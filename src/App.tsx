@@ -194,11 +194,11 @@ export function App() {
                   <Share2 className="w-5 h-5 theme-accent-text" />
                 </div>
               </div>
-              <div>
+              <div className="flex flex-col sm:flex-row sm:items-center">
                 <span className="font-extrabold text-lg tracking-tight bg-gradient-to-r from-[var(--text-primary)] via-slate-400 to-cyan-500 bg-clip-text text-transparent">
                   Relayo
                 </span>
-                <span className="text-[10px] font-mono ml-1.5 px-1.5 py-0.5 rounded border theme-badge font-semibold">
+                <span className="text-[10px] font-mono sm:ml-1.5 mt-0.5 sm:mt-0 px-1.5 py-0.5 rounded border theme-badge font-semibold">
                   Local HTTP Direct Share
                 </span>
               </div>
