@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-main: #000000;
+    --panel-bg: rgba(14, 16, 22, 0.9);
+    --panel-border: rgba(255, 255, 255, 0.12);
+    --text-primary: #ffffff;
+    --text-muted: #94a3b8;
+    --badge-bg: rgba(56, 189, 248, 0.1);
+    --badge-border: rgba(56, 189, 248, 0.3);
+    --badge-text: #38bdf8;
+    --accent-color: #38bdf8;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --input-bg: rgba(0, 0, 0, 0.7);
+  }
+
+  [data-theme='amoled'] {
+    --bg-main: #000000;
+    --panel-bg: rgba(10, 10, 14, 0.92);
+    --panel-border: rgba(255, 255, 255, 0.12);
+    --text-primary: #ffffff;
+    --text-muted: #94a3b8;
+    --badge-bg: rgba(56, 189, 248, 0.12);
+    --badge-border: rgba(56, 189, 248, 0.35);
+    --badge-text: #38bdf8;
+    --accent-color: #38bdf8;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --input-bg: rgba(0, 0, 0, 0.7);
+  }
+
+  [data-theme='light'] {
+    --bg-main: #f8fafc;
+    --panel-bg: #ffffff;
+    --panel-border: #cbd5e1;
+    --text-primary: #0f172a;
+    --text-muted: #334155;
+    --badge-bg: #e0f2fe;
+    --badge-border: #0284c7;
+    --badge-text: #0369a1;
+    --accent-color: #0284c7;
+    --card-bg: #f1f5f9;
+    --input-bg: #e2e8f0;
+  }
+
+  [data-theme='monochrome'] {
+    --bg-main: #000000;
+    --panel-bg: rgba(12, 12, 12, 0.95);
+    --panel-border: rgba(255, 255, 255, 0.3);
+    --text-primary: #ffffff;
+    --text-muted: #e5e7eb;
+    --badge-bg: rgba(255, 255, 255, 0.1);
+    --badge-border: rgba(255, 255, 255, 0.4);
+    --badge-text: #ffffff;
+    --accent-color: #ffffff;
+    --card-bg: rgba(255, 255, 255, 0.08);
+    --input-bg: rgba(20, 20, 20, 0.9);
+  }
+
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+.glass-panel {
+  background-color: var(--panel-bg);
+  border-color: var(--panel-border);
+  backdrop-filter: blur(16px);
+}
+
+.theme-badge {
+  background-color: var(--badge-bg);
+  border-color: var(--badge-border);
+  color: var(--badge-text);
+}
+
+.theme-accent-text {
+  color: var(--accent-color);
+}
+
+@keyframes orbSlow {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  50% {
+    transform: translate(30px, -20px) scale(1.1);
+  }
+}
+
+.animate-orb-slow {
+  animation: orbSlow 12s ease-in-out infinite;
+}
