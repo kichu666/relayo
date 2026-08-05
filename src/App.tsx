@@ -338,9 +338,6 @@ export function App() {
             >
               <FileUp className="w-12 h-12 theme-accent-text mb-3 group-hover:scale-110 transition-transform animate-bounce" />
               <p className="text-base font-bold">Drop files here or click to select</p>
-              <p className="text-xs text-[var(--text-muted)] mt-1 font-mono">
-                16KB Binary DataChannel Chunking • Zero-Server Storage
-              </p>
             </div>
 
             {selectedFiles.length > 0 && (
@@ -401,7 +398,7 @@ export function App() {
                 >
                   <div className="flex items-center gap-2">
                     <Zap className="w-4 h-4 fill-white" />
-                    <span>Create WebRTC Direct Share Link ({selectedFiles.length} files)</span>
+                    <span>Share Files ({selectedFiles.length})</span>
                   </div>
                 </button>
               </div>
@@ -416,9 +413,9 @@ export function App() {
               <Globe className="w-7 h-7 animate-pulse" />
             </div>
 
-            <h2 className="text-2xl font-black mb-1">WebRTC P2P Share Active!</h2>
+            <h2 className="text-2xl font-black mb-1">Sharing Active!</h2>
             <p className="text-xs text-[var(--text-muted)] mb-3">
-              Open this link on any PC, phone, or tablet to stream files directly browser-to-browser.
+              Open this link on any device to download files.
             </p>
 
             {/* P2P Status Indicator Banner */}
@@ -427,9 +424,6 @@ export function App() {
             {/* Share Link Display Box */}
             <div className="w-full p-4 rounded-2xl bg-[var(--input-bg)] border border-cyan-500/40 mb-6 flex items-center justify-between gap-3">
               <div className="text-left min-w-0 flex-1">
-                <p className="text-[10px] uppercase font-mono theme-accent-text font-bold mb-0.5">
-                  WebRTC P2P Direct Share Link
-                </p>
                 <p className="text-xs font-mono font-bold truncate">{store.shareUrl}</p>
               </div>
               <button
@@ -456,7 +450,7 @@ export function App() {
                 <div className="flex items-center justify-between text-xs font-semibold mb-2">
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-                    <span>Streaming P2P DataChunks...</span>
+                    <span>Transferring files...</span>
                   </div>
                   <div className="flex items-center gap-3 font-mono">
                     {store.transferSpeed && (
@@ -500,7 +494,7 @@ export function App() {
                 </div>
                 <p className="text-[11px] text-[var(--text-muted)] flex items-center gap-1.5 font-medium">
                   <QrCode className="w-3.5 h-3.5 theme-accent-text" />
-                  <span>Scan with Phone Camera to Open WebRTC Share</span>
+                  <span>Scan to open on mobile</span>
                 </p>
               </div>
             )}
@@ -553,7 +547,7 @@ export function App() {
             <h2 className="text-2xl font-black mb-1">P2P File Transfer</h2>
             <p className="text-xs text-[var(--text-muted)] mb-3 flex items-center justify-center gap-1.5 font-medium">
               <ShieldCheck className="w-4 h-4 text-emerald-500" />
-              100% Browser-to-Browser Encrypted WebRTC DataChannel • Zero-Server Storage
+              Direct browser-to-browser transfer
             </p>
 
             <div className="mb-6 flex justify-center">{getConnectionStateBadge()}</div>
@@ -564,7 +558,7 @@ export function App() {
                 <div className="flex items-center justify-between text-xs font-semibold mb-2">
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-                    <span>Receiving P2P Binary Stream...</span>
+                    <span>Receiving files...</span>
                   </div>
                   <div className="flex items-center gap-3 font-mono">
                     {store.transferSpeed && (
