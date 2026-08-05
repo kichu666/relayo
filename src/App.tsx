@@ -30,6 +30,7 @@ import {
   Zap,
   Wifi,
   Radio,
+  HelpCircle,
 } from 'lucide-react';
 
 const ITEMS_PER_PAGE = 20;
@@ -40,6 +41,7 @@ export function App() {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [copied, setCopied] = useState(false);
   const [displayLimit, setDisplayLimit] = useState(ITEMS_PER_PAGE);
+  const [showHelpModal, setShowHelpModal] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   // Ref guard: prevents React Strict Mode double-invoke from spawning two PeerJS instances
   const hasInitializedReceiver = useRef(false);
@@ -312,19 +314,12 @@ export function App() {
 
       {/* Main Content Body */}
       <main className="max-w-4xl mx-auto px-6 py-10 w-full flex-1 flex flex-col items-center justify-center relative z-10">
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-semibold mb-4 backdrop-blur-md theme-badge shadow-sm">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Relayo Zero-Memory HTTPS Direct Streaming Architecture</span>
-          </div>
-          <h1 className="text-4xl sm:text-5xl font-black tracking-tight leading-tight mb-4">
-            Instant Device-to-Device <br />
-            <span className="bg-gradient-to-r from-cyan-500 via-indigo-500 to-violet-500 bg-clip-text text-transparent">
-              WebRTC P2P Direct Share
-            </span>
+        <div className="text-center max-w-xl mx-auto mb-8">
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-2 bg-gradient-to-r from-[var(--text-primary)] via-cyan-400 to-indigo-400 bg-clip-text text-transparent">
+            P2P File Share
           </h1>
-          <p className="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed">
-            Direct browser-to-browser peer file streaming over WebRTC. Zero server storage, zero cellular bandwidth wasted, 100% direct device transfer.
+          <p className="text-sm sm:text-base text-[var(--text-muted)] font-medium">
+            Secure, serverless browser-to-browser file transfer.
           </p>
         </div>
 
@@ -669,9 +664,73 @@ export function App() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full border-t border-[var(--panel-border)] py-4 glass-panel text-center text-xs text-[var(--text-muted)] font-mono">
-        Relayo Zero-Memory HTTPS Direct Streaming Architecture (WebRTC P2P) • Zero Server Data Storage
+      <footer className="w-full border-t border-[var(--panel-border)] py-4 glass-panel flex flex-col sm:flex-row items-center justify-between px-6 gap-3 text-xs text-[var(--text-muted)] font-mono">
+        <span>Relayo P2P Direct Share • Zero Server Storage</span>
+        <button
+          onClick={() => setShowHelpModal(true)}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all cursor-pointer"
+        >
+          <HelpCircle className="w-3.5 h-3.5 text-cyan-400" />
+          <span>Help & Tutorial</span>
+        </button>
       </footer>
+
+      {/* AMOLED Glassmorphism Help Modal */}
+      {showHelpModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
+          <div className="relative w-full max-w-md bg-black/95 border border-zinc-800/90 rounded-3xl p-6 shadow-2xl backdrop-blur-2xl text-zinc-100">
+            <button
+              onClick={() => setShowHelpModal(false)}
+              className="absolute top-5 right-5 p-1.5 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white transition-colors cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <div className="flex items-center gap-3 mb-5">
+              <div className="p-2.5 rounded-2xl bg-indigo-500/20 border border-indigo-500/30 text-indigo-400">
+                <HelpCircle className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-base font-extrabold text-white">How P2P Share Works</h3>
+                <p className="text-[11px] text-zinc-400">Direct Browser-to-Browser Transfer</p>
+              </div>
+            </div>
+
+            <div className="space-y-3.5 my-6 text-xs">
+              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-zinc-900/90 border border-zinc-800/80">
+                <div className="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-xs shrink-0">1</div>
+                <div>
+                  <p className="font-bold text-white mb-0.5">Share Link or QR Code</p>
+                  <p className="text-zinc-400 leading-normal">Drop any file to instantly generate a secure share link or scan the QR code on your mobile device.</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-zinc-900/90 border border-zinc-800/80">
+                <div className="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-xs shrink-0">2</div>
+                <div>
+                  <p className="font-bold text-white mb-0.5">Keep Browser Tabs Open</p>
+                  <p className="text-zinc-400 leading-normal">Both sender and receiver tabs must remain open to maintain the direct WebRTC peer tunnel.</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-zinc-900/90 border border-zinc-800/80">
+                <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0">3</div>
+                <div>
+                  <p className="font-bold text-white mb-0.5">Direct P2P Data Streaming</p>
+                  <p className="text-zinc-400 leading-normal">Files transfer directly between browsers with live speed indicators and zero server storage.</p>
+                </div>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setShowHelpModal(false)}
+              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-bold text-xs transition-all shadow-lg cursor-pointer"
+            >
+              Got It, Start Sharing
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
