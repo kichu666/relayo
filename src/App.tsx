@@ -5,6 +5,9 @@ import {
   $shareStore,
   hostFilesOnSender,
   loadReceiverShareInfo,
+  resetRtcSession,
+  getActiveRtcManager,
+  extractRoomIdFromUrl,
   triggerToast,
 } from './logic/shareStore';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
@@ -24,6 +27,9 @@ import {
   QrCode,
   ChevronDown,
   ShieldCheck,
+  Zap,
+  Wifi,
+  Radio,
 } from 'lucide-react';
 
 const ITEMS_PER_PAGE = 20;
@@ -35,23 +41,78 @@ export function App() {
   const [copied, setCopied] = useState(false);
   const [displayLimit, setDisplayLimit] = useState(ITEMS_PER_PAGE);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  // Ref guard: prevents React Strict Mode double-invoke from spawning two PeerJS instances
+  const hasInitializedReceiver = useRef(false);
 
-  // Parse URL hash for incoming share links on mount (#share?id=...)
-  useEffect(() => {
-    const handleHashCheck = async () => {
-      const hash = window.location.hash;
-      if (hash.includes('#share?id=')) {
-        const urlParams = new URLSearchParams(hash.replace('#share?', ''));
-        const shareId = urlParams.get('id');
-        if (shareId) {
-          await loadReceiverShareInfo(shareId);
-        }
+  // Explicit Room ID extraction from URL Search Query (?id=...) and Hash (#share)
+  const extractRoomIdFromUrl = (): string | null => {
+    const search = window.location.search;
+    if (search) {
+      const urlParams = new URLSearchParams(search);
+      const id = urlParams.get('id') || urlParams.get('room') || urlParams.get('share');
+      if (id) return id.trim();
+    }
+
+    const hash = window.location.hash;
+    if (hash) {
+      if (hash.includes('id=')) {
+        const match = hash.match(/id=([^&]+)/);
+        if (match && match[1]) return decodeURIComponent(match[1]).trim();
       }
+      if (hash.includes('room=')) {
+        const match = hash.match(/room=([^&]+)/);
+        if (match && match[1]) return decodeURIComponent(match[1]).trim();
+      }
+      if (hash.startsWith('#relayo-') || hash.startsWith('#share-')) {
+        return hash.substring(1).trim();
+      }
+    }
+
+    const href = window.location.href;
+    if (href.includes('id=')) {
+      const match = href.match(/id=([^&#]+)/);
+      if (match && match[1]) return decodeURIComponent(match[1]).trim();
+    }
+
+    return null;
+  };
+
+  // Parse URL for incoming share links on mount & hash/popstate changes
+  // Single useEffect handles all routing — useLayoutEffect removed to prevent Strict Mode double-init
+  useEffect(() => {
+    const handleUrlCheck = async () => {
+      const roomId = extractRoomIdFromUrl();
+      if (!roomId || store.viewMode === 'sender_host') return;
+
+      // Ref-based guard: prevent React Strict Mode double-invoke from creating two PeerJS instances
+      if (hasInitializedReceiver.current) {
+        console.log(`[Relayo Router] Receiver already initialized for '${roomId}'. Skipping duplicate useEffect call.`);
+        return;
+      }
+      hasInitializedReceiver.current = true;
+
+      console.log(`[Relayo Router] Share link detected: id='${roomId}'. Switching to receiver mode...`);
+      if (store.viewMode === 'home') {
+        $shareStore.setKey('viewMode', 'receiver_download');
+        $shareStore.setKey('shareId', roomId);
+      }
+      await loadReceiverShareInfo(roomId);
     };
 
-    handleHashCheck();
-    window.addEventListener('hashchange', handleHashCheck);
-    return () => window.removeEventListener('hashchange', handleHashCheck);
+    handleUrlCheck();
+    window.addEventListener('hashchange', handleUrlCheck);
+    window.addEventListener('popstate', handleUrlCheck);
+
+    return () => {
+      window.removeEventListener('hashchange', handleUrlCheck);
+      window.removeEventListener('popstate', handleUrlCheck);
+      // Cleanup: destroy PeerJS instance if component unmounts (React Strict Mode safe)
+      const manager = getActiveRtcManager();
+      if (manager) {
+        console.log('[Relayo] Cleaning up PeerJS connection on unmount...');
+        manager.destroy();
+      }
+    };
   }, []);
 
   const handleDropzoneClick = () => {
@@ -74,7 +135,7 @@ export function App() {
     try {
       await hostFilesOnSender(selectedFiles);
     } catch (err: any) {
-      alert(err.message || 'Failed to start Web Share');
+      alert(err.message || 'Failed to start WebRTC P2P Share');
     }
   };
 
@@ -82,38 +143,41 @@ export function App() {
     if (!store.shareUrl) return;
     navigator.clipboard.writeText(store.shareUrl);
     setCopied(true);
-    triggerToast('Local Web Share link copied to clipboard!');
+    triggerToast('WebRTC P2P Direct Share link copied to clipboard!');
     setTimeout(() => setCopied(false), 3000);
   };
 
   /**
-   * On-Demand Object URL Download with Instant Revocation
+   * Browser Direct Zero-Memory File Download from Received WebRTC Blob
    */
   const handleDownloadSingleFile = (fileIndex: number, fileName: string) => {
-    if (!store.shareId) return;
-
     const fileMeta = store.files[fileIndex];
-    if (store.viewMode === 'sender_host' && fileMeta?.rawFile) {
-      const objectUrl = URL.createObjectURL(fileMeta.rawFile);
-      const anchor = document.createElement('a');
-      anchor.href = objectUrl;
-      anchor.download = fileName;
-      document.body.appendChild(anchor);
-      anchor.click();
-      document.body.removeChild(anchor);
-      setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+    if (!fileMeta) return;
+
+    let downloadBlob: Blob | undefined;
+
+    if (store.viewMode === 'sender_host' && fileMeta.rawFile) {
+      downloadBlob = fileMeta.rawFile;
+    } else if (fileMeta.receivedBlob) {
+      downloadBlob = fileMeta.receivedBlob;
+    } else {
+      const rtcManager = getActiveRtcManager();
+      downloadBlob = rtcManager?.getReceivedBlob(fileIndex);
+    }
+
+    if (!downloadBlob) {
+      triggerToast('File chunk data is currently streaming via WebRTC P2P...');
       return;
     }
 
-    const downloadUrl = `/api/share/download?id=${encodeURIComponent(
-      store.shareId
-    )}&index=${fileIndex}`;
+    const objectUrl = URL.createObjectURL(downloadBlob);
     const anchor = document.createElement('a');
-    anchor.href = downloadUrl;
+    anchor.href = objectUrl;
     anchor.download = fileName;
     document.body.appendChild(anchor);
     anchor.click();
     document.body.removeChild(anchor);
+    setTimeout(() => URL.revokeObjectURL(objectUrl), 2000);
   };
 
   const handleDownloadAll = () => {
@@ -125,20 +189,13 @@ export function App() {
   };
 
   const handleResetHome = () => {
+    if (typeof window !== 'undefined' && window.history) {
+      window.history.replaceState(null, '', window.location.pathname);
+    }
     window.location.hash = '';
     setSelectedFiles([]);
     setDisplayLimit(ITEMS_PER_PAGE);
-    $shareStore.set({
-      viewMode: 'home',
-      shareId: null,
-      shareUrl: null,
-      files: [],
-      isUploading: false,
-      uploadProgressPercent: 0,
-      currentUploadingFileName: '',
-      isLoadingInfo: false,
-      toastMessage: null,
-    });
+    resetRtcSession();
   };
 
   const formatFileSize = (bytes: number): string => {
@@ -150,6 +207,99 @@ export function App() {
   };
 
   const visibleFiles = store.files.slice(0, displayLimit);
+
+  const getConnectionStateBadge = () => {
+    switch (store.connectionState) {
+      case 'error':
+        return (
+          <div className="flex flex-col items-center gap-1">
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 text-[11px] font-bold shadow-sm">
+              <X className="w-3.5 h-3.5 text-rose-400" />
+              <span>WebRTC Error</span>
+            </div>
+            {store.statusMessage && (
+              <span className="text-[10px] text-rose-400 font-mono font-bold max-w-sm text-center">{store.statusMessage}</span>
+            )}
+          </div>
+        );
+      case 'transferring':
+        return (
+          <div className="flex flex-col items-center gap-1">
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 text-[11px] font-bold shadow-sm">
+              <Loader2 className="w-3.5 h-3.5 animate-spin text-cyan-400" />
+              <span>Transferring file...</span>
+            </div>
+            {store.statusMessage && (
+              <span className="text-[10px] text-[var(--text-muted)] font-mono">{store.statusMessage}</span>
+            )}
+          </div>
+        );
+      case 'connecting_peer':
+        return (
+          <div className="flex flex-col items-center gap-1">
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[11px] font-bold shadow-sm">
+              <Loader2 className="w-3.5 h-3.5 animate-spin text-amber-400" />
+              <span>Handshaking...</span>
+            </div>
+            {store.statusMessage && (
+              <span className="text-[10px] text-[var(--text-muted)] font-mono">{store.statusMessage}</span>
+            )}
+          </div>
+        );
+      case 'connected':
+        return (
+          <div className="flex flex-col items-center gap-1">
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[11px] font-bold shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+              <span>WebRTC P2P Connected</span>
+            </div>
+            {store.statusMessage && (
+              <span className="text-[10px] text-[var(--text-muted)] font-mono">{store.statusMessage}</span>
+            )}
+          </div>
+        );
+      case 'completed':
+        return (
+          <div className="flex flex-col items-center gap-1">
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[11px] font-bold shadow-sm">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Transfer Complete</span>
+            </div>
+            {store.statusMessage && (
+              <span className="text-[10px] text-[var(--text-muted)] font-mono">{store.statusMessage}</span>
+            )}
+          </div>
+        );
+      case 'waiting_for_peer':
+        return (
+          <div className="flex flex-col items-center gap-1">
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 text-[11px] font-bold shadow-sm">
+              <Radio className="w-3.5 h-3.5 animate-pulse text-indigo-400" />
+              <span>Ready for peer connection</span>
+            </div>
+            {store.statusMessage && (
+              <span className="text-[10px] text-[var(--text-muted)] font-mono">{store.statusMessage}</span>
+            )}
+          </div>
+        );
+      case 'connecting_signaling':
+      default:
+        return (
+          <div className="flex flex-col items-center gap-1">
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[11px] font-bold shadow-sm">
+              <Loader2 className="w-3.5 h-3.5 animate-spin text-amber-400" />
+              <span>Handshaking...</span>
+            </div>
+            {store.statusMessage && (
+              <span className="text-[10px] text-[var(--text-muted)] font-mono">{store.statusMessage}</span>
+            )}
+          </div>
+        );
+    }
+  };
+
+  const isReceiverUrl = extractRoomIdFromUrl() !== null;
+  const activeViewMode = store.viewMode === 'home' && isReceiverUrl ? 'receiver_download' : store.viewMode;
 
   return (
     <div className="min-h-screen bg-[var(--bg-main)] text-[var(--text-primary)] flex flex-col justify-between selection:bg-indigo-500 selection:text-white relative overflow-hidden transition-colors duration-300">
@@ -174,22 +324,23 @@ export function App() {
         </div>
       )}
 
+      {/* On-Screen WebRTC & Signaling Diagnostic Error Overlay */}
+      {store.connectionState === 'error' && store.statusMessage && (
+        <div className="fixed top-24 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-5 py-3 rounded-2xl bg-rose-950/95 border border-rose-500/80 text-rose-100 text-xs font-mono shadow-2xl backdrop-blur-2xl max-w-md w-11/12 animate-pulse">
+          <X className="w-5 h-5 text-rose-400 shrink-0" />
+          <div className="flex-1 min-w-0">
+            <p className="font-bold text-rose-300 uppercase tracking-wider text-[10px] mb-0.5">On-Screen WebRTC Error Overlay</p>
+            <p className="font-semibold break-words">{store.statusMessage}</p>
+          </div>
+        </div>
+      )}
+
       {/* Top Navbar with Persistent Theme Switcher */}
       <header className="w-full border-b border-[var(--panel-border)] glass-panel sticky top-0 z-40 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            {store.viewMode !== 'home' && (
-              <button
-                onClick={handleResetHome}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[var(--card-bg)] hover:opacity-80 transition-all text-xs font-medium border border-[var(--panel-border)] cursor-pointer"
-              >
-                <ArrowLeft className="w-4 h-4 theme-accent-text" />
-                <span>Home</span>
-              </button>
-            )}
-
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-2xl bg-gradient-to-tr from-cyan-500 via-indigo-600 to-violet-500 p-[1px] shadow-lg shadow-cyan-500/25">
+          <div className="flex items-center gap-3 cursor-pointer" onClick={handleResetHome}>
+            <div className="flex items-center gap-2">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 to-indigo-600 p-0.5 shadow-lg shadow-cyan-500/20 flex items-center justify-center">
                 <div className="w-full h-full bg-[var(--bg-main)] rounded-[15px] flex items-center justify-center">
                   <Share2 className="w-5 h-5 theme-accent-text" />
                 </div>
@@ -199,7 +350,7 @@ export function App() {
                   Relayo
                 </span>
                 <span className="text-[10px] font-mono sm:ml-1.5 mt-0.5 sm:mt-0 px-1.5 py-0.5 rounded border theme-badge font-semibold">
-                  Local HTTP Direct Share
+                  WebRTC P2P Direct
                 </span>
               </div>
             </div>
@@ -208,10 +359,7 @@ export function App() {
           <div className="flex items-center gap-3">
             <ThemeSwitcher />
             <div className="hidden sm:flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-              <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-semibold">
-                Hotspot Subnet Direct
-              </span>
+              {getConnectionStateBadge()}
             </div>
           </div>
         </div>
@@ -222,27 +370,26 @@ export function App() {
         <div className="text-center max-w-2xl mx-auto mb-10">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-semibold mb-4 backdrop-blur-md theme-badge shadow-sm">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Relayo Zero-Memory HTTP Direct Streaming Architecture</span>
+            <span>Relayo Zero-Memory HTTPS Direct Streaming Architecture</span>
           </div>
           <h1 className="text-4xl sm:text-5xl font-black tracking-tight leading-tight mb-4">
-            Instant Cross-Device <br />
+            Instant Device-to-Device <br />
             <span className="bg-gradient-to-r from-cyan-500 via-indigo-500 to-violet-500 bg-clip-text text-transparent">
-              Local Web File Sharing
+              WebRTC P2P Direct Share
             </span>
           </h1>
           <p className="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed">
-            Host files on your phone or laptop over your local Wi-Fi / hotspot subnet. Receivers open the link in any browser
-            for high-speed HTTP streaming downloads—100% zero cellular data used.
+            Direct browser-to-browser peer file streaming over WebRTC. Zero server storage, zero cellular bandwidth wasted, 100% direct device transfer.
           </p>
         </div>
 
         {store.isLoadingInfo ? (
           <div className="w-full max-w-md glass-panel rounded-3xl p-8 text-center border border-[var(--panel-border)] flex flex-col items-center">
             <Loader2 className="w-10 h-10 theme-accent-text animate-spin mb-4" />
-            <h3 className="text-base font-bold mb-1">Loading Shared Files...</h3>
-            <p className="text-xs text-[var(--text-muted)]">Fetching local network share info</p>
+            <h3 className="text-base font-bold mb-1">Connecting WebRTC P2P Stream...</h3>
+            <p className="text-xs text-[var(--text-muted)]">{store.statusMessage || 'Performing WebSocket signaling handshake...'}</p>
           </div>
-        ) : store.viewMode === 'home' ? (
+        ) : activeViewMode === 'home' ? (
           /* Home Screen: Select Files to Host */
           <div className="w-full max-w-xl glass-panel rounded-3xl p-8 border border-[var(--panel-border)] shadow-2xl text-center">
             <div
@@ -252,7 +399,7 @@ export function App() {
               <FileUp className="w-12 h-12 theme-accent-text mb-3 group-hover:scale-110 transition-transform animate-bounce" />
               <p className="text-base font-bold">Drop files here or click to select</p>
               <p className="text-xs text-[var(--text-muted)] mt-1 font-mono">
-                Supports large files & multi-file batches • Zero-RAM Slicing
+                16KB Binary DataChannel Chunking • Zero-Server Storage
               </p>
             </div>
 
@@ -312,30 +459,16 @@ export function App() {
                   disabled={store.isUploading}
                   className="w-full mt-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white text-xs font-bold shadow-lg shadow-cyan-500/25 flex flex-col items-center justify-center gap-1 transition-all cursor-pointer disabled:opacity-50"
                 >
-                  {store.isUploading ? (
-                    <>
-                      <div className="flex items-center gap-2">
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        <span>Slicing & Hosting Chunks ({store.uploadProgressPercent}%)</span>
-                      </div>
-                      {store.currentUploadingFileName && (
-                        <span className="text-[10px] font-mono font-normal opacity-80 truncate max-w-xs">
-                          {store.currentUploadingFileName}
-                        </span>
-                      )}
-                    </>
-                  ) : (
-                    <div className="flex items-center gap-2">
-                      <Globe className="w-4 h-4" />
-                      <span>Host Web Share Link ({selectedFiles.length} files)</span>
-                    </div>
-                  )}
+                  <div className="flex items-center gap-2">
+                    <Zap className="w-4 h-4 fill-white" />
+                    <span>Create WebRTC Direct Share Link ({selectedFiles.length} files)</span>
+                  </div>
                 </button>
               </div>
             )}
           </div>
         ) : store.viewMode === 'sender_host' ? (
-          /* Sender View: Display Local Network Share Link & QR Code */
+          /* Sender View: Display WebRTC Network Share Link & QR Code */
           <div className="w-full max-w-xl glass-panel rounded-3xl p-8 border border-[var(--panel-border)] shadow-2xl text-center relative overflow-hidden animate-fade-in">
             <div className="absolute top-0 right-0 w-40 h-40 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -343,16 +476,19 @@ export function App() {
               <Globe className="w-7 h-7 animate-pulse" />
             </div>
 
-            <h2 className="text-2xl font-black mb-1">Local Direct Share Active!</h2>
-            <p className="text-xs text-[var(--text-muted)] mb-6">
-              Open this link on any PC, laptop, or phone connected to the same Wi-Fi subnet to download files.
+            <h2 className="text-2xl font-black mb-1">WebRTC P2P Share Active!</h2>
+            <p className="text-xs text-[var(--text-muted)] mb-3">
+              Open this link on any PC, phone, or tablet to stream files directly browser-to-browser.
             </p>
 
-            {/* Local Network Link Display Box */}
+            {/* P2P Status Indicator Banner */}
+            <div className="mb-6 flex justify-center">{getConnectionStateBadge()}</div>
+
+            {/* Share Link Display Box */}
             <div className="w-full p-4 rounded-2xl bg-[var(--input-bg)] border border-cyan-500/40 mb-6 flex items-center justify-between gap-3">
               <div className="text-left min-w-0 flex-1">
                 <p className="text-[10px] uppercase font-mono theme-accent-text font-bold mb-0.5">
-                  Local Network Share Link
+                  WebRTC P2P Direct Share Link
                 </p>
                 <p className="text-xs font-mono font-bold truncate">{store.shareUrl}</p>
               </div>
@@ -374,6 +510,27 @@ export function App() {
               </button>
             </div>
 
+            {/* Transfer Progress Bar */}
+            {store.uploadProgressPercent > 0 && store.uploadProgressPercent < 100 && (
+              <div className="w-full mb-6 p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/30">
+                <div className="flex items-center justify-between text-xs font-semibold mb-2">
+                  <span>Streaming P2P DataChunks...</span>
+                  <span className="font-mono text-cyan-400">{store.uploadProgressPercent}%</span>
+                </div>
+                <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-cyan-500 to-indigo-500 transition-all duration-300"
+                    style={{ width: `${store.uploadProgressPercent}%` }}
+                  />
+                </div>
+                {store.currentUploadingFileName && (
+                  <p className="text-[10px] font-mono text-[var(--text-muted)] mt-1.5 truncate">
+                    Current: {store.currentUploadingFileName}
+                  </p>
+                )}
+              </div>
+            )}
+
             {/* QR Code for Instant Phone Camera Scanning */}
             {store.shareUrl && (
               <div className="mb-6 flex flex-col items-center">
@@ -382,15 +539,15 @@ export function App() {
                 </div>
                 <p className="text-[11px] text-[var(--text-muted)] flex items-center gap-1.5 font-medium">
                   <QrCode className="w-3.5 h-3.5 theme-accent-text" />
-                  <span>Scan with Phone Camera to Open Share Link</span>
+                  <span>Scan with Phone Camera to Open WebRTC Share</span>
                 </p>
               </div>
             )}
 
-            {/* Hosted File List Preview with Pagination */}
+            {/* Hosted File List Preview */}
             <div className="w-full text-left mb-6">
               <p className="text-xs font-semibold text-[var(--text-muted)] mb-2">
-                Currently Hosted Files ({store.files.length})
+                Hosted Files ({store.files.length})
               </p>
               <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
                 {visibleFiles.map((file, idx) => (
@@ -409,21 +566,11 @@ export function App() {
                       onClick={() => handleDownloadSingleFile(idx, file.name)}
                       className="px-2.5 py-1 rounded-lg border theme-badge text-xs font-semibold transition-colors cursor-pointer"
                     >
-                      Download
+                      Save Copy
                     </button>
                   </div>
                 ))}
               </div>
-
-              {store.files.length > displayLimit && (
-                <button
-                  onClick={() => setDisplayLimit((prev) => prev + ITEMS_PER_PAGE)}
-                  className="w-full mt-2 py-1 text-center text-xs theme-accent-text hover:underline cursor-pointer flex items-center justify-center gap-1 font-semibold"
-                >
-                  <span>Show More Files ({store.files.length - displayLimit} remaining)</span>
-                  <ChevronDown className="w-3.5 h-3.5" />
-                </button>
-              )}
             </div>
 
             <button
@@ -434,7 +581,7 @@ export function App() {
             </button>
           </div>
         ) : (
-          /* Receiver View: Direct Browser HTTP Download Dashboard */
+          /* Receiver View: WebRTC P2P Direct Download Dashboard */
           <div className="w-full max-w-xl glass-panel rounded-3xl p-8 border border-indigo-500/30 shadow-2xl text-center relative overflow-hidden animate-fade-in">
             <div className="absolute top-0 right-0 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -442,27 +589,59 @@ export function App() {
               <Download className="w-7 h-7 animate-bounce" />
             </div>
 
-            <h2 className="text-2xl font-black mb-1">Shared Files Ready</h2>
-            <p className="text-xs text-[var(--text-muted)] mb-6 flex items-center justify-center gap-1.5 font-medium">
+            <h2 className="text-2xl font-black mb-1">P2P File Transfer</h2>
+            <p className="text-xs text-[var(--text-muted)] mb-3 flex items-center justify-center gap-1.5 font-medium">
               <ShieldCheck className="w-4 h-4 text-emerald-500" />
-              Direct HTTP 206 Partial Content Stream • Zero-RAM Memory Overhead
+              100% Browser-to-Browser Encrypted WebRTC DataChannel • Zero-Server Storage
             </p>
 
-            {/* Primary Download All Button */}
-            <button
-              onClick={handleDownloadAll}
-              className="w-full mb-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-indigo-600 to-violet-600 hover:from-cyan-400 hover:to-violet-500 text-white font-bold text-xs shadow-xl shadow-indigo-500/25 flex items-center justify-center gap-2 transition-all cursor-pointer"
-            >
-              <Download className="w-4 h-4" />
-              <span>Download All Files ({store.files.length})</span>
-            </button>
+            <div className="mb-6 flex justify-center">{getConnectionStateBadge()}</div>
 
-            {/* Shared File List with DOM Pagination */}
+            {/* Transfer Progress Bar for Receiver */}
+            {store.uploadProgressPercent > 0 && store.uploadProgressPercent <= 100 && (
+              <div className="w-full mb-6 p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/30">
+                <div className="flex items-center justify-between text-xs font-semibold mb-2">
+                  <span>Receiving P2P Binary Stream...</span>
+                  <span className="font-mono text-cyan-400">{store.uploadProgressPercent}%</span>
+                </div>
+                <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-cyan-500 to-indigo-500 transition-all duration-300"
+                    style={{ width: `${store.uploadProgressPercent}%` }}
+                  />
+                </div>
+                {store.currentUploadingFileName && (
+                  <p className="text-[10px] font-mono text-[var(--text-muted)] mt-1.5 truncate">
+                    Receiving: {store.currentUploadingFileName}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* Primary Download All Button */}
+            {store.files.length > 0 && (
+              <button
+                onClick={handleDownloadAll}
+                className="w-full mb-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-indigo-600 to-violet-600 hover:from-cyan-400 hover:to-violet-500 text-white font-bold text-xs shadow-xl shadow-indigo-500/25 flex items-center justify-center gap-2 transition-all cursor-pointer"
+              >
+                <Download className="w-4 h-4" />
+                <span>Save All Files ({store.files.length})</span>
+              </button>
+            )}
+
+            {/* Shared File List */}
             <div className="w-full text-left mb-6">
               <p className="text-xs font-semibold text-[var(--text-muted)] mb-2">
                 Available Shared Files ({store.files.length})
               </p>
-              <div className="space-y-2.5 max-h-60 overflow-y-auto pr-1">
+              {store.files.length === 0 ? (
+                <div className="p-6 rounded-2xl bg-[var(--card-bg)] border border-[var(--panel-border)] text-center text-xs text-[var(--text-muted)] flex flex-col items-center justify-center gap-2">
+                  <Loader2 className="w-6 h-6 theme-accent-text animate-spin" />
+                  <p className="font-semibold text-[var(--text-primary)]">Fetching shared files from sender...</p>
+                  <p className="text-[11px] font-mono text-[var(--text-muted)]">WebRTC P2P direct stream handshaking in progress</p>
+                </div>
+              ) : (
+                <div className="space-y-2.5 max-h-60 overflow-y-auto pr-1">
                 {visibleFiles.map((file, idx) => (
                   <div
                     key={idx}
@@ -484,20 +663,11 @@ export function App() {
                       className="px-3 py-1.5 rounded-xl border theme-badge text-xs font-bold transition-all shrink-0 cursor-pointer flex items-center gap-1 shadow-sm"
                     >
                       <Download className="w-3.5 h-3.5" />
-                      <span>Download</span>
+                      <span>{file.receivedBlob ? 'Save File' : 'Download'}</span>
                     </button>
                   </div>
                 ))}
               </div>
-
-              {store.files.length > displayLimit && (
-                <button
-                  onClick={() => setDisplayLimit((prev) => prev + ITEMS_PER_PAGE)}
-                  className="w-full mt-2 py-1 text-center text-xs theme-accent-text hover:underline cursor-pointer flex items-center justify-center gap-1 font-semibold"
-                >
-                  <span>Show More Files ({store.files.length - displayLimit} remaining)</span>
-                  <ChevronDown className="w-3.5 h-3.5" />
-                </button>
               )}
             </div>
 
@@ -513,7 +683,7 @@ export function App() {
 
       {/* Footer */}
       <footer className="w-full border-t border-[var(--panel-border)] py-4 glass-panel text-center text-xs text-[var(--text-muted)] font-mono">
-        Relayo Local HTTP Direct Streaming Architecture • 100% Zero Cellular Data
+        Relayo Zero-Memory HTTPS Direct Streaming Architecture (WebRTC P2P) • Zero Server Data Storage
       </footer>
     </div>
   );
