@@ -290,27 +290,7 @@ export class WebRTCManager {
 
     let hasTriggeredOpen = false;
 
-    // 30-second timeout: only on receiver side — ICE/TURN negotiation can take up to 20–30s.
-    // The sender side has no DataChannel until peer.on('connection') fires, so no timeout needed there.
-    let openTimeoutId: ReturnType<typeof setTimeout> | null = null;
-    if (this.role === 'receiver') {
-      openTimeoutId = setTimeout(() => {
-        if (!hasTriggeredOpen) {
-          console.error('[Relayo] DataChannel open timeout (30s) — sender may be offline or NAT traversal failed.');
-          this.reportError(
-            'Connection Timeout',
-            'Could not reach the sender after 30 seconds. They may be offline or the room has expired. Please ask the sender for a new share link.'
-          );
-        }
-      }, 30000);
-    }
-
     const handleOpen = () => {
-      // Clear timeout immediately as the very first action
-      if (openTimeoutId !== null) {
-        clearTimeout(openTimeoutId);
-        openTimeoutId = null;
-      }
       if (hasTriggeredOpen) return;
       hasTriggeredOpen = true;
 
@@ -346,13 +326,11 @@ export class WebRTCManager {
 
     conn.on('close', () => {
       console.log(`[Relayo] DataChannel closed with peer: ${conn.peer}`);
-      if (openTimeoutId !== null) clearTimeout(openTimeoutId);
       this.callbacks.onStateChange('disconnected', 'P2P Connection closed.');
     });
 
     conn.on('error', (err: any) => {
       console.error(`[Relayo] DataChannel error:`, err);
-      if (openTimeoutId !== null) clearTimeout(openTimeoutId);
       this.reportError('DataConnection Error', err.message || String(err));
     });
   }
