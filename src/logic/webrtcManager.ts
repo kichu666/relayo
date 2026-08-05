@@ -39,7 +39,13 @@ export type ConnectionState =
 export interface WebRTCManagerCallbacks {
   onStateChange: (state: ConnectionState, message?: string) => void;
   onFileMetadataReceived: (files: FileMetadata[]) => void;
-  onProgress: (percent: number, currentFile: string) => void;
+  onProgress: (
+    percent: number,
+    currentFile: string,
+    speedStr: string,
+    bytesTransferred: number,
+    totalBytes: number
+  ) => void;
   onFileReceived: (index: number, blob: Blob) => void;
   onTransferComplete: () => void;
   onError: (error: string) => void;
@@ -56,6 +62,12 @@ export class WebRTCManager {
 
   private filesToHost: File[] = [];
   private fileMetadataList: FileMetadata[] = [];
+
+  // Transfer speed & progress metrics
+  private transferStartTime: number = 0;
+  private lastSpeedCalcTime: number = 0;
+  private lastSpeedBytes: number = 0;
+  private currentSpeedStr: string = '0 KB/s';
 
   // Receiver state
   private receivedBlobs: Map<number, Blob> = new Map();
@@ -363,6 +375,39 @@ export class WebRTCManager {
   }
 
   /**
+   * Helper: Calculate real-time transfer speed (MB/s or KB/s) and trigger onProgress callback
+   */
+  private updateTransferMetrics(bytesTransferred: number, totalBytes: number, currentFileName: string) {
+    const now = performance.now();
+    if (!this.transferStartTime) {
+      this.transferStartTime = now;
+      this.lastSpeedCalcTime = now;
+      this.lastSpeedBytes = bytesTransferred;
+    }
+
+    const timeDiff = (now - this.lastSpeedCalcTime) / 1000;
+    // Calculate speed every 250ms or when complete
+    if (timeDiff >= 0.25 || (totalBytes > 0 && bytesTransferred >= totalBytes)) {
+      const bytesDiff = bytesTransferred - this.lastSpeedBytes;
+      const bytesPerSec = timeDiff > 0 ? bytesDiff / timeDiff : 0;
+
+      if (bytesPerSec >= 1024 * 1024) {
+        this.currentSpeedStr = `${(bytesPerSec / (1024 * 1024)).toFixed(1)} MB/s`;
+      } else if (bytesPerSec >= 1024) {
+        this.currentSpeedStr = `${(bytesPerSec / 1024).toFixed(0)} KB/s`;
+      } else {
+        this.currentSpeedStr = `${Math.round(bytesPerSec)} B/s`;
+      }
+
+      this.lastSpeedCalcTime = now;
+      this.lastSpeedBytes = bytesTransferred;
+    }
+
+    const percent = totalBytes > 0 ? Math.min(100, Math.round((bytesTransferred / totalBytes) * 100)) : 0;
+    this.callbacks.onProgress(percent, currentFileName, this.currentSpeedStr, bytesTransferred, totalBytes);
+  }
+
+  /**
    * Sender: Stream file binary chunks over PeerJS DataConnection
    */
   private async streamFilesToPeer(conn: DataConnection) {
@@ -371,6 +416,7 @@ export class WebRTCManager {
 
     const totalAllFilesBytes = this.filesToHost.reduce((acc, f) => acc + f.size, 0) || 1;
     let totalBytesSent = 0;
+    this.transferStartTime = 0; // reset metrics for new stream
 
     for (let i = 0; i < this.filesToHost.length; i++) {
       const file = this.filesToHost[i];
@@ -395,8 +441,7 @@ export class WebRTCManager {
         offset += chunkSlice.size;
         totalBytesSent += chunkSlice.size;
 
-        const progress = Math.min(100, Math.round((totalBytesSent / totalAllFilesBytes) * 100));
-        this.callbacks.onProgress(progress, file.name);
+        this.updateTransferMetrics(totalBytesSent, totalAllFilesBytes, file.name);
       }
 
       // 3. Send END_FILE control message
@@ -440,10 +485,8 @@ export class WebRTCManager {
 
       const fileMeta = this.fileMetadataList.find((f) => f.index === this.currentFileIndex);
       const fileName = fileMeta ? fileMeta.name : '';
-      const progress = this.totalBytesExpectedAllFiles > 0
-        ? Math.min(100, Math.round((this.totalBytesReceivedAllFiles / this.totalBytesExpectedAllFiles) * 100))
-        : 0;
-      this.callbacks.onProgress(progress, fileName);
+
+      this.updateTransferMetrics(this.totalBytesReceivedAllFiles, this.totalBytesExpectedAllFiles, fileName);
       return;
     } else if (typeof data === 'object' && data !== null) {
       payload = data;

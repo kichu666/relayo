@@ -510,24 +510,45 @@ export function App() {
               </button>
             </div>
 
-            {/* Transfer Progress Bar */}
-            {store.uploadProgressPercent > 0 && store.uploadProgressPercent < 100 && (
-              <div className="w-full mb-6 p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/30">
+            {/* Transfer Progress Bar with Percentage & Live Speed */}
+            {store.uploadProgressPercent > 0 && store.uploadProgressPercent <= 100 && (
+              <div className="w-full mb-6 p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 backdrop-blur-md text-left">
                 <div className="flex items-center justify-between text-xs font-semibold mb-2">
-                  <span>Streaming P2P DataChunks...</span>
-                  <span className="font-mono text-cyan-400">{store.uploadProgressPercent}%</span>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+                    <span>Streaming P2P DataChunks...</span>
+                  </div>
+                  <div className="flex items-center gap-3 font-mono">
+                    {store.transferSpeed && (
+                      <span className="text-[11px] px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold">
+                        ⚡ {store.transferSpeed}
+                      </span>
+                    )}
+                    <span className="text-cyan-400 font-bold text-sm">{store.uploadProgressPercent}%</span>
+                  </div>
                 </div>
-                <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+
+                <div className="w-full h-3 bg-slate-900/80 rounded-full overflow-hidden p-0.5 border border-slate-700/50">
                   <div
-                    className="h-full bg-gradient-to-r from-cyan-500 to-indigo-500 transition-all duration-300"
+                    className="h-full bg-gradient-to-r from-cyan-400 via-indigo-500 to-violet-500 rounded-full transition-all duration-150 shadow-lg shadow-cyan-500/50"
                     style={{ width: `${store.uploadProgressPercent}%` }}
                   />
                 </div>
-                {store.currentUploadingFileName && (
-                  <p className="text-[10px] font-mono text-[var(--text-muted)] mt-1.5 truncate">
-                    Current: {store.currentUploadingFileName}
-                  </p>
-                )}
+
+                <div className="flex items-center justify-between text-[11px] font-mono text-[var(--text-muted)] mt-2">
+                  {store.currentUploadingFileName ? (
+                    <span className="truncate max-w-[200px] sm:max-w-[280px]">
+                      File: <span className="text-[var(--text-primary)] font-medium">{store.currentUploadingFileName}</span>
+                    </span>
+                  ) : (
+                    <span />
+                  )}
+                  {store.totalBytesExpected > 0 && (
+                    <span className="shrink-0 font-semibold">
+                      {formatFileSize(store.bytesTransferred)} / {formatFileSize(store.totalBytesExpected)}
+                    </span>
+                  )}
+                </div>
               </div>
             )}
 
@@ -597,24 +618,45 @@ export function App() {
 
             <div className="mb-6 flex justify-center">{getConnectionStateBadge()}</div>
 
-            {/* Transfer Progress Bar for Receiver */}
+            {/* Transfer Progress Bar for Receiver with Percentage & Live Speed */}
             {store.uploadProgressPercent > 0 && store.uploadProgressPercent <= 100 && (
-              <div className="w-full mb-6 p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/30">
+              <div className="w-full mb-6 p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 backdrop-blur-md text-left">
                 <div className="flex items-center justify-between text-xs font-semibold mb-2">
-                  <span>Receiving P2P Binary Stream...</span>
-                  <span className="font-mono text-cyan-400">{store.uploadProgressPercent}%</span>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+                    <span>Receiving P2P Binary Stream...</span>
+                  </div>
+                  <div className="flex items-center gap-3 font-mono">
+                    {store.transferSpeed && (
+                      <span className="text-[11px] px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold">
+                        ⚡ {store.transferSpeed}
+                      </span>
+                    )}
+                    <span className="text-cyan-400 font-bold text-sm">{store.uploadProgressPercent}%</span>
+                  </div>
                 </div>
-                <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+
+                <div className="w-full h-3 bg-slate-900/80 rounded-full overflow-hidden p-0.5 border border-slate-700/50">
                   <div
-                    className="h-full bg-gradient-to-r from-cyan-500 to-indigo-500 transition-all duration-300"
+                    className="h-full bg-gradient-to-r from-cyan-400 via-indigo-500 to-violet-500 rounded-full transition-all duration-150 shadow-lg shadow-cyan-500/50"
                     style={{ width: `${store.uploadProgressPercent}%` }}
                   />
                 </div>
-                {store.currentUploadingFileName && (
-                  <p className="text-[10px] font-mono text-[var(--text-muted)] mt-1.5 truncate">
-                    Receiving: {store.currentUploadingFileName}
-                  </p>
-                )}
+
+                <div className="flex items-center justify-between text-[11px] font-mono text-[var(--text-muted)] mt-2">
+                  {store.currentUploadingFileName ? (
+                    <span className="truncate max-w-[200px] sm:max-w-[280px]">
+                      Receiving: <span className="text-[var(--text-primary)] font-medium">{store.currentUploadingFileName}</span>
+                    </span>
+                  ) : (
+                    <span />
+                  )}
+                  {store.totalBytesExpected > 0 && (
+                    <span className="shrink-0 font-semibold">
+                      {formatFileSize(store.bytesTransferred)} / {formatFileSize(store.totalBytesExpected)}
+                    </span>
+                  )}
+                </div>
               </div>
             )}
 

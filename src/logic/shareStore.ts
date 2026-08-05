@@ -20,6 +20,9 @@ export interface ShareSessionState {
   isUploading: boolean;
   uploadProgressPercent: number;
   currentUploadingFileName: string;
+  transferSpeed: string;
+  bytesTransferred: number;
+  totalBytesExpected: number;
   isLoadingInfo: boolean;
   toastMessage: string | null;
 }
@@ -38,6 +41,9 @@ export const $shareStore = map<ShareSessionState>({
   isUploading: false,
   uploadProgressPercent: 0,
   currentUploadingFileName: '',
+  transferSpeed: '',
+  bytesTransferred: 0,
+  totalBytesExpected: 0,
   isLoadingInfo: false,
   toastMessage: initialRoomId ? 'Room link detected! Connecting via WebRTC P2P...' : null,
 });
@@ -117,6 +123,9 @@ export function resetRtcSession() {
     isUploading: false,
     uploadProgressPercent: 0,
     currentUploadingFileName: '',
+    transferSpeed: '',
+    bytesTransferred: 0,
+    totalBytesExpected: 0,
     isLoadingInfo: false,
     toastMessage: null,
   });
@@ -171,10 +180,13 @@ export async function hostFilesOnSender(files: File[]): Promise<string> {
       }
     },
     onFileMetadataReceived: () => {},
-    onProgress: (percent, currentFile) => {
+    onProgress: (percent, currentFile, speedStr, bytesTransferred, totalBytes) => {
       $shareStore.setKey('isUploading', percent < 100);
       $shareStore.setKey('uploadProgressPercent', percent);
       $shareStore.setKey('currentUploadingFileName', currentFile);
+      $shareStore.setKey('transferSpeed', speedStr);
+      $shareStore.setKey('bytesTransferred', bytesTransferred);
+      $shareStore.setKey('totalBytesExpected', totalBytes);
     },
     onFileReceived: () => {},
     onTransferComplete: () => {
@@ -253,9 +265,12 @@ export async function loadReceiverShareInfo(shareId: string): Promise<void> {
       $shareStore.setKey('statusMessage', 'WebRTC Direct Stream Active! Shared Files Ready.');
       triggerToast(`Loaded ${files.length} shared files from sender! WebRTC P2P stream ready.`);
     },
-    onProgress: (percent, currentFile) => {
+    onProgress: (percent, currentFile, speedStr, bytesTransferred, totalBytes) => {
       $shareStore.setKey('uploadProgressPercent', percent);
       $shareStore.setKey('currentUploadingFileName', currentFile);
+      $shareStore.setKey('transferSpeed', speedStr);
+      $shareStore.setKey('bytesTransferred', bytesTransferred);
+      $shareStore.setKey('totalBytesExpected', totalBytes);
     },
     onFileReceived: (index: number, blob: Blob) => {
       const currentFiles = $shareStore.get().files;
