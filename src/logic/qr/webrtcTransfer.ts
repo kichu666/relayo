@@ -272,24 +272,34 @@ class WebRTCFileTransferEngine {
       } catch (err) {
         console.error('Failed to parse WebRTC header:', err);
       }
-    } else if (data instanceof ArrayBuffer && this.incomingMetadata) {
-      this.incomingChunks.push(data);
-      this.incomingBytesRead += data.byteLength;
-
-      const durationSec = (Date.now() - this.startTime) / 1000 || 0.001;
-      const speedMb = this.incomingBytesRead / (1024 * 1024 * durationSec);
-      const percent = Math.min(
-        100,
-        Math.round((this.incomingBytesRead / this.incomingMetadata.size) * 100)
-      );
-
-      $transferStore.setKey('role', 'receiver');
-      $transferStore.setKey('transferRole', 'receiving');
-      $transferStore.setKey('status', 'receiving');
-      $transferStore.setKey('bytesTransferred', this.incomingBytesRead);
-      $transferStore.setKey('progressPercent', percent);
-      $transferStore.setKey('transferSpeedMbps', parseFloat(speedMb.toFixed(2)));
+    } else if ((data instanceof ArrayBuffer || ArrayBuffer.isView(data) || data instanceof Blob) && this.incomingMetadata) {
+      if (data instanceof Blob) {
+        data.arrayBuffer().then((buf) => this.processIncomingChunk(buf));
+      } else {
+        const buf = data instanceof ArrayBuffer ? data : data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength);
+        this.processIncomingChunk(buf);
+      }
     }
+  }
+
+  private processIncomingChunk(buf: ArrayBuffer): void {
+    if (!this.incomingMetadata) return;
+    this.incomingChunks.push(buf);
+    this.incomingBytesRead += buf.byteLength;
+
+    const durationSec = (Date.now() - this.startTime) / 1000 || 0.001;
+    const speedMb = this.incomingBytesRead / (1024 * 1024 * durationSec);
+    const percent = Math.min(
+      100,
+      Math.round((this.incomingBytesRead / this.incomingMetadata.size) * 100)
+    );
+
+    $transferStore.setKey('role', 'receiver');
+    $transferStore.setKey('transferRole', 'receiving');
+    $transferStore.setKey('status', 'receiving');
+    $transferStore.setKey('bytesTransferred', this.incomingBytesRead);
+    $transferStore.setKey('progressPercent', percent);
+    $transferStore.setKey('transferSpeedMbps', parseFloat(speedMb.toFixed(2)));
   }
 
   public triggerAutoDownload(url: string, fileName: string): void {

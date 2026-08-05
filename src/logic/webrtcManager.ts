@@ -489,6 +489,33 @@ export class WebRTCManager {
    * Also handles sender-side REQUEST_METADATA → triggers file stream
    */
   private handleConnectionData(data: any, conn: DataConnection) {
+    // --- Handle binary DataChannel chunks (ArrayBuffer, ArrayBufferView / TypedArray, Blob) ---
+    if (data instanceof ArrayBuffer || ArrayBuffer.isView(data)) {
+      const buffer = data instanceof ArrayBuffer
+        ? data
+        : data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength);
+
+      this.currentFileChunks.push(buffer);
+      this.totalBytesReceivedAllFiles += buffer.byteLength;
+
+      const fileMeta = this.fileMetadataList.find((f) => f.index === this.currentFileIndex);
+      const fileName = fileMeta ? fileMeta.name : '';
+
+      this.updateTransferMetrics(this.totalBytesReceivedAllFiles, this.totalBytesExpectedAllFiles, fileName);
+      return;
+    } else if (data instanceof Blob) {
+      data.arrayBuffer().then((buffer) => {
+        this.currentFileChunks.push(buffer);
+        this.totalBytesReceivedAllFiles += buffer.byteLength;
+
+        const fileMeta = this.fileMetadataList.find((f) => f.index === this.currentFileIndex);
+        const fileName = fileMeta ? fileMeta.name : '';
+
+        this.updateTransferMetrics(this.totalBytesReceivedAllFiles, this.totalBytesExpectedAllFiles, fileName);
+      });
+      return;
+    }
+
     // --- Normalise: handle both plain objects and JSON strings ---
     let payload: any = null;
     if (typeof data === 'string') {
@@ -499,16 +526,6 @@ export class WebRTCManager {
         console.error(`[Relayo] JSON parse error:`, parseErr, data);
         return;
       }
-    } else if (data instanceof ArrayBuffer) {
-      // Binary chunk — accumulate for current file
-      this.currentFileChunks.push(data);
-      this.totalBytesReceivedAllFiles += data.byteLength;
-
-      const fileMeta = this.fileMetadataList.find((f) => f.index === this.currentFileIndex);
-      const fileName = fileMeta ? fileMeta.name : '';
-
-      this.updateTransferMetrics(this.totalBytesReceivedAllFiles, this.totalBytesExpectedAllFiles, fileName);
-      return;
     } else if (typeof data === 'object' && data !== null) {
       payload = data;
     } else {
