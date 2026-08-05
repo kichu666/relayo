@@ -287,8 +287,7 @@ export async function loadReceiverShareInfo(shareId: string): Promise<void> {
     onError: (err) => {
       $shareStore.setKey('isLoadingInfo', false);
       $shareStore.setKey('connectionState', 'error');
-      $shareStore.setKey('statusMessage', `Connection error: ${err}`);
-      triggerToast(`WebRTC Receiver Error: ${err}`);
+      $shareStore.setKey('statusMessage', err || 'Connection failed');
     },
   });
 

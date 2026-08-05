@@ -215,11 +215,8 @@ export function App() {
           <div className="flex flex-col items-center gap-1">
             <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 text-[11px] font-bold shadow-sm">
               <X className="w-3.5 h-3.5 text-rose-400" />
-              <span>WebRTC Error</span>
+              <span>{store.statusMessage || 'Connection failed'}</span>
             </div>
-            {store.statusMessage && (
-              <span className="text-[10px] text-rose-400 font-mono font-bold max-w-sm text-center">{store.statusMessage}</span>
-            )}
           </div>
         );
       case 'transferring':
@@ -321,17 +318,6 @@ export function App() {
         <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 animate-bounce flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-700 dark:text-emerald-300 text-xs font-bold backdrop-blur-xl shadow-2xl">
           <CheckCircle2 className="w-4 h-4 text-emerald-500" />
           <span>{store.toastMessage}</span>
-        </div>
-      )}
-
-      {/* On-Screen WebRTC & Signaling Diagnostic Error Overlay */}
-      {store.connectionState === 'error' && store.statusMessage && (
-        <div className="fixed top-24 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-5 py-3 rounded-2xl bg-rose-950/95 border border-rose-500/80 text-rose-100 text-xs font-mono shadow-2xl backdrop-blur-2xl max-w-md w-11/12 animate-pulse">
-          <X className="w-5 h-5 text-rose-400 shrink-0" />
-          <div className="flex-1 min-w-0">
-            <p className="font-bold text-rose-300 uppercase tracking-wider text-[10px] mb-0.5">On-Screen WebRTC Error Overlay</p>
-            <p className="font-semibold break-words">{store.statusMessage}</p>
-          </div>
         </div>
       )}
 

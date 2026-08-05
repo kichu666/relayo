@@ -81,10 +81,9 @@ export class WebRTCManager {
   }
 
   private reportError(category: string, errMessage: string) {
-    const fullMsg = `[${category}] ${errMessage}`;
-    console.error(`[Relayo PeerJS ERROR] ${fullMsg}`);
-    this.callbacks.onError(fullMsg);
-    this.callbacks.onStateChange('error', fullMsg);
+    console.error(`[Relayo PeerJS ERROR] [${category}] ${errMessage}`);
+    this.callbacks.onError(errMessage);
+    this.callbacks.onStateChange('error', errMessage);
   }
 
   /**
