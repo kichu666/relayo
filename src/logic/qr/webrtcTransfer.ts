@@ -1,6 +1,7 @@
 import { $sessionStore, $transferStore, triggerConnectionToast } from './sessionStore';
+import { DEFAULT_ICE_SERVERS } from '../webrtcManager';
 
-const CHUNK_SIZE = 16384; // 16KB WebRTC DataChannel chunk size
+const CHUNK_SIZE = 64 * 1024; // 64KB optimal WebRTC DataChannel chunk size
 
 export interface FileMetadataHeader {
   type: 'HEADER';
@@ -67,8 +68,8 @@ class WebRTCFileTransferEngine {
    * Create WebRTC loopback channels for local testing & file streaming
    */
   public async initializeLocalLoopback(): Promise<RTCDataChannel> {
-    this.localPeerConnection = new RTCPeerConnection();
-    this.remotePeerConnection = new RTCPeerConnection();
+    this.localPeerConnection = new RTCPeerConnection({ iceServers: DEFAULT_ICE_SERVERS });
+    this.remotePeerConnection = new RTCPeerConnection({ iceServers: DEFAULT_ICE_SERVERS });
 
     this.dataChannel = this.localPeerConnection.createDataChannel('fileTransfer', {
       ordered: true,
@@ -166,12 +167,36 @@ class WebRTCFileTransferEngine {
     this.dataChannel!.send(JSON.stringify(header));
 
     let offset = 0;
+    const HIGH_WATERMARK = 1024 * 1024;
+    const LOW_WATERMARK = 256 * 1024;
+
+    if (this.dataChannel) {
+      this.dataChannel.bufferedAmountLowThreshold = LOW_WATERMARK;
+    }
+
     while (offset < file.size) {
       const slice = file.slice(offset, offset + CHUNK_SIZE);
       const buffer = await slice.arrayBuffer();
 
-      if (this.dataChannel!.bufferedAmount > 8 * 1024 * 1024) {
-        await new Promise((resolve) => setTimeout(resolve, 20));
+      if (this.dataChannel && this.dataChannel.bufferedAmount > HIGH_WATERMARK) {
+        await new Promise<void>((resolve) => {
+          let resolved = false;
+          const onLow = () => {
+            if (!resolved) {
+              resolved = true;
+              this.dataChannel?.removeEventListener('bufferedamountlow', onLow);
+              resolve();
+            }
+          };
+          this.dataChannel?.addEventListener('bufferedamountlow', onLow);
+          setTimeout(() => {
+            if (!resolved) {
+              resolved = true;
+              this.dataChannel?.removeEventListener('bufferedamountlow', onLow);
+              resolve();
+            }
+          }, 30);
+        });
       }
 
       this.dataChannel!.send(buffer);
@@ -184,8 +209,6 @@ class WebRTCFileTransferEngine {
       $transferStore.setKey('bytesTransferred', offset);
       $transferStore.setKey('progressPercent', percent);
       $transferStore.setKey('transferSpeedMbps', parseFloat(speedMb.toFixed(2)));
-
-      await new Promise((resolve) => setTimeout(resolve, 2));
     }
 
     const eof: FileEofHeader = {

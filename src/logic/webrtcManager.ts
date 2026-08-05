@@ -51,7 +51,19 @@ export interface WebRTCManagerCallbacks {
   onError: (error: string) => void;
 }
 
-const CHUNK_SIZE = 16 * 1024; // 16KB binary chunks
+export const DEFAULT_ICE_SERVERS: RTCIceServer[] = [
+  { urls: 'stun:stun.l.google.com:19302' },
+  { urls: 'stun:stun1.l.google.com:19302' },
+  { urls: 'stun:stun2.l.google.com:19302' },
+  { urls: 'stun:stun3.l.google.com:19302' },
+  { urls: 'stun:stun4.l.google.com:19302' },
+  { urls: 'stun:stun.cloudflare.com:3478' },
+  { urls: 'stun:stun.services.mozilla.com:3478' },
+];
+
+const CHUNK_SIZE = 64 * 1024; // 64KB optimal chunk size for high-speed WebRTC DataChannel streaming
+const HIGH_WATERMARK = 1024 * 1024; // 1MB buffer threshold before pausing
+const LOW_WATERMARK = 256 * 1024; // 256KB buffer threshold to resume
 
 export class WebRTCManager {
   private peer: Peer | null = null;
@@ -126,12 +138,7 @@ export class WebRTCManager {
         path: '/',
         debug: 1,
         config: {
-          iceServers: [
-            { urls: 'stun:stun.l.google.com:19302' },
-            { urls: 'stun:stun1.l.google.com:19302' },
-            { urls: 'stun:stun2.l.google.com:19302' },
-            { urls: 'stun:stun.cloudflare.com:3478' },
-          ],
+          iceServers: DEFAULT_ICE_SERVERS,
         },
       });
 
@@ -223,12 +230,7 @@ export class WebRTCManager {
         path: '/',
         debug: 1,
         config: {
-          iceServers: [
-            { urls: 'stun:stun.l.google.com:19302' },
-            { urls: 'stun:stun1.l.google.com:19302' },
-            { urls: 'stun:stun2.l.google.com:19302' },
-            { urls: 'stun:stun.cloudflare.com:3478' },
-          ],
+          iceServers: DEFAULT_ICE_SERVERS,
         },
       });
 
@@ -287,6 +289,29 @@ export class WebRTCManager {
    */
   private setupDataConnection(conn: DataConnection) {
     this.callbacks.onStateChange('connecting_peer', 'Handshaking...');
+
+    // Monitor native RTCPeerConnection ICE state transitions and log fallback diagnostics
+    const pc = (conn as any).peerConnection as RTCPeerConnection | undefined;
+    if (pc) {
+      pc.oniceconnectionstatechange = () => {
+        const state = pc.iceConnectionState;
+        console.log(`[Relayo ICE State] Peer: ${conn.peer} -> State: ${state}`);
+        if (state === 'failed') {
+          console.warn('[Relayo ICE Fallback] Direct P2P negotiation failed due to restrictive NAT/Firewall.');
+          this.reportError('P2P Connection Failed', 'Direct P2P connection blocked by network or firewall restrictions.');
+        } else if (state === 'disconnected') {
+          console.warn('[Relayo ICE Warning] ICE connection temporarily disconnected. Attempting ICE candidate recovery...');
+        }
+      };
+
+      pc.onconnectionstatechange = () => {
+        console.log(`[Relayo WebRTC Connection State] Peer: ${conn.peer} -> State: ${pc.connectionState}`);
+      };
+
+      pc.onicecandidateerror = (event: any) => {
+        console.warn(`[Relayo ICE Candidate Error] host: ${event.address}, code: ${event.errorCode}, text: ${event.errorText}`);
+      };
+    }
 
     let hasTriggeredOpen = false;
 
@@ -392,9 +417,35 @@ export class WebRTCManager {
         mimeType: file.type || 'application/octet-stream',
       });
 
-      // 2. Stream binary 16KB ArrayBuffer chunks
+      // 2. Stream binary ArrayBuffer chunks with event-driven buffer backpressure
+      const dc = (conn as any).dataChannel as RTCDataChannel | undefined;
+      if (dc) {
+        dc.bufferedAmountLowThreshold = LOW_WATERMARK;
+      }
+
       let offset = 0;
       while (offset < file.size) {
+        if (dc && dc.bufferedAmount > HIGH_WATERMARK) {
+          await new Promise<void>((resolve) => {
+            let resolved = false;
+            const onLow = () => {
+              if (!resolved) {
+                resolved = true;
+                dc.removeEventListener('bufferedamountlow', onLow);
+                resolve();
+              }
+            };
+            dc.addEventListener('bufferedamountlow', onLow);
+            setTimeout(() => {
+              if (!resolved) {
+                resolved = true;
+                dc.removeEventListener('bufferedamountlow', onLow);
+                resolve();
+              }
+            }, 30);
+          });
+        }
+
         const chunkSlice = file.slice(offset, offset + CHUNK_SIZE);
         const arrayBuffer = await chunkSlice.arrayBuffer();
 
