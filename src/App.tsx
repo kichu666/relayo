@@ -220,7 +220,7 @@ export function App() {
       case 'transferring':
         return (
           <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 text-[10px] sm:text-[11px] font-bold shadow-sm shrink-0">
-            <Loader2 className="w-3 h-3 animate-spin text-cyan-400" />
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping shrink-0" />
             <span>Transferring...</span>
           </div>
         );
@@ -228,28 +228,28 @@ export function App() {
       case 'connecting_signaling':
         return (
           <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30 text-[10px] sm:text-[11px] font-bold shadow-sm shrink-0">
-            <Loader2 className="w-3 h-3 animate-spin text-amber-400" />
-            <span>Connecting...</span>
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping shrink-0" />
+            <span>Connecting via P2P</span>
           </div>
         );
       case 'connected':
         return (
           <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-[10px] sm:text-[11px] font-bold shadow-sm shrink-0">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping shrink-0" />
             <span>P2P Connected</span>
           </div>
         );
       case 'completed':
         return (
           <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-[10px] sm:text-[11px] font-bold shadow-sm shrink-0">
-            <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+            <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
             <span>Complete</span>
           </div>
         );
       case 'waiting_for_peer':
         return (
           <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 text-[10px] sm:text-[11px] font-bold shadow-sm shrink-0">
-            <Radio className="w-3 h-3 animate-pulse text-indigo-400" />
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
             <span>Ready</span>
           </div>
         );
@@ -276,10 +276,10 @@ export function App() {
         className="hidden"
       />
 
-      {/* Toast Notification */}
+      {/* Toast Notification - Bottom Right Corner */}
       {store.toastMessage && (
-        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 animate-bounce flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-700 dark:text-emerald-300 text-xs font-bold backdrop-blur-xl shadow-2xl">
-          <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+        <div className="fixed bottom-6 right-6 z-50 animate-fade-in flex items-center gap-2.5 px-4 py-2 rounded-2xl bg-[var(--card-bg)] border border-[var(--panel-border)] text-[var(--text-primary)] text-xs font-semibold backdrop-blur-xl shadow-2xl">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping shrink-0" />
           <span>{store.toastMessage}</span>
         </div>
       )}
