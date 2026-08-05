@@ -289,20 +289,11 @@ export function App() {
       {/* Top Navbar with Persistent Theme Switcher */}
       <header className="w-full border-b border-[var(--panel-border)] glass-panel sticky top-0 z-40 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2 cursor-pointer shrink-0" onClick={handleResetHome}>
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr from-cyan-500 to-indigo-600 p-0.5 shadow-lg shadow-cyan-500/20 flex items-center justify-center">
-              <div className="w-full h-full bg-[var(--bg-main)] rounded-[15px] flex items-center justify-center">
-                <Share2 className="w-4 h-4 sm:w-5 sm:h-5 theme-accent-text" />
-              </div>
-            </div>
-            <div className="flex flex-row items-center gap-1.5">
-              <span className="font-extrabold text-base sm:text-lg tracking-tight bg-gradient-to-r from-[var(--text-primary)] via-slate-400 to-cyan-500 bg-clip-text text-transparent">
-                Relayo
-              </span>
-              <span className="hidden xs:inline-block text-[9px] sm:text-[10px] font-mono px-1.5 py-0.5 rounded border theme-badge font-semibold">
-                P2P
-              </span>
-            </div>
+          <div className="flex items-center gap-2.5 cursor-pointer shrink-0" onClick={handleResetHome}>
+            <Share2 className="w-6 h-6 theme-accent-text shrink-0" />
+            <span className="font-extrabold text-lg sm:text-xl tracking-tight bg-gradient-to-r from-[var(--text-primary)] via-cyan-400 to-indigo-400 bg-clip-text text-transparent">
+              Relayo
+            </span>
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
@@ -314,11 +305,11 @@ export function App() {
 
       {/* Main Content Body */}
       <main className="max-w-4xl mx-auto px-6 py-10 w-full flex-1 flex flex-col items-center justify-center relative z-10">
-        <div className="text-center max-w-xl mx-auto mb-8">
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-2 bg-gradient-to-r from-[var(--text-primary)] via-cyan-400 to-indigo-400 bg-clip-text text-transparent">
+        <div className="text-center max-w-2xl mx-auto mb-10">
+          <h1 className="text-4xl sm:text-6xl font-black tracking-tight mb-3 bg-gradient-to-r from-cyan-400 via-indigo-400 to-violet-400 bg-clip-text text-transparent">
             P2P File Share
           </h1>
-          <p className="text-sm sm:text-base text-[var(--text-muted)] font-medium">
+          <p className="text-base sm:text-lg text-[var(--text-muted)] font-medium">
             Secure, serverless browser-to-browser file transfer.
           </p>
         </div>
@@ -413,13 +404,10 @@ export function App() {
               <Globe className="w-7 h-7 animate-pulse" />
             </div>
 
-            <h2 className="text-2xl font-black mb-1">Sharing Active!</h2>
-            <p className="text-xs text-[var(--text-muted)] mb-3">
+            <h3 className="text-lg font-bold mb-1">Share Link Ready</h3>
+            <p className="text-xs text-[var(--text-muted)] mb-5">
               Open this link on any device to download files.
             </p>
-
-            {/* P2P Status Indicator Banner */}
-            <div className="mb-6 flex justify-center">{getConnectionStateBadge()}</div>
 
             {/* Share Link Display Box */}
             <div className="w-full p-4 rounded-2xl bg-[var(--input-bg)] border border-cyan-500/40 mb-6 flex items-center justify-between gap-3">
@@ -544,13 +532,11 @@ export function App() {
               <Download className="w-7 h-7 animate-bounce" />
             </div>
 
-            <h2 className="text-2xl font-black mb-1">P2P File Transfer</h2>
-            <p className="text-xs text-[var(--text-muted)] mb-3 flex items-center justify-center gap-1.5 font-medium">
+            <h3 className="text-lg font-bold mb-1">Shared Files</h3>
+            <p className="text-xs text-[var(--text-muted)] mb-5 flex items-center justify-center gap-1.5 font-medium">
               <ShieldCheck className="w-4 h-4 text-emerald-500" />
               Direct browser-to-browser transfer
             </p>
-
-            <div className="mb-6 flex justify-center">{getConnectionStateBadge()}</div>
 
             {/* Transfer Progress Bar for Receiver with Percentage & Live Speed */}
             {store.uploadProgressPercent > 0 && store.uploadProgressPercent <= 100 && (
