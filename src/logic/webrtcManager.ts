@@ -129,16 +129,8 @@ export class WebRTCManager {
           iceServers: [
             { urls: 'stun:stun.l.google.com:19302' },
             { urls: 'stun:stun1.l.google.com:19302' },
-            {
-              urls: 'turn:global.relay.metered.ca:80',
-              username: '8ca289ae098e106bad8fdba9',
-              credential: 'bvaLXeyfody7sk6m',
-            },
-            {
-              urls: 'turn:global.relay.metered.ca:443',
-              username: '8ca289ae098e106bad8fdba9',
-              credential: 'bvaLXeyfody7sk6m',
-            },
+            { urls: 'stun:stun2.l.google.com:19302' },
+            { urls: 'stun:stun.cloudflare.com:3478' },
           ],
         },
       });
@@ -234,16 +226,8 @@ export class WebRTCManager {
           iceServers: [
             { urls: 'stun:stun.l.google.com:19302' },
             { urls: 'stun:stun1.l.google.com:19302' },
-            {
-              urls: 'turn:global.relay.metered.ca:80',
-              username: '8ca289ae098e106bad8fdba9',
-              credential: 'bvaLXeyfody7sk6m',
-            },
-            {
-              urls: 'turn:global.relay.metered.ca:443',
-              username: '8ca289ae098e106bad8fdba9',
-              credential: 'bvaLXeyfody7sk6m',
-            },
+            { urls: 'stun:stun2.l.google.com:19302' },
+            { urls: 'stun:stun.cloudflare.com:3478' },
           ],
         },
       });
