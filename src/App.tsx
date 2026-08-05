@@ -212,11 +212,8 @@ export function App() {
     switch (store.connectionState) {
       case 'error':
         return (
-          <div className="flex flex-col items-center gap-1">
-            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 text-[11px] font-bold shadow-sm">
-              <X className="w-3.5 h-3.5 text-rose-400" />
-              <span>{store.statusMessage || 'Connection failed'}</span>
-            </div>
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--card-bg)] text-[var(--text-muted)] border border-[var(--panel-border)] text-[11px] font-medium">
+            <span>Offline</span>
           </div>
         );
       case 'transferring':

@@ -195,7 +195,7 @@ export async function hostFilesOnSender(files: File[]): Promise<string> {
       triggerToast('P2P Direct File Transfer Completed!');
     },
     onError: (err) => {
-      triggerToast(`WebRTC Error: ${err}`);
+      console.error('[Relayo Sender Error]', err);
     },
   });
 
@@ -299,8 +299,7 @@ export async function loadReceiverShareInfo(shareId: string): Promise<void> {
     console.error('[Relayo] startReceiverSession crashed:', err);
     $shareStore.setKey('isLoadingInfo', false);
     $shareStore.setKey('connectionState', 'error');
-    $shareStore.setKey('statusMessage', `Failed to initialize receiver: ${err?.message || String(err)}`);
-    triggerToast(`Receiver initialization error: ${err?.message || String(err)}`);
+    $shareStore.setKey('statusMessage', 'Connection failed');
   } finally {
     receiverSessionInitializing = false;
   }
