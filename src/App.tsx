@@ -19,7 +19,6 @@ import {
   FileUp,
   File,
   X,
-  ArrowLeft,
   Sparkles,
   CheckCircle2,
   Globe,
@@ -42,95 +41,30 @@ const ITEMS_PER_PAGE = 20;
 
 export function App() {
   const store = useStore($shareStore);
-
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [copied, setCopied] = useState(false);
   const [displayLimit, setDisplayLimit] = useState(ITEMS_PER_PAGE);
   const [showHelpModal, setShowHelpModal] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  // Ref guard: prevents React Strict Mode double-invoke from spawning two PeerJS instances
   const hasInitializedReceiver = useRef(false);
 
-  // Explicit Room ID extraction from URL Search Query (?id=...) and Hash (#share)
-  const extractRoomIdFromUrl = (): string | null => {
-    const search = window.location.search;
-    if (search) {
-      const urlParams = new URLSearchParams(search);
-      const id = urlParams.get('id') || urlParams.get('room') || urlParams.get('share');
-      if (id) return id.trim();
-    }
-
-    const hash = window.location.hash;
-    if (hash) {
-      if (hash.includes('id=')) {
-        const match = hash.match(/id=([^&]+)/);
-        if (match && match[1]) return decodeURIComponent(match[1]).trim();
-      }
-      if (hash.includes('room=')) {
-        const match = hash.match(/room=([^&]+)/);
-        if (match && match[1]) return decodeURIComponent(match[1]).trim();
-      }
-      if (hash.startsWith('#relayo-') || hash.startsWith('#share-')) {
-        return hash.substring(1).trim();
-      }
-    }
-
-    const href = window.location.href;
-    if (href.includes('id=')) {
-      const match = href.match(/id=([^&#]+)/);
-      if (match && match[1]) return decodeURIComponent(match[1]).trim();
-    }
-
-    return null;
-  };
-
-  // Parse URL for incoming share links on mount & hash/popstate changes
-  // Single useEffect handles all routing — useLayoutEffect removed to prevent Strict Mode double-init
   useEffect(() => {
-    const handleUrlCheck = async () => {
-      const roomId = extractRoomIdFromUrl();
-      if (!roomId || store.viewMode === 'sender_host') return;
-
-      // Ref-based guard: prevent React Strict Mode double-invoke from creating two PeerJS instances
-      if (hasInitializedReceiver.current) {
-        console.log(`[Relayo Router] Receiver already initialized for '${roomId}'. Skipping duplicate useEffect call.`);
-        return;
-      }
+    const urlRoomId = extractRoomIdFromUrl();
+    if (urlRoomId && !hasInitializedReceiver.current) {
       hasInitializedReceiver.current = true;
-
-      console.log(`[Relayo Router] Share link detected: id='${roomId}'. Switching to receiver mode...`);
-      if (store.viewMode === 'home') {
-        $shareStore.setKey('viewMode', 'receiver_download');
-        $shareStore.setKey('shareId', roomId);
-      }
-      await loadReceiverShareInfo(roomId);
-    };
-
-    handleUrlCheck();
-    window.addEventListener('hashchange', handleUrlCheck);
-    window.addEventListener('popstate', handleUrlCheck);
-
-    return () => {
-      window.removeEventListener('hashchange', handleUrlCheck);
-      window.removeEventListener('popstate', handleUrlCheck);
-      // Cleanup: destroy PeerJS instance if component unmounts (React Strict Mode safe)
-      const manager = getActiveRtcManager();
-      if (manager) {
-        console.log('[Relayo] Cleaning up PeerJS connection on unmount...');
-        manager.destroy();
-      }
-    };
+      loadReceiverShareInfo(urlRoomId);
+    }
   }, []);
-
-  const handleDropzoneClick = () => {
-    fileInputRef.current?.click();
-  };
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      const filesArray = Array.from(e.target.files);
-      setSelectedFiles((prev) => [...prev, ...filesArray]);
+      const newFiles = Array.from(e.target.files);
+      setSelectedFiles((prev) => [...prev, ...newFiles]);
     }
+  };
+
+  const handleDropzoneClick = () => {
+    fileInputRef.current?.click();
   };
 
   const handleRemoveFile = (index: number) => {
@@ -142,75 +76,60 @@ export function App() {
     try {
       await hostFilesOnSender(selectedFiles);
     } catch (err: any) {
-      alert(err.message || 'Failed to start WebRTC P2P Share');
+      console.error('[Relayo] Failed to start host session:', err);
     }
   };
 
   const handleCopyLink = () => {
-    if (!store.shareUrl) return;
-    navigator.clipboard.writeText(store.shareUrl);
-    setCopied(true);
-    triggerToast('WebRTC P2P Direct Share link copied to clipboard!');
-    setTimeout(() => setCopied(false), 3000);
-  };
-
-  /**
-   * Browser Direct Zero-Memory File Download from Received WebRTC Blob
-   */
-  const handleDownloadSingleFile = (fileIndex: number, fileName: string) => {
-    const fileMeta = store.files[fileIndex];
-    if (!fileMeta) return;
-
-    let downloadBlob: Blob | undefined;
-
-    if (store.viewMode === 'sender_host' && fileMeta.rawFile) {
-      downloadBlob = fileMeta.rawFile;
-    } else if (fileMeta.receivedBlob) {
-      downloadBlob = fileMeta.receivedBlob;
-    } else {
-      const rtcManager = getActiveRtcManager();
-      downloadBlob = rtcManager?.getReceivedBlob(fileIndex);
+    if (store.shareUrl) {
+      navigator.clipboard.writeText(store.shareUrl);
+      setCopied(true);
+      triggerToast('Share link copied to clipboard!');
+      setTimeout(() => setCopied(false), 3000);
     }
-
-    if (!downloadBlob) {
-      triggerToast('File chunk data is currently streaming via WebRTC P2P...');
-      return;
-    }
-
-    const objectUrl = URL.createObjectURL(downloadBlob);
-    const anchor = document.createElement('a');
-    anchor.href = objectUrl;
-    anchor.download = fileName;
-    document.body.appendChild(anchor);
-    anchor.click();
-    document.body.removeChild(anchor);
-    setTimeout(() => URL.revokeObjectURL(objectUrl), 2000);
-  };
-
-  const handleDownloadAll = () => {
-    store.files.forEach((f, idx) => {
-      setTimeout(() => {
-        handleDownloadSingleFile(idx, f.name);
-      }, idx * 400);
-    });
   };
 
   const handleResetHome = () => {
+    hasInitializedReceiver.current = false;
+    setSelectedFiles([]);
+    resetRtcSession();
     if (typeof window !== 'undefined' && window.history) {
       window.history.replaceState(null, '', window.location.pathname);
     }
-    window.location.hash = '';
-    setSelectedFiles([]);
-    setDisplayLimit(ITEMS_PER_PAGE);
-    resetRtcSession();
   };
 
-  const formatFileSize = (bytes: number): string => {
-    if (bytes === 0) return '0 Bytes';
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  const handleDownloadSingleFile = (fileIndex: number, fileName: string) => {
+    const targetFile = store.files.find((f) => f.index === fileIndex);
+    if (targetFile?.receivedBlob) {
+      const url = URL.createObjectURL(targetFile.receivedBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } else {
+      const rtc = getActiveRtcManager();
+      if (rtc) {
+        rtc.requestFileDownload(fileIndex);
+        triggerToast(`Requested download for file: ${fileName}`);
+      }
+    }
+  };
+
+  const handleDownloadAllZip = () => {
+    const rtc = getActiveRtcManager();
+    if (rtc) {
+      store.files.forEach((file) => {
+        if (!file.receivedBlob) {
+          rtc.requestFileDownload(file.index);
+        } else {
+          handleDownloadSingleFile(file.index, file.name);
+        }
+      });
+      triggerToast('Requesting all file downloads...');
+    }
   };
 
   const visibleFiles = store.files.slice(0, displayLimit);
@@ -296,9 +215,14 @@ export function App() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2">
           <div className="flex items-center gap-2.5 cursor-pointer shrink-0" onClick={handleResetHome}>
             <Share2 className="w-6 h-6 theme-accent-text shrink-0" />
-            <span className="font-extrabold text-lg sm:text-xl tracking-tight bg-gradient-to-r from-[var(--text-primary)] via-cyan-400 to-indigo-400 bg-clip-text text-transparent">
-              Relayo
-            </span>
+            <div className="flex items-center gap-1.5">
+              <span className="font-extrabold text-lg sm:text-xl tracking-tight bg-gradient-to-r from-[var(--text-primary)] via-cyan-400 to-indigo-400 bg-clip-text text-transparent">
+                Relayo
+              </span>
+              <span className="hidden xs:inline-block text-[9px] sm:text-[10px] font-mono px-1.5 py-0.5 rounded border theme-badge font-semibold">
+                P2P
+              </span>
+            </div>
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
@@ -310,12 +234,20 @@ export function App() {
 
       {/* Main Content Body */}
       <main className="max-w-4xl mx-auto px-6 py-10 w-full flex-1 flex flex-col items-center justify-center relative z-10">
+        {/* Original Hero Section */}
         <div className="text-center max-w-2xl mx-auto mb-10">
-          <h1 className="text-4xl sm:text-6xl font-black tracking-tight mb-3 bg-gradient-to-r from-cyan-400 via-indigo-400 to-violet-400 bg-clip-text text-transparent">
-            Share Files Instantly
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-semibold mb-4 backdrop-blur-md theme-badge shadow-sm">
+            <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+            <span>Relayo Zero-Memory HTTPS Direct Streaming Architecture</span>
+          </div>
+          <h1 className="text-4xl sm:text-5xl font-black tracking-tight leading-tight mb-4">
+            Instant Device-to-Device <br />
+            <span className="bg-gradient-to-r from-cyan-500 via-indigo-500 to-violet-500 bg-clip-text text-transparent">
+              WebRTC P2P Direct Share
+            </span>
           </h1>
-          <p className="text-base sm:text-lg text-[var(--text-muted)] font-semibold tracking-wide">
-            Same Wi-Fi • No Cloud Upload
+          <p className="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed max-w-2xl mx-auto">
+            Direct browser-to-browser peer file streaming over WebRTC. Zero server storage, zero cellular bandwidth wasted, 100% direct device transfer.
           </p>
         </div>
 
@@ -331,11 +263,13 @@ export function App() {
             <div className="w-full max-w-xl glass-panel rounded-3xl p-8 border border-[var(--panel-border)] shadow-2xl text-center">
               <div
                 onClick={handleDropzoneClick}
-                className="w-full p-10 rounded-2xl border-2 border-dashed border-cyan-500/40 bg-[var(--card-bg)] hover:opacity-90 transition-colors cursor-pointer mb-6 flex flex-col items-center justify-center group"
+                className="w-full p-8 rounded-2xl border-2 border-dashed border-cyan-500/40 bg-[var(--card-bg)] hover:opacity-90 transition-colors cursor-pointer mb-6 flex flex-col items-center justify-center group"
               >
                 <FileUp className="w-12 h-12 theme-accent-text mb-3 group-hover:scale-110 transition-transform animate-bounce" />
-                <p className="text-lg font-bold text-[var(--text-primary)]">📁 Drop files here</p>
-                <p className="text-xs text-[var(--text-muted)] mt-1 font-medium">or Tap to Select Files</p>
+                <p className="text-base font-bold">Drop files here or click to select</p>
+                <p className="text-xs text-[var(--text-muted)] mt-1 font-mono">
+                  16KB Binary DataChannel Chunking • Zero-Server Storage
+                </p>
               </div>
 
               {selectedFiles.length > 0 && (
@@ -401,88 +335,6 @@ export function App() {
                   </button>
                 </div>
               )}
-            </div>
-
-            {/* P2P Architecture Diagram */}
-            <div className="w-full max-w-xl mt-8 p-6 rounded-3xl glass-panel border border-[var(--panel-border)] shadow-2xl text-center backdrop-blur-2xl relative overflow-hidden">
-              <div className="absolute -top-10 -left-10 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
-              <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-
-              <h3 className="text-xs font-extrabold uppercase tracking-wider text-[var(--text-muted)] mb-6 flex items-center justify-center gap-2">
-                <Globe className="w-4 h-4 text-cyan-400" />
-                <span>Direct Device-to-Device Transfer Flow</span>
-              </h3>
-
-              <div className="flex flex-col items-center gap-2 relative z-10">
-                {/* TOP NODE: Sender Desktop */}
-                <div className="flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-[var(--card-bg)] border border-cyan-500/40 shadow-lg w-full max-w-md justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-xl bg-cyan-500/20 text-cyan-400">
-                      <Laptop className="w-5 h-5" />
-                    </div>
-                    <div className="text-left">
-                      <p className="text-xs font-bold text-[var(--text-primary)]">💻 Sender</p>
-                      <p className="text-[10px] text-[var(--text-muted)] font-mono">Host Device</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 text-[10px] font-mono font-semibold">
-                    <File className="w-3 h-3 text-cyan-400" />
-                    <span>📁 File</span>
-                  </div>
-                </div>
-
-                {/* CONNECTING LINE 1 WITH PULSING DOT */}
-                <div className="flex flex-col items-center my-0.5 relative">
-                  <div className="w-0.5 h-6 bg-gradient-to-b from-cyan-400 to-indigo-500 animate-pulse" />
-                  <div className="w-2 h-2 rounded-full bg-cyan-400 animate-ping absolute top-2" />
-                </div>
-
-                {/* MIDDLE NODE: Local Network & QR Code */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-md">
-                  <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-[var(--card-bg)] border border-[var(--panel-border)] text-left">
-                    <div className="p-2 rounded-xl bg-indigo-500/20 text-indigo-400 shrink-0">
-                      <Wifi className="w-5 h-5 animate-pulse" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-[var(--text-primary)]">Same Local Network</p>
-                      <p className="text-[10px] text-[var(--text-muted)] font-mono">Direct P2P Tunnel</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-[var(--card-bg)] border border-[var(--panel-border)] text-left">
-                    <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-400 shrink-0">
-                      <QrCode className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-[var(--text-primary)]">📷 Scan QR Code</p>
-                      <p className="text-[10px] text-[var(--text-muted)] font-mono">Instant Pairing</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* CONNECTING LINE 2 WITH PULSING DOT */}
-                <div className="flex flex-col items-center my-0.5 relative">
-                  <div className="w-0.5 h-6 bg-gradient-to-b from-indigo-500 to-emerald-400 animate-pulse" />
-                  <div className="w-2 h-2 rounded-full bg-emerald-400 animate-ping absolute top-2" />
-                </div>
-
-                {/* BOTTOM NODE: Receiver Smartphone */}
-                <div className="flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-[var(--card-bg)] border border-emerald-500/40 shadow-lg w-full max-w-md justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-400">
-                      <Smartphone className="w-5 h-5" />
-                    </div>
-                    <div className="text-left">
-                      <p className="text-xs font-bold text-[var(--text-primary)]">📱 Receiver</p>
-                      <p className="text-[10px] text-[var(--text-muted)] font-mono">Peer Device</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 text-[10px] font-mono font-semibold">
-                    <Download className="w-3 h-3 text-emerald-400 animate-bounce" />
-                    <span>📥 Download</span>
-                  </div>
-                </div>
-              </div>
             </div>
 
             {/* Why Relayo? Unified AMOLED Glassmorphism Card */}
@@ -670,16 +522,10 @@ export function App() {
                     <div className="flex items-center gap-2.5 min-w-0">
                       <File className="w-4 h-4 theme-accent-text shrink-0" />
                       <span className="truncate font-medium">{file.name}</span>
-                      <span className="text-[10px] font-mono text-[var(--text-muted)] shrink-0">
-                        ({formatFileSize(file.size)})
-                      </span>
                     </div>
-                    <button
-                      onClick={() => handleDownloadSingleFile(idx, file.name)}
-                      className="px-2.5 py-1 rounded-lg border theme-badge text-xs font-semibold transition-colors cursor-pointer"
-                    >
-                      Save Copy
-                    </button>
+                    <span className="text-[10px] font-mono text-[var(--text-muted)] shrink-0">
+                      {formatFileSize(file.size)}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -689,7 +535,7 @@ export function App() {
               onClick={handleResetHome}
               className="px-4 py-2 rounded-xl bg-[var(--card-bg)] hover:opacity-80 text-xs font-medium cursor-pointer border border-[var(--panel-border)]"
             >
-              Stop Sharing & Return Home
+              Done & Return Home
             </button>
           </div>
         ) : (
@@ -749,37 +595,31 @@ export function App() {
               </div>
             )}
 
-            {/* Primary Download All Button */}
-            {store.files.length > 0 && (
-              <button
-                onClick={handleDownloadAll}
-                className="w-full mb-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-indigo-600 to-violet-600 hover:from-cyan-400 hover:to-violet-500 text-white font-bold text-xs shadow-xl shadow-indigo-500/25 flex items-center justify-center gap-2 transition-all cursor-pointer"
-              >
-                <Download className="w-4 h-4" />
-                <span>Save All Files ({store.files.length})</span>
-              </button>
-            )}
-
-            {/* Shared File List */}
+            {/* Receiver File List & Download Buttons */}
             <div className="w-full text-left mb-6">
-              <p className="text-xs font-semibold text-[var(--text-muted)] mb-2">
-                Available Shared Files ({store.files.length})
-              </p>
-              {store.files.length === 0 ? (
-                <div className="p-6 rounded-2xl bg-[var(--card-bg)] border border-[var(--panel-border)] text-center text-xs text-[var(--text-muted)] flex flex-col items-center justify-center gap-2">
-                  <Loader2 className="w-6 h-6 theme-accent-text animate-spin" />
-                  <p className="font-semibold text-[var(--text-primary)]">Fetching shared files from sender...</p>
-                  <p className="text-[11px] font-mono text-[var(--text-muted)]">WebRTC P2P direct stream handshaking in progress</p>
-                </div>
-              ) : (
-                <div className="space-y-2.5 max-h-60 overflow-y-auto pr-1">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-semibold text-[var(--text-muted)]">
+                  Available Files ({store.files.length})
+                </span>
+                {store.files.length > 1 && (
+                  <button
+                    onClick={handleDownloadAllZip}
+                    className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white text-xs font-bold shadow-md flex items-center gap-1 cursor-pointer transition-all"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Download All</span>
+                  </button>
+                )}
+              </div>
+
+              <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
                 {visibleFiles.map((file, idx) => (
                   <div
                     key={idx}
-                    className="flex items-center justify-between p-3.5 rounded-xl bg-[var(--card-bg)] border border-[var(--panel-border)] text-xs hover:border-cyan-500/40 transition-colors"
+                    className="flex items-center justify-between p-3 rounded-xl bg-[var(--card-bg)] border border-[var(--panel-border)] text-xs gap-3"
                   >
-                    <div className="flex items-center gap-3 min-w-0 pr-2">
-                      <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500 shrink-0">
+                    <div className="flex items-center gap-2.5 min-w-0 pr-2">
+                      <div className="p-2 rounded-lg bg-indigo-500/10 text-indigo-400 shrink-0">
                         <File className="w-4 h-4" />
                       </div>
                       <div className="min-w-0">
@@ -799,7 +639,6 @@ export function App() {
                   </div>
                 ))}
               </div>
-              )}
             </div>
 
             <button
@@ -882,6 +721,14 @@ export function App() {
       )}
     </div>
   );
+}
+
+function formatFileSize(bytes: number): string {
+  if (bytes === 0) return '0 B';
+  const k = 1024;
+  const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(1))} ${sizes[i]}`;
 }
 
 export default App;
