@@ -339,14 +339,9 @@ export function App() {
             <div className="w-full max-w-xl mt-8 p-6 sm:p-7 rounded-3xl bg-black/90 border border-zinc-800/90 shadow-2xl backdrop-blur-2xl text-left relative overflow-hidden">
               <div className="absolute top-0 right-0 w-40 h-40 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
 
-              <div className="flex items-center gap-2 mb-6">
-                <div className="p-2 rounded-xl bg-cyan-500/20 border border-cyan-500/30 text-cyan-400">
-                  <Sparkles className="w-4 h-4" />
-                </div>
-                <h3 className="text-xs font-extrabold uppercase tracking-wider text-zinc-100">
-                  Why Relayo?
-                </h3>
-              </div>
+              <h3 className="text-lg font-bold uppercase tracking-wider text-zinc-100 mb-6">
+                Why Relayo?
+              </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex items-center gap-3">
