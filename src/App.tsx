@@ -31,6 +31,8 @@ import {
   Wifi,
   Radio,
   HelpCircle,
+  Laptop,
+  Smartphone,
 } from 'lucide-react';
 
 const ITEMS_PER_PAGE = 20;
@@ -396,6 +398,88 @@ export function App() {
                   </button>
                 </div>
               )}
+            </div>
+
+            {/* P2P Architecture Diagram */}
+            <div className="w-full max-w-xl mt-8 p-6 rounded-3xl glass-panel border border-[var(--panel-border)] shadow-2xl text-center backdrop-blur-2xl relative overflow-hidden">
+              <div className="absolute -top-10 -left-10 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+
+              <h3 className="text-xs font-extrabold uppercase tracking-wider text-[var(--text-muted)] mb-6 flex items-center justify-center gap-2">
+                <Globe className="w-4 h-4 text-cyan-400" />
+                <span>Direct Device-to-Device Transfer Flow</span>
+              </h3>
+
+              <div className="flex flex-col items-center gap-2 relative z-10">
+                {/* TOP NODE: Sender Desktop */}
+                <div className="flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-[var(--card-bg)] border border-cyan-500/40 shadow-lg w-full max-w-md justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-xl bg-cyan-500/20 text-cyan-400">
+                      <Laptop className="w-5 h-5" />
+                    </div>
+                    <div className="text-left">
+                      <p className="text-xs font-bold text-[var(--text-primary)]">💻 Sender</p>
+                      <p className="text-[10px] text-[var(--text-muted)] font-mono">Host Device</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 text-[10px] font-mono font-semibold">
+                    <File className="w-3 h-3 text-cyan-400" />
+                    <span>📁 File</span>
+                  </div>
+                </div>
+
+                {/* CONNECTING LINE 1 WITH PULSING DOT */}
+                <div className="flex flex-col items-center my-0.5 relative">
+                  <div className="w-0.5 h-6 bg-gradient-to-b from-cyan-400 to-indigo-500 animate-pulse" />
+                  <div className="w-2 h-2 rounded-full bg-cyan-400 animate-ping absolute top-2" />
+                </div>
+
+                {/* MIDDLE NODE: Local Network & QR Code */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-md">
+                  <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-[var(--card-bg)] border border-[var(--panel-border)] text-left">
+                    <div className="p-2 rounded-xl bg-indigo-500/20 text-indigo-400 shrink-0">
+                      <Wifi className="w-5 h-5 animate-pulse" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-[var(--text-primary)]">Same Local Network</p>
+                      <p className="text-[10px] text-[var(--text-muted)] font-mono">Direct P2P Tunnel</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-[var(--card-bg)] border border-[var(--panel-border)] text-left">
+                    <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-400 shrink-0">
+                      <QrCode className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-[var(--text-primary)]">📷 Scan QR Code</p>
+                      <p className="text-[10px] text-[var(--text-muted)] font-mono">Instant Pairing</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* CONNECTING LINE 2 WITH PULSING DOT */}
+                <div className="flex flex-col items-center my-0.5 relative">
+                  <div className="w-0.5 h-6 bg-gradient-to-b from-indigo-500 to-emerald-400 animate-pulse" />
+                  <div className="w-2 h-2 rounded-full bg-emerald-400 animate-ping absolute top-2" />
+                </div>
+
+                {/* BOTTOM NODE: Receiver Smartphone */}
+                <div className="flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-[var(--card-bg)] border border-emerald-500/40 shadow-lg w-full max-w-md justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-400">
+                      <Smartphone className="w-5 h-5" />
+                    </div>
+                    <div className="text-left">
+                      <p className="text-xs font-bold text-[var(--text-primary)]">📱 Receiver</p>
+                      <p className="text-[10px] text-[var(--text-muted)] font-mono">Peer Device</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 text-[10px] font-mono font-semibold">
+                    <Download className="w-3 h-3 text-emerald-400 animate-bounce" />
+                    <span>📥 Download</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Why Relayo? Feature Grid */}
