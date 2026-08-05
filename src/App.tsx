@@ -266,7 +266,7 @@ export function App() {
                 <FileUp className="w-12 h-12 theme-accent-text mb-3 group-hover:scale-110 transition-transform animate-bounce" />
                 <p className="text-base font-bold">Drop files here or click to select</p>
                 <p className="text-xs text-[var(--text-muted)] mt-1 font-mono">
-                  16KB Binary DataChannel Chunking • Zero-Server Storage
+                  64KB Binary DataChannel Chunking • Zero-Server Storage
                 </p>
               </div>
 
