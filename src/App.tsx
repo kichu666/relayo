@@ -33,6 +33,9 @@ import {
   HelpCircle,
   Laptop,
   Smartphone,
+  CloudOff,
+  ArrowLeftRight,
+  Package,
 } from 'lucide-react';
 
 const ITEMS_PER_PAGE = 20;
@@ -482,36 +485,81 @@ export function App() {
               </div>
             </div>
 
-            {/* Why Relayo? Feature Grid */}
-            <div className="w-full max-w-xl mt-8 p-6 rounded-3xl glass-panel border border-[var(--panel-border)] shadow-xl text-left">
-              <h3 className="text-xs font-extrabold uppercase tracking-wider text-[var(--text-muted)] mb-4 flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-cyan-400" />
-                <span>Why Relayo?</span>
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs font-semibold">
-                <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-[var(--card-bg)] border border-[var(--panel-border)]">
-                  <span className="text-base">⚡</span>
-                  <span>No cloud uploads</span>
+            {/* Why Relayo? Unified AMOLED Glassmorphism Card */}
+            <div className="w-full max-w-xl mt-8 p-6 sm:p-7 rounded-3xl bg-black/90 border border-zinc-800/90 shadow-2xl backdrop-blur-2xl text-left relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
+
+              <div className="flex items-center gap-2 mb-6">
+                <div className="p-2 rounded-xl bg-cyan-500/20 border border-cyan-500/30 text-cyan-400">
+                  <Sparkles className="w-4 h-4" />
                 </div>
-                <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-[var(--card-bg)] border border-[var(--panel-border)]">
-                  <span className="text-base">🔒</span>
-                  <span>Direct device-to-device transfer</span>
+                <h3 className="text-xs font-extrabold uppercase tracking-wider text-zinc-100">
+                  Why Relayo?
+                </h3>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 shrink-0 shadow-lg shadow-cyan-500/10">
+                    <CloudOff className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-zinc-100">No cloud uploads</p>
+                    <p className="text-[10px] text-zinc-400 font-medium">100% Zero server data storage</p>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-[var(--card-bg)] border border-[var(--panel-border)]">
-                  <span className="text-base">📱</span>
-                  <span>Scan QR & download instantly</span>
+
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 shrink-0 shadow-lg shadow-indigo-500/10">
+                    <ArrowLeftRight className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-zinc-100">Direct P2P transfer</p>
+                    <p className="text-[10px] text-zinc-400 font-medium">Browser-to-browser streaming</p>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-[var(--card-bg)] border border-[var(--panel-border)]">
-                  <span className="text-base">💻</span>
-                  <span>Works on phone & desktop</span>
+
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 shrink-0 shadow-lg shadow-emerald-500/10">
+                    <QrCode className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-zinc-100">Scan QR & download</p>
+                    <p className="text-[10px] text-zinc-400 font-medium">Instant pairing for mobile</p>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-[var(--card-bg)] border border-[var(--panel-border)]">
-                  <span className="text-base">📦</span>
-                  <span>Large file support</span>
+
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-2xl bg-violet-500/10 border border-violet-500/30 text-violet-400 shrink-0 shadow-lg shadow-violet-500/10">
+                    <div className="flex items-center gap-0.5">
+                      <Laptop className="w-3.5 h-3.5" />
+                      <Smartphone className="w-3 h-3" />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-zinc-100">Phone & desktop</p>
+                    <p className="text-[10px] text-zinc-400 font-medium">Cross-platform compatibility</p>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-[var(--card-bg)] border border-[var(--panel-border)]">
-                  <span className="text-base">🌐</span>
-                  <span>Works on the same local network</span>
+
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 shrink-0 shadow-lg shadow-amber-500/10">
+                    <Package className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-zinc-100">Large file support</p>
+                    <p className="text-[10px] text-zinc-400 font-medium">Zero file size limitations</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-2xl bg-blue-500/10 border border-blue-500/30 text-blue-400 shrink-0 shadow-lg shadow-blue-500/10">
+                    <Wifi className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-zinc-100">Same local network</p>
+                    <p className="text-[10px] text-zinc-400 font-medium">Ultra-fast Wi-Fi speed</p>
+                  </div>
                 </div>
               </div>
             </div>
