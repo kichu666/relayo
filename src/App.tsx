@@ -307,94 +307,131 @@ export function App() {
       <main className="max-w-4xl mx-auto px-6 py-10 w-full flex-1 flex flex-col items-center justify-center relative z-10">
         <div className="text-center max-w-2xl mx-auto mb-10">
           <h1 className="text-4xl sm:text-6xl font-black tracking-tight mb-3 bg-gradient-to-r from-cyan-400 via-indigo-400 to-violet-400 bg-clip-text text-transparent">
-            P2P File Share
+            Share Files Instantly
           </h1>
-          <p className="text-base sm:text-lg text-[var(--text-muted)] font-medium">
-            Secure, serverless browser-to-browser file transfer.
+          <p className="text-base sm:text-lg text-[var(--text-muted)] font-semibold tracking-wide">
+            Same Wi-Fi • No Cloud Upload
           </p>
         </div>
 
         {store.isLoadingInfo ? (
           <div className="w-full max-w-md glass-panel rounded-3xl p-8 text-center border border-[var(--panel-border)] flex flex-col items-center">
             <Loader2 className="w-10 h-10 theme-accent-text animate-spin mb-4" />
-            <h3 className="text-base font-bold mb-1">Connecting WebRTC P2P Stream...</h3>
-            <p className="text-xs text-[var(--text-muted)]">{store.statusMessage || 'Performing WebSocket signaling handshake...'}</p>
+            <h3 className="text-base font-bold mb-1">Connecting P2P Stream...</h3>
+            <p className="text-xs text-[var(--text-muted)]">{store.statusMessage || 'Connecting to peer...'}</p>
           </div>
         ) : activeViewMode === 'home' ? (
           /* Home Screen: Select Files to Host */
-          <div className="w-full max-w-xl glass-panel rounded-3xl p-8 border border-[var(--panel-border)] shadow-2xl text-center">
-            <div
-              onClick={handleDropzoneClick}
-              className="w-full p-8 rounded-2xl border-2 border-dashed border-cyan-500/40 bg-[var(--card-bg)] hover:opacity-90 transition-colors cursor-pointer mb-6 flex flex-col items-center justify-center group"
-            >
-              <FileUp className="w-12 h-12 theme-accent-text mb-3 group-hover:scale-110 transition-transform animate-bounce" />
-              <p className="text-base font-bold">Drop files here or click to select</p>
+          <>
+            <div className="w-full max-w-xl glass-panel rounded-3xl p-8 border border-[var(--panel-border)] shadow-2xl text-center">
+              <div
+                onClick={handleDropzoneClick}
+                className="w-full p-10 rounded-2xl border-2 border-dashed border-cyan-500/40 bg-[var(--card-bg)] hover:opacity-90 transition-colors cursor-pointer mb-6 flex flex-col items-center justify-center group"
+              >
+                <FileUp className="w-12 h-12 theme-accent-text mb-3 group-hover:scale-110 transition-transform animate-bounce" />
+                <p className="text-lg font-bold text-[var(--text-primary)]">📁 Drop files here</p>
+                <p className="text-xs text-[var(--text-muted)] mt-1 font-medium">or Tap to Select Files</p>
+              </div>
+
+              {selectedFiles.length > 0 && (
+                <div className="w-full mb-6 text-left">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-semibold text-[var(--text-muted)]">
+                      Selected Files ({selectedFiles.length})
+                    </span>
+                    <button
+                      onClick={() => setSelectedFiles([])}
+                      className="text-[11px] text-rose-500 hover:underline cursor-pointer"
+                    >
+                      Clear all
+                    </button>
+                  </div>
+
+                  {/* Paginated File Queue View */}
+                  <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+                    {selectedFiles.slice(0, displayLimit).map((file, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-center justify-between p-2.5 rounded-xl bg-[var(--card-bg)] border border-[var(--panel-border)] text-xs"
+                      >
+                        <div className="flex items-center gap-2.5 min-w-0 pr-2">
+                          <File className="w-4 h-4 theme-accent-text shrink-0" />
+                          <span className="truncate font-medium">{file.name}</span>
+                          <span className="text-[10px] font-mono text-[var(--text-muted)] shrink-0">
+                            ({formatFileSize(file.size)})
+                          </span>
+                        </div>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleRemoveFile(idx);
+                          }}
+                          className="p-1 rounded-lg hover:bg-black/10 dark:hover:bg-white/10 transition-colors cursor-pointer"
+                        >
+                          <X className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+
+                  {selectedFiles.length > displayLimit && (
+                    <button
+                      onClick={() => setDisplayLimit((prev) => prev + ITEMS_PER_PAGE)}
+                      className="w-full mt-2 py-1 text-center text-xs theme-accent-text hover:underline cursor-pointer flex items-center justify-center gap-1 font-semibold"
+                    >
+                      <span>Show More Files ({selectedFiles.length - displayLimit} remaining)</span>
+                      <ChevronDown className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+
+                  <button
+                    onClick={handleStartShareHost}
+                    disabled={store.isUploading}
+                    className="w-full mt-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white text-xs font-bold shadow-lg shadow-cyan-500/25 flex flex-col items-center justify-center gap-1 transition-all cursor-pointer disabled:opacity-50"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Zap className="w-4 h-4 fill-white" />
+                      <span>Share Files ({selectedFiles.length})</span>
+                    </div>
+                  </button>
+                </div>
+              )}
             </div>
 
-            {selectedFiles.length > 0 && (
-              <div className="w-full mb-6 text-left">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-semibold text-[var(--text-muted)]">
-                    Selected Files ({selectedFiles.length})
-                  </span>
-                  <button
-                    onClick={() => setSelectedFiles([])}
-                    className="text-[11px] text-rose-500 hover:underline cursor-pointer"
-                  >
-                    Clear all
-                  </button>
+            {/* Why Relayo? Feature Grid */}
+            <div className="w-full max-w-xl mt-8 p-6 rounded-3xl glass-panel border border-[var(--panel-border)] shadow-xl text-left">
+              <h3 className="text-xs font-extrabold uppercase tracking-wider text-[var(--text-muted)] mb-4 flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-cyan-400" />
+                <span>Why Relayo?</span>
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs font-semibold">
+                <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-[var(--card-bg)] border border-[var(--panel-border)]">
+                  <span className="text-base">⚡</span>
+                  <span>No cloud uploads</span>
                 </div>
-
-                {/* Paginated File Queue View */}
-                <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
-                  {selectedFiles.slice(0, displayLimit).map((file, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center justify-between p-2.5 rounded-xl bg-[var(--card-bg)] border border-[var(--panel-border)] text-xs"
-                    >
-                      <div className="flex items-center gap-2.5 min-w-0 pr-2">
-                        <File className="w-4 h-4 theme-accent-text shrink-0" />
-                        <span className="truncate font-medium">{file.name}</span>
-                        <span className="text-[10px] font-mono text-[var(--text-muted)] shrink-0">
-                          ({formatFileSize(file.size)})
-                        </span>
-                      </div>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleRemoveFile(idx);
-                        }}
-                        className="p-1 rounded-lg hover:bg-black/10 dark:hover:bg-white/10 transition-colors cursor-pointer"
-                      >
-                        <X className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  ))}
+                <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-[var(--card-bg)] border border-[var(--panel-border)]">
+                  <span className="text-base">🔒</span>
+                  <span>Direct device-to-device transfer</span>
                 </div>
-
-                {selectedFiles.length > displayLimit && (
-                  <button
-                    onClick={() => setDisplayLimit((prev) => prev + ITEMS_PER_PAGE)}
-                    className="w-full mt-2 py-1 text-center text-xs theme-accent-text hover:underline cursor-pointer flex items-center justify-center gap-1 font-semibold"
-                  >
-                    <span>Show More Files ({selectedFiles.length - displayLimit} remaining)</span>
-                    <ChevronDown className="w-3.5 h-3.5" />
-                  </button>
-                )}
-
-                <button
-                  onClick={handleStartShareHost}
-                  disabled={store.isUploading}
-                  className="w-full mt-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white text-xs font-bold shadow-lg shadow-cyan-500/25 flex flex-col items-center justify-center gap-1 transition-all cursor-pointer disabled:opacity-50"
-                >
-                  <div className="flex items-center gap-2">
-                    <Zap className="w-4 h-4 fill-white" />
-                    <span>Share Files ({selectedFiles.length})</span>
-                  </div>
-                </button>
+                <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-[var(--card-bg)] border border-[var(--panel-border)]">
+                  <span className="text-base">📱</span>
+                  <span>Scan QR & download instantly</span>
+                </div>
+                <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-[var(--card-bg)] border border-[var(--panel-border)]">
+                  <span className="text-base">💻</span>
+                  <span>Works on phone & desktop</span>
+                </div>
+                <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-[var(--card-bg)] border border-[var(--panel-border)]">
+                  <span className="text-base">📦</span>
+                  <span>Large file support</span>
+                </div>
+                <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-[var(--card-bg)] border border-[var(--panel-border)]">
+                  <span className="text-base">🌐</span>
+                  <span>Works on the same local network</span>
+                </div>
               </div>
-            )}
-          </div>
+            </div>
+          </>
         ) : store.viewMode === 'sender_host' ? (
           /* Sender View: Display WebRTC Network Share Link & QR Code */
           <div className="w-full max-w-xl glass-panel rounded-3xl p-8 border border-[var(--panel-border)] shadow-2xl text-center relative overflow-hidden animate-fade-in">
