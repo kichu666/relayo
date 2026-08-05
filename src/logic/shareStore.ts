@@ -247,6 +247,9 @@ export async function loadReceiverShareInfo(shareId: string): Promise<void> {
     onStateChange: (state, message) => {
       $shareStore.setKey('connectionState', state);
       if (message) $shareStore.setKey('statusMessage', message);
+      if (state === 'transferring') {
+        $shareStore.setKey('isUploading', true);
+      }
       if (state === 'connected' || state === 'transferring' || state === 'completed') {
         $shareStore.setKey('isLoadingInfo', false);
       }
@@ -258,14 +261,17 @@ export async function loadReceiverShareInfo(shareId: string): Promise<void> {
         size: f.size,
         mimeType: f.mimeType,
       }));
+      const totalExpected = metadataList.reduce((acc, f) => acc + f.size, 0);
 
       $shareStore.setKey('files', files);
+      $shareStore.setKey('totalBytesExpected', totalExpected);
       $shareStore.setKey('isLoadingInfo', false);
       $shareStore.setKey('connectionState', 'connected');
       $shareStore.setKey('statusMessage', 'P2P Connected');
       triggerToast(`${files.length} shared files ready!`);
     },
     onProgress: (percent, currentFile, speedStr, bytesTransferred, totalBytes) => {
+      $shareStore.setKey('isUploading', percent < 100);
       $shareStore.setKey('uploadProgressPercent', percent);
       $shareStore.setKey('currentUploadingFileName', currentFile);
       $shareStore.setKey('transferSpeed', speedStr);
@@ -281,6 +287,7 @@ export async function loadReceiverShareInfo(shareId: string): Promise<void> {
       triggerToast(`Received file #${index + 1}: ${blob.size} bytes`);
     },
     onTransferComplete: () => {
+      $shareStore.setKey('isUploading', false);
       $shareStore.setKey('uploadProgressPercent', 100);
       triggerToast('All WebRTC direct P2P files received successfully!');
     },

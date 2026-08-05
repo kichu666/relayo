@@ -217,6 +217,15 @@ export class WebRTCManager {
     }
 
     this.roomId = targetRoomId;
+    this.totalBytesReceivedAllFiles = 0;
+    this.totalBytesExpectedAllFiles = 0;
+    this.transferStartTime = 0;
+    this.lastSpeedCalcTime = 0;
+    this.lastSpeedBytes = 0;
+    this.currentSpeedStr = '0 KB/s';
+    this.receivedBlobs = new Map();
+    this.currentFileChunks = [];
+    this.currentFileIndex = -1;
     this.callbacks.onStateChange('connecting_peer', 'Connecting...');
 
     try {
@@ -536,7 +545,42 @@ export class WebRTCManager {
       console.log(`[Relayo RECEIVER] Receiving file #${payload.index + 1}: ${payload.name}`);
       this.currentFileIndex = payload.index;
       this.currentFileChunks = [];
-      this.callbacks.onStateChange('transferring', `Receiving ${payload.name}...`);
+
+      if (!this.transferStartTime) {
+        this.transferStartTime = performance.now();
+        this.lastSpeedCalcTime = performance.now();
+        this.lastSpeedBytes = this.totalBytesReceivedAllFiles;
+      }
+
+      let fileMeta = this.fileMetadataList.find((f) => f.index === payload.index);
+      if (!fileMeta && payload.name) {
+        fileMeta = {
+          index: payload.index,
+          name: payload.name,
+          size: payload.size || 0,
+          mimeType: payload.mimeType || 'application/octet-stream',
+        };
+        this.fileMetadataList.push(fileMeta);
+      }
+
+      if (this.totalBytesExpectedAllFiles === 0 && this.fileMetadataList.length > 0) {
+        this.totalBytesExpectedAllFiles = this.fileMetadataList.reduce((acc, f) => acc + f.size, 0);
+      }
+
+      const fileName = payload.name || (fileMeta ? fileMeta.name : '');
+      this.callbacks.onStateChange('transferring', `Receiving ${fileName}...`);
+
+      const currentPercent = this.totalBytesExpectedAllFiles > 0
+        ? Math.min(100, Math.round((this.totalBytesReceivedAllFiles / this.totalBytesExpectedAllFiles) * 100))
+        : 0;
+
+      this.callbacks.onProgress(
+        currentPercent,
+        fileName,
+        this.currentSpeedStr || '0 KB/s',
+        this.totalBytesReceivedAllFiles,
+        this.totalBytesExpectedAllFiles
+      );
 
     } else if (type === 'END_FILE') {
       const fileMeta = this.fileMetadataList.find((f) => f.index === payload.index);
@@ -549,6 +593,16 @@ export class WebRTCManager {
 
     } else if (type === 'TRANSFER_COMPLETE') {
       console.log(`[Relayo RECEIVER] All files received!`);
+      const fileMeta = this.fileMetadataList.find((f) => f.index === this.currentFileIndex);
+      const fileName = fileMeta ? fileMeta.name : '';
+      const finalBytes = this.totalBytesExpectedAllFiles || this.totalBytesReceivedAllFiles;
+      this.callbacks.onProgress(
+        100,
+        fileName,
+        this.currentSpeedStr || '0 KB/s',
+        finalBytes,
+        finalBytes
+      );
       this.callbacks.onStateChange('completed', 'Download Complete!');
       this.callbacks.onTransferComplete();
 

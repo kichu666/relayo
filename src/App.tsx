@@ -447,7 +447,7 @@ export function App() {
             </div>
 
             {/* Transfer Progress Bar with Percentage & Live Speed */}
-            {store.uploadProgressPercent > 0 && store.uploadProgressPercent <= 100 && (
+            {(store.isUploading || store.connectionState === 'transferring' || (store.uploadProgressPercent > 0 && store.uploadProgressPercent <= 100)) && (
               <div className="w-full mb-6 p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 backdrop-blur-md text-left">
                 <div className="flex items-center justify-between text-xs font-semibold mb-2">
                   <div className="flex items-center gap-2">
@@ -547,7 +547,7 @@ export function App() {
             </p>
 
             {/* Transfer Progress Bar for Receiver with Percentage & Live Speed */}
-            {store.uploadProgressPercent > 0 && store.uploadProgressPercent <= 100 && (
+            {(store.isUploading || store.connectionState === 'transferring' || (store.uploadProgressPercent > 0 && store.uploadProgressPercent <= 100)) && (
               <div className="w-full mb-6 p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 backdrop-blur-md text-left">
                 <div className="flex items-center justify-between text-xs font-semibold mb-2">
                   <div className="flex items-center gap-2">
