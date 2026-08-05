@@ -212,83 +212,49 @@ export function App() {
     switch (store.connectionState) {
       case 'error':
         return (
-          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--card-bg)] text-[var(--text-muted)] border border-[var(--panel-border)] text-[11px] font-medium">
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-500/15 text-rose-300 border border-rose-500/30 text-[10px] sm:text-[11px] font-bold shadow-sm shrink-0">
+            <X className="w-3 h-3 text-rose-400" />
             <span>Offline</span>
           </div>
         );
       case 'transferring':
         return (
-          <div className="flex flex-col items-center gap-1">
-            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 text-[11px] font-bold shadow-sm">
-              <Loader2 className="w-3.5 h-3.5 animate-spin text-cyan-400" />
-              <span>Transferring file...</span>
-            </div>
-            {store.statusMessage && (
-              <span className="text-[10px] text-[var(--text-muted)] font-mono">{store.statusMessage}</span>
-            )}
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 text-[10px] sm:text-[11px] font-bold shadow-sm shrink-0">
+            <Loader2 className="w-3 h-3 animate-spin text-cyan-400" />
+            <span>Transferring...</span>
           </div>
         );
       case 'connecting_peer':
+      case 'connecting_signaling':
         return (
-          <div className="flex flex-col items-center gap-1">
-            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[11px] font-bold shadow-sm">
-              <Loader2 className="w-3.5 h-3.5 animate-spin text-amber-400" />
-              <span>Handshaking...</span>
-            </div>
-            {store.statusMessage && (
-              <span className="text-[10px] text-[var(--text-muted)] font-mono">{store.statusMessage}</span>
-            )}
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30 text-[10px] sm:text-[11px] font-bold shadow-sm shrink-0">
+            <Loader2 className="w-3 h-3 animate-spin text-amber-400" />
+            <span>Connecting...</span>
           </div>
         );
       case 'connected':
         return (
-          <div className="flex flex-col items-center gap-1">
-            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[11px] font-bold shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-              <span>WebRTC P2P Connected</span>
-            </div>
-            {store.statusMessage && (
-              <span className="text-[10px] text-[var(--text-muted)] font-mono">{store.statusMessage}</span>
-            )}
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-[10px] sm:text-[11px] font-bold shadow-sm shrink-0">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+            <span>P2P Connected</span>
           </div>
         );
       case 'completed':
         return (
-          <div className="flex flex-col items-center gap-1">
-            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[11px] font-bold shadow-sm">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Transfer Complete</span>
-            </div>
-            {store.statusMessage && (
-              <span className="text-[10px] text-[var(--text-muted)] font-mono">{store.statusMessage}</span>
-            )}
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-[10px] sm:text-[11px] font-bold shadow-sm shrink-0">
+            <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+            <span>Complete</span>
           </div>
         );
       case 'waiting_for_peer':
         return (
-          <div className="flex flex-col items-center gap-1">
-            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 text-[11px] font-bold shadow-sm">
-              <Radio className="w-3.5 h-3.5 animate-pulse text-indigo-400" />
-              <span>Ready for peer connection</span>
-            </div>
-            {store.statusMessage && (
-              <span className="text-[10px] text-[var(--text-muted)] font-mono">{store.statusMessage}</span>
-            )}
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 text-[10px] sm:text-[11px] font-bold shadow-sm shrink-0">
+            <Radio className="w-3 h-3 animate-pulse text-indigo-400" />
+            <span>Ready</span>
           </div>
         );
-      case 'connecting_signaling':
       default:
-        return (
-          <div className="flex flex-col items-center gap-1">
-            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[11px] font-bold shadow-sm">
-              <Loader2 className="w-3.5 h-3.5 animate-spin text-amber-400" />
-              <span>Handshaking...</span>
-            </div>
-            {store.statusMessage && (
-              <span className="text-[10px] text-[var(--text-muted)] font-mono">{store.statusMessage}</span>
-            )}
-          </div>
-        );
+        return null;
     }
   };
 
@@ -320,30 +286,26 @@ export function App() {
 
       {/* Top Navbar with Persistent Theme Switcher */}
       <header className="w-full border-b border-[var(--panel-border)] glass-panel sticky top-0 z-40 backdrop-blur-xl">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3 cursor-pointer" onClick={handleResetHome}>
-            <div className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 to-indigo-600 p-0.5 shadow-lg shadow-cyan-500/20 flex items-center justify-center">
-                <div className="w-full h-full bg-[var(--bg-main)] rounded-[15px] flex items-center justify-center">
-                  <Share2 className="w-5 h-5 theme-accent-text" />
-                </div>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 cursor-pointer shrink-0" onClick={handleResetHome}>
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr from-cyan-500 to-indigo-600 p-0.5 shadow-lg shadow-cyan-500/20 flex items-center justify-center">
+              <div className="w-full h-full bg-[var(--bg-main)] rounded-[15px] flex items-center justify-center">
+                <Share2 className="w-4 h-4 sm:w-5 sm:h-5 theme-accent-text" />
               </div>
-              <div className="flex flex-col sm:flex-row sm:items-center">
-                <span className="font-extrabold text-lg tracking-tight bg-gradient-to-r from-[var(--text-primary)] via-slate-400 to-cyan-500 bg-clip-text text-transparent">
-                  Relayo
-                </span>
-                <span className="text-[10px] font-mono sm:ml-1.5 mt-0.5 sm:mt-0 px-1.5 py-0.5 rounded border theme-badge font-semibold">
-                  WebRTC P2P Direct
-                </span>
-              </div>
+            </div>
+            <div className="flex flex-row items-center gap-1.5">
+              <span className="font-extrabold text-base sm:text-lg tracking-tight bg-gradient-to-r from-[var(--text-primary)] via-slate-400 to-cyan-500 bg-clip-text text-transparent">
+                Relayo
+              </span>
+              <span className="hidden xs:inline-block text-[9px] sm:text-[10px] font-mono px-1.5 py-0.5 rounded border theme-badge font-semibold">
+                P2P
+              </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            {getConnectionStateBadge()}
             <ThemeSwitcher />
-            <div className="hidden sm:flex items-center gap-2">
-              {getConnectionStateBadge()}
-            </div>
           </div>
         </div>
       </header>

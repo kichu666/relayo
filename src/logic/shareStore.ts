@@ -37,7 +37,7 @@ export const $shareStore = map<ShareSessionState>({
     : null,
   files: [],
   connectionState: initialRoomId ? 'connecting_peer' : 'idle',
-  statusMessage: initialRoomId ? 'Handshaking with sender room...' : 'Ready',
+  statusMessage: initialRoomId ? 'Connecting...' : 'Ready',
   isUploading: false,
   uploadProgressPercent: 0,
   currentUploadingFileName: '',
@@ -45,7 +45,7 @@ export const $shareStore = map<ShareSessionState>({
   bytesTransferred: 0,
   totalBytesExpected: 0,
   isLoadingInfo: false,
-  toastMessage: initialRoomId ? 'Room link detected! Connecting via WebRTC P2P...' : null,
+  toastMessage: initialRoomId ? 'Connecting via P2P...' : null,
 });
 
 let activeRtcManager: WebRTCManager | null = null;
@@ -163,12 +163,12 @@ export async function hostFilesOnSender(files: File[]): Promise<string> {
     shareUrl,
     files: metadataList,
     connectionState: 'connecting_signaling',
-    statusMessage: 'Initializing WebRTC signaling...',
+    statusMessage: 'Connecting...',
     isUploading: false,
     uploadProgressPercent: 0,
     currentUploadingFileName: '',
     isLoadingInfo: false,
-    toastMessage: 'Relayo WebRTC P2P share link active! Ready for direct peer download.',
+    toastMessage: 'Share active!',
   });
 
   const rtcManager = new WebRTCManager({
@@ -235,12 +235,12 @@ export async function loadReceiverShareInfo(shareId: string): Promise<void> {
     shareUrl: receiverShareUrl,
     files: [],
     connectionState: 'connecting_peer',
-    statusMessage: 'Handshaking with sender room...',
+    statusMessage: 'Connecting...',
     isUploading: false,
     uploadProgressPercent: 0,
     currentUploadingFileName: '',
     isLoadingInfo: true,
-    toastMessage: 'Connecting to sender via WebRTC P2P direct stream...',
+    toastMessage: 'Connecting via P2P...',
   });
 
   const rtcManager = new WebRTCManager({
@@ -262,8 +262,8 @@ export async function loadReceiverShareInfo(shareId: string): Promise<void> {
       $shareStore.setKey('files', files);
       $shareStore.setKey('isLoadingInfo', false);
       $shareStore.setKey('connectionState', 'connected');
-      $shareStore.setKey('statusMessage', 'WebRTC Direct Stream Active! Shared Files Ready.');
-      triggerToast(`Loaded ${files.length} shared files from sender! WebRTC P2P stream ready.`);
+      $shareStore.setKey('statusMessage', 'P2P Connected');
+      triggerToast(`${files.length} shared files ready!`);
     },
     onProgress: (percent, currentFile, speedStr, bytesTransferred, totalBytes) => {
       $shareStore.setKey('uploadProgressPercent', percent);

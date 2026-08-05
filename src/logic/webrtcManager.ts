@@ -107,11 +107,11 @@ export class WebRTCManager {
       type: f.type || 'application/octet-stream',
     }));
 
-    this.callbacks.onStateChange('waiting_for_peer', 'Ready for peer connection (Sender Active)');
+    this.callbacks.onStateChange('waiting_for_peer', 'Ready');
 
     // 2. Guard against null/empty share ID before instantiating Peer
     if (!shareId || shareId === 'null' || shareId.trim() === '') {
-      this.reportError('Invalid Room ID', 'Share ID is null or invalid. Please generate a new share link.');
+      this.reportError('Invalid Room ID', 'Share ID is invalid.');
       return;
     }
 
@@ -139,7 +139,7 @@ export class WebRTCManager {
 
       peer.on('open', (id) => {
         console.log(`[Relayo PeerJS SENDER] Host peer opened on 0.peerjs.com with ID: ${id}`);
-        this.callbacks.onStateChange('waiting_for_peer', 'Ready for peer connection (Sender Active)');
+        this.callbacks.onStateChange('waiting_for_peer', 'Ready');
       });
 
       peer.on('connection', (conn) => {
@@ -210,7 +210,7 @@ export class WebRTCManager {
     }
 
     this.roomId = targetRoomId;
-    this.callbacks.onStateChange('connecting_peer', `Connecting to sender room '${targetRoomId}'...`);
+    this.callbacks.onStateChange('connecting_peer', 'Connecting...');
 
     try {
       if (this.peer) this.peer.destroy();
@@ -243,7 +243,7 @@ export class WebRTCManager {
           return;
         }
 
-        this.callbacks.onStateChange('connecting_peer', `Connecting to sender room '${targetRoomId}'...`);
+        this.callbacks.onStateChange('connecting_peer', 'Connecting...');
 
         // Connect to the sender using the clean, verified target room ID
         const conn = peer.connect(targetRoomId, { reliable: true });
@@ -286,7 +286,7 @@ export class WebRTCManager {
    *   4. Receiver receives FILE_METADATA_LIST → updates UI, clears loading spinner
    */
   private setupDataConnection(conn: DataConnection) {
-    this.callbacks.onStateChange('connecting_peer', 'Handshaking with peer...');
+    this.callbacks.onStateChange('connecting_peer', 'Handshaking...');
 
     let hasTriggeredOpen = false;
 
@@ -295,7 +295,7 @@ export class WebRTCManager {
       hasTriggeredOpen = true;
 
       console.log(`[Relayo] DataChannel OPEN with peer: ${conn.peer}. Role: ${this.role}`);
-      this.callbacks.onStateChange('connected', 'P2P DataChannel Connected!');
+      this.callbacks.onStateChange('connected', 'P2P Connected');
 
       if (this.role === 'sender') {
         // Step 1: Sender immediately sends metadata on open
