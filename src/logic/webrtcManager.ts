@@ -380,11 +380,14 @@ export class WebRTCManager {
       this.lastSpeedBytes = bytesTransferred;
     }
 
+    const totalDuration = (now - this.transferStartTime) / 1000 || 0.001;
+    const overallBytesPerSec = bytesTransferred / totalDuration;
     const timeDiff = (now - this.lastSpeedCalcTime) / 1000;
+
     // Calculate speed every 250ms or when complete
     if (timeDiff >= 0.25 || (totalBytes > 0 && bytesTransferred >= totalBytes)) {
       const bytesDiff = bytesTransferred - this.lastSpeedBytes;
-      const bytesPerSec = timeDiff > 0 ? bytesDiff / timeDiff : 0;
+      const bytesPerSec = timeDiff > 0 ? bytesDiff / timeDiff : overallBytesPerSec;
 
       if (bytesPerSec >= 1024 * 1024) {
         this.currentSpeedStr = `${(bytesPerSec / (1024 * 1024)).toFixed(1)} MB/s`;
@@ -396,6 +399,14 @@ export class WebRTCManager {
 
       this.lastSpeedCalcTime = now;
       this.lastSpeedBytes = bytesTransferred;
+    } else if ((!this.currentSpeedStr || this.currentSpeedStr === '0 KB/s') && bytesTransferred > 0) {
+      if (overallBytesPerSec >= 1024 * 1024) {
+        this.currentSpeedStr = `${(overallBytesPerSec / (1024 * 1024)).toFixed(1)} MB/s`;
+      } else if (overallBytesPerSec >= 1024) {
+        this.currentSpeedStr = `${(overallBytesPerSec / 1024).toFixed(0)} KB/s`;
+      } else {
+        this.currentSpeedStr = `${Math.round(overallBytesPerSec)} B/s`;
+      }
     }
 
     const percent = totalBytes > 0 ? Math.min(100, Math.round((bytesTransferred / totalBytes) * 100)) : 0;
