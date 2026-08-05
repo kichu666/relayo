@@ -17,10 +17,9 @@ import {
   Copy,
   Check,
   FileUp,
-  File,
+  File as FileIcon,
   X,
   Sparkles,
-  CheckCircle2,
   Globe,
   Loader2,
   QrCode,
@@ -28,7 +27,6 @@ import {
   ShieldCheck,
   Zap,
   Wifi,
-  Radio,
   HelpCircle,
   Laptop,
   Smartphone,
@@ -41,7 +39,7 @@ const ITEMS_PER_PAGE = 20;
 
 export function App() {
   const store = useStore($shareStore);
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [selectedFiles, setSelectedFiles] = useState<FileIcon[]>([]);
   const [copied, setCopied] = useState(false);
   const [displayLimit, setDisplayLimit] = useState(ITEMS_PER_PAGE);
   const [showHelpModal, setShowHelpModal] = useState(false);
@@ -294,7 +292,7 @@ export function App() {
                         className="flex items-center justify-between p-2.5 rounded-xl bg-[var(--card-bg)] border border-[var(--panel-border)] text-xs"
                       >
                         <div className="flex items-center gap-2.5 min-w-0 pr-2">
-                          <File className="w-4 h-4 theme-accent-text shrink-0" />
+                          <FileIcon className="w-4 h-4 theme-accent-text shrink-0" />
                           <span className="truncate font-medium">{file.name}</span>
                           <span className="text-[10px] font-mono text-[var(--text-muted)] shrink-0">
                             ({formatFileSize(file.size)})
@@ -520,7 +518,7 @@ export function App() {
                     className="flex items-center justify-between p-3 rounded-xl bg-[var(--card-bg)] border border-[var(--panel-border)] text-xs"
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
-                      <File className="w-4 h-4 theme-accent-text shrink-0" />
+                      <FileIcon className="w-4 h-4 theme-accent-text shrink-0" />
                       <span className="truncate font-medium">{file.name}</span>
                     </div>
                     <span className="text-[10px] font-mono text-[var(--text-muted)] shrink-0">
@@ -620,7 +618,7 @@ export function App() {
                   >
                     <div className="flex items-center gap-2.5 min-w-0 pr-2">
                       <div className="p-2 rounded-lg bg-indigo-500/10 text-indigo-400 shrink-0">
-                        <File className="w-4 h-4" />
+                        <FileIcon className="w-4 h-4" />
                       </div>
                       <div className="min-w-0">
                         <p className="truncate font-semibold">{file.name}</p>
