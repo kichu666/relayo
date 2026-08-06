@@ -134,10 +134,10 @@ export function PresenceTracker() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between sm:justify-start gap-2 bg-black/40 [html[data-theme=light]_&]:bg-[#F4F9FF] px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl border border-white/10 [html[data-theme=light]_&]:border-[#D5E9FF] text-xs text-slate-300 [html[data-theme=light]_&]:text-[#0F172A] font-medium w-full sm:w-auto shrink-0">
+          <div className="flex items-center justify-between sm:justify-start gap-2 bg-black/40 [html[data-theme=light]_&]:bg-[#F4F9FF] px-3.5 py-2.5 sm:px-4 sm:py-2.5 rounded-xl border border-white/10 [html[data-theme=light]_&]:border-[#D5E9FF] text-xs font-mono text-slate-300 [html[data-theme=light]_&]:text-[#0F172A] font-medium w-full sm:w-auto shrink-0 mt-3 pt-3 sm:mt-0 sm:pt-0 border-t sm:border-t-0">
             <div className="flex items-center gap-1.5 min-w-0">
               <Globe className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 shrink-0" strokeWidth={2} />
-              <span>Room Code:</span>
+              <span className="font-sans">Room Code:</span>
             </div>
             <span className="font-mono font-bold text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 tracking-wider truncate max-w-[160px] sm:max-w-none">{store.roomId}</span>
           </div>
