@@ -89,15 +89,15 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto space-y-6">
+    <div className="w-full max-w-6xl mx-auto space-y-8 pb-32 sm:pb-36">
       {/* Back to Local Navigation Button */}
       {onBackToLocal && (
         <button
           onClick={onBackToLocal}
-          className="flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors cursor-pointer w-fit group py-1 px-2 rounded-lg hover:bg-white/5"
+          className="flex items-center gap-2 text-sm text-zinc-400 hover:text-white [html[data-theme=light]_&]:text-slate-600 [html[data-theme=light]_&]:hover:text-slate-900 transition-colors cursor-pointer w-fit group py-1.5 px-3 rounded-xl hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100 min-h-[44px]"
           title="Back to Local P2P Mode"
         >
-          <ArrowLeft className="w-4 h-4 text-zinc-400 group-hover:text-white group-hover:-translate-x-1 transition-transform" />
+          <ArrowLeft className="w-4 h-4 text-zinc-400 group-hover:text-white [html[data-theme=light]_&]:text-slate-500 [html[data-theme=light]_&]:group-hover:text-slate-900 group-hover:-translate-x-1 transition-transform" strokeWidth={2} />
           <span className="font-semibold">Back to Local</span>
         </button>
       )}
@@ -105,69 +105,69 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
       {/* Toast Notification Alert */}
       {store.toast && (
         <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl bg-slate-900/90 border border-cyan-500/40 text-cyan-200 shadow-[0_0_25px_rgba(6,182,212,0.3)] backdrop-blur-xl animate-bounce">
-          <Sparkles className="w-5 h-5 text-cyan-400" />
+          <Sparkles className="w-5 h-5 text-cyan-400" strokeWidth={2} />
           <span className="text-sm font-semibold">{store.toast.message}</span>
         </div>
       )}
 
-      {/* Top Banner & Room Switcher */}
-      <div className="glass-panel p-4 sm:p-6 rounded-3xl border border-white/10 [html[data-theme=light]_&]:border-[#D9EAF7] bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950/60 [html[data-theme=light]_&]:bg-[linear-gradient(135deg,#FFFFFF_0%,#F4F9FF_50%,#E7F4FF_100%)] shadow-2xl [html[data-theme=light]_&]:shadow-[0_12px_35px_rgba(20,40,80,0.08)] backdrop-blur-md relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 [html[data-theme=light]_&]:bg-blue-400/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-500/10 [html[data-theme=light]_&]:bg-cyan-300/10 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
+      {/* Top Banner & Room Switcher (Flattened Light Mode Surface) */}
+      <div className="glass-panel p-5 sm:p-7 rounded-3xl border border-white/10 [html[data-theme=light]_&]:border-slate-200 bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950/60 [html[data-theme=light]_&]:bg-white shadow-2xl [html[data-theme=light]_&]:shadow-[0_4px_20px_rgb(0,0,0,0.03)] backdrop-blur-md relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 [html[data-theme=light]_&]:hidden rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-500/10 [html[data-theme=light]_&]:hidden rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
 
-        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 sm:gap-4">
-          <div className="flex items-center gap-3 sm:gap-4">
-            <div className="p-2.5 sm:p-3.5 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-500/30 text-cyan-400 shadow-lg">
-              <Globe className="w-6 h-6 sm:w-7 sm:h-7 animate-pulse" />
+        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5 sm:gap-4">
+            <div className="p-3 sm:p-3.5 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-500/30 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 shadow-lg">
+              <Globe className="w-6 h-6 sm:w-7 sm:h-7 animate-pulse" strokeWidth={2} />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white [html[data-theme=light]_&]:text-[#172033]">
+                <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-white [html[data-theme=light]_&]:text-[#0F172A]">
                   Relayo Cloud Hub
                 </h2>
               </div>
-              <p className="text-[11px] sm:text-xs text-slate-400 [html[data-theme=light]_&]:text-[#667085] mt-0.5 sm:mt-1">
+              <p className="text-[11px] sm:text-xs font-medium text-slate-400 [html[data-theme=light]_&]:text-[#64748B] mt-0.5 sm:mt-1">
                 Seamless cross-device productivity over the cloud
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+          <div className="flex items-center gap-2.5 flex-wrap">
             <button
               onClick={() => setShowRoomModal(true)}
-              className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-black/60 [html[data-theme=light]_&]:bg-white hover:bg-black/80 hover:[html[data-theme=light]_&]:bg-slate-50 border border-white/15 [html[data-theme=light]_&]:border-[#D9EAF7] text-slate-200 [html[data-theme=light]_&]:text-[#667085] text-xs font-bold transition shadow-md cursor-pointer"
+              className="h-11 min-h-[44px] flex items-center gap-2 px-4 rounded-xl bg-black/60 [html[data-theme=light]_&]:bg-slate-100 hover:bg-black/80 hover:[html[data-theme=light]_&]:bg-slate-200 border border-white/15 [html[data-theme=light]_&]:border-slate-200 text-slate-200 [html[data-theme=light]_&]:text-slate-700 text-xs font-bold transition shadow-sm cursor-pointer"
             >
-              <KeyRound className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" />
+              <KeyRound className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />
               <span className="hidden sm:inline">Change Room</span>
             </button>
 
             <button
               onClick={handleCopyRoomCode}
-              className="p-2 rounded-2xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:bg-white border border-cyan-500/30 [html[data-theme=light]_&]:border-[#D9EAF7] text-xs transition cursor-pointer"
+              className="w-11 h-11 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:bg-slate-100 [html[data-theme=light]_&]:hover:bg-slate-200 border border-cyan-500/30 [html[data-theme=light]_&]:border-slate-200 text-xs transition cursor-pointer"
               title="Copy Room Link"
             >
-              {copiedCode ? <Check className="w-4 h-4 text-emerald-400" /> : <QrCode className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" />}
+              {copiedCode ? <Check className="w-4 h-4 text-emerald-400" strokeWidth={2} /> : <QrCode className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />}
             </button>
           </div>
         </div>
 
-        {/* Prominent Room Code Input & Quick Switcher */}
-        <div className="mt-4 pt-4 border-t border-white/10 [html[data-theme=light]_&]:border-[#D9EAF7] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 relative z-10">
+        {/* Prominent Room Code Input & Quick Switcher (44px min touch targets) */}
+        <div className="mt-5 pt-4 border-t border-white/10 [html[data-theme=light]_&]:border-slate-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 relative z-10">
           <div className="flex items-center gap-2 flex-1 max-w-lg">
             <div className="relative flex-1">
-              <KeyRound className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <KeyRound className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" strokeWidth={2} />
               <input
                 type="text"
                 value={newRoomCode}
                 onChange={(e) => setNewRoomCode(e.target.value)}
                 placeholder="Enter room code (e.g. relayo-x8k3p9)..."
-                className="w-full bg-black/60 [html[data-theme=light]_&]:bg-white border border-white/15 [html[data-theme=light]_&]:border-[#D9EAF7] rounded-xl pl-9 pr-3 py-2 text-xs font-mono text-cyan-300 [html[data-theme=light]_&]:text-[#172033] placeholder-slate-500 [html[data-theme=light]_&]:placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+                className="w-full h-11 min-h-[44px] bg-black/60 [html[data-theme=light]_&]:bg-slate-50 border border-white/15 [html[data-theme=light]_&]:border-slate-200 rounded-xl pl-10 pr-3 py-2 text-xs sm:text-sm font-mono text-cyan-300 [html[data-theme=light]_&]:text-[#0F172A] placeholder-slate-500 [html[data-theme=light]_&]:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
                 onKeyDown={(e) => e.key === 'Enter' && handleSwitchRoom()}
               />
             </div>
             <button
               onClick={handleSwitchRoom}
-              className="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs transition shadow-md whitespace-nowrap cursor-pointer"
+              className="h-11 min-h-[44px] px-5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm transition shadow-md whitespace-nowrap cursor-pointer flex items-center justify-center"
             >
               Join Room
             </button>
@@ -176,95 +176,99 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
           <div className="flex items-center gap-2">
             <button
               onClick={handleNewPrivateRoom}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/5 [html[data-theme=light]_&]:bg-white hover:bg-white/10 hover:[html[data-theme=light]_&]:bg-slate-50 text-slate-300 [html[data-theme=light]_&]:text-[#667085] border border-white/10 [html[data-theme=light]_&]:border-[#D9EAF7] text-xs font-semibold transition whitespace-nowrap cursor-pointer"
+              className="h-11 min-h-[44px] flex items-center gap-2 px-4 rounded-xl bg-white/5 [html[data-theme=light]_&]:bg-slate-100 hover:bg-white/10 hover:[html[data-theme=light]_&]:bg-slate-200 text-slate-300 [html[data-theme=light]_&]:text-slate-700 border border-white/10 [html[data-theme=light]_&]:border-slate-200 text-xs font-semibold transition whitespace-nowrap cursor-pointer"
               title="Generate new random private room ID"
             >
-              <Sparkles className="w-3.5 h-3.5 text-purple-400 [html[data-theme=light]_&]:text-purple-600" />
+              <Sparkles className="w-3.5 h-3.5 text-purple-400 [html[data-theme=light]_&]:text-purple-600" strokeWidth={2} />
               <span>New Private Room</span>
             </button>
           </div>
         </div>
       </div>
 
-      {/* Sub-Tab Navigation Bar */}
-      <div className="flex items-center justify-start sm:justify-center overflow-x-auto gap-1 sm:gap-2 p-1 sm:p-1.5 glass-panel rounded-xl sm:rounded-2xl border border-white/10 [html[data-theme=light]_&]:border-slate-200 bg-black/40 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:shadow-[0_4px_20px_rgb(0,0,0,0.03)] backdrop-blur-xl">
-        <button
-          onClick={() => setSubTab('presence')}
-          className={`flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap ${
-            subTab === 'presence'
-              ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 [html[data-theme=light]_&]:bg-cyan-50 border border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.2)] [html[data-theme=light]_&]:shadow-none'
-              : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
-          }`}
-        >
-          <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" />
-          <span>Online Devices</span>
-          <span className="px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-300 [html[data-theme=light]_&]:text-emerald-700 text-[10px]">
-            {store.devices.filter(d => d.id !== store.deviceId && d.status === 'online').length}
-          </span>
-        </button>
-
-        <button
-          onClick={() => setSubTab('clipboard')}
-          className={`flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap ${
-            subTab === 'clipboard'
-              ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 [html[data-theme=light]_&]:bg-cyan-50 border border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.2)] [html[data-theme=light]_&]:shadow-none'
-              : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
-          }`}
-        >
-          <ClipboardCopy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" />
-          <span>Clipboard Sync</span>
-          {store.clipboards.length > 0 && (
-            <span className="px-1.5 py-0.2 rounded-full bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 text-[10px]">
-              {store.clipboards.length}
+      {/* Sub-Tab Navigation Bar with Horizontal Scrollability Hint */}
+      <div className="relative group/tabs overflow-hidden rounded-xl sm:rounded-2xl border border-white/10 [html[data-theme=light]_&]:border-slate-200">
+        <div className="flex items-center justify-start sm:justify-center overflow-x-auto gap-1 sm:gap-2 p-1.5 glass-panel bg-black/40 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:shadow-[0_4px_20px_rgb(0,0,0,0.03)] backdrop-blur-xl">
+          <button
+            onClick={() => setSubTab('presence')}
+            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[40px] ${
+              subTab === 'presence'
+                ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 [html[data-theme=light]_&]:bg-cyan-50 border border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.2)] [html[data-theme=light]_&]:shadow-none'
+                : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
+            }`}
+          >
+            <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />
+            <span>Online Devices</span>
+            <span className="px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-300 [html[data-theme=light]_&]:text-emerald-700 text-[10px]">
+              {store.devices.filter(d => d.id !== store.deviceId && d.status === 'online').length}
             </span>
-          )}
-        </button>
+          </button>
 
-        <button
-          onClick={() => setSubTab('link')}
-          className={`flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap ${
-            subTab === 'link'
-              ? 'bg-gradient-to-r from-purple-500/20 to-indigo-500/20 text-purple-300 [html[data-theme=light]_&]:text-purple-700 [html[data-theme=light]_&]:bg-purple-50 border border-purple-500/40 shadow-[0_0_15px_rgba(168,85,247,0.2)] [html[data-theme=light]_&]:shadow-none'
-              : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
-          }`}
-        >
-          <Link2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-400 [html[data-theme=light]_&]:text-purple-600" />
-          <span>Links</span>
-          {store.links.length > 0 && (
-            <span className="px-1.5 py-0.2 rounded-full bg-purple-500/20 text-purple-300 [html[data-theme=light]_&]:text-purple-700 text-[10px]">
-              {store.links.length}
-            </span>
-          )}
-        </button>
+          <button
+            onClick={() => setSubTab('clipboard')}
+            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[40px] ${
+              subTab === 'clipboard'
+                ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 [html[data-theme=light]_&]:bg-cyan-50 border border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.2)] [html[data-theme=light]_&]:shadow-none'
+                : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
+            }`}
+          >
+            <ClipboardCopy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />
+            <span>Clipboard Sync</span>
+            {store.clipboards.length > 0 && (
+              <span className="px-1.5 py-0.2 rounded-full bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 text-[10px]">
+                {store.clipboards.length}
+              </span>
+            )}
+          </button>
 
-        <button
-          onClick={() => setSubTab('scratchpad')}
-          className={`flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap ${
-            subTab === 'scratchpad'
-              ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-300 [html[data-theme=light]_&]:text-emerald-700 [html[data-theme=light]_&]:bg-emerald-50 border border-emerald-500/40 shadow-[0_0_15px_rgba(16,185,129,0.2)] [html[data-theme=light]_&]:shadow-none'
-              : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
-          }`}
-        >
-          <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 [html[data-theme=light]_&]:text-emerald-600" />
-          <span>Notes</span>
-        </button>
+          <button
+            onClick={() => setSubTab('link')}
+            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[40px] ${
+              subTab === 'link'
+                ? 'bg-gradient-to-r from-purple-500/20 to-indigo-500/20 text-purple-300 [html[data-theme=light]_&]:text-purple-700 [html[data-theme=light]_&]:bg-purple-50 border border-purple-500/40 shadow-[0_0_15px_rgba(168,85,247,0.2)] [html[data-theme=light]_&]:shadow-none'
+                : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
+            }`}
+          >
+            <Link2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-400 [html[data-theme=light]_&]:text-purple-600" strokeWidth={2} />
+            <span>Links</span>
+            {store.links.length > 0 && (
+              <span className="px-1.5 py-0.2 rounded-full bg-purple-500/20 text-purple-300 [html[data-theme=light]_&]:text-purple-700 text-[10px]">
+                {store.links.length}
+              </span>
+            )}
+          </button>
 
-        <button
-          onClick={() => setSubTab('screenshot')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-xs transition whitespace-nowrap ${
-            subTab === 'screenshot'
-              ? 'bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-300 [html[data-theme=light]_&]:text-amber-700 [html[data-theme=light]_&]:bg-amber-50 border border-amber-500/40 shadow-[0_0_15px_rgba(245,158,11,0.2)] [html[data-theme=light]_&]:shadow-none'
-              : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
-          }`}
-        >
-          <Camera className="w-4 h-4 text-amber-400 [html[data-theme=light]_&]:text-amber-600" />
-          <span>Screenshots</span>
-          {store.screenshots.length > 0 && (
-            <span className="px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-300 [html[data-theme=light]_&]:text-amber-700 text-[10px]">
-              {store.screenshots.length}
-            </span>
-          )}
-        </button>
+          <button
+            onClick={() => setSubTab('scratchpad')}
+            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[40px] ${
+              subTab === 'scratchpad'
+                ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-300 [html[data-theme=light]_&]:text-emerald-700 [html[data-theme=light]_&]:bg-emerald-50 border border-emerald-500/40 shadow-[0_0_15px_rgba(16,185,129,0.2)] [html[data-theme=light]_&]:shadow-none'
+                : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
+            }`}
+          >
+            <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 [html[data-theme=light]_&]:text-emerald-600" strokeWidth={2} />
+            <span>Notes</span>
+          </button>
+
+          <button
+            onClick={() => setSubTab('screenshot')}
+            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[40px] ${
+              subTab === 'screenshot'
+                ? 'bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-300 [html[data-theme=light]_&]:text-amber-700 [html[data-theme=light]_&]:bg-amber-50 border border-amber-500/40 shadow-[0_0_15px_rgba(245,158,11,0.2)] [html[data-theme=light]_&]:shadow-none'
+                : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
+            }`}
+          >
+            <Camera className="w-4 h-4 text-amber-400 [html[data-theme=light]_&]:text-amber-600" strokeWidth={2} />
+            <span>Screenshots</span>
+            {store.screenshots.length > 0 && (
+              <span className="px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-300 [html[data-theme=light]_&]:text-amber-700 text-[10px]">
+                {store.screenshots.length}
+              </span>
+            )}
+          </button>
+        </div>
+        {/* Subtle Gradient Fade hint on right edge for horizontal scroll */}
+        <div className="absolute top-0 right-0 bottom-0 w-8 bg-gradient-to-l from-black/60 via-black/20 to-transparent [html[data-theme=light]_&]:from-white [html[data-theme=light]_&]:via-white/50 [html[data-theme=light]_&]:to-transparent pointer-events-none rounded-r-2xl sm:hidden" />
       </div>
 
       {/* Main Tab Content */}
