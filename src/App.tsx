@@ -45,8 +45,8 @@ export function App() {
   const store = useStore($shareStore);
   const [selectedFiles, setSelectedFiles] = useState<FileIcon[]>([]);
   const [copied, setCopied] = useState(false);
-  const [displayLimit, setDisplayLimit] = useState(ITEMS_PER_PAGE);
-  const [showHelpModal, setShowHelpModal] = useState(false);
+  const [isP2PTutorialOpen, setIsP2PTutorialOpen] = useState(false);
+  const [isCloudTutorialOpen, setIsCloudTutorialOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [appMode, setAppMode] = useState<'p2p' | 'cloud'>('p2p');
 
@@ -269,7 +269,11 @@ export function App() {
       {/* Main Content Body */}
       {appMode === 'cloud' ? (
         <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 w-full flex-1 relative z-10">
-          <CloudHub />
+          <CloudHub
+            isOpenCloudHelp={isCloudTutorialOpen}
+            onCloseCloudHelp={() => setIsCloudTutorialOpen(false)}
+            onOpenCloudHelp={() => setIsCloudTutorialOpen(true)}
+          />
         </main>
       ) : (
         <main className="max-w-4xl mx-auto px-6 py-10 w-full flex-1 flex flex-col items-center justify-center relative z-10">
@@ -687,7 +691,13 @@ export function App() {
       <footer className="w-full border-t border-[var(--panel-border)] py-4 glass-panel flex flex-col sm:flex-row items-center justify-between px-6 gap-3 text-xs text-[var(--text-muted)] font-mono">
         <span>Relayo P2P Direct Share • Zero Server Storage</span>
         <button
-          onClick={() => setShowHelpModal(true)}
+          onClick={() => {
+            if (appMode === 'cloud') {
+              setIsCloudTutorialOpen(true);
+            } else {
+              setIsP2PTutorialOpen(true);
+            }
+          }}
           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all cursor-pointer"
         >
           <HelpCircle className="w-3.5 h-3.5 text-cyan-400" />
@@ -695,12 +705,12 @@ export function App() {
         </button>
       </footer>
 
-      {/* AMOLED Glassmorphism Help Modal */}
-      {showHelpModal && (
+      {/* AMOLED Glassmorphism P2P Help Modal */}
+      {appMode === 'p2p' && isP2PTutorialOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
           <div className="relative w-full max-w-md bg-black/95 border border-zinc-800/90 rounded-3xl p-6 shadow-2xl backdrop-blur-2xl text-zinc-100">
             <button
-              onClick={() => setShowHelpModal(false)}
+              onClick={() => setIsP2PTutorialOpen(false)}
               className="absolute top-5 right-5 p-1.5 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
@@ -743,7 +753,7 @@ export function App() {
             </div>
 
             <button
-              onClick={() => setShowHelpModal(false)}
+              onClick={() => setIsP2PTutorialOpen(false)}
               className="w-full py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-bold text-xs transition-all shadow-lg cursor-pointer"
             >
               Got It, Start Sharing

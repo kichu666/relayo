@@ -31,13 +31,29 @@ import {
 import { QRCodeSVG } from 'qrcode.react';
 import { useFirebasePresence } from '../../logic/useFirebasePresence';
 
-export function CloudHub() {
+interface CloudHubProps {
+  isOpenCloudHelp?: boolean;
+  onCloseCloudHelp?: () => void;
+  onOpenCloudHelp?: () => void;
+}
+
+export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp }: CloudHubProps = {}) {
   const store = useStore($cloudStore);
   const [subTab, setSubTab] = useState<'presence' | 'clipboard' | 'link' | 'scratchpad' | 'screenshot'>('presence');
   const [showRoomModal, setShowRoomModal] = useState(false);
-  const [showCloudHelpModal, setShowCloudHelpModal] = useState(false);
+  const [localCloudHelpModal, setLocalCloudHelpModal] = useState(false);
   const [newRoomCode, setNewRoomCode] = useState('');
   const [copiedCode, setCopiedCode] = useState(false);
+
+  const isHelpModalOpen = isOpenCloudHelp !== undefined ? isOpenCloudHelp : localCloudHelpModal;
+  const handleOpenHelp = () => {
+    if (onOpenCloudHelp) onOpenCloudHelp();
+    else setLocalCloudHelpModal(true);
+  };
+  const handleCloseHelp = () => {
+    if (onCloseCloudHelp) onCloseCloudHelp();
+    else setLocalCloudHelpModal(false);
+  };
 
   useFirebasePresence(store.roomId, store.deviceName || 'Windows Desktop');
 
@@ -101,12 +117,12 @@ export function CloudHub() {
 
           <div className="flex items-center gap-2 sm:gap-3">
             <button
-              onClick={() => setShowCloudHelpModal(true)}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-semibold transition cursor-pointer shadow-md"
-              title="How Cloud Hub Works"
+              onClick={handleOpenHelp}
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-semibold transition cursor-pointer shadow-md"
+              title="Help & Tutorial"
             >
               <HelpCircle className="w-4 h-4 text-cyan-400" />
-              <span className="hidden sm:inline">How it works</span>
+              <span className="hidden sm:inline">Help & Tutorial</span>
             </button>
 
             <button
@@ -394,11 +410,11 @@ export function CloudHub() {
       )}
 
       {/* Cloud Hub Tutorial Modal */}
-      {showCloudHelpModal && (
+      {isHelpModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
           <div className="relative w-full max-w-md bg-slate-950 border border-white/10 rounded-3xl p-6 shadow-2xl backdrop-blur-2xl text-slate-100">
             <button
-              onClick={() => setShowCloudHelpModal(false)}
+              onClick={handleCloseHelp}
               className="absolute top-5 right-5 p-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-slate-400 hover:text-white transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
@@ -420,7 +436,7 @@ export function CloudHub() {
                 <div>
                   <p className="font-bold text-white mb-0.5">Create or Join a Room</p>
                   <p className="text-slate-400 leading-normal">
-                    Use the <strong className="text-cyan-300">New Private Room</strong> button to generate a fresh key, or type an existing code into the input field and click <strong className="text-cyan-300">Join Room</strong>. You can also tap the QR code button for instant mobile pairing.
+                    Use the <strong className="text-cyan-300">New Private Room</strong> button to generate a fresh key, type an existing code into the input field and click <strong className="text-cyan-300">Join Room</strong>, or tap the QR code for instant mobile pairing.
                   </p>
                 </div>
               </div>
@@ -440,17 +456,17 @@ export function CloudHub() {
                 <div>
                   <p className="font-bold text-white mb-0.5">Productivity Tools</p>
                   <p className="text-slate-400 leading-normal">
-                    Switch between <strong className="text-cyan-300">Clipboard Sync</strong>, <strong className="text-cyan-300">Links</strong>, <strong className="text-cyan-300">Notes</strong>, and <strong className="text-cyan-300">Screenshots</strong> tabs to instantly share data across your devices over the cloud.
+                    Switch between <strong className="text-cyan-300">Clipboard Sync</strong>, <strong className="text-cyan-300">Links</strong>, <strong className="text-cyan-300">Notes</strong>, and <strong className="text-cyan-300">Screenshots</strong> tabs to instantly share data across devices over the cloud.
                   </p>
                 </div>
               </div>
             </div>
 
             <button
-              onClick={() => setShowCloudHelpModal(false)}
+              onClick={handleCloseHelp}
               className="w-full py-2.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs transition cursor-pointer shadow-md"
             >
-              Got It, Start Syncing
+              Got it
             </button>
           </div>
         </div>
