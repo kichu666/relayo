@@ -263,10 +263,6 @@ export function App() {
         <main className="max-w-4xl mx-auto px-3 sm:px-6 py-4 sm:py-10 w-full flex-1 flex flex-col items-center justify-center relative z-10">
         {/* Original Hero Section */}
         <div className="text-center max-w-2xl mx-auto mb-5 sm:mb-8">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full border text-[10px] sm:text-xs font-semibold mb-2.5 sm:mb-4 backdrop-blur-md theme-badge shadow-sm">
-            <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400" />
-            <span>Relayo Direct Transfer Engine</span>
-          </div>
           <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-snug sm:leading-tight mb-2.5 sm:mb-4">
             Instant Device-to-Device Sharing
           </h1>
