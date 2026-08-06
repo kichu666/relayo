@@ -241,30 +241,24 @@ export function App() {
           </div>
 
           {/* Desktop Pill Switcher — centered, hidden on mobile */}
-          <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 p-1 items-center gap-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-2xl shadow-[0_0_20px_rgba(0,0,0,0.6)]">
+          <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 p-1 items-center gap-1 rounded-full bg-black/60 border border-white/5 backdrop-blur-md shadow-[0_0_20px_rgba(0,0,0,0.6)]">
             <button
               onClick={() => setAppMode('p2p')}
               className={`h-9 px-4 flex items-center justify-center gap-2 rounded-full font-bold text-sm whitespace-nowrap tracking-wide transition-all duration-300 cursor-pointer ${
                 appMode === 'p2p'
-                  ? 'bg-[#00a8ff] text-white shadow-[0_0_15px_rgba(0,168,255,0.4)]'
-                  : 'text-white/50 hover:text-white/80 hover:bg-white/5'
+                  ? 'bg-transparent border border-cyan-400 text-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.25)]'
+                  : 'bg-transparent text-white/40 hover:text-white/70 border border-transparent'
               }`}
             >
-              {/* Wi|Fi pill logo */}
-              <span className="flex items-center h-4 rounded-full overflow-hidden border border-current shrink-0 text-[8px] font-black leading-none">
-                <span className="px-1 bg-current text-[color:var(--wf-bg,#00a8ff)] flex items-center h-full" style={{'--wf-bg': appMode === 'p2p' ? '#fff' : '#1e293b'} as React.CSSProperties}>
-                  <span style={{color: appMode === 'p2p' ? '#00a8ff' : '#f1f5f9'}}>Wi</span>
-                </span>
-                <span className="px-1 flex items-center h-full">Fi</span>
-              </span>
-              <span>P2P</span>
+              <Wifi className="w-4 h-4 shrink-0" strokeWidth={1.5} />
+              <span>Wi-Fi P2P</span>
             </button>
             <button
               onClick={() => setAppMode('cloud')}
               className={`h-9 px-4 flex items-center justify-center gap-2 rounded-full font-bold text-sm whitespace-nowrap tracking-wide transition-all duration-300 cursor-pointer ${
                 appMode === 'cloud'
-                  ? 'bg-[#00a8ff] text-white shadow-[0_0_15px_rgba(0,168,255,0.4)]'
-                  : 'text-white/50 hover:text-white/80 hover:bg-white/5'
+                  ? 'bg-transparent border border-cyan-400 text-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.25)]'
+                  : 'bg-transparent text-white/40 hover:text-white/70 border border-transparent'
               }`}
             >
               <Cloud className="w-4 h-4 shrink-0" strokeWidth={1.5} />
@@ -277,30 +271,24 @@ export function App() {
             {getConnectionStateBadge()}
 
             {/* Mobile Icon-Only Switcher — hidden on desktop */}
-            <div className="flex md:hidden items-center gap-0.5 p-0.5 rounded-full bg-white/5 border border-white/10">
+            <div className="flex md:hidden items-center gap-0.5 p-1 rounded-full bg-black/60 border border-white/5 backdrop-blur-md">
               <button
                 onClick={() => setAppMode('p2p')}
                 className={`h-8 w-8 rounded-full flex items-center justify-center p-0 transition-all duration-300 cursor-pointer ${
                   appMode === 'p2p'
-                    ? 'bg-[#00a8ff] text-white shadow-[0_0_12px_rgba(0,168,255,0.5)]'
-                    : 'text-white/50 hover:text-white/80'
+                    ? 'bg-transparent border border-cyan-400 text-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.25)]'
+                    : 'bg-transparent text-white/40 hover:text-white/70 border border-transparent'
                 }`}
                 title="Wi-Fi P2P"
               >
-                {/* Compact Wi|Fi pill — mobile */}
-                <span className="flex items-center h-4 rounded-full overflow-hidden border border-current shrink-0 text-[7px] font-black leading-none">
-                  <span className="px-0.5 bg-current flex items-center h-full">
-                    <span style={{color: appMode === 'p2p' ? '#00a8ff' : '#1e293b'}}>Wi</span>
-                  </span>
-                  <span className="px-0.5 flex items-center h-full">Fi</span>
-                </span>
+                <Wifi className="w-3.5 h-3.5" strokeWidth={1.5} />
               </button>
               <button
                 onClick={() => setAppMode('cloud')}
                 className={`h-8 w-8 rounded-full flex items-center justify-center p-0 transition-all duration-300 cursor-pointer ${
                   appMode === 'cloud'
-                    ? 'bg-[#00a8ff] text-white shadow-[0_0_12px_rgba(0,168,255,0.5)]'
-                    : 'text-white/50 hover:text-white/80'
+                    ? 'bg-transparent border border-cyan-400 text-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.25)]'
+                    : 'bg-transparent text-white/40 hover:text-white/70 border border-transparent'
                 }`}
                 title="Cloud Hub"
               >
