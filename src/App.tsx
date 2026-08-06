@@ -250,8 +250,14 @@ export function App() {
                   : 'text-white/50 hover:text-white/80 hover:bg-white/5'
               }`}
             >
-              <Wifi className="w-4 h-4 shrink-0" strokeWidth={1.5} />
-              <span>Wi-Fi P2P</span>
+              {/* Wi|Fi pill logo */}
+              <span className="flex items-center h-4 rounded-full overflow-hidden border border-current shrink-0 text-[8px] font-black leading-none">
+                <span className="px-1 bg-current text-[color:var(--wf-bg,#00a8ff)] flex items-center h-full" style={{'--wf-bg': appMode === 'p2p' ? '#fff' : '#1e293b'} as React.CSSProperties}>
+                  <span style={{color: appMode === 'p2p' ? '#00a8ff' : '#f1f5f9'}}>Wi</span>
+                </span>
+                <span className="px-1 flex items-center h-full">Fi</span>
+              </span>
+              <span>P2P</span>
             </button>
             <button
               onClick={() => setAppMode('cloud')}
@@ -281,7 +287,13 @@ export function App() {
                 }`}
                 title="Wi-Fi P2P"
               >
-                <Wifi className="w-3.5 h-3.5" strokeWidth={1.5} />
+                {/* Compact Wi|Fi pill — mobile */}
+                <span className="flex items-center h-4 rounded-full overflow-hidden border border-current shrink-0 text-[7px] font-black leading-none">
+                  <span className="px-0.5 bg-current flex items-center h-full">
+                    <span style={{color: appMode === 'p2p' ? '#00a8ff' : '#1e293b'}}>Wi</span>
+                  </span>
+                  <span className="px-0.5 flex items-center h-full">Fi</span>
+                </span>
               </button>
               <button
                 onClick={() => setAppMode('cloud')}
