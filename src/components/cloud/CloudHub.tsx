@@ -180,16 +180,16 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp }:
       </div>
 
       {/* Sub-Tab Navigation Bar */}
-      <div className="flex items-center justify-start sm:justify-center overflow-x-auto gap-2 p-1.5 glass-panel rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl">
+      <div className="flex items-center justify-start sm:justify-center overflow-x-auto gap-1 sm:gap-2 p-1 sm:p-1.5 glass-panel rounded-xl sm:rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl">
         <button
           onClick={() => setSubTab('presence')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-xs transition whitespace-nowrap ${
+          className={`flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap ${
             subTab === 'presence'
               ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 border border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.2)]'
               : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
           }`}
         >
-          <Users className="w-4 h-4 text-cyan-400" />
+          <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />
           <span>Online Devices</span>
           <span className="px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px]">
             {store.devices.filter(d => d.id !== store.deviceId && d.status === 'online').length}
@@ -198,13 +198,13 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp }:
 
         <button
           onClick={() => setSubTab('clipboard')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-xs transition whitespace-nowrap ${
+          className={`flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap ${
             subTab === 'clipboard'
               ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 border border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.2)]'
               : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
           }`}
         >
-          <ClipboardCopy className="w-4 h-4 text-cyan-400" />
+          <ClipboardCopy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />
           <span>Clipboard Sync</span>
           {store.clipboards.length > 0 && (
             <span className="px-1.5 py-0.2 rounded-full bg-cyan-500/20 text-cyan-300 text-[10px]">
@@ -215,13 +215,13 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp }:
 
         <button
           onClick={() => setSubTab('link')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-xs transition whitespace-nowrap ${
+          className={`flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap ${
             subTab === 'link'
               ? 'bg-gradient-to-r from-purple-500/20 to-indigo-500/20 text-purple-300 border border-purple-500/40 shadow-[0_0_15px_rgba(168,85,247,0.2)]'
               : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
           }`}
         >
-          <Link2 className="w-4 h-4 text-purple-400" />
+          <Link2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-400" />
           <span>Links</span>
           {store.links.length > 0 && (
             <span className="px-1.5 py-0.2 rounded-full bg-purple-500/20 text-purple-300 text-[10px]">
@@ -232,13 +232,13 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp }:
 
         <button
           onClick={() => setSubTab('scratchpad')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-xs transition whitespace-nowrap ${
+          className={`flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap ${
             subTab === 'scratchpad'
               ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-300 border border-emerald-500/40 shadow-[0_0_15px_rgba(16,185,129,0.2)]'
               : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
           }`}
         >
-          <FileText className="w-4 h-4 text-emerald-400" />
+          <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400" />
           <span>Notes</span>
         </button>
 

@@ -235,27 +235,27 @@ export function App() {
             </div>
           </div>
 
-          <div className="flex items-center gap-0.5 sm:gap-1 p-0.5 sm:p-1 rounded-full bg-black border border-white/10 shadow-[0_0_20px_rgba(0,0,0,0.9)] backdrop-blur-2xl">
+          <div className="h-8 sm:h-auto flex items-center gap-0.5 sm:gap-1 p-0.5 sm:p-1 rounded-full bg-black border border-white/10 shadow-[0_0_20px_rgba(0,0,0,0.9)] backdrop-blur-2xl">
             <button
               onClick={() => setAppMode('p2p')}
-              className={`flex items-center gap-1 sm:gap-2 px-2.5 py-1 sm:px-4 sm:py-1.5 rounded-full font-bold text-[11px] sm:text-xs tracking-wide transition-all duration-300 cursor-pointer ${
+              className={`h-7 sm:h-auto flex items-center gap-1 sm:gap-2 px-2 py-0.5 sm:px-4 sm:py-1.5 rounded-full font-bold text-[11px] sm:text-xs tracking-wide transition-all duration-300 cursor-pointer ${
                 appMode === 'p2p'
                   ? 'bg-gradient-to-r from-cyan-400 to-blue-600 text-slate-950 shadow-[0_0_25px_rgba(6,182,212,0.4)]'
                   : 'text-white/50 hover:text-white/90 hover:bg-white/5'
               }`}
             >
-              <Radio className="w-3.5 h-3.5" />
+              <Radio className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
               <span>Wi-Fi P2P</span>
             </button>
             <button
               onClick={() => setAppMode('cloud')}
-              className={`flex items-center gap-1 sm:gap-2 px-2.5 py-1 sm:px-4 sm:py-1.5 rounded-full font-bold text-[11px] sm:text-xs tracking-wide transition-all duration-300 cursor-pointer ${
+              className={`h-7 sm:h-auto flex items-center gap-1 sm:gap-2 px-2 py-0.5 sm:px-4 sm:py-1.5 rounded-full font-bold text-[11px] sm:text-xs tracking-wide transition-all duration-300 cursor-pointer ${
                 appMode === 'cloud'
                   ? 'bg-gradient-to-r from-cyan-400 to-blue-600 text-slate-950 shadow-[0_0_25px_rgba(6,182,212,0.4)]'
                   : 'text-white/50 hover:text-white/90 hover:bg-white/5'
               }`}
             >
-              <Cloud className="w-3.5 h-3.5" />
+              <Cloud className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
               <span>Cloud Hub</span>
             </button>
           </div>
@@ -269,7 +269,7 @@ export function App() {
 
       {/* Main Content Body */}
       {appMode === 'cloud' ? (
-        <main className="max-w-6xl mx-auto px-3 sm:px-6 py-4 sm:py-8 w-full flex-1 relative z-10">
+        <main className="max-w-6xl mx-auto px-2.5 sm:px-6 py-3 sm:py-8 w-full flex-1 relative z-10">
           <CloudHub
             isOpenCloudHelp={isCloudTutorialOpen}
             onCloseCloudHelp={() => setIsCloudTutorialOpen(false)}
@@ -277,14 +277,14 @@ export function App() {
           />
         </main>
       ) : (
-        <main className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10 w-full flex-1 flex flex-col items-center justify-center relative z-10">
+        <main className="max-w-4xl mx-auto px-3 sm:px-6 py-4 sm:py-10 w-full flex-1 flex flex-col items-center justify-center relative z-10">
         {/* Original Hero Section */}
-        <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full border text-[11px] sm:text-xs font-semibold mb-3 sm:mb-4 backdrop-blur-md theme-badge shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+        <div className="text-center max-w-2xl mx-auto mb-5 sm:mb-10">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full border text-[10px] sm:text-xs font-semibold mb-2.5 sm:mb-4 backdrop-blur-md theme-badge shadow-sm">
+            <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400" />
             <span>Relayo Direct Transfer Engine</span>
           </div>
-          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-snug sm:leading-tight mb-3 sm:mb-4">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-snug sm:leading-tight mb-2.5 sm:mb-4">
             Instant Device-to-Device Sharing
           </h1>
           <p className="text-xs sm:text-base text-[var(--text-muted)] leading-relaxed max-w-2xl mx-auto">
@@ -293,18 +293,18 @@ export function App() {
         </div>
 
         {store.isLoadingInfo ? (
-          <div className="w-full max-w-md glass-panel rounded-3xl p-5 sm:p-8 text-center border border-[var(--panel-border)] flex flex-col items-center">
-            <Loader2 className="w-10 h-10 theme-accent-text animate-spin mb-4" />
-            <h3 className="text-base font-bold mb-1">Connecting P2P Stream...</h3>
+          <div className="w-full max-w-md glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-8 text-center border border-[var(--panel-border)] flex flex-col items-center">
+            <Loader2 className="w-8 h-8 sm:w-10 sm:h-10 theme-accent-text animate-spin mb-3 sm:mb-4" />
+            <h3 className="text-sm sm:text-base font-bold mb-1">Connecting P2P Stream...</h3>
             <p className="text-xs text-[var(--text-muted)]">{store.statusMessage || 'Connecting to peer...'}</p>
           </div>
         ) : activeViewMode === 'home' ? (
           /* Home Screen: Select Files to Host */
           <>
-            <div className="w-full max-w-xl glass-panel rounded-3xl p-4 sm:p-8 border border-[var(--panel-border)] shadow-2xl text-center">
+            <div className="w-full max-w-xl glass-panel rounded-2xl sm:rounded-3xl p-3.5 sm:p-8 border border-[var(--panel-border)] shadow-2xl text-center">
               <div
                 onClick={handleDropzoneClick}
-                className="w-full p-5 sm:p-8 rounded-2xl border-2 border-dashed border-cyan-500/40 bg-[var(--card-bg)] hover:opacity-90 transition-colors cursor-pointer mb-5 sm:mb-6 flex flex-col items-center justify-center group"
+                className="w-full p-4 sm:p-8 rounded-xl sm:rounded-2xl border-2 border-dashed border-cyan-500/40 bg-[var(--card-bg)] hover:opacity-90 transition-colors cursor-pointer mb-4 sm:mb-6 flex flex-col items-center justify-center group"
               >
                 <FileUp className="w-10 h-10 sm:w-12 sm:h-12 theme-accent-text mb-3 group-hover:scale-110 transition-transform animate-bounce" />
                 <p className="text-sm sm:text-base font-bold">Drop files here or click to select</p>
