@@ -4,6 +4,7 @@ import {
   $cloudStore,
   initCloudSession,
   switchCloudRoom,
+  generateRandomRoomId,
   triggerCloudToast
 } from '../../logic/cloudStore';
 import { PresenceTracker } from './PresenceTracker';
@@ -44,6 +45,12 @@ export function CloudHub() {
       switchCloudRoom(newRoomCode);
       setShowRoomModal(false);
     }
+  };
+
+  const handleNewPrivateRoom = () => {
+    const freshRoom = generateRandomRoomId();
+    setNewRoomCode(freshRoom);
+    switchCloudRoom(freshRoom);
   };
 
   const handleCopyRoomCode = () => {
@@ -103,9 +110,43 @@ export function CloudHub() {
             <button
               onClick={handleCopyRoomCode}
               className="p-2 rounded-2xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs transition"
-              title="Copy Room Code"
+              title="Copy Room Link"
             >
               {copiedCode ? <Check className="w-4 h-4 text-emerald-400" /> : <QrCode className="w-4 h-4" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Prominent Room Code Input & Quick Switcher */}
+        <div className="mt-4 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 relative z-10">
+          <div className="flex items-center gap-2 flex-1 max-w-lg">
+            <div className="relative flex-1">
+              <KeyRound className="w-4 h-4 text-cyan-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                value={newRoomCode}
+                onChange={(e) => setNewRoomCode(e.target.value)}
+                placeholder="Type custom shared room code (e.g. my-secret-room)"
+                className="w-full bg-black/60 border border-white/15 rounded-xl pl-9 pr-3 py-2 text-xs font-mono text-cyan-300 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+                onKeyDown={(e) => e.key === 'Enter' && handleSwitchRoom()}
+              />
+            </div>
+            <button
+              onClick={handleSwitchRoom}
+              className="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs transition shadow-md whitespace-nowrap cursor-pointer"
+            >
+              Join Room
+            </button>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleNewPrivateRoom}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 text-xs font-semibold transition whitespace-nowrap cursor-pointer"
+              title="Generate new random private room ID"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+              <span>🎲 New Private Room</span>
             </button>
           </div>
         </div>
@@ -124,7 +165,7 @@ export function CloudHub() {
           <Users className="w-4 h-4 text-cyan-400" />
           <span>Device Presence</span>
           <span className="px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px]">
-            {store.devices.filter(d => d.status === 'online').length}
+            {store.devices.filter(d => d.id !== store.deviceId && d.status === 'online').length}
           </span>
         </button>
 

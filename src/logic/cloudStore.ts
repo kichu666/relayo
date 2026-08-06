@@ -97,9 +97,18 @@ const detectDefaultName = (): string => {
   return `🖥️ ${os} ${type === 'laptop' ? 'Laptop' : 'Desktop'}`;
 };
 
+export const generateRandomRoomId = (): string => {
+  const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  let rand = '';
+  for (let i = 0; i < 6; i++) {
+    rand += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return `relayo-${rand}`;
+};
+
 const initialDeviceId = getStoredOrGeneratedId('relayo_cloud_device_id', 'dev');
 const initialDeviceName = localStorage.getItem('relayo_cloud_device_name') || detectDefaultName();
-const initialRoomId = localStorage.getItem('relayo_cloud_room_id') || 'relayo.world';
+const initialRoomId = localStorage.getItem('relayo_cloud_room_id') || generateRandomRoomId();
 const initialDeviceType = detectDeviceType();
 
 export const $cloudStore = atom<CloudState>({
@@ -311,10 +320,10 @@ export const updateDeviceName = (name: string) => {
 };
 
 // Switch Cloud Room Code
-export const switchCloudRoom = (newRoomId: string) => {
-  const cleanRoom = newRoomId.trim() || 'relayo.world';
+export const switchCloudRoom = (newRoomId?: string) => {
+  const cleanRoom = newRoomId?.trim() || generateRandomRoomId();
   initCloudSession(cleanRoom);
-  triggerCloudToast(`Switched to Cloud Room: ${cleanRoom}`, 'success');
+  triggerCloudToast(`Joined Cloud Room: ${cleanRoom}`, 'success');
 };
 
 // Send Clipboard Text

@@ -47,8 +47,9 @@ export function PresenceTracker() {
     return `${Math.floor(diff / 3600)}h ago`;
   };
 
-  const onlineDevices = store.devices.filter((d) => d.status === 'online');
-  const offlineDevices = store.devices.filter((d) => d.status === 'offline');
+  const remoteDevices = store.devices.filter((d) => d.id !== store.deviceId);
+  const onlineDevices = remoteDevices.filter((d) => d.status === 'online');
+  const offlineDevices = remoteDevices.filter((d) => d.status === 'offline');
 
   return (
     <div className="space-y-6">
