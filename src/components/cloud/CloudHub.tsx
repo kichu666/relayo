@@ -393,7 +393,7 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
                 type="text"
                 value={newRoomCode}
                 onChange={(e) => setNewRoomCode(e.target.value)}
-                placeholder="e.g. relayo.world, my-devices"
+                placeholder="e.g. my-private-room, team-sync"
                 className="w-full bg-black/60 [html[data-theme=light]_&]:bg-white border border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] hover:[html[data-theme=light]_&]:border-[#B8DCFF] focus:[html[data-theme=light]_&]:border-[#22C7F2] rounded-xl px-4 py-2.5 font-mono text-sm text-cyan-300 [html[data-theme=light]_&]:text-[#0F172A] tracking-wider focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:[html[data-theme=light]_&]:ring-0 focus:[html[data-theme=light]_&]:shadow-[0_0_0_4px_rgba(34,199,242,0.15)] transition"
                 onKeyDown={(e) => e.key === 'Enter' && handleSwitchRoom()}
               />
