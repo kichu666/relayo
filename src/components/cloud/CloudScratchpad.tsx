@@ -67,13 +67,13 @@ export function CloudScratchpad() {
 
   return (
     <div className="space-y-6">
-      <div className="glass-panel p-5 rounded-2xl border border-white/10 bg-slate-900/60 backdrop-blur-xl shadow-lg">
+      <div className="glass-panel p-5 rounded-2xl border border-white/10 [html[data-theme=light]_&]:border-slate-200 bg-slate-900/60 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:shadow-[0_4px_20px_rgb(0,0,0,0.03)] backdrop-blur-xl shadow-lg">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
           <div className="flex items-center gap-2">
-            <FileText className="w-5 h-5 text-emerald-400" />
+            <FileText className="w-5 h-5 text-emerald-400 [html[data-theme=light]_&]:text-emerald-600" />
             <div>
-              <h3 className="text-base font-bold text-white">Cloud Synced Scratchpad</h3>
-              <span className="text-xs text-slate-400">Notes update live across all connected devices</span>
+              <h3 className="text-base font-bold text-white [html[data-theme=light]_&]:text-slate-900">Cloud Synced Scratchpad</h3>
+              <span className="text-xs text-slate-400 [html[data-theme=light]_&]:text-slate-500">Notes update live across all connected devices</span>
             </div>
           </div>
 
@@ -81,20 +81,20 @@ export function CloudScratchpad() {
             <button
               onClick={handleCopyNote}
               disabled={!localText}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer ${
                 isCopied
                   ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
-                  : 'bg-white/5 hover:bg-white/10 text-slate-200 border border-white/10 disabled:opacity-40'
+                  : 'bg-white/5 hover:bg-white/10 [html[data-theme=light]_&]:bg-slate-100 [html[data-theme=light]_&]:hover:bg-slate-200 text-slate-200 [html[data-theme=light]_&]:text-slate-700 border border-white/10 [html[data-theme=light]_&]:border-slate-200 disabled:opacity-40'
               }`}
             >
-              {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5 text-emerald-400" />}
+              {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-400 [html[data-theme=light]_&]:text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-emerald-400 [html[data-theme=light]_&]:text-emerald-600" />}
               <span>{isCopied ? 'Copied!' : 'Copy Note'}</span>
             </button>
 
             <button
               onClick={clearScratchpadNote}
               disabled={!localText}
-              className="p-1.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 text-xs disabled:opacity-40 transition"
+              className="p-1.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 text-xs disabled:opacity-40 transition cursor-pointer"
               title="Clear Scratchpad"
             >
               <Trash2 className="w-4 h-4" />
@@ -103,25 +103,25 @@ export function CloudScratchpad() {
         </div>
 
         {/* Quick Toolbar */}
-        <div className="flex items-center gap-2 mb-2 pt-1 border-t border-white/5">
-          <span className="text-[11px] text-slate-400 font-medium">Quick Insert:</span>
+        <div className="flex items-center gap-2 mb-2 pt-1 border-t border-white/5 [html[data-theme=light]_&]:border-slate-100">
+          <span className="text-[11px] text-slate-400 [html[data-theme=light]_&]:text-slate-500 font-medium">Quick Insert:</span>
           <button
             onClick={() => handleInsertTemplate('bullets')}
-            className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 text-xs border border-white/10 transition"
+            className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 [html[data-theme=light]_&]:bg-slate-100 [html[data-theme=light]_&]:hover:bg-slate-200 text-slate-300 [html[data-theme=light]_&]:text-slate-700 text-xs border border-white/10 [html[data-theme=light]_&]:border-slate-200 transition cursor-pointer"
           >
-            <List className="w-3 h-3 text-emerald-400" /> List
+            <List className="w-3 h-3 text-emerald-400 [html[data-theme=light]_&]:text-emerald-600" /> List
           </button>
           <button
             onClick={() => handleInsertTemplate('todo')}
-            className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 text-xs border border-white/10 transition"
+            className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 [html[data-theme=light]_&]:bg-slate-100 [html[data-theme=light]_&]:hover:bg-slate-200 text-slate-300 [html[data-theme=light]_&]:text-slate-700 text-xs border border-white/10 [html[data-theme=light]_&]:border-slate-200 transition cursor-pointer"
           >
-            <CheckSquare className="w-3 h-3 text-cyan-400" /> Checklist
+            <CheckSquare className="w-3 h-3 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" /> Checklist
           </button>
           <button
             onClick={() => handleInsertTemplate('code')}
-            className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 text-xs border border-white/10 transition"
+            className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 [html[data-theme=light]_&]:bg-slate-100 [html[data-theme=light]_&]:hover:bg-slate-200 text-slate-300 [html[data-theme=light]_&]:text-slate-700 text-xs border border-white/10 [html[data-theme=light]_&]:border-slate-200 transition cursor-pointer"
           >
-            <Code className="w-3 h-3 text-purple-400" /> Code Block
+            <Code className="w-3 h-3 text-purple-400 [html[data-theme=light]_&]:text-purple-600" /> Code Block
           </button>
         </div>
 
@@ -131,8 +131,7 @@ export function CloudScratchpad() {
             value={localText}
             onChange={(e) => handleTextChange(e.target.value)}
             placeholder="Type notes, draft code, or brainstorm here... Changes sync in real-time to your phone & desktop!"
-            rows={10}
-            className="w-full bg-black/70 border border-white/10 rounded-xl p-4 font-mono text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition resize-y leading-relaxed"
+            className="w-full h-[160px] min-h-[160px] bg-black/70 dark:bg-black/70 [html[data-theme=light]_&]:bg-white border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E6F4] rounded-2xl p-5 font-mono text-sm text-slate-100 dark:text-slate-100 [html[data-theme=light]_&]:text-[#1E293B] placeholder-slate-500 dark:placeholder-slate-500 [html[data-theme=light]_&]:placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:[html[data-theme=light]_&]:ring-0 focus:[html[data-theme=light]_&]:border-[#22B8FF] focus:[html[data-theme=light]_&]:shadow-[0_0_0_4px_rgba(34,184,255,0.15)] transition resize-y leading-relaxed"
           />
         </div>
 

@@ -55,10 +55,10 @@ export function CloudClipboard() {
           </div>
           <button
             onClick={readAndPushSystemClipboard}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-semibold transition"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:bg-slate-50 [html[data-theme=light]_&]:hover:bg-slate-100 [html[data-theme=light]_&]:text-slate-700 border border-cyan-500/30 [html[data-theme=light]_&]:border-[#D7E6F4] text-xs font-semibold transition cursor-pointer"
             title="Read system clipboard and send directly"
           >
-            <ClipboardPaste className="w-3.5 h-3.5" />
+            <ClipboardPaste className="w-3.5 h-3.5 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" />
             <span>Paste System Clipboard</span>
           </button>
         </div>
@@ -68,19 +68,18 @@ export function CloudClipboard() {
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             placeholder="Type or paste text payload here to copy across your linked devices..."
-            rows={3}
-            className="w-full bg-black/60 border border-white/10 rounded-xl p-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-transparent transition resize-none"
+            className="w-full h-[160px] bg-black/60 dark:bg-black/60 [html[data-theme=light]_&]:bg-white border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E6F4] rounded-2xl p-5 text-sm font-mono text-white dark:text-white [html[data-theme=light]_&]:text-[#1E293B] placeholder-slate-500 dark:placeholder-slate-500 [html[data-theme=light]_&]:placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:[html[data-theme=light]_&]:ring-0 focus:[html[data-theme=light]_&]:border-[#22B8FF] focus:[html[data-theme=light]_&]:shadow-[0_0_0_4px_rgba(34,184,255,0.15)] transition resize-none leading-relaxed"
           />
         </div>
 
         <div className="flex items-center justify-between mt-3">
-          <span className="text-xs text-slate-400">
+          <span className="text-xs text-slate-400 [html[data-theme=light]_&]:text-slate-500">
             {inputText.length} characters
           </span>
           <button
             onClick={handleSend}
             disabled={!inputText.trim()}
-            className="flex items-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-medium text-sm shadow-[0_0_15px_rgba(6,182,212,0.3)] transition transform active:scale-95"
+            className="flex items-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-medium text-sm shadow-[0_0_15px_rgba(6,182,212,0.3)] transition transform active:scale-95 cursor-pointer"
           >
             <Sparkles className="w-4 h-4" />
             <span>Sync Payload</span>
