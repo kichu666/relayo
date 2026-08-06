@@ -30,17 +30,17 @@
   }
 
   [data-theme='light'] {
-    --bg-main: #F5F5F7;
+    --bg-main: #F8FAFC;
     --panel-bg: #FFFFFF;
-    --panel-border: #E5E5EA;
-    --text-primary: #1D1D1F;
-    --text-muted: #86868B;
-    --badge-bg: #E5F1FF;
-    --badge-border: #007AFF;
-    --badge-text: #007AFF;
-    --accent-color: #007AFF;
+    --panel-border: #D7E8FF;
+    --text-primary: #0F172A;
+    --text-muted: #475569;
+    --badge-bg: #E0F2FE;
+    --badge-border: #0284C7;
+    --badge-text: #0369A1;
+    --accent-color: #0284C7;
     --card-bg: #FFFFFF;
-    --input-bg: #F5F5F7;
+    --input-bg: #FFFFFF;
   }
 
   [data-theme='monochrome'] {
