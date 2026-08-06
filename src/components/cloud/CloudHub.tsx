@@ -111,9 +111,9 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
       )}
 
       {/* Top Banner & Room Switcher */}
-      <div className="glass-panel p-4 sm:p-6 rounded-3xl border border-white/10 bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950/60 shadow-2xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
+      <div className="glass-panel p-4 sm:p-6 rounded-3xl border border-white/10 [html[data-theme=light]_&]:border-[#D5E9FF] bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950/60 [html[data-theme=light]_&]:bg-[linear-gradient(135deg,#F8FCFF_0%,#EDF7FF_40%,#E2F2FF_100%)] shadow-2xl [html[data-theme=light]_&]:shadow-[0_18px_45px_rgba(14,165,233,0.10)] relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 [html[data-theme=light]_&]:bg-cyan-400/15 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-500/10 [html[data-theme=light]_&]:bg-purple-300/10 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
 
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 sm:gap-4">
           <div className="flex items-center gap-3 sm:gap-4">
@@ -122,11 +122,11 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white">
+                <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white [html[data-theme=light]_&]:text-[#0F172A]">
                   Relayo Cloud Hub
                 </h2>
               </div>
-              <p className="text-[11px] sm:text-xs text-slate-400 mt-0.5 sm:mt-1">
+              <p className="text-[11px] sm:text-xs text-slate-400 [html[data-theme=light]_&]:text-[#475569] mt-0.5 sm:mt-1">
                 Seamless cross-device productivity over the cloud
               </p>
             </div>
@@ -135,51 +135,51 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
             <button
               onClick={() => setShowCloudReviewModal(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs font-semibold transition cursor-pointer shadow-md"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 [html[data-theme=light]_&]:text-rose-600 [html[data-theme=light]_&]:bg-rose-50 border border-rose-500/30 [html[data-theme=light]_&]:border-rose-200 text-xs font-semibold transition cursor-pointer shadow-md"
               title="Leave a Review"
             >
-              <MessageSquareHeart className="w-4 h-4 text-rose-400" />
+              <MessageSquareHeart className="w-4 h-4 text-rose-400 [html[data-theme=light]_&]:text-rose-500" />
               <span className="hidden sm:inline">Leave a Review</span>
             </button>
 
             <button
               onClick={handleOpenHelp}
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-semibold transition cursor-pointer shadow-md"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:text-[#475569] [html[data-theme=light]_&]:bg-white border border-cyan-500/30 [html[data-theme=light]_&]:border-[#D8E9FF] text-xs font-semibold transition cursor-pointer shadow-md"
               title="Help & Tutorial"
             >
-              <HelpCircle className="w-4 h-4 text-cyan-400" />
+              <HelpCircle className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" />
               <span className="hidden sm:inline">Help & Tutorial</span>
             </button>
 
             <button
               onClick={() => setShowRoomModal(true)}
-              className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-black/60 hover:bg-black/80 border border-white/15 text-slate-200 text-xs font-bold transition shadow-md cursor-pointer"
+              className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-black/60 [html[data-theme=light]_&]:bg-white hover:bg-black/80 hover:[html[data-theme=light]_&]:bg-slate-50 border border-white/15 [html[data-theme=light]_&]:border-[#D8E9FF] text-slate-200 [html[data-theme=light]_&]:text-[#475569] text-xs font-bold transition shadow-md cursor-pointer"
             >
-              <KeyRound className="w-4 h-4 text-cyan-400" />
+              <KeyRound className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" />
               <span className="hidden sm:inline">Change Room</span>
             </button>
 
             <button
               onClick={handleCopyRoomCode}
-              className="p-2 rounded-2xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs transition cursor-pointer"
+              className="p-2 rounded-2xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:bg-white border border-cyan-500/30 [html[data-theme=light]_&]:border-[#D8E9FF] text-xs transition cursor-pointer"
               title="Copy Room Link"
             >
-              {copiedCode ? <Check className="w-4 h-4 text-emerald-400" /> : <QrCode className="w-4 h-4" />}
+              {copiedCode ? <Check className="w-4 h-4 text-emerald-400" /> : <QrCode className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" />}
             </button>
           </div>
         </div>
 
         {/* Prominent Room Code Input & Quick Switcher */}
-        <div className="mt-4 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 relative z-10">
+        <div className="mt-4 pt-4 border-t border-white/10 [html[data-theme=light]_&]:border-[#D5E9FF] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 relative z-10">
           <div className="flex items-center gap-2 flex-1 max-w-lg">
             <div className="relative flex-1">
-              <KeyRound className="w-4 h-4 text-cyan-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <KeyRound className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={newRoomCode}
                 onChange={(e) => setNewRoomCode(e.target.value)}
                 placeholder="Enter room code (e.g. relayo-x8k3p9)..."
-                className="w-full bg-black/60 border border-white/15 rounded-xl pl-9 pr-3 py-2 text-xs font-mono text-cyan-300 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+                className="w-full bg-black/60 [html[data-theme=light]_&]:bg-white border border-white/15 [html[data-theme=light]_&]:border-[#D7E8FF] rounded-xl pl-9 pr-3 py-2 text-xs font-mono text-cyan-300 [html[data-theme=light]_&]:text-[#0F172A] placeholder-slate-500 [html[data-theme=light]_&]:placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
                 onKeyDown={(e) => e.key === 'Enter' && handleSwitchRoom()}
               />
             </div>
@@ -194,10 +194,10 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
           <div className="flex items-center gap-2">
             <button
               onClick={handleNewPrivateRoom}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 text-xs font-semibold transition whitespace-nowrap cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/5 [html[data-theme=light]_&]:bg-white hover:bg-white/10 hover:[html[data-theme=light]_&]:bg-slate-50 text-slate-300 [html[data-theme=light]_&]:text-[#475569] border border-white/10 [html[data-theme=light]_&]:border-[#D8E9FF] text-xs font-semibold transition whitespace-nowrap cursor-pointer"
               title="Generate new random private room ID"
             >
-              <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+              <Sparkles className="w-3.5 h-3.5 text-purple-400 [html[data-theme=light]_&]:text-purple-600" />
               <span>New Private Room</span>
             </button>
           </div>
