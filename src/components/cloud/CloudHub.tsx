@@ -134,24 +134,6 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
 
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
             <button
-              onClick={() => setShowCloudReviewModal(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 [html[data-theme=light]_&]:text-rose-600 [html[data-theme=light]_&]:bg-rose-50 border border-rose-500/30 [html[data-theme=light]_&]:border-rose-200 text-xs font-semibold transition cursor-pointer shadow-md"
-              title="Leave a Review"
-            >
-              <MessageSquareHeart className="w-4 h-4 text-rose-400 [html[data-theme=light]_&]:text-rose-500" />
-              <span className="hidden sm:inline">Leave a Review</span>
-            </button>
-
-            <button
-              onClick={handleOpenHelp}
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:text-[#475569] [html[data-theme=light]_&]:bg-white border border-cyan-500/30 [html[data-theme=light]_&]:border-[#D8E9FF] text-xs font-semibold transition cursor-pointer shadow-md"
-              title="Help & Tutorial"
-            >
-              <HelpCircle className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" />
-              <span className="hidden sm:inline">Help & Tutorial</span>
-            </button>
-
-            <button
               onClick={() => setShowRoomModal(true)}
               className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-black/60 [html[data-theme=light]_&]:bg-white hover:bg-black/80 hover:[html[data-theme=light]_&]:bg-slate-50 border border-white/15 [html[data-theme=light]_&]:border-[#D8E9FF] text-slate-200 [html[data-theme=light]_&]:text-[#475569] text-xs font-bold transition shadow-md cursor-pointer"
             >
@@ -506,6 +488,38 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
           </div>
         </div>
       )}
+
+      {/* Floating Action Buttons (FAB) Container */}
+      <div className="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-50 flex flex-col gap-4 items-center pointer-events-auto">
+        {/* Help & Tutorial FAB */}
+        <div className="relative group flex items-center">
+          <span className="absolute right-full mr-3 px-2.5 py-1 rounded-lg text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none bg-slate-900 text-white shadow-md border border-slate-700 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:text-slate-800 [html[data-theme=light]_&]:border-slate-200 [html[data-theme=light]_&]:shadow-lg">
+            Tutorial
+          </span>
+          <button
+            onClick={handleOpenHelp}
+            className="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center bg-white border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.12)] text-[#0EA5E9] dark:bg-slate-800/90 dark:border-slate-700 dark:text-cyan-400 dark:shadow-[0_0_15px_rgba(14,165,233,0.2)] transition-transform duration-300 hover:scale-110 hover:-translate-y-1 cursor-pointer"
+            title="Help & Tutorial"
+          >
+            <HelpCircle className="w-5 h-5 md:w-6 md:h-6" />
+          </button>
+        </div>
+
+        {/* Feedback / Review FAB */}
+        <div className="relative group flex items-center">
+          <span className="absolute right-full mr-3 px-2.5 py-1 rounded-lg text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none bg-slate-900 text-white shadow-md border border-slate-700 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:text-slate-800 [html[data-theme=light]_&]:border-slate-200 [html[data-theme=light]_&]:shadow-lg">
+            Feedback
+          </span>
+          <button
+            onClick={() => setShowCloudReviewModal(true)}
+            className="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center bg-white border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.12)] text-[#0EA5E9] dark:bg-slate-800/90 dark:border-slate-700 dark:text-cyan-400 dark:shadow-[0_0_15px_rgba(14,165,233,0.2)] transition-transform duration-300 hover:scale-110 hover:-translate-y-1 cursor-pointer"
+            title="Leave a Review"
+          >
+            <MessageSquareHeart className="w-5 h-5 md:w-6 md:h-6" />
+          </button>
+        </div>
+      </div>
+
       {/* Cloud Hub User Review & Feedback Modal */}
       <FeedbackModal
         isOpen={showCloudReviewModal}
