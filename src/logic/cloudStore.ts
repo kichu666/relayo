@@ -149,20 +149,10 @@ export const initCloudSession = (roomIdToJoin?: string) => {
   
   localStorage.setItem('relayo_cloud_room_id', roomId);
   
-  // Clean up previous listeners
+  // Clean up previous listeners & heartbeat
   currentUnsubscribes.forEach(unsub => unsub());
   currentUnsubscribes = [];
   if (heartbeatInterval) clearInterval(heartbeatInterval);
-
-  $cloudStore.set({ ...$cloudStore.get(), roomId });
-
-  if (!db) {
-    console.warn('[Relayo Cloud] Firebase Realtime Database is not initialized.');
-    return;
-  }
-
-  const deviceRef = ref(db, `rooms/${roomId}/presence/${state.deviceId}`);
-  const connectedRef = ref(db, '.info/connected');
 
   const selfDevice: CloudDevice = {
     id: state.deviceId,
@@ -173,7 +163,32 @@ export const initCloudSession = (roomIdToJoin?: string) => {
     platform: navigator.platform
   };
 
-  // Setup presence tracking with isolated onDisconnect.remove() for this unique device path
+  // State reset on room change to clear stale data from previous rooms
+  $cloudStore.set({
+    ...$cloudStore.get(),
+    roomId,
+    devices: [selfDevice],
+    clipboards: [],
+    links: [],
+    scratchpad: { text: '', lastUpdatedBy: '', updatedAt: Date.now() },
+    screenshots: []
+  });
+
+  if (!db) {
+    console.warn('[Relayo Cloud] Firebase Realtime Database is not initialized.');
+    return;
+  }
+
+  // Dynamic Room Presence Reference
+  const deviceRef = ref(db, `rooms/${roomId}/presence/${state.deviceId}`);
+  const connectedRef = ref(db, '.info/connected');
+
+  // Immediately write presence data to Firebase for the dynamic roomId
+  set(deviceRef, selfDevice).catch((err) => {
+    console.warn('[Relayo Cloud] Direct presence write notice:', err);
+  });
+
+  // Setup presence tracking & onDisconnect for this specific room reference
   const unsubConnected = onValue(connectedRef, (snap) => {
     if (snap.val() === true) {
       set(deviceRef, selfDevice);
@@ -185,10 +200,7 @@ export const initCloudSession = (roomIdToJoin?: string) => {
   });
   currentUnsubscribes.push(() => off(connectedRef));
 
-  // Initial set
-  set(deviceRef, selfDevice).catch(() => {});
-
-  // Heartbeat loop every 10 seconds to keep lastActive fresh
+  // Heartbeat loop every 10 seconds for dynamic roomId
   heartbeatInterval = setInterval(() => {
     if (db) {
       set(ref(db, `rooms/${roomId}/presence/${state.deviceId}/lastActive`), Date.now());
