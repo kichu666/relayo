@@ -34,7 +34,7 @@ export function CloudHub() {
   const store = useStore($cloudStore);
   const [subTab, setSubTab] = useState<'presence' | 'clipboard' | 'link' | 'scratchpad' | 'screenshot'>('presence');
   const [showRoomModal, setShowRoomModal] = useState(false);
-  const [newRoomCode, setNewRoomCode] = useState(store.roomId);
+  const [newRoomCode, setNewRoomCode] = useState('');
   const [copiedCode, setCopiedCode] = useState(false);
 
   useFirebasePresence(store.roomId, store.deviceName || 'Windows Desktop');
@@ -45,15 +45,16 @@ export function CloudHub() {
 
   const handleSwitchRoom = () => {
     if (newRoomCode.trim()) {
-      switchCloudRoom(newRoomCode);
+      switchCloudRoom(newRoomCode.trim());
+      setNewRoomCode('');
       setShowRoomModal(false);
     }
   };
 
   const handleNewPrivateRoom = () => {
     const freshRoom = generateRandomRoomId();
-    setNewRoomCode(freshRoom);
     switchCloudRoom(freshRoom);
+    setNewRoomCode('');
   };
 
   const handleCopyRoomCode = () => {
@@ -125,7 +126,7 @@ export function CloudHub() {
                 type="text"
                 value={newRoomCode}
                 onChange={(e) => setNewRoomCode(e.target.value)}
-                placeholder="Type custom shared room code (e.g. relayo-x8k3p9)"
+                placeholder="Enter room code (e.g. relayo-x8k3p9)..."
                 className="w-full bg-black/60 border border-white/15 rounded-xl pl-9 pr-3 py-2 text-xs font-mono text-cyan-300 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
                 onKeyDown={(e) => e.key === 'Enter' && handleSwitchRoom()}
               />

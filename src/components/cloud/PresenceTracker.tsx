@@ -12,7 +12,8 @@ import {
   ShieldCheck,
   Globe,
   Activity,
-  Cpu
+  Cpu,
+  Radio
 } from 'lucide-react';
 
 export function PresenceTracker() {
@@ -119,7 +120,7 @@ export function PresenceTracker() {
         <div className="flex items-center justify-between mb-3 px-1">
           <div className="flex items-center gap-2">
             <Activity className="w-4 h-4 text-emerald-400" />
-            <h4 className="text-sm font-semibold text-slate-200 uppercase tracking-wider">
+            <h4 className="text-sm font-semibold text-slate-200 tracking-wide">
               Connected Devices ({onlineDevices.length})
             </h4>
           </div>
@@ -128,7 +129,7 @@ export function PresenceTracker() {
 
         {onlineDevices.length === 0 ? (
           <div className="glass-panel p-6 text-center rounded-2xl border border-white/5 bg-black/40">
-            <Wifi className="w-8 h-8 text-slate-600 mx-auto mb-2" />
+            <Radio className="w-8 h-8 text-cyan-400/40 mx-auto mb-2 animate-pulse" />
             <p className="text-sm text-slate-400">No other devices online in this Cloud Room.</p>
             <p className="text-xs text-slate-500 mt-1">Open Relayo on your mobile phone or laptop with Room Code <span className="font-mono text-cyan-400">{store.roomId}</span> to instantly pair!</p>
           </div>
@@ -187,7 +188,7 @@ export function PresenceTracker() {
       {/* Offline Devices (if any) */}
       {offlineDevices.length > 0 && (
         <div className="pt-2">
-          <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 px-1">
+          <h4 className="text-xs font-semibold text-slate-500 tracking-wide mb-2 px-1">
             Offline Devices ({offlineDevices.length})
           </h4>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
