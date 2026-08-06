@@ -79,36 +79,36 @@ export function PresenceTracker() {
 
   return (
     <div className="space-y-8">
-      {/* Device Info Header Card */}
-      <div className="glass-panel p-5 sm:p-6 rounded-2xl border border-white/10 [html[data-theme=light]_&]:border-slate-200 bg-gradient-to-r from-slate-900/90 via-slate-900/70 to-indigo-950/40 [html[data-theme=light]_&]:bg-white shadow-xl [html[data-theme=light]_&]:shadow-[0_4px_20px_rgb(0,0,0,0.03)] backdrop-blur-xl">
+      {/* Device Info Header Card (Apple HIG Specs) */}
+      <div className="glass-panel p-6 sm:p-8 rounded-2xl border border-white/10 [html[data-theme=light]_&]:border-[#E5E5EA] bg-gradient-to-r from-slate-900/90 via-slate-900/70 to-indigo-950/40 [html[data-theme=light]_&]:bg-white shadow-xl [html[data-theme=light]_&]:shadow-[0_4px_24px_rgba(0,0,0,0.04)] backdrop-blur-xl">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
-            <div className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 shadow-inner">
+            <div className="p-3 rounded-xl bg-cyan-500/10 [html[data-theme=light]_&]:bg-[#E5F1FF] border border-cyan-500/30 [html[data-theme=light]_&]:border-transparent text-cyan-400 [html[data-theme=light]_&]:text-[#007AFF] shadow-inner [html[data-theme=light]_&]:shadow-none">
               <Cpu className="w-6 h-6 animate-pulse" strokeWidth={2} />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold tracking-wider text-cyan-400 [html[data-theme=light]_&]:text-cyan-600">This Device</span>
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-500/10 text-emerald-400 [html[data-theme=light]_&]:text-emerald-600 border border-emerald-500/30">
+                <span className="text-xs font-semibold tracking-wider text-cyan-400 [html[data-theme=light]_&]:text-[#007AFF]">This Device</span>
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-500/10 text-emerald-400 [html[data-theme=light]_&]:text-emerald-700 border border-emerald-500/30">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
                   ● Active
                 </span>
               </div>
 
               {isEditingName ? (
-                <div className="flex items-center gap-2 mt-1">
+                <div className="flex items-center gap-2 mt-1.5">
                   <input
                     type="text"
                     value={nameInput}
                     onChange={(e) => setNameInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSaveName()}
-                    className="h-10 min-h-[40px] bg-black/60 [html[data-theme=light]_&]:bg-slate-50 border border-cyan-500/50 [html[data-theme=light]_&]:border-slate-300 rounded-lg px-3 py-1 text-sm text-white [html[data-theme=light]_&]:text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-400/50"
+                    className="h-11 min-h-[44px] bg-black/60 [html[data-theme=light]_&]:bg-[#F5F5F7] border border-cyan-500/50 [html[data-theme=light]_&]:border-transparent focus:[html[data-theme=light]_&]:border-[#007AFF] rounded-xl px-4 py-1 text-sm text-white [html[data-theme=light]_&]:text-[#1D1D1F] focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:[html[data-theme=light]_&]:ring-[#007AFF]/20 transition"
                     placeholder="Enter device name..."
                     autoFocus
                   />
                   <button
                     onClick={handleSaveName}
-                    className="h-10 min-h-[40px] px-3 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 border border-cyan-500/40 transition cursor-pointer"
+                    className="h-11 min-h-[44px] px-4 rounded-xl bg-cyan-500/20 [html[data-theme=light]_&]:bg-[#007AFF] hover:bg-cyan-500/30 hover:[html[data-theme=light]_&]:bg-[#0066CC] text-cyan-300 [html[data-theme=light]_&]:text-white border border-cyan-500/40 [html[data-theme=light]_&]:border-transparent transition cursor-pointer font-bold"
                     title="Save Device Name"
                   >
                     <Check className="w-4 h-4" strokeWidth={2} />
@@ -116,7 +116,7 @@ export function PresenceTracker() {
                 </div>
               ) : (
                 <div className="flex items-center gap-2 mt-1">
-                  <h3 className="text-lg font-extrabold text-white [html[data-theme=light]_&]:text-[#0F172A] tracking-wide">
+                  <h3 className="text-lg font-extrabold text-white [html[data-theme=light]_&]:text-[#1D1D1F] tracking-wide">
                     {displayedCurrentDeviceName}
                   </h3>
                   <button
@@ -124,20 +124,20 @@ export function PresenceTracker() {
                       setNameInput(displayedCurrentDeviceName);
                       setIsEditingName(true);
                     }}
-                    className="p-1 text-slate-400 hover:text-cyan-300 [html[data-theme=light]_&]:hover:text-cyan-600 transition cursor-pointer"
+                    className="p-1.5 text-slate-400 hover:text-cyan-300 [html[data-theme=light]_&]:hover:text-[#007AFF] transition cursor-pointer"
                     title="Rename Device"
                   >
-                    <Edit2 className="w-3.5 h-3.5" strokeWidth={2} />
+                    <Edit2 className="w-4 h-4" strokeWidth={2} />
                   </button>
                 </div>
               )}
             </div>
           </div>
 
-          <div className="flex items-center gap-2 self-end sm:self-center bg-black/40 [html[data-theme=light]_&]:bg-slate-50 px-3.5 py-2 rounded-xl border border-white/10 [html[data-theme=light]_&]:border-slate-200 text-xs text-slate-300 [html[data-theme=light]_&]:text-slate-700 font-medium">
-            <Globe className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />
+          <div className="flex items-center gap-2 self-end sm:self-center bg-black/40 [html[data-theme=light]_&]:bg-[#F5F5F7] px-4 py-2.5 rounded-xl border border-white/10 [html[data-theme=light]_&]:border-transparent text-xs text-slate-300 [html[data-theme=light]_&]:text-[#1D1D1F] font-medium">
+            <Globe className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-[#007AFF]" strokeWidth={2} />
             <span>Room Code:</span>
-            <span className="font-mono font-bold text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 tracking-wider">{store.roomId}</span>
+            <span className="font-mono font-bold text-cyan-300 [html[data-theme=light]_&]:text-[#007AFF] tracking-wider">{store.roomId}</span>
           </div>
         </div>
       </div>
@@ -146,19 +146,19 @@ export function PresenceTracker() {
       <div>
         <div className="flex items-center justify-between mb-3 px-1">
           <div className="flex items-center gap-2">
-            <Activity className="w-4 h-4 text-emerald-400 [html[data-theme=light]_&]:text-emerald-600" strokeWidth={2} />
-            <h4 className="text-sm font-extrabold text-slate-200 [html[data-theme=light]_&]:text-[#0F172A] tracking-wide">
+            <Activity className="w-4 h-4 text-emerald-400 [html[data-theme=light]_&]:text-[#007AFF]" strokeWidth={2} />
+            <h4 className="text-sm font-extrabold text-slate-200 [html[data-theme=light]_&]:text-[#1D1D1F] tracking-wide">
               Connected Devices ({onlineDevices.length})
             </h4>
           </div>
-          <span className="text-xs font-medium text-slate-400 [html[data-theme=light]_&]:text-[#64748B]">Synced via Relayo Cloud</span>
+          <span className="text-xs font-medium text-slate-400 [html[data-theme=light]_&]:text-[#86868B]">Synced via Relayo Cloud</span>
         </div>
 
         {onlineDevices.length === 0 ? (
-          <div className="glass-panel p-8 sm:p-10 pb-12 sm:pb-14 text-center rounded-2xl border border-white/5 [html[data-theme=light]_&]:border-slate-200 bg-black/40 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
-            <Radio className="w-8 h-8 text-cyan-400/40 [html[data-theme=light]_&]:text-cyan-600/50 mx-auto mb-3 animate-pulse" strokeWidth={2} />
-            <p className="text-base font-extrabold text-slate-200 [html[data-theme=light]_&]:text-[#0F172A]">No other devices online in this Cloud Room.</p>
-            <p className="text-xs font-medium text-slate-400 [html[data-theme=light]_&]:text-[#64748B] mt-2 leading-relaxed max-w-md mx-auto">Open Relayo on your mobile phone or laptop with Room Code <span className="font-mono font-bold text-cyan-400 [html[data-theme=light]_&]:text-cyan-700 bg-cyan-500/10 px-2 py-0.5 rounded">{store.roomId}</span> to instantly pair!</p>
+          <div className="glass-panel p-8 sm:p-10 pb-16 sm:pb-20 text-center rounded-2xl border border-white/5 [html[data-theme=light]_&]:border-[#E5E5EA] bg-black/40 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:shadow-[0_4px_24px_rgba(0,0,0,0.04)]">
+            <Radio className="w-8 h-8 text-cyan-400/40 [html[data-theme=light]_&]:text-[#007AFF]/50 mx-auto mb-3 animate-pulse" strokeWidth={2} />
+            <p className="text-base font-extrabold text-slate-200 [html[data-theme=light]_&]:text-[#1D1D1F]">No other devices online in this Cloud Room.</p>
+            <p className="text-xs font-medium text-slate-400 [html[data-theme=light]_&]:text-[#86868B] mt-2 leading-relaxed max-w-md mx-auto">Open Relayo on your mobile phone or laptop with Room Code <span className="font-mono font-bold text-cyan-400 [html[data-theme=light]_&]:text-[#007AFF] bg-cyan-500/10 [html[data-theme=light]_&]:bg-[#E5F1FF] px-2 py-0.5 rounded">{store.roomId}</span> to instantly pair!</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
@@ -171,39 +171,39 @@ export function PresenceTracker() {
                   key={dev.id}
                   className={`glass-panel p-4 rounded-2xl border transition-all duration-300 ${
                     isCurrent
-                      ? 'border-cyan-500/40 bg-cyan-950/20 [html[data-theme=light]_&]:bg-cyan-50/50 [html[data-theme=light]_&]:border-cyan-300 shadow-[0_0_15px_rgba(6,182,212,0.15)]'
-                      : 'border-white/10 [html[data-theme=light]_&]:border-slate-200 bg-slate-900/40 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:shadow-sm hover:border-white/20'
+                      ? 'border-cyan-500/40 bg-cyan-950/20 [html[data-theme=light]_&]:bg-[#E5F1FF] [html[data-theme=light]_&]:border-[#007AFF]/30 shadow-[0_0_15px_rgba(6,182,212,0.15)] [html[data-theme=light]_&]:shadow-none'
+                      : 'border-white/10 [html[data-theme=light]_&]:border-[#E5E5EA] bg-slate-900/40 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:shadow-[0_4px_24px_rgba(0,0,0,0.04)] hover:border-white/20'
                   }`}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="p-2.5 rounded-xl bg-white/5 [html[data-theme=light]_&]:bg-slate-100 border border-white/10 [html[data-theme=light]_&]:border-slate-200">
+                      <div className="p-2.5 rounded-xl bg-white/5 [html[data-theme=light]_&]:bg-[#F5F5F7] border border-white/10 [html[data-theme=light]_&]:border-transparent">
                         {getDeviceIcon(dev.type, dev.name)}
                       </div>
                       <div>
                         <div className="flex items-center gap-1.5">
-                          <span className="font-extrabold text-sm text-white [html[data-theme=light]_&]:text-[#0F172A]">{formattedName}</span>
+                          <span className="font-extrabold text-sm text-white [html[data-theme=light]_&]:text-[#1D1D1F]">{formattedName}</span>
                           {isCurrent && (
-                            <span className="text-[10px] px-1.5 py-0.2 rounded bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 border border-cyan-500/30">
+                            <span className="text-[10px] px-1.5 py-0.2 rounded bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:text-[#007AFF] [html[data-theme=light]_&]:bg-[#E5F1FF] border border-cyan-500/30 [html[data-theme=light]_&]:border-transparent">
                               This Device
                             </span>
                           )}
                         </div>
-                        <p className="text-xs font-medium text-slate-400 [html[data-theme=light]_&]:text-[#64748B] mt-0.5 capitalize">
+                        <p className="text-xs font-medium text-slate-400 [html[data-theme=light]_&]:text-[#86868B] mt-0.5 capitalize">
                           {isMobileViewport && formattedName.includes('Mobile') ? 'Mobile Phone' : dev.type} • {dev.platform || 'Web'}
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 [html[data-theme=light]_&]:text-emerald-600 border border-emerald-500/30">
+                    <div className="flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 [html[data-theme=light]_&]:text-emerald-700 border border-emerald-500/30">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
                       <span>Online</span>
                     </div>
                   </div>
 
-                  <div className="mt-3 pt-3 border-t border-white/5 [html[data-theme=light]_&]:border-slate-100 flex items-center justify-between text-[11px] font-medium text-slate-400 [html[data-theme=light]_&]:text-[#64748B]">
+                  <div className="mt-3 pt-3 border-t border-white/5 [html[data-theme=light]_&]:border-[#E5E5EA] flex items-center justify-between text-[11px] font-medium text-slate-400 [html[data-theme=light]_&]:text-[#86868B]">
                     <span className="flex items-center gap-1">
-                      <ShieldCheck className="w-3.5 h-3.5 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} /> Cloud Sync Active
+                      <ShieldCheck className="w-3.5 h-3.5 text-cyan-400 [html[data-theme=light]_&]:text-[#007AFF]" strokeWidth={2} /> Cloud Sync Active
                     </span>
                     <span>{formatLastSeen(dev.lastActive)}</span>
                   </div>
@@ -224,19 +224,19 @@ export function PresenceTracker() {
             {offlineDevices.map((dev) => (
               <div
                 key={dev.id}
-                className="glass-panel p-3.5 rounded-2xl border border-white/5 [html[data-theme=light]_&]:border-slate-200 bg-black/30 [html[data-theme=light]_&]:bg-slate-50 opacity-60"
+                className="glass-panel p-3.5 rounded-2xl border border-white/5 [html[data-theme=light]_&]:border-[#E5E5EA] bg-black/30 [html[data-theme=light]_&]:bg-[#F5F5F7] opacity-60"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <div className="p-2 rounded-lg bg-white/5 [html[data-theme=light]_&]:bg-slate-200/60 text-slate-400 [html[data-theme=light]_&]:text-slate-600">
+                    <div className="p-2 rounded-lg bg-white/5 [html[data-theme=light]_&]:bg-slate-200/60 text-slate-400 [html[data-theme=light]_&]:text-[#86868B]">
                       {getDeviceIcon(dev.type, dev.name)}
                     </div>
                     <div>
-                      <span className="font-bold text-xs text-slate-300 [html[data-theme=light]_&]:text-[#0F172A]">{stripEmojis(dev.name)}</span>
+                      <span className="font-bold text-xs text-slate-300 [html[data-theme=light]_&]:text-[#1D1D1F]">{stripEmojis(dev.name)}</span>
                       <p className="text-[11px] font-medium text-slate-500">Last active: {formatLastSeen(dev.lastActive)}</p>
                     </div>
                   </div>
-                  <span className="px-2 py-0.5 rounded-full text-[10px] bg-slate-800 [html[data-theme=light]_&]:bg-slate-200 text-slate-400 [html[data-theme=light]_&]:text-slate-600 border border-slate-700 [html[data-theme=light]_&]:border-slate-300">
+                  <span className="px-2 py-0.5 rounded-full text-[10px] bg-slate-800 [html[data-theme=light]_&]:bg-slate-200 text-slate-400 [html[data-theme=light]_&]:text-[#86868B] border border-slate-700 [html[data-theme=light]_&]:border-transparent">
                     Offline
                   </span>
                 </div>

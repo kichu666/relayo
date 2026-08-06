@@ -58,20 +58,20 @@ export function CloudLinkPusher() {
   return (
     <div className="space-y-6">
       {/* Input Link Card */}
-      <div className="glass-panel p-5 rounded-2xl border border-white/10 [html[data-theme=light]_&]:border-slate-200 bg-slate-900/60 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:shadow-[0_4px_20px_rgb(0,0,0,0.03)] backdrop-blur-xl shadow-lg">
-        <div className="flex items-center gap-2 mb-3">
-          <Link2 className="w-5 h-5 text-purple-400 [html[data-theme=light]_&]:text-purple-600" />
-          <h3 className="text-base font-bold text-white [html[data-theme=light]_&]:text-slate-900">Push & Trigger Link across Devices</h3>
+      <div className="glass-panel p-6 rounded-2xl border border-white/10 [html[data-theme=light]_&]:border-[#E5E5EA] bg-slate-900/60 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:shadow-[0_4px_24px_rgba(0,0,0,0.04)] backdrop-blur-xl shadow-lg">
+        <div className="flex items-center gap-2 mb-4">
+          <Link2 className="w-5 h-5 text-purple-400 [html[data-theme=light]_&]:text-[#007AFF]" strokeWidth={2} />
+          <h3 className="text-base font-extrabold text-white [html[data-theme=light]_&]:text-[#1D1D1F]">Push & Trigger Link across Devices</h3>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-3.5">
           <div>
             <input
               type="url"
               value={urlInput}
               onChange={(e) => setUrlInput(e.target.value)}
               placeholder="Paste or type URL (e.g. https://github.com or google.com)"
-              className="w-full bg-black/60 dark:bg-black/60 [html[data-theme=light]_&]:bg-white border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E6F4] rounded-2xl p-4 text-sm font-mono text-white dark:text-white [html[data-theme=light]_&]:text-[#1E293B] placeholder-slate-500 dark:placeholder-slate-500 [html[data-theme=light]_&]:placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:[html[data-theme=light]_&]:ring-0 focus:[html[data-theme=light]_&]:border-[#22B8FF] focus:[html[data-theme=light]_&]:shadow-[0_0_0_4px_rgba(34,184,255,0.15)] transition"
+              className="w-full h-11 min-h-[44px] bg-black/60 dark:bg-black/60 [html[data-theme=light]_&]:bg-[#F5F5F7] border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-transparent focus:[html[data-theme=light]_&]:border-[#007AFF] rounded-xl px-4 py-2 text-sm font-mono text-white dark:text-white [html[data-theme=light]_&]:text-[#1D1D1F] placeholder-slate-500 dark:placeholder-slate-500 [html[data-theme=light]_&]:placeholder-[#86868B] focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:[html[data-theme=light]_&]:ring-[#007AFF]/20 transition"
               onKeyDown={(e) => e.key === 'Enter' && handlePushLink()}
             />
           </div>
@@ -82,15 +82,15 @@ export function CloudLinkPusher() {
               value={noteInput}
               onChange={(e) => setNoteInput(e.target.value)}
               placeholder="Optional note / title..."
-              className="flex-1 bg-black/60 dark:bg-black/60 [html[data-theme=light]_&]:bg-white border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E6F4] rounded-2xl px-4 py-2.5 text-xs text-white dark:text-white [html[data-theme=light]_&]:text-[#1E293B] placeholder-slate-500 dark:placeholder-slate-500 [html[data-theme=light]_&]:placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:[html[data-theme=light]_&]:ring-0 focus:[html[data-theme=light]_&]:border-[#22B8FF] focus:[html[data-theme=light]_&]:shadow-[0_0_0_4px_rgba(34,184,255,0.15)] transition"
+              className="flex-1 h-11 min-h-[44px] bg-black/60 dark:bg-black/60 [html[data-theme=light]_&]:bg-[#F5F5F7] border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-transparent focus:[html[data-theme=light]_&]:border-[#007AFF] rounded-xl px-4 py-2 text-xs sm:text-sm text-white dark:text-white [html[data-theme=light]_&]:text-[#1D1D1F] placeholder-slate-500 dark:placeholder-slate-500 [html[data-theme=light]_&]:placeholder-[#86868B] focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:[html[data-theme=light]_&]:ring-[#007AFF]/20 transition"
               onKeyDown={(e) => e.key === 'Enter' && handlePushLink()}
             />
             <button
               onClick={handlePushLink}
               disabled={!urlInput.trim()}
-              className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-medium text-sm shadow-[0_0_15px_rgba(147,51,234,0.3)] transition transform active:scale-95 whitespace-nowrap cursor-pointer"
+              className="h-11 min-h-[44px] flex items-center justify-center gap-2 px-6 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 [html[data-theme=light]_&]:bg-[#007AFF] [html[data-theme=light]_&]:from-[#007AFF] [html[data-theme=light]_&]:to-[#007AFF] hover:from-purple-500 hover:to-indigo-500 hover:[html[data-theme=light]_&]:bg-[#0066CC] disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-sm shadow-[0_0_15px_rgba(147,51,234,0.3)] [html[data-theme=light]_&]:shadow-md transition transform active:scale-95 whitespace-nowrap cursor-pointer"
             >
-              <Send className="w-4 h-4" />
+              <Send className="w-4 h-4" strokeWidth={2} />
               <span>Push URL</span>
             </button>
           </div>

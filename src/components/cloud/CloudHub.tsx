@@ -110,23 +110,23 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
         </div>
       )}
 
-      {/* Top Banner & Room Switcher (Flattened Light Mode Surface) */}
-      <div className="glass-panel p-5 sm:p-7 rounded-3xl border border-white/10 [html[data-theme=light]_&]:border-slate-200 bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950/60 [html[data-theme=light]_&]:bg-white shadow-2xl [html[data-theme=light]_&]:shadow-[0_4px_20px_rgb(0,0,0,0.03)] backdrop-blur-md relative overflow-hidden">
+      {/* Top Banner & Room Switcher (Apple HIG Pure White Surface) */}
+      <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 [html[data-theme=light]_&]:border-[#E5E5EA] bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950/60 [html[data-theme=light]_&]:bg-white shadow-2xl [html[data-theme=light]_&]:shadow-[0_4px_24px_rgba(0,0,0,0.04)] backdrop-blur-md relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 [html[data-theme=light]_&]:hidden rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-500/10 [html[data-theme=light]_&]:hidden rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
 
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="flex items-center gap-3.5 sm:gap-4">
-            <div className="p-3 sm:p-3.5 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-500/30 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 shadow-lg">
+            <div className="p-3 sm:p-3.5 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 [html[data-theme=light]_&]:bg-[#E5F1FF] border border-cyan-500/30 [html[data-theme=light]_&]:border-transparent text-cyan-400 [html[data-theme=light]_&]:text-[#007AFF] shadow-lg [html[data-theme=light]_&]:shadow-none">
               <Globe className="w-6 h-6 sm:w-7 sm:h-7 animate-pulse" strokeWidth={2} />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-white [html[data-theme=light]_&]:text-[#0F172A]">
+                <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-white [html[data-theme=light]_&]:text-[#1D1D1F]">
                   Relayo Cloud Hub
                 </h2>
               </div>
-              <p className="text-[11px] sm:text-xs font-medium text-slate-400 [html[data-theme=light]_&]:text-[#64748B] mt-0.5 sm:mt-1">
+              <p className="text-[11px] sm:text-xs font-medium text-slate-400 [html[data-theme=light]_&]:text-[#86868B] mt-0.5 sm:mt-1">
                 Seamless cross-device productivity over the cloud
               </p>
             </div>
@@ -135,39 +135,39 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
           <div className="flex items-center gap-2.5 flex-wrap">
             <button
               onClick={() => setShowRoomModal(true)}
-              className="h-11 min-h-[44px] flex items-center gap-2 px-4 rounded-xl bg-black/60 [html[data-theme=light]_&]:bg-slate-100 hover:bg-black/80 hover:[html[data-theme=light]_&]:bg-slate-200 border border-white/15 [html[data-theme=light]_&]:border-slate-200 text-slate-200 [html[data-theme=light]_&]:text-slate-700 text-xs font-bold transition shadow-sm cursor-pointer"
+              className="h-11 min-h-[44px] flex items-center gap-2 px-4 rounded-xl bg-black/60 [html[data-theme=light]_&]:bg-[#F5F5F7] hover:bg-black/80 hover:[html[data-theme=light]_&]:bg-[#E5E5EA] border border-white/15 [html[data-theme=light]_&]:border-transparent text-slate-200 [html[data-theme=light]_&]:text-[#1D1D1F] text-xs font-bold transition shadow-sm cursor-pointer"
             >
-              <KeyRound className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />
+              <KeyRound className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-[#007AFF]" strokeWidth={2} />
               <span className="hidden sm:inline">Change Room</span>
             </button>
 
             <button
               onClick={handleCopyRoomCode}
-              className="w-11 h-11 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:bg-slate-100 [html[data-theme=light]_&]:hover:bg-slate-200 border border-cyan-500/30 [html[data-theme=light]_&]:border-slate-200 text-xs transition cursor-pointer"
+              className="w-11 h-11 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:bg-[#F5F5F7] [html[data-theme=light]_&]:hover:bg-[#E5E5EA] border border-cyan-500/30 [html[data-theme=light]_&]:border-transparent text-xs transition cursor-pointer"
               title="Copy Room Link"
             >
-              {copiedCode ? <Check className="w-4 h-4 text-emerald-400" strokeWidth={2} /> : <QrCode className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />}
+              {copiedCode ? <Check className="w-4 h-4 text-emerald-400" strokeWidth={2} /> : <QrCode className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-[#007AFF]" strokeWidth={2} />}
             </button>
           </div>
         </div>
 
-        {/* Prominent Room Code Input & Quick Switcher (44px min touch targets) */}
-        <div className="mt-5 pt-4 border-t border-white/10 [html[data-theme=light]_&]:border-slate-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 relative z-10">
-          <div className="flex items-center gap-2 flex-1 max-w-lg">
+        {/* Prominent Room Code Input & Quick Switcher (Apple HIG Soft Input) */}
+        <div className="mt-6 pt-5 border-t border-white/10 [html[data-theme=light]_&]:border-[#E5E5EA] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 relative z-10">
+          <div className="flex items-center gap-2.5 flex-1 max-w-lg">
             <div className="relative flex-1">
-              <KeyRound className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" strokeWidth={2} />
+              <KeyRound className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-[#007AFF] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" strokeWidth={2} />
               <input
                 type="text"
                 value={newRoomCode}
                 onChange={(e) => setNewRoomCode(e.target.value)}
                 placeholder="Enter room code (e.g. relayo-x8k3p9)..."
-                className="w-full h-11 min-h-[44px] bg-black/60 [html[data-theme=light]_&]:bg-slate-50 border border-white/15 [html[data-theme=light]_&]:border-slate-200 rounded-xl pl-10 pr-3 py-2 text-xs sm:text-sm font-mono text-cyan-300 [html[data-theme=light]_&]:text-[#0F172A] placeholder-slate-500 [html[data-theme=light]_&]:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+                className="w-full h-11 min-h-[44px] bg-black/60 [html[data-theme=light]_&]:bg-[#F5F5F7] border border-white/15 [html[data-theme=light]_&]:border-transparent focus:[html[data-theme=light]_&]:border-[#007AFF] rounded-xl pl-10 pr-3 py-2 text-xs sm:text-sm font-mono text-cyan-300 [html[data-theme=light]_&]:text-[#1D1D1F] placeholder-slate-500 [html[data-theme=light]_&]:placeholder-[#86868B] focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:[html[data-theme=light]_&]:ring-[#007AFF]/20 transition"
                 onKeyDown={(e) => e.key === 'Enter' && handleSwitchRoom()}
               />
             </div>
             <button
               onClick={handleSwitchRoom}
-              className="h-11 min-h-[44px] px-5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm transition shadow-md whitespace-nowrap cursor-pointer flex items-center justify-center"
+              className="h-11 min-h-[44px] px-6 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 [html[data-theme=light]_&]:bg-[#007AFF] [html[data-theme=light]_&]:from-[#007AFF] [html[data-theme=light]_&]:to-[#007AFF] hover:from-cyan-400 hover:to-blue-500 hover:[html[data-theme=light]_&]:bg-[#0066CC] text-white font-bold text-xs sm:text-sm transition shadow-md whitespace-nowrap cursor-pointer flex items-center justify-center"
             >
               Join Room
             </button>
@@ -176,10 +176,10 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
           <div className="flex items-center gap-2">
             <button
               onClick={handleNewPrivateRoom}
-              className="h-11 min-h-[44px] flex items-center gap-2 px-4 rounded-xl bg-white/5 [html[data-theme=light]_&]:bg-slate-100 hover:bg-white/10 hover:[html[data-theme=light]_&]:bg-slate-200 text-slate-300 [html[data-theme=light]_&]:text-slate-700 border border-white/10 [html[data-theme=light]_&]:border-slate-200 text-xs font-semibold transition whitespace-nowrap cursor-pointer"
+              className="h-11 min-h-[44px] flex items-center gap-2 px-4 rounded-xl bg-white/5 [html[data-theme=light]_&]:bg-[#F5F5F7] hover:bg-white/10 hover:[html[data-theme=light]_&]:bg-[#E5E5EA] text-slate-300 [html[data-theme=light]_&]:text-[#1D1D1F] border border-white/10 [html[data-theme=light]_&]:border-transparent text-xs font-semibold transition whitespace-nowrap cursor-pointer"
               title="Generate new random private room ID"
             >
-              <Sparkles className="w-3.5 h-3.5 text-purple-400 [html[data-theme=light]_&]:text-purple-600" strokeWidth={2} />
+              <Sparkles className="w-3.5 h-3.5 text-purple-400 [html[data-theme=light]_&]:text-[#007AFF]" strokeWidth={2} />
               <span>New Private Room</span>
             </button>
           </div>
@@ -187,17 +187,17 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
       </div>
 
       {/* Sub-Tab Navigation Bar with Horizontal Scrollability Hint */}
-      <div className="relative group/tabs overflow-hidden rounded-xl sm:rounded-2xl border border-white/10 [html[data-theme=light]_&]:border-slate-200">
-        <div className="flex items-center justify-start sm:justify-center overflow-x-auto gap-1 sm:gap-2 p-1.5 glass-panel bg-black/40 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:shadow-[0_4px_20px_rgb(0,0,0,0.03)] backdrop-blur-xl">
+      <div className="relative group/tabs overflow-hidden rounded-xl sm:rounded-2xl border border-white/10 [html[data-theme=light]_&]:border-[#E5E5EA]">
+        <div className="flex items-center justify-start sm:justify-center overflow-x-auto gap-1 sm:gap-2 p-1.5 glass-panel bg-black/40 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:shadow-[0_4px_24px_rgba(0,0,0,0.04)] backdrop-blur-xl">
           <button
             onClick={() => setSubTab('presence')}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[40px] ${
+            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] ${
               subTab === 'presence'
-                ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 [html[data-theme=light]_&]:bg-cyan-50 border border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.2)] [html[data-theme=light]_&]:shadow-none'
-                : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
+                ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 [html[data-theme=light]_&]:text-[#007AFF] [html[data-theme=light]_&]:bg-[#E5F1FF] border border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.2)] [html[data-theme=light]_&]:shadow-none'
+                : 'text-slate-400 [html[data-theme=light]_&]:text-[#86868B] hover:text-slate-200 [html[data-theme=light]_&]:hover:text-[#1D1D1F] hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-[#F5F5F7]'
             }`}
           >
-            <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />
+            <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 [html[data-theme=light]_&]:text-[#007AFF]" strokeWidth={2} />
             <span>Online Devices</span>
             <span className="px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-300 [html[data-theme=light]_&]:text-emerald-700 text-[10px]">
               {store.devices.filter(d => d.id !== store.deviceId && d.status === 'online').length}
@@ -206,16 +206,16 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
 
           <button
             onClick={() => setSubTab('clipboard')}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[40px] ${
+            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] ${
               subTab === 'clipboard'
-                ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 [html[data-theme=light]_&]:bg-cyan-50 border border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.2)] [html[data-theme=light]_&]:shadow-none'
-                : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
+                ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 [html[data-theme=light]_&]:text-[#007AFF] [html[data-theme=light]_&]:bg-[#E5F1FF] border border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.2)] [html[data-theme=light]_&]:shadow-none'
+                : 'text-slate-400 [html[data-theme=light]_&]:text-[#86868B] hover:text-slate-200 [html[data-theme=light]_&]:hover:text-[#1D1D1F] hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-[#F5F5F7]'
             }`}
           >
-            <ClipboardCopy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />
+            <ClipboardCopy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 [html[data-theme=light]_&]:text-[#007AFF]" strokeWidth={2} />
             <span>Clipboard Sync</span>
             {store.clipboards.length > 0 && (
-              <span className="px-1.5 py-0.2 rounded-full bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 text-[10px]">
+              <span className="px-1.5 py-0.2 rounded-full bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:text-[#007AFF] text-[10px]">
                 {store.clipboards.length}
               </span>
             )}
@@ -223,16 +223,16 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
 
           <button
             onClick={() => setSubTab('link')}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[40px] ${
+            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] ${
               subTab === 'link'
-                ? 'bg-gradient-to-r from-purple-500/20 to-indigo-500/20 text-purple-300 [html[data-theme=light]_&]:text-purple-700 [html[data-theme=light]_&]:bg-purple-50 border border-purple-500/40 shadow-[0_0_15px_rgba(168,85,247,0.2)] [html[data-theme=light]_&]:shadow-none'
-                : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
+                ? 'bg-gradient-to-r from-purple-500/20 to-indigo-500/20 text-purple-300 [html[data-theme=light]_&]:text-[#007AFF] [html[data-theme=light]_&]:bg-[#E5F1FF] border border-purple-500/40 shadow-[0_0_15px_rgba(168,85,247,0.2)] [html[data-theme=light]_&]:shadow-none'
+                : 'text-slate-400 [html[data-theme=light]_&]:text-[#86868B] hover:text-slate-200 [html[data-theme=light]_&]:hover:text-[#1D1D1F] hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-[#F5F5F7]'
             }`}
           >
-            <Link2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-400 [html[data-theme=light]_&]:text-purple-600" strokeWidth={2} />
+            <Link2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-400 [html[data-theme=light]_&]:text-[#007AFF]" strokeWidth={2} />
             <span>Links</span>
             {store.links.length > 0 && (
-              <span className="px-1.5 py-0.2 rounded-full bg-purple-500/20 text-purple-300 [html[data-theme=light]_&]:text-purple-700 text-[10px]">
+              <span className="px-1.5 py-0.2 rounded-full bg-purple-500/20 text-purple-300 [html[data-theme=light]_&]:text-[#007AFF] text-[10px]">
                 {store.links.length}
               </span>
             )}
@@ -240,35 +240,35 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
 
           <button
             onClick={() => setSubTab('scratchpad')}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[40px] ${
+            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] ${
               subTab === 'scratchpad'
-                ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-300 [html[data-theme=light]_&]:text-emerald-700 [html[data-theme=light]_&]:bg-emerald-50 border border-emerald-500/40 shadow-[0_0_15px_rgba(16,185,129,0.2)] [html[data-theme=light]_&]:shadow-none'
-                : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
+                ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-300 [html[data-theme=light]_&]:text-[#007AFF] [html[data-theme=light]_&]:bg-[#E5F1FF] border border-emerald-500/40 shadow-[0_0_15px_rgba(16,185,129,0.2)] [html[data-theme=light]_&]:shadow-none'
+                : 'text-slate-400 [html[data-theme=light]_&]:text-[#86868B] hover:text-slate-200 [html[data-theme=light]_&]:hover:text-[#1D1D1F] hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-[#F5F5F7]'
             }`}
           >
-            <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 [html[data-theme=light]_&]:text-emerald-600" strokeWidth={2} />
+            <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 [html[data-theme=light]_&]:text-[#007AFF]" strokeWidth={2} />
             <span>Notes</span>
           </button>
 
           <button
             onClick={() => setSubTab('screenshot')}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[40px] ${
+            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] ${
               subTab === 'screenshot'
-                ? 'bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-300 [html[data-theme=light]_&]:text-amber-700 [html[data-theme=light]_&]:bg-amber-50 border border-amber-500/40 shadow-[0_0_15px_rgba(245,158,11,0.2)] [html[data-theme=light]_&]:shadow-none'
-                : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
+                ? 'bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-300 [html[data-theme=light]_&]:text-[#007AFF] [html[data-theme=light]_&]:bg-[#E5F1FF] border border-amber-500/40 shadow-[0_0_15px_rgba(245,158,11,0.2)] [html[data-theme=light]_&]:shadow-none'
+                : 'text-slate-400 [html[data-theme=light]_&]:text-[#86868B] hover:text-slate-200 [html[data-theme=light]_&]:hover:text-[#1D1D1F] hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-[#F5F5F7]'
             }`}
           >
-            <Camera className="w-4 h-4 text-amber-400 [html[data-theme=light]_&]:text-amber-600" strokeWidth={2} />
+            <Camera className="w-4 h-4 text-amber-400 [html[data-theme=light]_&]:text-[#007AFF]" strokeWidth={2} />
             <span>Screenshots</span>
             {store.screenshots.length > 0 && (
-              <span className="px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-300 [html[data-theme=light]_&]:text-amber-700 text-[10px]">
+              <span className="px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-300 [html[data-theme=light]_&]:text-[#007AFF] text-[10px]">
                 {store.screenshots.length}
               </span>
             )}
           </button>
         </div>
         {/* Subtle Gradient Fade hint on right edge for horizontal scroll */}
-        <div className="absolute top-0 right-0 bottom-0 w-8 bg-gradient-to-l from-black/60 via-black/20 to-transparent [html[data-theme=light]_&]:from-white [html[data-theme=light]_&]:via-white/50 [html[data-theme=light]_&]:to-transparent pointer-events-none rounded-r-2xl sm:hidden" />
+        <div className="absolute top-0 right-0 bottom-0 w-8 bg-gradient-to-l from-black/60 via-black/20 to-transparent [html[data-theme=light]_&]:from-[#F5F5F7] [html[data-theme=light]_&]:to-transparent pointer-events-none rounded-r-2xl sm:hidden" />
       </div>
 
       {/* Main Tab Content */}
