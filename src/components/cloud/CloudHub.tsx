@@ -307,13 +307,6 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
               Powerful real-time cross-device productivity tools
             </p>
           </div>
-          <button
-            onClick={() => setShowCloudReviewModal(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs font-semibold transition cursor-pointer"
-          >
-            <MessageSquareHeart className="w-4 h-4 text-rose-400" />
-            <span>Leave a Review</span>
-          </button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
