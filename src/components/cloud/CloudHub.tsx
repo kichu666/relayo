@@ -139,11 +139,10 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp }:
 
             <button
               onClick={() => setShowRoomModal(true)}
-              className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-black/60 hover:bg-black/80 border border-white/15 text-slate-200 text-xs font-bold transition shadow-md"
+              className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-black/60 hover:bg-black/80 border border-white/15 text-slate-200 text-xs font-bold transition shadow-md cursor-pointer"
             >
               <KeyRound className="w-4 h-4 text-cyan-400" />
-              <span>Room:</span>
-              <span className="font-mono text-cyan-300 tracking-wider">{store.roomId}</span>
+              <span className="hidden sm:inline">Change Room</span>
             </button>
 
             <button
