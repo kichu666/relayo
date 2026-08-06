@@ -69,7 +69,11 @@ export interface CloudState {
 const getStoredOrGeneratedId = (key: string, prefix: string) => {
   let val = localStorage.getItem(key);
   if (!val) {
-    val = `${prefix}_${Math.random().toString(36).substring(2, 9)}`;
+    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+      val = `${prefix}_${crypto.randomUUID().substring(0, 8)}`;
+    } else {
+      val = `${prefix}_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+    }
     localStorage.setItem(key, val);
   }
   return val;
@@ -169,23 +173,11 @@ export const initCloudSession = (roomIdToJoin?: string) => {
     platform: navigator.platform
   };
 
-  // Immediately register self device locally & in Firebase
-  set(deviceRef, selfDevice).catch(() => {});
-  const existingDevs = $cloudStore.get().devices;
-  const mergedDevs = existingDevs.some(d => d.id === state.deviceId)
-    ? existingDevs.map(d => (d.id === state.deviceId ? selfDevice : d))
-    : [selfDevice, ...existingDevs];
-  $cloudStore.set({ ...$cloudStore.get(), isConnected: true, devices: mergedDevs });
-
-  // Setup presence tracking
+  // Setup presence tracking with isolated onDisconnect.remove() for this unique device path
   const unsubConnected = onValue(connectedRef, (snap) => {
     if (snap.val() === true) {
       set(deviceRef, selfDevice);
-      onDisconnect(deviceRef).update({
-        status: 'offline',
-        lastActive: serverTimestamp()
-      });
-
+      onDisconnect(deviceRef).remove();
       $cloudStore.set({ ...$cloudStore.get(), isConnected: true });
     } else {
       $cloudStore.set({ ...$cloudStore.get(), isConnected: false });
@@ -193,15 +185,17 @@ export const initCloudSession = (roomIdToJoin?: string) => {
   });
   currentUnsubscribes.push(() => off(connectedRef));
 
-  // Heartbeat loop every 10 seconds
+  // Initial set
+  set(deviceRef, selfDevice).catch(() => {});
+
+  // Heartbeat loop every 10 seconds to keep lastActive fresh
   heartbeatInterval = setInterval(() => {
-    const currentState = $cloudStore.get();
     if (db) {
-      set(ref(db, `rooms/${roomId}/presence/${currentState.deviceId}/lastActive`), Date.now());
+      set(ref(db, `rooms/${roomId}/presence/${state.deviceId}/lastActive`), Date.now());
     }
   }, 10000);
 
-  // Listen to all devices in the room
+  // Listen to all devices in the room presence node
   const presenceRef = ref(db, `rooms/${roomId}/presence`);
   const unsubDevices = onValue(presenceRef, (snapshot) => {
     const data = snapshot.val();
