@@ -132,18 +132,10 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5 flex-wrap">
-            <button
-              onClick={() => setShowRoomModal(true)}
-              className="h-11 min-h-[44px] flex items-center gap-2 px-4 rounded-xl bg-black/60 [html[data-theme=light]_&]:bg-white hover:bg-black/80 hover:[html[data-theme=light]_&]:bg-slate-50 border border-white/15 [html[data-theme=light]_&]:border-[#D8E9FF] text-slate-200 [html[data-theme=light]_&]:text-[#0F172A] text-xs font-bold transition shadow-sm cursor-pointer"
-            >
-              <KeyRound className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />
-              <span className="hidden sm:inline">Change Room</span>
-            </button>
-
+          <div className="flex items-center gap-2">
             <button
               onClick={handleCopyRoomCode}
-              className="w-11 h-11 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:hover:bg-slate-50 border border-cyan-500/30 [html[data-theme=light]_&]:border-[#D8E9FF] text-xs transition cursor-pointer"
+              className="w-11 h-11 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:hover:bg-slate-50 border border-cyan-500/30 [html[data-theme=light]_&]:border-[#D8E9FF] text-xs transition cursor-pointer shadow-sm"
               title="Copy Room Link"
             >
               {copiedCode ? <Check className="w-4 h-4 text-emerald-400" strokeWidth={2} /> : <QrCode className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />}
