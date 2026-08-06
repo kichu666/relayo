@@ -453,52 +453,52 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
 
       {/* Cloud Hub Tutorial Modal */}
       {isHelpModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-          <div className="relative w-full max-w-md bg-slate-950 border border-white/10 rounded-3xl p-6 shadow-2xl backdrop-blur-2xl text-slate-100">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 dark:bg-black/80 [html[data-theme=light]_&]:bg-[rgba(248,250,252,0.35)] backdrop-blur-md animate-fade-in">
+          <div className="relative w-full max-w-md bg-slate-950 dark:bg-slate-950 [html[data-theme=light]_&]:bg-[linear-gradient(180deg,#F9FCFF_0%,#EEF7FF_100%)] border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] rounded-3xl p-6 shadow-2xl dark:shadow-2xl [html[data-theme=light]_&]:shadow-[0_20px_60px_rgba(14,165,233,0.12)] backdrop-blur-2xl text-slate-100 dark:text-slate-100 [html[data-theme=light]_&]:text-[#0F172A]">
             <button
               onClick={handleCloseHelp}
-              className="absolute top-5 right-5 p-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-slate-400 hover:text-white transition-colors cursor-pointer"
+              className="absolute top-5 right-5 p-1.5 rounded-full bg-white/5 dark:bg-white/5 [html[data-theme=light]_&]:bg-white hover:bg-white/10 dark:hover:bg-white/10 hover:[html[data-theme=light]_&]:bg-slate-50 border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] text-slate-400 dark:text-slate-400 [html[data-theme=light]_&]:text-[#475569] hover:text-white dark:hover:text-white hover:[html[data-theme=light]_&]:text-[#0F172A] [html[data-theme=light]_&]:shadow-sm transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
 
             <div className="flex items-center gap-3 mb-5">
-              <div className="p-2.5 rounded-2xl bg-cyan-500/20 border border-cyan-500/30 text-cyan-400">
+              <div className="p-2.5 rounded-2xl bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 [html[data-theme=light]_&]:text-[#0EA5E9] [html[data-theme=light]_&]:bg-cyan-50 [html[data-theme=light]_&]:border-[#D7E8FF]">
                 <HelpCircle className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-base font-extrabold text-white">How Cloud Hub Works</h3>
-                <p className="text-[11px] text-slate-400">Real-Time Multi-Device Cloud Productivity</p>
+                <h3 className="text-base font-extrabold text-white dark:text-white [html[data-theme=light]_&]:text-[#0F172A]">How Cloud Hub Works</h3>
+                <p className="text-[11px] text-slate-400 dark:text-slate-400 [html[data-theme=light]_&]:text-[#475569]">Real-Time Multi-Device Cloud Productivity</p>
               </div>
             </div>
 
             <div className="space-y-3.5 my-6 text-xs">
-              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-black/60 border border-white/10">
-                <div className="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-xs shrink-0">1</div>
+              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-black/60 dark:bg-black/60 [html[data-theme=light]_&]:bg-white border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#E2E8F0] [html[data-theme=light]_&]:shadow-sm">
+                <div className="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 [html[data-theme=light]_&]:text-cyan-700 [html[data-theme=light]_&]:bg-cyan-100 flex items-center justify-center font-bold text-xs shrink-0">1</div>
                 <div>
-                  <p className="font-bold text-white mb-0.5">Create or Join a Room</p>
-                  <p className="text-slate-400 leading-normal">
-                    Use the <strong className="text-cyan-300">New Private Room</strong> button to generate a fresh key, type an existing code into the input field and click <strong className="text-cyan-300">Join Room</strong>, or tap the QR code for instant mobile pairing.
+                  <p className="font-bold text-white dark:text-white [html[data-theme=light]_&]:text-[#0F172A] mb-0.5">Create or Join a Room</p>
+                  <p className="text-slate-400 dark:text-slate-400 [html[data-theme=light]_&]:text-[#475569] leading-normal">
+                    Use the <strong className="text-cyan-300 dark:text-cyan-300 [html[data-theme=light]_&]:text-cyan-700">New Private Room</strong> button to generate a fresh key, type an existing code into the input field and click <strong className="text-cyan-300 dark:text-cyan-300 [html[data-theme=light]_&]:text-cyan-700">Join Room</strong>, or tap the QR code for instant mobile pairing.
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-black/60 border border-white/10">
-                <div className="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-xs shrink-0">2</div>
+              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-black/60 dark:bg-black/60 [html[data-theme=light]_&]:bg-white border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#E2E8F0] [html[data-theme=light]_&]:shadow-sm">
+                <div className="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 [html[data-theme=light]_&]:text-indigo-700 [html[data-theme=light]_&]:bg-indigo-100 flex items-center justify-center font-bold text-xs shrink-0">2</div>
                 <div>
-                  <p className="font-bold text-white mb-0.5">Online Devices</p>
-                  <p className="text-slate-400 leading-normal">
-                    Monitor your active status under <strong className="text-cyan-300">This Device</strong> and view all paired devices in real time under <strong className="text-cyan-300">Connected Devices</strong>.
+                  <p className="font-bold text-white dark:text-white [html[data-theme=light]_&]:text-[#0F172A] mb-0.5">Online Devices</p>
+                  <p className="text-slate-400 dark:text-slate-400 [html[data-theme=light]_&]:text-[#475569] leading-normal">
+                    Monitor your active status under <strong className="text-cyan-300 dark:text-cyan-300 [html[data-theme=light]_&]:text-cyan-700">This Device</strong> and view all paired devices in real time under <strong className="text-cyan-300 dark:text-cyan-300 [html[data-theme=light]_&]:text-cyan-700">Connected Devices</strong>.
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-black/60 border border-white/10">
-                <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0">3</div>
+              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-black/60 dark:bg-black/60 [html[data-theme=light]_&]:bg-white border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#E2E8F0] [html[data-theme=light]_&]:shadow-sm">
+                <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 [html[data-theme=light]_&]:text-emerald-700 [html[data-theme=light]_&]:bg-emerald-100 flex items-center justify-center font-bold text-xs shrink-0">3</div>
                 <div>
-                  <p className="font-bold text-white mb-0.5">Productivity Tools</p>
-                  <p className="text-slate-400 leading-normal">
-                    Switch between <strong className="text-cyan-300">Clipboard Sync</strong>, <strong className="text-cyan-300">Links</strong>, <strong className="text-cyan-300">Notes</strong>, and <strong className="text-cyan-300">Screenshots</strong> tabs to instantly share data across devices over the cloud.
+                  <p className="font-bold text-white dark:text-white [html[data-theme=light]_&]:text-[#0F172A] mb-0.5">Productivity Tools</p>
+                  <p className="text-slate-400 dark:text-slate-400 [html[data-theme=light]_&]:text-[#475569] leading-normal">
+                    Switch between <strong className="text-cyan-300 dark:text-cyan-300 [html[data-theme=light]_&]:text-cyan-700">Clipboard Sync</strong>, <strong className="text-cyan-300 dark:text-cyan-300 [html[data-theme=light]_&]:text-cyan-700">Links</strong>, <strong className="text-cyan-300 dark:text-cyan-300 [html[data-theme=light]_&]:text-cyan-700">Notes</strong>, and <strong className="text-cyan-300 dark:text-cyan-300 [html[data-theme=light]_&]:text-cyan-700">Screenshots</strong> tabs to instantly share data across devices over the cloud.
                   </p>
                 </div>
               </div>

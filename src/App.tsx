@@ -707,49 +707,49 @@ export function App() {
       {/* Formspree User Feedback Modal */}
       <FeedbackModal isOpen={isFeedbackOpen} onClose={() => setIsFeedbackOpen(false)} />
 
-      {/* AMOLED Glassmorphism P2P Help Modal */}
+      {/* Glassmorphism P2P Help Modal */}
       {appMode === 'p2p' && isP2PTutorialOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-          <div className="relative w-full max-w-md bg-black/95 border border-zinc-800/90 rounded-3xl p-6 shadow-2xl backdrop-blur-2xl text-zinc-100">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 dark:bg-black/80 [html[data-theme=light]_&]:bg-[rgba(248,250,252,0.35)] backdrop-blur-md animate-fade-in">
+          <div className="relative w-full max-w-md bg-black/95 dark:bg-black/95 [html[data-theme=light]_&]:bg-[linear-gradient(180deg,#F9FCFF_0%,#EEF7FF_100%)] border border-zinc-800/90 dark:border-zinc-800/90 [html[data-theme=light]_&]:border-[#D7E8FF] rounded-3xl p-6 shadow-2xl dark:shadow-2xl [html[data-theme=light]_&]:shadow-[0_20px_60px_rgba(14,165,233,0.12)] backdrop-blur-2xl text-zinc-100 dark:text-zinc-100 [html[data-theme=light]_&]:text-[#0F172A]">
             <button
               onClick={() => setIsP2PTutorialOpen(false)}
-              className="absolute top-5 right-5 p-1.5 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              className="absolute top-5 right-5 p-1.5 rounded-full bg-zinc-900 dark:bg-zinc-900 [html[data-theme=light]_&]:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-800 hover:[html[data-theme=light]_&]:bg-slate-50 border border-zinc-800 dark:border-zinc-800 [html[data-theme=light]_&]:border-[#D7E8FF] text-zinc-400 dark:text-zinc-400 [html[data-theme=light]_&]:text-[#475569] hover:text-white dark:hover:text-white hover:[html[data-theme=light]_&]:text-[#0F172A] [html[data-theme=light]_&]:shadow-sm transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
 
             <div className="flex items-center gap-3 mb-5">
-              <div className="p-2.5 rounded-2xl bg-indigo-500/20 border border-indigo-500/30 text-indigo-400">
+              <div className="p-2.5 rounded-2xl bg-indigo-500/20 border border-indigo-500/30 text-indigo-400 [html[data-theme=light]_&]:text-[#0EA5E9] [html[data-theme=light]_&]:bg-cyan-50 [html[data-theme=light]_&]:border-[#D7E8FF]">
                 <HelpCircle className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-base font-extrabold text-white">How P2P Share Works</h3>
-                <p className="text-[11px] text-zinc-400">Direct Browser-to-Browser Transfer</p>
+                <h3 className="text-base font-extrabold text-white dark:text-white [html[data-theme=light]_&]:text-[#0F172A]">How P2P Share Works</h3>
+                <p className="text-[11px] text-zinc-400 dark:text-zinc-400 [html[data-theme=light]_&]:text-[#475569]">Direct Browser-to-Browser Transfer</p>
               </div>
             </div>
 
             <div className="space-y-3.5 my-6 text-xs">
-              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-zinc-900/90 border border-zinc-800/80">
-                <div className="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-xs shrink-0">1</div>
+              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-zinc-900/90 dark:bg-zinc-900/90 [html[data-theme=light]_&]:bg-white border border-zinc-800/80 dark:border-zinc-800/80 [html[data-theme=light]_&]:border-[#E2E8F0] [html[data-theme=light]_&]:shadow-sm">
+                <div className="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 [html[data-theme=light]_&]:text-cyan-700 [html[data-theme=light]_&]:bg-cyan-100 flex items-center justify-center font-bold text-xs shrink-0">1</div>
                 <div>
-                  <p className="font-bold text-white mb-0.5">Share Link or QR Code</p>
-                  <p className="text-zinc-400 leading-normal">Drop any file to instantly generate a secure share link or scan the QR code on your mobile device.</p>
+                  <p className="font-bold text-white dark:text-white [html[data-theme=light]_&]:text-[#0F172A] mb-0.5">Share Link or QR Code</p>
+                  <p className="text-zinc-400 dark:text-zinc-400 [html[data-theme=light]_&]:text-[#475569] leading-normal">Drop any file to instantly generate a secure share link or scan the QR code on your mobile device.</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-zinc-900/90 border border-zinc-800/80">
-                <div className="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-xs shrink-0">2</div>
+              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-zinc-900/90 dark:bg-zinc-900/90 [html[data-theme=light]_&]:bg-white border border-zinc-800/80 dark:border-zinc-800/80 [html[data-theme=light]_&]:border-[#E2E8F0] [html[data-theme=light]_&]:shadow-sm">
+                <div className="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 [html[data-theme=light]_&]:text-indigo-700 [html[data-theme=light]_&]:bg-indigo-100 flex items-center justify-center font-bold text-xs shrink-0">2</div>
                 <div>
-                  <p className="font-bold text-white mb-0.5">Keep Browser Tabs Open</p>
-                  <p className="text-zinc-400 leading-normal">Both sender and receiver tabs must remain open to maintain the direct WebRTC peer tunnel.</p>
+                  <p className="font-bold text-white dark:text-white [html[data-theme=light]_&]:text-[#0F172A] mb-0.5">Keep Browser Tabs Open</p>
+                  <p className="text-zinc-400 dark:text-zinc-400 [html[data-theme=light]_&]:text-[#475569] leading-normal">Both sender and receiver tabs must remain open to maintain the direct WebRTC peer tunnel.</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-zinc-900/90 border border-zinc-800/80">
-                <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0">3</div>
+              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-zinc-900/90 dark:bg-zinc-900/90 [html[data-theme=light]_&]:bg-white border border-zinc-800/80 dark:border-zinc-800/80 [html[data-theme=light]_&]:border-[#E2E8F0] [html[data-theme=light]_&]:shadow-sm">
+                <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 [html[data-theme=light]_&]:text-emerald-700 [html[data-theme=light]_&]:bg-emerald-100 flex items-center justify-center font-bold text-xs shrink-0">3</div>
                 <div>
-                  <p className="font-bold text-white mb-0.5">Direct P2P Data Streaming</p>
-                  <p className="text-zinc-400 leading-normal">Files transfer directly between browsers with live speed indicators and zero server storage.</p>
+                  <p className="font-bold text-white dark:text-white [html[data-theme=light]_&]:text-[#0F172A] mb-0.5">Direct P2P Data Streaming</p>
+                  <p className="text-zinc-400 dark:text-zinc-400 [html[data-theme=light]_&]:text-[#475569] leading-normal">Files transfer directly between browsers with live speed indicators and zero server storage.</p>
                 </div>
               </div>
             </div>
