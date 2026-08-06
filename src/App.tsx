@@ -225,7 +225,9 @@ export function App() {
 
       {/* Top Navbar with Persistent Theme Switcher */}
       <header className="w-full border-b border-[var(--panel-border)] glass-panel sticky top-0 z-40 backdrop-blur-xl">
-        <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-1.5 sm:gap-3">
+        <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2">
+
+          {/* Logo — left */}
           <div className="flex items-center gap-2 cursor-pointer shrink-0" onClick={handleResetHome}>
             <Share2 className="w-5 h-5 sm:w-6 sm:h-6 theme-accent-text shrink-0" />
             <div className="flex items-center gap-1">
@@ -238,33 +240,62 @@ export function App() {
             </div>
           </div>
 
-          <div className="p-0.5 flex items-center gap-0.5 rounded-full bg-black border border-white/10 shadow-[0_0_20px_rgba(0,0,0,0.9)] backdrop-blur-2xl shrink-0">
+          {/* Desktop Pill Switcher — centered, hidden on mobile */}
+          <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 p-1 items-center gap-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-2xl shadow-[0_0_20px_rgba(0,0,0,0.6)]">
             <button
               onClick={() => setAppMode('p2p')}
-              className={`h-8 min-h-[32px] px-3 py-1 flex items-center justify-center gap-1.5 rounded-full font-bold text-xs md:text-sm whitespace-nowrap tracking-wide transition-all duration-300 cursor-pointer ${
+              className={`h-9 px-4 flex items-center justify-center gap-2 rounded-full font-bold text-sm whitespace-nowrap tracking-wide transition-all duration-300 cursor-pointer ${
                 appMode === 'p2p'
-                  ? 'bg-gradient-to-r from-cyan-400 to-blue-600 text-slate-950 shadow-[0_0_25px_rgba(6,182,212,0.4)]'
-                  : 'text-white/50 hover:text-white/90 hover:bg-white/5'
+                  ? 'bg-[#00a8ff] text-white shadow-[0_0_15px_rgba(0,168,255,0.4)]'
+                  : 'text-white/50 hover:text-white/80 hover:bg-white/5'
               }`}
             >
-              <Radio className="w-3 h-3 shrink-0" />
-              <span className="whitespace-nowrap">Wi-Fi P2P</span>
+              <Wifi className="w-4 h-4 shrink-0" strokeWidth={1.5} />
+              <span>Wi-Fi P2P</span>
             </button>
             <button
               onClick={() => setAppMode('cloud')}
-              className={`h-8 min-h-[32px] px-3 py-1 flex items-center justify-center gap-1.5 rounded-full font-bold text-xs md:text-sm whitespace-nowrap tracking-wide transition-all duration-300 cursor-pointer ${
+              className={`h-9 px-4 flex items-center justify-center gap-2 rounded-full font-bold text-sm whitespace-nowrap tracking-wide transition-all duration-300 cursor-pointer ${
                 appMode === 'cloud'
-                  ? 'bg-gradient-to-r from-cyan-400 to-blue-600 text-slate-950 shadow-[0_0_25px_rgba(6,182,212,0.4)]'
-                  : 'text-white/50 hover:text-white/90 hover:bg-white/5'
+                  ? 'bg-[#00a8ff] text-white shadow-[0_0_15px_rgba(0,168,255,0.4)]'
+                  : 'text-white/50 hover:text-white/80 hover:bg-white/5'
               }`}
             >
-              <Cloud className="w-3 h-3 shrink-0" />
-              <span className="whitespace-nowrap">Cloud Hub</span>
+              <Cloud className="w-4 h-4 shrink-0" strokeWidth={1.5} />
+              <span>Cloud Hub</span>
             </button>
           </div>
 
-          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+          {/* Right side — connection badge + theme + mobile icon switcher */}
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {getConnectionStateBadge()}
+
+            {/* Mobile Icon-Only Switcher — hidden on desktop */}
+            <div className="flex md:hidden items-center gap-0.5 p-0.5 rounded-full bg-white/5 border border-white/10">
+              <button
+                onClick={() => setAppMode('p2p')}
+                className={`h-8 w-8 rounded-full flex items-center justify-center p-0 transition-all duration-300 cursor-pointer ${
+                  appMode === 'p2p'
+                    ? 'bg-[#00a8ff] text-white shadow-[0_0_12px_rgba(0,168,255,0.5)]'
+                    : 'text-white/50 hover:text-white/80'
+                }`}
+                title="Wi-Fi P2P"
+              >
+                <Wifi className="w-3.5 h-3.5" strokeWidth={1.5} />
+              </button>
+              <button
+                onClick={() => setAppMode('cloud')}
+                className={`h-8 w-8 rounded-full flex items-center justify-center p-0 transition-all duration-300 cursor-pointer ${
+                  appMode === 'cloud'
+                    ? 'bg-[#00a8ff] text-white shadow-[0_0_12px_rgba(0,168,255,0.5)]'
+                    : 'text-white/50 hover:text-white/80'
+                }`}
+                title="Cloud Hub"
+              >
+                <Cloud className="w-3.5 h-3.5" strokeWidth={1.5} />
+              </button>
+            </div>
+
             <ThemeSwitcher />
           </div>
         </div>
