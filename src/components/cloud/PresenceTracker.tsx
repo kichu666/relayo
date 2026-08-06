@@ -67,7 +67,7 @@ export function PresenceTracker() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold tracking-wider text-cyan-400 uppercase">This Device Identity</span>
+                <span className="text-xs font-semibold tracking-wider text-cyan-400">This Device</span>
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
                   ● Active

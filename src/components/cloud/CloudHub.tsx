@@ -163,7 +163,7 @@ export function CloudHub() {
           }`}
         >
           <Users className="w-4 h-4 text-cyan-400" />
-          <span>Device Presence</span>
+          <span>Online Devices</span>
           <span className="px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px]">
             {store.devices.filter(d => d.id !== store.deviceId && d.status === 'online').length}
           </span>
@@ -178,7 +178,7 @@ export function CloudHub() {
           }`}
         >
           <ClipboardCopy className="w-4 h-4 text-cyan-400" />
-          <span>Clipboard</span>
+          <span>Clipboard Sync</span>
           {store.clipboards.length > 0 && (
             <span className="px-1.5 py-0.2 rounded-full bg-cyan-500/20 text-cyan-300 text-[10px]">
               {store.clipboards.length}
@@ -195,7 +195,7 @@ export function CloudHub() {
           }`}
         >
           <Link2 className="w-4 h-4 text-purple-400" />
-          <span>Send Link</span>
+          <span>Links</span>
           {store.links.length > 0 && (
             <span className="px-1.5 py-0.2 rounded-full bg-purple-500/20 text-purple-300 text-[10px]">
               {store.links.length}
@@ -212,7 +212,7 @@ export function CloudHub() {
           }`}
         >
           <FileText className="w-4 h-4 text-emerald-400" />
-          <span>Scratchpad</span>
+          <span>Notes</span>
         </button>
 
         <button

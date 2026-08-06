@@ -277,16 +277,13 @@ export function App() {
         <div className="text-center max-w-2xl mx-auto mb-10">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-semibold mb-4 backdrop-blur-md theme-badge shadow-sm">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Relayo Zero-Memory HTTPS Direct Streaming Architecture</span>
+            <span>Relayo Direct Transfer Engine</span>
           </div>
           <h1 className="text-4xl sm:text-5xl font-black tracking-tight leading-tight mb-4">
-            Instant Device-to-Device <br />
-            <span className="bg-gradient-to-r from-cyan-500 via-indigo-500 to-violet-500 bg-clip-text text-transparent">
-              WebRTC P2P Direct Share
-            </span>
+            Instant Device-to-Device Sharing
           </h1>
           <p className="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed max-w-2xl mx-auto">
-            Direct browser-to-browser peer file streaming over WebRTC. Zero server storage, zero cellular bandwidth wasted, 100% direct device transfer.
+            Direct browser-to-browser transfer. No uploads. No server storage.
           </p>
         </div>
 
@@ -307,7 +304,7 @@ export function App() {
                 <FileUp className="w-12 h-12 theme-accent-text mb-3 group-hover:scale-110 transition-transform animate-bounce" />
                 <p className="text-base font-bold">Drop files here or click to select</p>
                 <p className="text-xs text-[var(--text-muted)] mt-1 font-mono">
-                  64KB Binary DataChannel Chunking • Zero-Server Storage
+                  Direct Browser-to-Browser Transfer • Zero-Server Storage
                 </p>
               </div>
 
