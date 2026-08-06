@@ -64,11 +64,11 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 dark:bg-black/80 [html[data-theme=light]_&]:bg-[rgba(248,250,252,0.35)] backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-md bg-white dark:bg-slate-950 [html[data-theme=light]_&]:bg-[linear-gradient(180deg,#F9FCFF_0%,#EEF7FF_100%)] border border-slate-200 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] rounded-3xl p-6 shadow-[0_20px_60px_rgba(14,165,233,0.12)] dark:shadow-2xl backdrop-blur-2xl text-slate-900 dark:text-slate-100">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 dark:bg-black/80 backdrop-blur-md animate-fade-in">
+      <div className="relative w-full max-w-md bg-white dark:bg-slate-950 [html[data-theme=light]_&]:bg-[linear-gradient(180deg,#FFFFFF_0%,#F6FAFF_100%)] border border-slate-200 dark:border-white/10 [html[data-theme=light]_&]:border-[#D9EAF7] rounded-3xl p-6 shadow-[0_20px_60px_rgba(20,40,80,0.15)] dark:shadow-2xl backdrop-blur-2xl text-slate-900 dark:text-slate-100">
         <button
           onClick={handleResetAndClose}
-          className="absolute top-5 right-5 p-1.5 rounded-full bg-slate-100 dark:bg-white/5 [html[data-theme=light]_&]:bg-white hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] text-slate-500 dark:text-slate-400 [html[data-theme=light]_&]:text-[#475569] hover:text-slate-900 dark:hover:text-white hover:[html[data-theme=light]_&]:text-[#0F172A] [html[data-theme=light]_&]:shadow-sm transition-colors cursor-pointer"
+          className="absolute top-5 right-5 p-1.5 rounded-full bg-slate-100 dark:bg-white/5 [html[data-theme=light]_&]:bg-white hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 [html[data-theme=light]_&]:border-[#D9EAF7] text-slate-500 dark:text-slate-400 [html[data-theme=light]_&]:text-[#667085] hover:text-slate-900 dark:hover:text-white hover:[html[data-theme=light]_&]:text-[#172033] [html[data-theme=light]_&]:shadow-sm transition-colors cursor-pointer"
         >
           <X className="w-4 h-4" />
         </button>
@@ -80,15 +80,15 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                 <CheckCircle2 className="w-12 h-12 animate-bounce" />
               </div>
             </div>
-            <h3 className="text-xl font-black text-slate-900 dark:text-white [html[data-theme=light]_&]:text-[#0F172A] tracking-tight">
+            <h3 className="text-xl font-black text-slate-900 dark:text-white [html[data-theme=light]_&]:text-[#172033] tracking-tight">
               Thank You for Your Feedback!
             </h3>
-            <p className="text-xs text-slate-600 dark:text-slate-400 [html[data-theme=light]_&]:text-[#475569] max-w-xs mx-auto leading-relaxed">
+            <p className="text-xs text-slate-600 dark:text-slate-400 [html[data-theme=light]_&]:text-[#667085] max-w-xs mx-auto leading-relaxed">
               Your review has been successfully submitted and helps us continuously improve Relayo.
             </p>
             <button
               onClick={handleResetAndClose}
-              className="w-full mt-4 py-2.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs shadow-lg transition cursor-pointer"
+              className="w-full mt-4 py-2.5 rounded-2xl bg-[linear-gradient(90deg,#1FB6FF,#2D7FF9)] hover:brightness-105 text-white font-bold text-xs shadow-lg transition cursor-pointer"
             >
               Done
             </button>
@@ -100,18 +100,18 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                 <MessageSquareHeart className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-base font-extrabold text-slate-900 dark:text-white [html[data-theme=light]_&]:text-[#0F172A]">Share Your Feedback</h3>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400 [html[data-theme=light]_&]:text-[#475569]">We value your review and suggestions</p>
+                <h3 className="text-base font-extrabold text-slate-900 dark:text-white [html[data-theme=light]_&]:text-[#172033]">Share Your Feedback</h3>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 [html[data-theme=light]_&]:text-[#667085]">We value your review and suggestions</p>
               </div>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Star Rating Picker (Star wrapper forced to bg-transparent with drop-shadow SVG glow) */}
               <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 [html[data-theme=light]_&]:text-[#334155] mb-1.5">
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 [html[data-theme=light]_&]:text-[#172033] mb-1.5">
                   Rating
                 </label>
-                <div className="flex items-center gap-2 bg-transparent border border-slate-200 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] p-2.5 rounded-xl justify-center">
+                <div className="flex items-center gap-2 bg-transparent border border-slate-200 dark:border-white/10 [html[data-theme=light]_&]:border-[#D9EAF7] p-2.5 rounded-xl justify-center">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button
                       key={star}
@@ -136,7 +136,7 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
               {/* Name & Email Fields */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 [html[data-theme=light]_&]:text-[#334155] mb-1">
+                  <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 [html[data-theme=light]_&]:text-[#172033] mb-1">
                     Name (Optional)
                   </label>
                   <input
@@ -144,11 +144,11 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Your name..."
-                    className="w-full bg-slate-50 dark:bg-black/60 [html[data-theme=light]_&]:bg-white border border-slate-200 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] hover:[html[data-theme=light]_&]:border-[#B8DCFF] focus:[html[data-theme=light]_&]:border-[#22C7F2] rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white [html[data-theme=light]_&]:text-[#0F172A] placeholder-slate-400 dark:placeholder-slate-500 [html[data-theme=light]_&]:placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:[html[data-theme=light]_&]:ring-cyan-400/30"
+                    className="w-full bg-slate-50 dark:bg-black/60 [html[data-theme=light]_&]:bg-white border border-slate-200 dark:border-white/10 [html[data-theme=light]_&]:border-[#D9EAF7] focus:[html[data-theme=light]_&]:border-[#26B6FF] rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white [html[data-theme=light]_&]:text-[#172033] placeholder-slate-400 dark:placeholder-slate-500 [html[data-theme=light]_&]:placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:[html[data-theme=light]_&]:ring-[#26B6FF]/30"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 [html[data-theme=light]_&]:text-[#334155] mb-1">
+                  <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 [html[data-theme=light]_&]:text-[#172033] mb-1">
                     Email (Optional)
                   </label>
                   <input
@@ -156,14 +156,14 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@domain.com..."
-                    className="w-full bg-slate-50 dark:bg-black/60 [html[data-theme=light]_&]:bg-white border border-slate-200 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] hover:[html[data-theme=light]_&]:border-[#B8DCFF] focus:[html[data-theme=light]_&]:border-[#22C7F2] rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white [html[data-theme=light]_&]:text-[#0F172A] placeholder-slate-400 dark:placeholder-slate-500 [html[data-theme=light]_&]:placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:[html[data-theme=light]_&]:ring-cyan-400/30"
+                    className="w-full bg-slate-50 dark:bg-black/60 [html[data-theme=light]_&]:bg-white border border-slate-200 dark:border-white/10 [html[data-theme=light]_&]:border-[#D9EAF7] focus:[html[data-theme=light]_&]:border-[#26B6FF] rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white [html[data-theme=light]_&]:text-[#172033] placeholder-slate-400 dark:placeholder-slate-500 [html[data-theme=light]_&]:placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:[html[data-theme=light]_&]:ring-[#26B6FF]/30"
                   />
                 </div>
               </div>
 
               {/* Message Field */}
               <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 [html[data-theme=light]_&]:text-[#334155] mb-1">
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 [html[data-theme=light]_&]:text-[#172033] mb-1">
                   Your Review / Message <span className="text-cyan-600 dark:text-cyan-400">*</span>
                 </label>
                 <textarea
@@ -172,7 +172,7 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Tell us what you love or how we can improve Relayo..."
-                  className="w-full bg-slate-50 dark:bg-black/60 [html[data-theme=light]_&]:bg-white border border-slate-200 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] hover:[html[data-theme=light]_&]:border-[#B8DCFF] focus:[html[data-theme=light]_&]:border-[#22C7F2] rounded-xl p-3 text-xs text-slate-900 dark:text-white [html[data-theme=light]_&]:text-[#0F172A] placeholder-slate-400 dark:placeholder-slate-500 [html[data-theme=light]_&]:placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:[html[data-theme=light]_&]:ring-cyan-400/30 resize-none"
+                  className="w-full bg-slate-50 dark:bg-black/60 [html[data-theme=light]_&]:bg-white border border-slate-200 dark:border-white/10 [html[data-theme=light]_&]:border-[#D9EAF7] focus:[html[data-theme=light]_&]:border-[#26B6FF] rounded-xl p-3 text-xs text-slate-900 dark:text-white [html[data-theme=light]_&]:text-[#172033] placeholder-slate-400 dark:placeholder-slate-500 [html[data-theme=light]_&]:placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:[html[data-theme=light]_&]:ring-[#26B6FF]/30 resize-none"
                 />
               </div>
 
@@ -185,7 +185,7 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
               <button
                 type="submit"
                 disabled={isSubmitting || !message.trim()}
-                className="w-full py-2.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 disabled:opacity-50 text-white font-bold text-xs shadow-md flex items-center justify-center gap-2 transition cursor-pointer"
+                className="w-full py-2.5 rounded-2xl bg-[linear-gradient(90deg,#1FB6FF,#2D7FF9)] hover:brightness-105 disabled:opacity-50 text-white font-bold text-xs shadow-md flex items-center justify-center gap-2 transition cursor-pointer"
               >
                 {isSubmitting ? (
                   <>
