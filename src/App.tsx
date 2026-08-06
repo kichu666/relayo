@@ -261,6 +261,10 @@ export function App() {
         </main>
       ) : (
         <main className="max-w-4xl mx-auto px-3 sm:px-6 py-4 sm:py-10 w-full flex-1 flex flex-col items-center justify-center relative z-10">
+        {/* Ambient Depth Glows (Light Mode) */}
+        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-blue-400/5 rounded-full blur-[100px] pointer-events-none hidden [html[data-theme=light]_&]:block" />
+        <div className="absolute top-40 right-10 w-[400px] h-[300px] bg-purple-400/5 rounded-full blur-[100px] pointer-events-none hidden [html[data-theme=light]_&]:block" />
+
         {/* Original Hero Section */}
         <div className="text-center max-w-2xl mx-auto mb-5 sm:mb-8">
           <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-snug sm:leading-tight mb-2.5 sm:mb-4">
@@ -285,7 +289,7 @@ export function App() {
         ) : activeViewMode === 'home' ? (
           /* Home Screen: Select Files to Host */
           <>
-            <div className="w-full max-w-xl glass-panel rounded-2xl sm:rounded-3xl p-3.5 sm:p-8 border border-[var(--panel-border)] shadow-2xl text-center">
+            <div className="w-full max-w-xl glass-panel rounded-2xl sm:rounded-3xl p-3.5 sm:p-8 border border-[var(--panel-border)] shadow-2xl [html[data-theme=light]_&]:shadow-[0_8px_30px_rgb(0,0,0,0.04)] text-center">
               <div
                 onClick={handleDropzoneClick}
                 className="w-full p-4 sm:p-8 rounded-xl sm:rounded-2xl border-2 border-dashed border-cyan-500/40 bg-[var(--card-bg)] hover:opacity-90 transition-colors cursor-pointer mb-4 sm:mb-6 flex flex-col items-center justify-center group"
@@ -362,11 +366,11 @@ export function App() {
               )}
             </div>
 
-            {/* Why Relayo? Unified AMOLED Glassmorphism Card */}
-            <div className="w-full max-w-xl mt-8 p-6 sm:p-7 rounded-3xl bg-black/90 border border-zinc-800/90 shadow-2xl backdrop-blur-2xl text-left relative overflow-hidden">
+            {/* Why Relayo? Unified Card */}
+            <div className="w-full max-w-xl mt-8 p-6 sm:p-7 rounded-3xl bg-black/90 [html[data-theme=light]_&]:bg-white border border-zinc-800/90 [html[data-theme=light]_&]:border-gray-200 shadow-2xl [html[data-theme=light]_&]:shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-2xl text-left relative overflow-hidden">
               <div className="absolute top-0 right-0 w-40 h-40 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
 
-              <h3 className="text-lg font-bold tracking-wide text-zinc-100 mb-6">
+              <h3 className="text-lg font-bold tracking-wide text-zinc-100 [html[data-theme=light]_&]:text-slate-900 mb-6">
                 Why Relayo?
               </h3>
 
@@ -376,8 +380,8 @@ export function App() {
                     <CloudOff className="w-4 h-4" />
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-zinc-100">No cloud uploads</p>
-                    <p className="text-[10px] text-zinc-400 font-medium">100% Zero server data storage</p>
+                    <p className="text-xs font-bold text-zinc-100 [html[data-theme=light]_&]:text-slate-900">No cloud uploads</p>
+                    <p className="text-[10px] text-zinc-400 [html[data-theme=light]_&]:text-slate-500 font-medium">100% Zero server data storage</p>
                   </div>
                 </div>
 
@@ -386,8 +390,8 @@ export function App() {
                     <ArrowLeftRight className="w-4 h-4" />
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-zinc-100">Direct P2P transfer</p>
-                    <p className="text-[10px] text-zinc-400 font-medium">Browser-to-browser streaming</p>
+                    <p className="text-xs font-bold text-zinc-100 [html[data-theme=light]_&]:text-slate-900">Direct P2P transfer</p>
+                    <p className="text-[10px] text-zinc-400 [html[data-theme=light]_&]:text-slate-500 font-medium">Browser-to-browser streaming</p>
                   </div>
                 </div>
 
@@ -396,8 +400,8 @@ export function App() {
                     <QrCode className="w-4 h-4" />
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-zinc-100">Scan QR & download</p>
-                    <p className="text-[10px] text-zinc-400 font-medium">Instant pairing for mobile</p>
+                    <p className="text-xs font-bold text-zinc-100 [html[data-theme=light]_&]:text-slate-900">Scan QR & download</p>
+                    <p className="text-[10px] text-zinc-400 [html[data-theme=light]_&]:text-slate-500 font-medium">Instant pairing for mobile</p>
                   </div>
                 </div>
 
@@ -409,8 +413,8 @@ export function App() {
                     </div>
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-zinc-100">Phone & desktop</p>
-                    <p className="text-[10px] text-zinc-400 font-medium">Cross-platform compatibility</p>
+                    <p className="text-xs font-bold text-zinc-100 [html[data-theme=light]_&]:text-slate-900">Phone & desktop</p>
+                    <p className="text-[10px] text-zinc-400 [html[data-theme=light]_&]:text-slate-500 font-medium">Cross-platform compatibility</p>
                   </div>
                 </div>
 
@@ -419,8 +423,8 @@ export function App() {
                     <Package className="w-4 h-4" />
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-zinc-100">Large file support</p>
-                    <p className="text-[10px] text-zinc-400 font-medium">Zero file size limitations</p>
+                    <p className="text-xs font-bold text-zinc-100 [html[data-theme=light]_&]:text-slate-900">Large file support</p>
+                    <p className="text-[10px] text-zinc-400 [html[data-theme=light]_&]:text-slate-500 font-medium">Zero file size limitations</p>
                   </div>
                 </div>
 
@@ -429,8 +433,8 @@ export function App() {
                     <Wifi className="w-4 h-4" />
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-zinc-100">Same local network</p>
-                    <p className="text-[10px] text-zinc-400 font-medium">Ultra-fast Wi-Fi speed</p>
+                    <p className="text-xs font-bold text-zinc-100 [html[data-theme=light]_&]:text-slate-900">Same local network</p>
+                    <p className="text-[10px] text-zinc-400 [html[data-theme=light]_&]:text-slate-500 font-medium">Ultra-fast Wi-Fi speed</p>
                   </div>
                 </div>
               </div>

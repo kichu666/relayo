@@ -31,16 +31,16 @@
 
   [data-theme='light'] {
     --bg-main: #f8fafc;
-    --panel-bg: #ffffff;
-    --panel-border: #cbd5e1;
+    --panel-bg: rgba(255, 255, 255, 0.85);
+    --panel-border: #e2e8f0;
     --text-primary: #0f172a;
-    --text-muted: #334155;
+    --text-muted: #64748b;
     --badge-bg: #e0f2fe;
     --badge-border: #0284c7;
     --badge-text: #0369a1;
     --accent-color: #0284c7;
-    --card-bg: #f1f5f9;
-    --input-bg: #e2e8f0;
+    --card-bg: #ffffff;
+    --input-bg: #f8fafc;
   }
 
   [data-theme='monochrome'] {
