@@ -157,7 +157,7 @@ export const initCloudSession = (roomIdToJoin?: string) => {
     return;
   }
 
-  const deviceRef = ref(db, `rooms/${roomId}/devices/${state.deviceId}`);
+  const deviceRef = ref(db, `rooms/${roomId}/presence/${state.deviceId}`);
   const connectedRef = ref(db, '.info/connected');
 
   const selfDevice: CloudDevice = {
@@ -197,13 +197,13 @@ export const initCloudSession = (roomIdToJoin?: string) => {
   heartbeatInterval = setInterval(() => {
     const currentState = $cloudStore.get();
     if (db) {
-      set(ref(db, `rooms/${roomId}/devices/${currentState.deviceId}/lastActive`), Date.now());
+      set(ref(db, `rooms/${roomId}/presence/${currentState.deviceId}/lastActive`), Date.now());
     }
   }, 10000);
 
   // Listen to all devices in the room
-  const devicesRef = ref(db, `rooms/${roomId}/devices`);
-  const unsubDevices = onValue(devicesRef, (snapshot) => {
+  const presenceRef = ref(db, `rooms/${roomId}/presence`);
+  const unsubDevices = onValue(presenceRef, (snapshot) => {
     const data = snapshot.val();
     if (data) {
       const deviceList: CloudDevice[] = Object.values(data);
@@ -222,11 +222,11 @@ export const initCloudSession = (roomIdToJoin?: string) => {
       $cloudStore.set({ ...$cloudStore.get(), devices: [selfDevice] });
     }
   });
-  currentUnsubscribes.push(() => off(devicesRef));
+  currentUnsubscribes.push(() => off(presenceRef));
 
   // Listen to Clipboard items
-  const clipboardsRef = ref(db, `rooms/${roomId}/clipboards`);
-  const unsubClipboards = onValue(clipboardsRef, (snapshot) => {
+  const clipboardRef = ref(db, `rooms/${roomId}/clipboard`);
+  const unsubClipboards = onValue(clipboardRef, (snapshot) => {
     const data = snapshot.val();
     if (data) {
       const items: ClipboardItem[] = Object.keys(data).map(key => ({
@@ -246,7 +246,7 @@ export const initCloudSession = (roomIdToJoin?: string) => {
       $cloudStore.set({ ...$cloudStore.get(), clipboards: [] });
     }
   });
-  currentUnsubscribes.push(() => off(clipboardsRef));
+  currentUnsubscribes.push(() => off(clipboardRef));
 
   // Listen to Links
   const linksRef = ref(db, `rooms/${roomId}/links`);
@@ -315,7 +315,7 @@ export const updateDeviceName = (name: string) => {
   $cloudStore.set({ ...state, deviceName: cleanName });
 
   if (db && state.isConnected) {
-    set(ref(db, `rooms/${state.roomId}/devices/${state.deviceId}/name`), cleanName);
+    set(ref(db, `rooms/${state.roomId}/presence/${state.deviceId}/name`), cleanName);
   }
 };
 
@@ -335,7 +335,7 @@ export const sendClipboardPayload = async (text: string) => {
     return;
   }
 
-  const newClipRef = push(ref(db, `rooms/${state.roomId}/clipboards`));
+  const newClipRef = push(ref(db, `rooms/${state.roomId}/clipboard`));
   await set(newClipRef, {
     senderId: state.deviceId,
     senderName: state.deviceName,
@@ -375,7 +375,7 @@ export const readAndPushSystemClipboard = async () => {
 export const deleteClipboardItem = async (itemId: string) => {
   const state = $cloudStore.get();
   if (db) {
-    await remove(ref(db, `rooms/${state.roomId}/clipboards/${itemId}`));
+    await remove(ref(db, `rooms/${state.roomId}/clipboard/${itemId}`));
     triggerCloudToast('Clipboard entry removed', 'info');
   }
 };
