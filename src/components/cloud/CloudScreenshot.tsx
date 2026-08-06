@@ -47,29 +47,30 @@ export function CloudScreenshot() {
   return (
     <div className="space-y-6">
       {/* Upload / Capture Control Card */}
-      <div className="glass-panel p-5 rounded-2xl border border-white/10 bg-slate-900/60 backdrop-blur-xl shadow-lg">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <Camera className="w-5 h-5 text-amber-400" />
-            <h3 className="text-base font-bold text-white">Stream & Upload Screenshots</h3>
+      <div className="glass-panel p-4 sm:p-6 rounded-2xl border border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] bg-slate-900/60 [html[data-theme=light]_&]:bg-white backdrop-blur-xl shadow-lg [html[data-theme=light]_&]:shadow-sm">
+        <div className="flex items-center justify-between mb-3.5">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-xl bg-amber-500/10 [html[data-theme=light]_&]:bg-amber-50 border border-amber-500/30 [html[data-theme=light]_&]:border-amber-200 text-amber-400 [html[data-theme=light]_&]:text-amber-600">
+              <Camera className="w-5 h-5" strokeWidth={2} />
+            </div>
+            <h3 className="text-sm sm:text-base font-extrabold text-white [html[data-theme=light]_&]:text-[#0F172A]">Stream & Upload Screenshots</h3>
           </div>
-          <span className="text-xs text-slate-400">Firebase Storage / Cloud Sync</span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
           <button
             onClick={handleCapture}
-            className="flex items-center justify-center gap-2.5 p-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white font-semibold text-sm shadow-[0_0_15px_rgba(245,158,11,0.3)] transition transform active:scale-95"
+            className="flex items-center justify-center gap-2 py-2.5 px-4 sm:py-3.5 sm:px-5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white font-bold text-xs sm:text-sm transition shadow-md active:scale-95 cursor-pointer min-h-[44px]"
           >
-            <Camera className="w-5 h-5" />
+            <Camera className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2} />
             <span>Capture Display Screen</span>
           </button>
 
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="flex items-center justify-center gap-2.5 p-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 font-semibold text-sm transition transform active:scale-95"
+            className="flex items-center justify-center gap-2 py-2.5 px-4 sm:py-3.5 sm:px-5 rounded-xl bg-white/5 [html[data-theme=light]_&]:bg-white hover:bg-white/10 hover:[html[data-theme=light]_&]:bg-slate-50 border border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] text-slate-200 [html[data-theme=light]_&]:text-[#0F172A] font-bold text-xs sm:text-sm transition shadow-sm active:scale-95 cursor-pointer min-h-[44px]"
           >
-            <Upload className="w-5 h-5 text-amber-400" />
+            <Upload className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 [html[data-theme=light]_&]:text-amber-600" strokeWidth={2} />
             <span>Upload Image File</span>
           </button>
           <input
@@ -85,17 +86,17 @@ export function CloudScreenshot() {
       {/* Streamed Screenshots Stream */}
       <div>
         <div className="flex items-center justify-between mb-3 px-1">
-          <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+          <h4 className="text-xs font-semibold text-slate-400 [html[data-theme=light]_&]:text-[#475569] uppercase tracking-wider">
             Cloud Screenshot Stream ({store.screenshots.length})
           </h4>
-          <span className="text-xs text-slate-500">Instant cross-device viewing</span>
+          <span className="text-xs text-slate-500 [html[data-theme=light]_&]:text-slate-400">Instant cross-device viewing</span>
         </div>
 
         {store.screenshots.length === 0 ? (
-          <div className="glass-panel p-8 text-center rounded-2xl border border-white/5 bg-black/30">
-            <ImageIcon className="w-8 h-8 text-slate-600 mx-auto mb-2" />
-            <p className="text-sm text-slate-400">No screenshots shared yet.</p>
-            <p className="text-xs text-slate-500 mt-1">Capture your screen or upload an image to stream it to all paired devices!</p>
+          <div className="glass-panel p-8 text-center rounded-2xl border border-white/5 [html[data-theme=light]_&]:border-[#D7E8FF] bg-black/30 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:shadow-sm">
+            <ImageIcon className="w-8 h-8 text-slate-600 [html[data-theme=light]_&]:text-slate-400 mx-auto mb-2" />
+            <p className="text-sm text-slate-400 [html[data-theme=light]_&]:text-[#0F172A]">No screenshots shared yet.</p>
+            <p className="text-xs text-slate-500 [html[data-theme=light]_&]:text-[#475569] mt-1">Capture your screen or upload an image to stream it to all paired devices!</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -105,7 +106,7 @@ export function CloudScreenshot() {
               return (
                 <div
                   key={item.id}
-                  className="glass-panel rounded-2xl border border-white/10 bg-slate-900/40 overflow-hidden hover:border-amber-500/40 transition group flex flex-col justify-between"
+                  className="glass-panel rounded-2xl border border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] bg-slate-900/40 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:shadow-sm overflow-hidden hover:border-amber-500/40 transition group flex flex-col justify-between"
                 >
                   <div className="relative aspect-video bg-black/80 overflow-hidden cursor-pointer" onClick={() => setSelectedItem(item)}>
                     <img
@@ -123,26 +124,26 @@ export function CloudScreenshot() {
                   <div className="p-3.5">
                     <div className="flex items-center justify-between mb-1.5">
                       <div className="flex items-center gap-1.5">
-                        <span className="p-1 rounded bg-white/5 text-amber-400 text-xs">
+                        <span className="p-1 rounded bg-white/5 [html[data-theme=light]_&]:bg-amber-50 text-amber-400 [html[data-theme=light]_&]:text-amber-600 text-xs">
                           {isSender ? <Laptop className="w-3 h-3" /> : <Smartphone className="w-3 h-3" />}
                         </span>
-                        <span className="text-xs font-semibold text-slate-200">
+                        <span className="text-xs font-semibold text-slate-200 [html[data-theme=light]_&]:text-[#0F172A]">
                           {item.senderName}
                         </span>
                       </div>
-                      <span className="text-[11px] text-slate-500 flex items-center gap-1">
+                      <span className="text-[11px] text-slate-500 [html[data-theme=light]_&]:text-slate-400 flex items-center gap-1">
                         <Clock className="w-3 h-3" /> {formatTime(item.timestamp)}
                       </span>
                     </div>
 
                     {item.title && (
-                      <p className="text-xs text-slate-400 truncate mb-2">{item.title}</p>
+                      <p className="text-xs text-slate-400 [html[data-theme=light]_&]:text-[#475569] truncate mb-2">{item.title}</p>
                     )}
 
-                    <div className="flex items-center justify-between pt-2 border-t border-white/5">
+                    <div className="flex items-center justify-between pt-2 border-t border-white/5 [html[data-theme=light]_&]:border-slate-100">
                       <button
                         onClick={() => setSelectedItem(item)}
-                        className="text-xs text-amber-400 hover:text-amber-300 font-semibold"
+                        className="text-xs text-amber-400 [html[data-theme=light]_&]:text-amber-600 hover:text-amber-300 font-semibold"
                       >
                         View HD 4K
                       </button>
