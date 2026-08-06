@@ -45,6 +45,7 @@ export function App() {
   const store = useStore($shareStore);
   const [selectedFiles, setSelectedFiles] = useState<FileIcon[]>([]);
   const [copied, setCopied] = useState(false);
+  const [displayLimit, setDisplayLimit] = useState(ITEMS_PER_PAGE);
   const [isP2PTutorialOpen, setIsP2PTutorialOpen] = useState(false);
   const [isCloudTutorialOpen, setIsCloudTutorialOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
