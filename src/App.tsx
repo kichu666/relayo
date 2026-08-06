@@ -241,6 +241,9 @@ export function App() {
             </div>
           </div>
 
+          {/* Centered Glowing AMOLED Switch */}
+          <AmoledWifiSwitchSection appMode={appMode} setAppMode={setAppMode} />
+
           {/* Right side — connection badge + theme */}
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {getConnectionStateBadge()}
@@ -248,9 +251,6 @@ export function App() {
           </div>
         </div>
       </header>
-
-      {/* AMOLED Wi-Fi Switch Section */}
-      <AmoledWifiSwitchSection appMode={appMode} setAppMode={setAppMode} />
 
       {/* Main Content Body */}
       {appMode === 'cloud' ? (
