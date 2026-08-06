@@ -238,28 +238,28 @@ export function App() {
             </div>
           </div>
 
-          <div className="h-7 px-1 py-0.5 sm:h-auto sm:p-1 flex items-center gap-0.5 sm:gap-1 rounded-full bg-black border border-white/10 shadow-[0_0_20px_rgba(0,0,0,0.9)] backdrop-blur-2xl">
+          <div className="p-1 flex items-center gap-0.5 rounded-full bg-black border border-white/10 shadow-[0_0_20px_rgba(0,0,0,0.9)] backdrop-blur-2xl shrink-0">
             <button
               onClick={() => setAppMode('p2p')}
-              className={`text-xs py-0.5 px-2 sm:text-sm sm:py-1.5 sm:px-4 flex items-center gap-1 sm:gap-2 rounded-full font-bold tracking-wide transition-all duration-300 cursor-pointer ${
+              className={`flex flex-row items-center justify-center gap-1.5 whitespace-nowrap text-xs md:text-sm py-1.5 md:py-2 px-3 md:px-4 rounded-full font-bold tracking-wide transition-all duration-300 cursor-pointer ${
                 appMode === 'p2p'
                   ? 'bg-gradient-to-r from-cyan-400 to-blue-600 text-slate-950 shadow-[0_0_25px_rgba(6,182,212,0.4)]'
                   : 'text-white/50 hover:text-white/90 hover:bg-white/5'
               }`}
             >
-              <Radio className="w-3 h-3 sm:w-4 sm:h-4" />
-              <span>Wi-Fi P2P</span>
+              <Radio className="w-3 h-3 md:w-4 md:h-4 shrink-0" />
+              <span className="whitespace-nowrap">Wi-Fi P2P</span>
             </button>
             <button
               onClick={() => setAppMode('cloud')}
-              className={`text-xs py-0.5 px-2 sm:text-sm sm:py-1.5 sm:px-4 flex items-center gap-1 sm:gap-2 rounded-full font-bold tracking-wide transition-all duration-300 cursor-pointer ${
+              className={`flex flex-row items-center justify-center gap-1.5 whitespace-nowrap text-xs md:text-sm py-1.5 md:py-2 px-3 md:px-4 rounded-full font-bold tracking-wide transition-all duration-300 cursor-pointer ${
                 appMode === 'cloud'
                   ? 'bg-gradient-to-r from-cyan-400 to-blue-600 text-slate-950 shadow-[0_0_25px_rgba(6,182,212,0.4)]'
                   : 'text-white/50 hover:text-white/90 hover:bg-white/5'
               }`}
             >
-              <Cloud className="w-3 h-3 sm:w-4 sm:h-4" />
-              <span>Cloud Hub</span>
+              <Cloud className="w-3 h-3 md:w-4 md:h-4 shrink-0" />
+              <span className="whitespace-nowrap">Cloud Hub</span>
             </button>
           </div>
 
