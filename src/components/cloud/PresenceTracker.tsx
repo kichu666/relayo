@@ -80,11 +80,11 @@ export function PresenceTracker() {
   return (
     <div className="space-y-8">
       {/* Device Info Header Card (Pure White Surface in Light Mode) */}
-      <div className="p-6 sm:p-8 rounded-2xl border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#D5E9FF] bg-gradient-to-r from-slate-900/90 via-slate-900/70 to-indigo-950/40 dark:from-slate-900/90 dark:via-slate-900/70 dark:to-indigo-950/40 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:bg-none shadow-xl [html[data-theme=light]_&]:shadow-sm backdrop-blur-xl">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5">
-            <div className="p-3 rounded-xl bg-cyan-500/10 [html[data-theme=light]_&]:bg-cyan-50 border border-cyan-500/30 [html[data-theme=light]_&]:border-cyan-200 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 shadow-inner [html[data-theme=light]_&]:shadow-none">
-              <Cpu className="w-6 h-6 animate-pulse" strokeWidth={2} />
+      <div className="p-4 sm:p-6 md:p-8 rounded-2xl border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#D5E9FF] bg-gradient-to-r from-slate-900/90 via-slate-900/70 to-indigo-950/40 dark:from-slate-900/90 dark:via-slate-900/70 dark:to-indigo-950/40 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:bg-none shadow-xl [html[data-theme=light]_&]:shadow-sm backdrop-blur-xl">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3.5 sm:gap-4">
+          <div className="flex items-center gap-3 sm:gap-3.5">
+            <div className="p-2.5 sm:p-3 rounded-xl bg-cyan-500/10 [html[data-theme=light]_&]:bg-cyan-50 border border-cyan-500/30 [html[data-theme=light]_&]:border-cyan-200 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 shadow-inner [html[data-theme=light]_&]:shadow-none shrink-0">
+              <Cpu className="w-5 h-5 sm:w-6 sm:h-6 animate-pulse" strokeWidth={2} />
             </div>
             <div>
               <div className="flex items-center gap-2">
@@ -115,8 +115,8 @@ export function PresenceTracker() {
                   </button>
                 </div>
               ) : (
-                <div className="flex items-center gap-2 mt-1">
-                  <h3 className="text-lg font-extrabold text-white [html[data-theme=light]_&]:text-[#0F172A] tracking-wide">
+                <div className="flex items-center gap-2 mt-0.5 sm:mt-1">
+                  <h3 className="text-base sm:text-lg font-extrabold text-white [html[data-theme=light]_&]:text-[#0F172A] tracking-wide">
                     {displayedCurrentDeviceName}
                   </h3>
                   <button
@@ -134,10 +134,12 @@ export function PresenceTracker() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 self-end sm:self-center bg-black/40 [html[data-theme=light]_&]:bg-[#F4F9FF] px-4 py-2.5 rounded-xl border border-white/10 [html[data-theme=light]_&]:border-[#D5E9FF] text-xs text-slate-300 [html[data-theme=light]_&]:text-[#0F172A] font-medium">
-            <Globe className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />
-            <span>Room Code:</span>
-            <span className="font-mono font-bold text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 tracking-wider">{store.roomId}</span>
+          <div className="flex items-center justify-between sm:justify-start gap-2 bg-black/40 [html[data-theme=light]_&]:bg-[#F4F9FF] px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl border border-white/10 [html[data-theme=light]_&]:border-[#D5E9FF] text-xs text-slate-300 [html[data-theme=light]_&]:text-[#0F172A] font-medium w-full sm:w-auto shrink-0">
+            <div className="flex items-center gap-1.5 min-w-0">
+              <Globe className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 shrink-0" strokeWidth={2} />
+              <span>Room Code:</span>
+            </div>
+            <span className="font-mono font-bold text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 tracking-wider truncate max-w-[160px] sm:max-w-none">{store.roomId}</span>
           </div>
         </div>
       </div>
