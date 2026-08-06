@@ -28,7 +28,8 @@ import {
   ShieldCheck,
   HelpCircle,
   MessageSquareHeart,
-  ArrowLeft
+  ArrowLeft,
+  Copy
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useFirebasePresence } from '../../logic/useFirebasePresence';
@@ -45,6 +46,7 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
   const store = useStore($cloudStore);
   const [subTab, setSubTab] = useState<'presence' | 'clipboard' | 'link' | 'scratchpad' | 'screenshot'>('presence');
   const [showRoomModal, setShowRoomModal] = useState(false);
+  const [showQRModal, setShowQRModal] = useState(false);
   const [localCloudHelpModal, setLocalCloudHelpModal] = useState(false);
   const [showCloudReviewModal, setShowCloudReviewModal] = useState(false);
   const [newRoomCode, setNewRoomCode] = useState('');
@@ -134,11 +136,11 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
 
           <div className="flex items-center gap-2 shrink-0">
             <button
-              onClick={handleCopyRoomCode}
+              onClick={() => setShowQRModal(true)}
               className="w-10 h-10 sm:w-11 sm:h-11 min-h-[40px] sm:min-h-[44px] min-w-[40px] sm:min-w-[44px] flex items-center justify-center rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:hover:bg-slate-50 border border-cyan-500/30 [html[data-theme=light]_&]:border-[#D8E9FF] text-xs transition cursor-pointer shadow-sm"
-              title="Copy Room Link"
+              title="Share Room & QR Code"
             >
-              {copiedCode ? <Check className="w-4 h-4 text-emerald-400" strokeWidth={2} /> : <QrCode className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />}
+              <QrCode className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />
             </button>
           </div>
         </div>
@@ -515,6 +517,73 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
           </button>
         </div>
       </div>
+
+      {/* Dedicated Share Cloud Room & QR Code Modal */}
+      {showQRModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 dark:bg-black/80 [html[data-theme=light]_&]:bg-[rgba(248,250,252,0.35)] backdrop-blur-md animate-fade-in">
+          <div className="relative w-full max-w-md bg-slate-950 dark:bg-slate-950 [html[data-theme=light]_&]:bg-[linear-gradient(180deg,#F9FCFF_0%,#EEF7FF_100%)] border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] rounded-3xl p-6 sm:p-7 shadow-2xl dark:shadow-2xl [html[data-theme=light]_&]:shadow-[0_20px_60px_rgba(14,165,233,0.12)] backdrop-blur-2xl text-slate-100 dark:text-slate-100 [html[data-theme=light]_&]:text-[#0F172A] space-y-5">
+            <button
+              onClick={() => setShowQRModal(false)}
+              className="absolute top-5 right-5 p-1.5 rounded-full bg-white/5 dark:bg-white/5 [html[data-theme=light]_&]:bg-white hover:bg-white/10 dark:hover:bg-white/10 hover:[html[data-theme=light]_&]:bg-slate-50 border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] text-slate-400 dark:text-slate-400 [html[data-theme=light]_&]:text-[#475569] hover:text-white dark:hover:text-white hover:[html[data-theme=light]_&]:text-[#0F172A] [html[data-theme=light]_&]:shadow-sm transition-colors cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 rounded-2xl bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 [html[data-theme=light]_&]:text-[#0EA5E9] [html[data-theme=light]_&]:bg-cyan-50 [html[data-theme=light]_&]:border-[#D7E8FF]">
+                <QrCode className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-base font-extrabold text-white dark:text-white [html[data-theme=light]_&]:text-[#0F172A]">Share Cloud Room</h3>
+                <p className="text-[11px] text-slate-400 dark:text-slate-400 [html[data-theme=light]_&]:text-[#475569]">Scan QR code or copy direct room link</p>
+              </div>
+            </div>
+
+            {/* Prominent Centered QR Code Container */}
+            <div className="flex flex-col items-center justify-center p-5 bg-white rounded-2xl border border-slate-200/80 [html[data-theme=light]_&]:border-[#D7E8FF] shadow-sm">
+              <QRCodeSVG
+                value={`https://relayo-eight.vercel.app/?room=${encodeURIComponent(store.roomId)}`}
+                size={160}
+                className="w-40 h-40"
+              />
+              <span className="mt-3 text-[11px] font-semibold text-slate-600 tracking-wide">
+                Room Code: <strong className="text-slate-900 font-mono font-extrabold">{store.roomId}</strong>
+              </span>
+            </div>
+
+            {/* Shareable Link Box & Copy Button */}
+            <div>
+              <label className="block text-[11px] font-semibold text-slate-300 dark:text-slate-300 [html[data-theme=light]_&]:text-[#0F172A] mb-1.5">
+                Direct Room Link
+              </label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  readOnly
+                  value={`https://relayo-eight.vercel.app/?room=${encodeURIComponent(store.roomId)}`}
+                  className="flex-1 bg-black/60 dark:bg-black/60 [html[data-theme=light]_&]:bg-white border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] rounded-xl px-3 py-2 text-xs font-mono text-cyan-300 dark:text-cyan-300 [html[data-theme=light]_&]:text-[#0F172A] truncate focus:outline-none select-all"
+                />
+                <button
+                  onClick={handleCopyRoomCode}
+                  className="h-9 px-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs transition shadow-md whitespace-nowrap cursor-pointer flex items-center gap-1.5"
+                >
+                  {copiedCode ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-emerald-300" strokeWidth={2.5} />
+                      <span>Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5" strokeWidth={2} />
+                      <span>Copy Link</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Cloud Hub User Review & Feedback Modal */}
       <FeedbackModal
