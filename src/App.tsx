@@ -256,6 +256,7 @@ export function App() {
             isOpenCloudHelp={isCloudTutorialOpen}
             onCloseCloudHelp={() => setIsCloudTutorialOpen(false)}
             onOpenCloudHelp={() => setIsCloudTutorialOpen(true)}
+            onBackToLocal={() => setAppMode('p2p')}
           />
         </main>
       ) : (

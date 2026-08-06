@@ -27,7 +27,8 @@ import {
   X,
   ShieldCheck,
   HelpCircle,
-  MessageSquareHeart
+  MessageSquareHeart,
+  ArrowLeft
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useFirebasePresence } from '../../logic/useFirebasePresence';
@@ -37,9 +38,10 @@ interface CloudHubProps {
   isOpenCloudHelp?: boolean;
   onCloseCloudHelp?: () => void;
   onOpenCloudHelp?: () => void;
+  onBackToLocal?: () => void;
 }
 
-export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp }: CloudHubProps = {}) {
+export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, onBackToLocal }: CloudHubProps = {}) {
   const store = useStore($cloudStore);
   const [subTab, setSubTab] = useState<'presence' | 'clipboard' | 'link' | 'scratchpad' | 'screenshot'>('presence');
   const [showRoomModal, setShowRoomModal] = useState(false);
@@ -88,6 +90,18 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp }:
 
   return (
     <div className="w-full max-w-6xl mx-auto space-y-6">
+      {/* Back to Local Navigation Button */}
+      {onBackToLocal && (
+        <button
+          onClick={onBackToLocal}
+          className="flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors cursor-pointer w-fit group py-1 px-2 rounded-lg hover:bg-white/5"
+          title="Back to Local P2P Mode"
+        >
+          <ArrowLeft className="w-4 h-4 text-zinc-400 group-hover:text-white group-hover:-translate-x-1 transition-transform" />
+          <span className="font-semibold">Back to Local</span>
+        </button>
+      )}
+
       {/* Toast Notification Alert */}
       {store.toast && (
         <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl bg-slate-900/90 border border-cyan-500/40 text-cyan-200 shadow-[0_0_25px_rgba(6,182,212,0.3)] backdrop-blur-xl animate-bounce">
