@@ -34,9 +34,11 @@ import {
   ArrowLeftRight,
   Package,
   Cloud,
-  Radio
+  Radio,
+  MessageSquareHeart
 } from 'lucide-react';
 import { CloudHub } from './components/cloud/CloudHub';
+import { FeedbackModal } from './components/FeedbackModal';
 import { initCloudSession } from './logic/cloudStore';
 
 const ITEMS_PER_PAGE = 20;
@@ -48,6 +50,7 @@ export function App() {
   const [displayLimit, setDisplayLimit] = useState(ITEMS_PER_PAGE);
   const [isP2PTutorialOpen, setIsP2PTutorialOpen] = useState(false);
   const [isCloudTutorialOpen, setIsCloudTutorialOpen] = useState(false);
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [appMode, setAppMode] = useState<'p2p' | 'cloud'>('p2p');
 
@@ -691,20 +694,33 @@ export function App() {
       {/* Footer */}
       <footer className="w-full border-t border-[var(--panel-border)] py-4 glass-panel flex flex-col sm:flex-row items-center justify-between px-6 gap-3 text-xs text-[var(--text-muted)] font-mono">
         <span>Relayo P2P Direct Share • Zero Server Storage</span>
-        <button
-          onClick={() => {
-            if (appMode === 'cloud') {
-              setIsCloudTutorialOpen(true);
-            } else {
-              setIsP2PTutorialOpen(true);
-            }
-          }}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all cursor-pointer"
-        >
-          <HelpCircle className="w-3.5 h-3.5 text-cyan-400" />
-          <span>Help & Tutorial</span>
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setIsFeedbackOpen(true)}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all cursor-pointer"
+          >
+            <MessageSquareHeart className="w-3.5 h-3.5 text-rose-400" />
+            <span>Send Feedback</span>
+          </button>
+
+          <button
+            onClick={() => {
+              if (appMode === 'cloud') {
+                setIsCloudTutorialOpen(true);
+              } else {
+                setIsP2PTutorialOpen(true);
+              }
+            }}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all cursor-pointer"
+          >
+            <HelpCircle className="w-3.5 h-3.5 text-cyan-400" />
+            <span>Help & Tutorial</span>
+          </button>
+        </div>
       </footer>
+
+      {/* Formspree User Feedback Modal */}
+      <FeedbackModal isOpen={isFeedbackOpen} onClose={() => setIsFeedbackOpen(false)} />
 
       {/* AMOLED Glassmorphism P2P Help Modal */}
       {appMode === 'p2p' && isP2PTutorialOpen && (
