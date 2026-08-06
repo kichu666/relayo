@@ -26,17 +26,21 @@ export function PresenceTracker() {
     setIsEditingName(false);
   };
 
-  const getDeviceIcon = (type: CloudDevice['type']) => {
-    switch (type) {
-      case 'phone':
-        return <Smartphone className="w-5 h-5 text-cyan-400" />;
-      case 'tablet':
-        return <Tablet className="w-5 h-5 text-purple-400" />;
-      case 'laptop':
-        return <Laptop className="w-5 h-5 text-emerald-400" />;
-      default:
-        return <Monitor className="w-5 h-5 text-blue-400" />;
+  const stripEmojis = (str: string = '') =>
+    str.replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]/gu, '').trim();
+
+  const getDeviceIcon = (type?: string) => {
+    const clean = String(type || '').toLowerCase();
+    if (clean.includes('phone') || clean.includes('mobile')) {
+      return <Smartphone className="w-5 h-5 text-cyan-400" />;
     }
+    if (clean.includes('tablet') || clean.includes('ipad')) {
+      return <Tablet className="w-5 h-5 text-purple-400" />;
+    }
+    if (clean.includes('laptop')) {
+      return <Laptop className="w-5 h-5 text-emerald-400" />;
+    }
+    return <Monitor className="w-5 h-5 text-cyan-400" />;
   };
 
   const formatLastSeen = (timestamp: number) => {
@@ -153,7 +157,7 @@ export function PresenceTracker() {
                       </div>
                       <div>
                         <div className="flex items-center gap-1.5">
-                          <span className="font-semibold text-sm text-white">{dev.name}</span>
+                          <span className="font-semibold text-sm text-white">{stripEmojis(dev.name)}</span>
                           {isCurrent && (
                             <span className="text-[10px] px-1.5 py-0.2 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
                               This Device
@@ -203,7 +207,7 @@ export function PresenceTracker() {
                       {getDeviceIcon(dev.type)}
                     </div>
                     <div>
-                      <span className="font-medium text-xs text-slate-300">{dev.name}</span>
+                      <span className="font-medium text-xs text-slate-300">{stripEmojis(dev.name)}</span>
                       <p className="text-[11px] text-slate-500">Last active: {formatLastSeen(dev.lastActive)}</p>
                     </div>
                   </div>
