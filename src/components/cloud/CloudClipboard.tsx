@@ -47,11 +47,11 @@ export function CloudClipboard() {
   return (
     <div className="space-y-6">
       {/* Input Box Card */}
-      <div className="glass-panel p-5 rounded-2xl border border-white/10 bg-slate-900/60 backdrop-blur-xl shadow-lg">
+      <div className="glass-panel p-5 rounded-2xl border border-white/10 [html[data-theme=light]_&]:border-slate-200 bg-slate-900/60 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:shadow-[0_4px_20px_rgb(0,0,0,0.03)] backdrop-blur-xl shadow-lg">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <ClipboardCopy className="w-5 h-5 text-cyan-400" />
-            <h3 className="text-base font-bold text-white">Send Clipboard to Cloud</h3>
+            <ClipboardCopy className="w-5 h-5 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" />
+            <h3 className="text-base font-bold text-white [html[data-theme=light]_&]:text-slate-900">Send Clipboard to Cloud</h3>
           </div>
           <button
             onClick={readAndPushSystemClipboard}

@@ -205,18 +205,18 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
       </div>
 
       {/* Sub-Tab Navigation Bar */}
-      <div className="flex items-center justify-start sm:justify-center overflow-x-auto gap-1 sm:gap-2 p-1 sm:p-1.5 glass-panel rounded-xl sm:rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl">
+      <div className="flex items-center justify-start sm:justify-center overflow-x-auto gap-1 sm:gap-2 p-1 sm:p-1.5 glass-panel rounded-xl sm:rounded-2xl border border-white/10 [html[data-theme=light]_&]:border-slate-200 bg-black/40 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:shadow-[0_4px_20px_rgb(0,0,0,0.03)] backdrop-blur-xl">
         <button
           onClick={() => setSubTab('presence')}
           className={`flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap ${
             subTab === 'presence'
-              ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 border border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.2)]'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+              ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 [html[data-theme=light]_&]:bg-cyan-50 border border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.2)] [html[data-theme=light]_&]:shadow-none'
+              : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
           }`}
         >
-          <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />
+          <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" />
           <span>Online Devices</span>
-          <span className="px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px]">
+          <span className="px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-300 [html[data-theme=light]_&]:text-emerald-700 text-[10px]">
             {store.devices.filter(d => d.id !== store.deviceId && d.status === 'online').length}
           </span>
         </button>
@@ -225,14 +225,14 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
           onClick={() => setSubTab('clipboard')}
           className={`flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap ${
             subTab === 'clipboard'
-              ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 border border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.2)]'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+              ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 [html[data-theme=light]_&]:bg-cyan-50 border border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.2)] [html[data-theme=light]_&]:shadow-none'
+              : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
           }`}
         >
-          <ClipboardCopy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />
+          <ClipboardCopy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" />
           <span>Clipboard Sync</span>
           {store.clipboards.length > 0 && (
-            <span className="px-1.5 py-0.2 rounded-full bg-cyan-500/20 text-cyan-300 text-[10px]">
+            <span className="px-1.5 py-0.2 rounded-full bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 text-[10px]">
               {store.clipboards.length}
             </span>
           )}
@@ -242,14 +242,14 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
           onClick={() => setSubTab('link')}
           className={`flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap ${
             subTab === 'link'
-              ? 'bg-gradient-to-r from-purple-500/20 to-indigo-500/20 text-purple-300 border border-purple-500/40 shadow-[0_0_15px_rgba(168,85,247,0.2)]'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+              ? 'bg-gradient-to-r from-purple-500/20 to-indigo-500/20 text-purple-300 [html[data-theme=light]_&]:text-purple-700 [html[data-theme=light]_&]:bg-purple-50 border border-purple-500/40 shadow-[0_0_15px_rgba(168,85,247,0.2)] [html[data-theme=light]_&]:shadow-none'
+              : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
           }`}
         >
-          <Link2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-400" />
+          <Link2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-400 [html[data-theme=light]_&]:text-purple-600" />
           <span>Links</span>
           {store.links.length > 0 && (
-            <span className="px-1.5 py-0.2 rounded-full bg-purple-500/20 text-purple-300 text-[10px]">
+            <span className="px-1.5 py-0.2 rounded-full bg-purple-500/20 text-purple-300 [html[data-theme=light]_&]:text-purple-700 text-[10px]">
               {store.links.length}
             </span>
           )}
@@ -259,11 +259,11 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
           onClick={() => setSubTab('scratchpad')}
           className={`flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap ${
             subTab === 'scratchpad'
-              ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-300 border border-emerald-500/40 shadow-[0_0_15px_rgba(16,185,129,0.2)]'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+              ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-300 [html[data-theme=light]_&]:text-emerald-700 [html[data-theme=light]_&]:bg-emerald-50 border border-emerald-500/40 shadow-[0_0_15px_rgba(16,185,129,0.2)] [html[data-theme=light]_&]:shadow-none'
+              : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
           }`}
         >
-          <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400" />
+          <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 [html[data-theme=light]_&]:text-emerald-600" />
           <span>Notes</span>
         </button>
 
@@ -271,14 +271,14 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
           onClick={() => setSubTab('screenshot')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-xs transition whitespace-nowrap ${
             subTab === 'screenshot'
-              ? 'bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-300 border border-amber-500/40 shadow-[0_0_15px_rgba(245,158,11,0.2)]'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+              ? 'bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-300 [html[data-theme=light]_&]:text-amber-700 [html[data-theme=light]_&]:bg-amber-50 border border-amber-500/40 shadow-[0_0_15px_rgba(245,158,11,0.2)] [html[data-theme=light]_&]:shadow-none'
+              : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
           }`}
         >
-          <Camera className="w-4 h-4 text-amber-400" />
+          <Camera className="w-4 h-4 text-amber-400 [html[data-theme=light]_&]:text-amber-600" />
           <span>Screenshots</span>
           {store.screenshots.length > 0 && (
-            <span className="px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-300 text-[10px]">
+            <span className="px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-300 [html[data-theme=light]_&]:text-amber-700 text-[10px]">
               {store.screenshots.length}
             </span>
           )}
@@ -295,15 +295,15 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
       </div>
 
       {/* Single Unified Cloud Hub Features Panel */}
-      <div className="mt-8 bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl p-6 md:p-8 text-left relative overflow-hidden">
+      <div className="mt-8 bg-black/40 [html[data-theme=light]_&]:bg-white backdrop-blur-xl border border-white/10 [html[data-theme=light]_&]:border-slate-200/80 [html[data-theme=light]_&]:shadow-[0_4px_20px_rgb(0,0,0,0.03)] rounded-2xl p-6 md:p-8 text-left relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-white/10">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-white/10 [html[data-theme=light]_&]:border-slate-100">
           <div>
-            <h3 className="text-base font-bold text-white tracking-wide">
+            <h3 className="text-base font-bold text-white [html[data-theme=light]_&]:text-slate-900 tracking-wide">
               Cloud Hub Features
             </h3>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-slate-400 [html[data-theme=light]_&]:text-slate-500 mt-0.5">
               Powerful real-time cross-device productivity tools
             </p>
           </div>

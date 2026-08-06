@@ -64,11 +64,11 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-md bg-slate-950 border border-white/10 rounded-3xl p-6 shadow-2xl backdrop-blur-2xl text-slate-100">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 dark:bg-black/80 backdrop-blur-sm animate-fade-in">
+      <div className="relative w-full max-w-md bg-white dark:bg-slate-950 border border-slate-200 dark:border-white/10 rounded-3xl p-6 shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:shadow-2xl backdrop-blur-2xl text-slate-900 dark:text-slate-100">
         <button
           onClick={handleResetAndClose}
-          className="absolute top-5 right-5 p-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-slate-400 hover:text-white transition-colors cursor-pointer"
+          className="absolute top-5 right-5 p-1.5 rounded-full bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
         >
           <X className="w-4 h-4" />
         </button>
@@ -76,14 +76,14 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
         {isSuccess ? (
           <div className="text-center py-6 space-y-4">
             <div className="flex justify-center">
-              <div className="p-3.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+              <div className="p-3.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 dark:text-emerald-400">
                 <CheckCircle2 className="w-12 h-12 animate-bounce" />
               </div>
             </div>
-            <h3 className="text-xl font-black text-white tracking-tight">
+            <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">
               Thank You for Your Feedback!
             </h3>
-            <p className="text-xs text-slate-400 max-w-xs mx-auto leading-relaxed">
+            <p className="text-xs text-slate-600 dark:text-slate-400 max-w-xs mx-auto leading-relaxed">
               Your review has been successfully submitted and helps us continuously improve Relayo.
             </p>
             <button
@@ -96,22 +96,22 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
         ) : (
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-2.5 rounded-2xl bg-cyan-500/20 border border-cyan-500/30 text-cyan-400">
+              <div className="p-2.5 rounded-2xl bg-cyan-500/10 dark:bg-cyan-500/20 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400">
                 <MessageSquareHeart className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-base font-extrabold text-white">Share Your Feedback</h3>
-                <p className="text-[11px] text-slate-400">We value your review and suggestions</p>
+                <h3 className="text-base font-extrabold text-slate-900 dark:text-white">Share Your Feedback</h3>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">We value your review and suggestions</p>
               </div>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Star Rating Picker */}
+              {/* Star Rating Picker (Star wrapper forced to bg-transparent with drop-shadow SVG glow) */}
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
                   Rating
                 </label>
-                <div className="flex items-center gap-2 bg-black/60 border border-white/10 p-2.5 rounded-xl justify-center">
+                <div className="flex items-center gap-2 bg-transparent border border-slate-200 dark:border-white/10 p-2.5 rounded-xl justify-center">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button
                       key={star}
@@ -119,13 +119,13 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                       onClick={() => setRating(star)}
                       onMouseEnter={() => setHoverRating(star)}
                       onMouseLeave={() => setHoverRating(0)}
-                      className="p-1 transition-transform hover:scale-125 focus:outline-none cursor-pointer"
+                      className="p-1 transition-transform hover:scale-125 focus:outline-none cursor-pointer bg-transparent"
                     >
                       <Star
-                        className={`w-6 h-6 ${
+                        className={`w-6 h-6 bg-transparent ${
                           star <= (hoverRating || rating)
-                            ? 'text-amber-400 fill-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.5)]'
-                            : 'text-slate-600'
+                            ? 'text-amber-400 fill-amber-400 drop-shadow-[0_0_8px_rgba(234,179,8,0.5)]'
+                            : 'text-slate-300 dark:text-slate-600'
                         }`}
                       />
                     </button>
@@ -136,7 +136,7 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
               {/* Name & Email Fields */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                  <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">
                     Name (Optional)
                   </label>
                   <input
@@ -144,11 +144,11 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Your name..."
-                    className="w-full bg-black/60 border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+                    className="w-full bg-slate-50 dark:bg-black/60 border border-slate-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                  <label className="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">
                     Email (Optional)
                   </label>
                   <input
@@ -156,15 +156,15 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@domain.com..."
-                    className="w-full bg-black/60 border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+                    className="w-full bg-slate-50 dark:bg-black/60 border border-slate-200 dark:border-white/10 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
                   />
                 </div>
               </div>
 
               {/* Message Field */}
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
-                  Your Review / Message <span className="text-cyan-400">*</span>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                  Your Review / Message <span className="text-cyan-600 dark:text-cyan-400">*</span>
                 </label>
                 <textarea
                   required
@@ -172,12 +172,12 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Tell us what you love or how we can improve Relayo..."
-                  className="w-full bg-black/60 border border-white/10 rounded-xl p-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 resize-none"
+                  className="w-full bg-slate-50 dark:bg-black/60 border border-slate-200 dark:border-white/10 rounded-xl p-3 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 resize-none"
                 />
               </div>
 
               {errorMessage && (
-                <div className="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs">
+                <div className="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-600 dark:text-rose-300 text-xs">
                   {errorMessage}
                 </div>
               )}
