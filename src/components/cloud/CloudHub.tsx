@@ -28,6 +28,7 @@ import {
   ShieldCheck
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
+import { useFirebasePresence } from '../../logic/useFirebasePresence';
 
 export function CloudHub() {
   const store = useStore($cloudStore);
@@ -35,6 +36,8 @@ export function CloudHub() {
   const [showRoomModal, setShowRoomModal] = useState(false);
   const [newRoomCode, setNewRoomCode] = useState(store.roomId);
   const [copiedCode, setCopiedCode] = useState(false);
+
+  useFirebasePresence(store.roomId, store.deviceName || 'Windows Desktop');
 
   useEffect(() => {
     initCloudSession();
