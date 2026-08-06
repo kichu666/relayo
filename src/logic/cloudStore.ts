@@ -191,8 +191,24 @@ export const initCloudSession = (roomIdToJoin?: string) => {
   // Setup presence tracking & onDisconnect for this specific room reference
   const unsubConnected = onValue(connectedRef, (snap) => {
     if (snap.val() === true) {
-      set(deviceRef, selfDevice);
-      onDisconnect(deviceRef).remove();
+      const explicitOnlinePayload: CloudDevice = {
+        id: state.deviceId,
+        name: state.deviceName,
+        type: state.deviceType,
+        status: 'online',
+        lastActive: Date.now(),
+        platform: navigator.platform
+      };
+
+      // Explicit online status write
+      set(deviceRef, explicitOnlinePayload);
+
+      // Configure onDisconnect to mark status as offline when client disconnects
+      onDisconnect(deviceRef).update({
+        status: 'offline',
+        lastActive: serverTimestamp()
+      });
+
       $cloudStore.set({ ...$cloudStore.get(), isConnected: true });
     } else {
       $cloudStore.set({ ...$cloudStore.get(), isConnected: false });
@@ -200,10 +216,14 @@ export const initCloudSession = (roomIdToJoin?: string) => {
   });
   currentUnsubscribes.push(() => off(connectedRef));
 
+  // Initial set
+  set(deviceRef, selfDevice).catch(() => {});
+
   // Heartbeat loop every 10 seconds for dynamic roomId
   heartbeatInterval = setInterval(() => {
     if (db) {
       set(ref(db, `rooms/${roomId}/presence/${state.deviceId}/lastActive`), Date.now());
+      set(ref(db, `rooms/${roomId}/presence/${state.deviceId}/status`), 'online');
     }
   }, 10000);
 
@@ -215,7 +235,10 @@ export const initCloudSession = (roomIdToJoin?: string) => {
       const deviceList: CloudDevice[] = Object.values(data);
       const now = Date.now();
       let updatedList = deviceList.map(dev => {
-        if (dev.id !== state.deviceId && dev.status === 'online' && now - dev.lastActive > 30000) {
+        if (dev.id === state.deviceId) {
+          return { ...dev, status: 'online' as const };
+        }
+        if (dev.status === 'online' && now - dev.lastActive > 35000) {
           return { ...dev, status: 'offline' as const };
         }
         return dev;
