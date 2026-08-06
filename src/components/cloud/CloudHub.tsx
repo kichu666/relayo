@@ -89,7 +89,7 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto space-y-8 pb-32 sm:pb-36">
+    <div className="w-full max-w-6xl mx-auto space-y-8 pb-36 sm:pb-44">
       {/* Back to Local Navigation Button */}
       {onBackToLocal && (
         <button

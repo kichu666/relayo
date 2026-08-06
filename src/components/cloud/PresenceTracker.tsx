@@ -79,16 +79,16 @@ export function PresenceTracker() {
 
   return (
     <div className="space-y-8">
-      {/* Device Info Header Card (Apple HIG Specs) */}
-      <div className="glass-panel p-6 sm:p-8 rounded-2xl border border-white/10 [html[data-theme=light]_&]:border-[#E5E5EA] bg-gradient-to-r from-slate-900/90 via-slate-900/70 to-indigo-950/40 [html[data-theme=light]_&]:bg-white shadow-xl [html[data-theme=light]_&]:shadow-[0_4px_24px_rgba(0,0,0,0.04)] backdrop-blur-xl">
+      {/* Device Info Header Card (Pure White Surface in Light Mode) */}
+      <div className="p-6 sm:p-8 rounded-2xl border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#D5E9FF] bg-gradient-to-r from-slate-900/90 via-slate-900/70 to-indigo-950/40 dark:from-slate-900/90 dark:via-slate-900/70 dark:to-indigo-950/40 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:bg-none shadow-xl [html[data-theme=light]_&]:shadow-sm backdrop-blur-xl">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
-            <div className="p-3 rounded-xl bg-cyan-500/10 [html[data-theme=light]_&]:bg-[#E5F1FF] border border-cyan-500/30 [html[data-theme=light]_&]:border-transparent text-cyan-400 [html[data-theme=light]_&]:text-[#007AFF] shadow-inner [html[data-theme=light]_&]:shadow-none">
+            <div className="p-3 rounded-xl bg-cyan-500/10 [html[data-theme=light]_&]:bg-cyan-50 border border-cyan-500/30 [html[data-theme=light]_&]:border-cyan-200 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 shadow-inner [html[data-theme=light]_&]:shadow-none">
               <Cpu className="w-6 h-6 animate-pulse" strokeWidth={2} />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold tracking-wider text-cyan-400 [html[data-theme=light]_&]:text-[#007AFF]">This Device</span>
+                <span className="text-xs font-semibold tracking-wider text-cyan-400 [html[data-theme=light]_&]:text-cyan-600">This Device</span>
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-500/10 text-emerald-400 [html[data-theme=light]_&]:text-emerald-700 border border-emerald-500/30">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
                   ● Active
@@ -102,13 +102,13 @@ export function PresenceTracker() {
                     value={nameInput}
                     onChange={(e) => setNameInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSaveName()}
-                    className="h-11 min-h-[44px] bg-black/60 [html[data-theme=light]_&]:bg-[#F5F5F7] border border-cyan-500/50 [html[data-theme=light]_&]:border-transparent focus:[html[data-theme=light]_&]:border-[#007AFF] rounded-xl px-4 py-1 text-sm text-white [html[data-theme=light]_&]:text-[#1D1D1F] focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:[html[data-theme=light]_&]:ring-[#007AFF]/20 transition"
+                    className="h-11 min-h-[44px] bg-black/60 [html[data-theme=light]_&]:bg-white border border-cyan-500/50 [html[data-theme=light]_&]:border-[#D5E9FF] focus:[html[data-theme=light]_&]:border-[#22C7F2] rounded-xl px-4 py-1 text-sm text-white [html[data-theme=light]_&]:text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:[html[data-theme=light]_&]:ring-0 focus:[html[data-theme=light]_&]:shadow-[0_0_0_4px_rgba(34,199,242,0.15)] transition"
                     placeholder="Enter device name..."
                     autoFocus
                   />
                   <button
                     onClick={handleSaveName}
-                    className="h-11 min-h-[44px] px-4 rounded-xl bg-cyan-500/20 [html[data-theme=light]_&]:bg-[#007AFF] hover:bg-cyan-500/30 hover:[html[data-theme=light]_&]:bg-[#0066CC] text-cyan-300 [html[data-theme=light]_&]:text-white border border-cyan-500/40 [html[data-theme=light]_&]:border-transparent transition cursor-pointer font-bold"
+                    className="h-11 min-h-[44px] px-4 rounded-xl bg-cyan-500/20 [html[data-theme=light]_&]:bg-gradient-to-r [html[data-theme=light]_&]:from-cyan-500 [html[data-theme=light]_&]:to-blue-600 hover:bg-cyan-500/30 text-cyan-300 [html[data-theme=light]_&]:text-white border border-cyan-500/40 [html[data-theme=light]_&]:border-transparent transition cursor-pointer font-bold"
                     title="Save Device Name"
                   >
                     <Check className="w-4 h-4" strokeWidth={2} />
@@ -116,7 +116,7 @@ export function PresenceTracker() {
                 </div>
               ) : (
                 <div className="flex items-center gap-2 mt-1">
-                  <h3 className="text-lg font-extrabold text-white [html[data-theme=light]_&]:text-[#1D1D1F] tracking-wide">
+                  <h3 className="text-lg font-extrabold text-white [html[data-theme=light]_&]:text-[#0F172A] tracking-wide">
                     {displayedCurrentDeviceName}
                   </h3>
                   <button
@@ -124,7 +124,7 @@ export function PresenceTracker() {
                       setNameInput(displayedCurrentDeviceName);
                       setIsEditingName(true);
                     }}
-                    className="p-1.5 text-slate-400 hover:text-cyan-300 [html[data-theme=light]_&]:hover:text-[#007AFF] transition cursor-pointer"
+                    className="p-1.5 text-slate-400 hover:text-cyan-300 [html[data-theme=light]_&]:hover:text-cyan-600 transition cursor-pointer"
                     title="Rename Device"
                   >
                     <Edit2 className="w-4 h-4" strokeWidth={2} />
@@ -134,10 +134,10 @@ export function PresenceTracker() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 self-end sm:self-center bg-black/40 [html[data-theme=light]_&]:bg-[#F5F5F7] px-4 py-2.5 rounded-xl border border-white/10 [html[data-theme=light]_&]:border-transparent text-xs text-slate-300 [html[data-theme=light]_&]:text-[#1D1D1F] font-medium">
-            <Globe className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-[#007AFF]" strokeWidth={2} />
+          <div className="flex items-center gap-2 self-end sm:self-center bg-black/40 [html[data-theme=light]_&]:bg-[#F4F9FF] px-4 py-2.5 rounded-xl border border-white/10 [html[data-theme=light]_&]:border-[#D5E9FF] text-xs text-slate-300 [html[data-theme=light]_&]:text-[#0F172A] font-medium">
+            <Globe className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />
             <span>Room Code:</span>
-            <span className="font-mono font-bold text-cyan-300 [html[data-theme=light]_&]:text-[#007AFF] tracking-wider">{store.roomId}</span>
+            <span className="font-mono font-bold text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 tracking-wider">{store.roomId}</span>
           </div>
         </div>
       </div>
