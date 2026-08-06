@@ -234,28 +234,28 @@ export function App() {
             </div>
           </div>
 
-          <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-black/50 border border-white/10 shadow-inner">
+          <div className="flex items-center gap-1 p-1 rounded-full bg-black/60 backdrop-blur-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
             <button
               onClick={() => setAppMode('p2p')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-xs transition-all ${
+              className={`flex items-center gap-2 px-4 py-1.5 sm:px-5 sm:py-2 rounded-full font-semibold text-xs tracking-wide transition-all duration-300 cursor-pointer ${
                 appMode === 'p2p'
-                  ? 'bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow-md'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-[0_0_20px_rgba(6,182,212,0.4)]'
+                  : 'text-white/60 hover:text-white hover:bg-white/5'
               }`}
             >
-              <Zap className="w-3.5 h-3.5" />
-              <span>⚡ Wi-Fi P2P</span>
+              <Wifi className="w-4 h-4" />
+              <span>Wi-Fi P2P</span>
             </button>
             <button
               onClick={() => setAppMode('cloud')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-xs transition-all ${
+              className={`flex items-center gap-2 px-4 py-1.5 sm:px-5 sm:py-2 rounded-full font-semibold text-xs tracking-wide transition-all duration-300 cursor-pointer ${
                 appMode === 'cloud'
-                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/20'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-[0_0_20px_rgba(6,182,212,0.4)]'
+                  : 'text-white/60 hover:text-white hover:bg-white/5'
               }`}
             >
-              <Cloud className="w-3.5 h-3.5 text-cyan-400" />
-              <span>☁️ Cloud Hub</span>
+              <Cloud className="w-4 h-4" />
+              <span>Cloud Hub</span>
             </button>
           </div>
 
