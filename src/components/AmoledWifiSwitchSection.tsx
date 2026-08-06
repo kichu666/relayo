@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wifi, Cloud, Moon } from 'lucide-react';
+import { Wifi, Cloud } from 'lucide-react';
 
 interface AmoledWifiSwitchSectionProps {
   appMode: 'p2p' | 'cloud';
@@ -29,10 +29,10 @@ export const AmoledWifiSwitchSection: React.FC<AmoledWifiSwitchSectionProps> = (
       />
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col gap-3">
-        {/* Upper Section: Toggle Track (Left) & Indicator (Right) */}
-        <div className="flex items-center justify-between gap-4">
+        {/* Upper Section: Glowing Switcher (Centered) */}
+        <div className="flex items-center justify-center gap-4">
           
-          {/* WI-FI / CLOUD TOGGLE (LEFT SIDE) */}
+          {/* WI-FI / CLOUD TOGGLE */}
           <div className="flex items-center p-1.5 rounded-full bg-zinc-950/90 border border-zinc-800 shadow-[inset_0_2px_4px_rgba(0,0,0,0.8)] backdrop-blur-md">
             
             {/* Active Wi-Fi Button */}
@@ -72,21 +72,6 @@ export const AmoledWifiSwitchSection: React.FC<AmoledWifiSwitchSectionProps> = (
                 }`}
               />
             </button>
-          </div>
-
-          {/* AMOLED / LIGHT-THEME INDICATOR (RIGHT SIDE) */}
-          <div
-            onClick={onToggleTheme}
-            className="flex items-center gap-2 p-1 rounded-full bg-zinc-900 border border-zinc-800 cursor-pointer hover:border-zinc-700 transition-colors shadow-inner overflow-hidden"
-            title="Theme Indicator"
-          >
-            <div className="pl-2.5 pr-1 py-1 flex items-center justify-center">
-              <Moon className="w-4 h-4 text-zinc-400" />
-            </div>
-            {/* Solid matte intense cyan background flush indicator tab */}
-            <div className="w-7 h-7 rounded-full bg-cyan-400 flex items-center justify-center shadow-sm">
-              <div className="w-2.5 h-2.5 rounded-full bg-zinc-950" />
-            </div>
           </div>
         </div>
 
