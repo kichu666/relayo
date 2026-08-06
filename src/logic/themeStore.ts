@@ -1,8 +1,9 @@
 import { atom } from 'nanostores';
 
-export type ThemeMode = 'amoled' | 'light' | 'monochrome';
+export type ThemeMode = 'amoled' | 'dark' | 'light';
 
-const savedTheme = (localStorage.getItem('relayo_theme') as ThemeMode) || 'amoled';
+const rawSaved = localStorage.getItem('relayo_theme');
+const savedTheme: ThemeMode = (rawSaved === 'dark' || rawSaved === 'light' || rawSaved === 'amoled') ? rawSaved : 'amoled';
 
 export const $themeStore = atom<ThemeMode>(savedTheme);
 

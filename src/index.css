@@ -2,8 +2,8 @@
 
 @layer base {
   :root {
-    --bg-main: #000000;
-    --panel-bg: rgba(14, 16, 22, 0.9);
+    --bg-main: #0B0F19;
+    --panel-bg: rgba(15, 23, 42, 0.85);
     --panel-border: rgba(255, 255, 255, 0.12);
     --text-primary: #ffffff;
     --text-muted: #94a3b8;
@@ -29,6 +29,20 @@
     --input-bg: rgba(0, 0, 0, 0.7);
   }
 
+  [data-theme='dark'] {
+    --bg-main: #0B0F19;
+    --panel-bg: rgba(15, 23, 42, 0.85);
+    --panel-border: rgba(255, 255, 255, 0.12);
+    --text-primary: #ffffff;
+    --text-muted: #94a3b8;
+    --badge-bg: rgba(56, 189, 248, 0.1);
+    --badge-border: rgba(56, 189, 248, 0.3);
+    --badge-text: #38bdf8;
+    --accent-color: #38bdf8;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --input-bg: rgba(0, 0, 0, 0.7);
+  }
+
   [data-theme='light'] {
     --bg-main: #F8FAFC;
     --panel-bg: #FFFFFF;
@@ -41,20 +55,6 @@
     --accent-color: #0284C7;
     --card-bg: #FFFFFF;
     --input-bg: #FFFFFF;
-  }
-
-  [data-theme='monochrome'] {
-    --bg-main: #000000;
-    --panel-bg: rgba(12, 12, 12, 0.95);
-    --panel-border: rgba(255, 255, 255, 0.3);
-    --text-primary: #ffffff;
-    --text-muted: #e5e7eb;
-    --badge-bg: rgba(255, 255, 255, 0.1);
-    --badge-border: rgba(255, 255, 255, 0.4);
-    --badge-text: #ffffff;
-    --accent-color: #ffffff;
-    --card-bg: rgba(255, 255, 255, 0.08);
-    --input-bg: rgba(20, 20, 20, 0.9);
   }
 
   body {

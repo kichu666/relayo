@@ -1,14 +1,14 @@
 import { useStore } from '@nanostores/react';
 import { $themeStore, setTheme, type ThemeMode } from '../logic/themeStore';
-import { Moon, Sun, Square } from 'lucide-react';
+import { Moon, Sun, MoonStar } from 'lucide-react';
 
 export function ThemeSwitcher() {
   const currentTheme = useStore($themeStore);
 
   const themes: Array<{ id: ThemeMode; label: string; icon: any }> = [
     { id: 'amoled', label: 'AMOLED', icon: Moon },
+    { id: 'dark', label: 'Dark', icon: MoonStar },
     { id: 'light', label: 'Light', icon: Sun },
-    { id: 'monochrome', label: 'Mono', icon: Square },
   ];
 
   return (
