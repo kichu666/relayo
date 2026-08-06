@@ -33,7 +33,11 @@ import {
   CloudOff,
   ArrowLeftRight,
   Package,
+  Cloud,
+  Radio
 } from 'lucide-react';
+import { CloudHub } from './components/cloud/CloudHub';
+import { initCloudSession } from './logic/cloudStore';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -44,9 +48,16 @@ export function App() {
   const [displayLimit, setDisplayLimit] = useState(ITEMS_PER_PAGE);
   const [showHelpModal, setShowHelpModal] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const hasInitializedReceiver = useRef(false);
+  const [appMode, setAppMode] = useState<'p2p' | 'cloud'>('p2p');
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const cloudRoomParam = urlParams.get('cloudRoom');
+    if (cloudRoomParam) {
+      setAppMode('cloud');
+      initCloudSession(cloudRoomParam);
+    }
+
     const urlRoomId = extractRoomIdFromUrl();
     if (urlRoomId && !hasInitializedReceiver.current) {
       hasInitializedReceiver.current = true;
@@ -223,6 +234,31 @@ export function App() {
             </div>
           </div>
 
+          <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-black/50 border border-white/10 shadow-inner">
+            <button
+              onClick={() => setAppMode('p2p')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-xs transition-all ${
+                appMode === 'p2p'
+                  ? 'bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow-md'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <Zap className="w-3.5 h-3.5" />
+              <span>⚡ Wi-Fi P2P</span>
+            </button>
+            <button
+              onClick={() => setAppMode('cloud')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-bold text-xs transition-all ${
+                appMode === 'cloud'
+                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/20'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <Cloud className="w-3.5 h-3.5 text-cyan-400" />
+              <span>☁️ Cloud Hub</span>
+            </button>
+          </div>
+
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {getConnectionStateBadge()}
             <ThemeSwitcher />
@@ -231,7 +267,12 @@ export function App() {
       </header>
 
       {/* Main Content Body */}
-      <main className="max-w-4xl mx-auto px-6 py-10 w-full flex-1 flex flex-col items-center justify-center relative z-10">
+      {appMode === 'cloud' ? (
+        <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 w-full flex-1 relative z-10">
+          <CloudHub />
+        </main>
+      ) : (
+        <main className="max-w-4xl mx-auto px-6 py-10 w-full flex-1 flex flex-col items-center justify-center relative z-10">
         {/* Original Hero Section */}
         <div className="text-center max-w-2xl mx-auto mb-10">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-semibold mb-4 backdrop-blur-md theme-badge shadow-sm">
@@ -642,7 +683,8 @@ export function App() {
             </button>
           </div>
         )}
-      </main>
+        </main>
+      )}
 
       {/* Footer */}
       <footer className="w-full border-t border-[var(--panel-border)] py-4 glass-panel flex flex-col sm:flex-row items-center justify-between px-6 gap-3 text-xs text-[var(--text-muted)] font-mono">

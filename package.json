@@ -13,6 +13,7 @@
     "@nanostores/react": "^1.1.0",
     "@tailwindcss/vite": "^4.3.3",
     "clsx": "^2.1.1",
+    "firebase": "^12.17.1",
     "html5-qrcode": "^2.3.8",
     "lucide-react": "^1.28.0",
     "nanostores": "^1.4.2",
