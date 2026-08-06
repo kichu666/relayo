@@ -26,10 +26,12 @@ import {
   Check,
   X,
   ShieldCheck,
-  HelpCircle
+  HelpCircle,
+  MessageSquareHeart
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useFirebasePresence } from '../../logic/useFirebasePresence';
+import { FeedbackModal } from '../FeedbackModal';
 
 interface CloudHubProps {
   isOpenCloudHelp?: boolean;
@@ -42,6 +44,7 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp }:
   const [subTab, setSubTab] = useState<'presence' | 'clipboard' | 'link' | 'scratchpad' | 'screenshot'>('presence');
   const [showRoomModal, setShowRoomModal] = useState(false);
   const [localCloudHelpModal, setLocalCloudHelpModal] = useState(false);
+  const [showCloudReviewModal, setShowCloudReviewModal] = useState(false);
   const [newRoomCode, setNewRoomCode] = useState('');
   const [copiedCode, setCopiedCode] = useState(false);
 
@@ -115,7 +118,16 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp }:
             </div>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+            <button
+              onClick={() => setShowCloudReviewModal(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs font-semibold transition cursor-pointer shadow-md"
+              title="Leave a Review"
+            >
+              <MessageSquareHeart className="w-4 h-4 text-rose-400" />
+              <span className="hidden sm:inline">Leave a Review</span>
+            </button>
+
             <button
               onClick={handleOpenHelp}
               className="inline-flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-semibold transition cursor-pointer shadow-md"
@@ -269,82 +281,99 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp }:
         {subTab === 'screenshot' && <CloudScreenshot />}
       </div>
 
-      {/* Cloud Hub Feature Cards (Scoped Exclusively to Cloud Hub Page) */}
-      <div className="mt-12 pt-8 border-t border-white/10">
-        <h3 className="text-sm font-bold tracking-wide text-slate-300 mb-4 px-1">
-          Cloud Hub Features
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div className="glass-panel p-4 rounded-2xl border border-white/10 bg-slate-900/60 backdrop-blur-xl">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">
-                <Globe className="w-5 h-5" />
-              </div>
-              <h4 className="text-sm font-bold text-white">Instant Cloud Sync</h4>
-            </div>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Real-time multi-device pairing across the global internet.
+      {/* Single Unified Cloud Hub Features Panel */}
+      <div className="mt-8 bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl p-6 md:p-8 text-left relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-white/10">
+          <div>
+            <h3 className="text-base font-bold text-white tracking-wide">
+              Cloud Hub Features
+            </h3>
+            <p className="text-xs text-slate-400 mt-0.5">
+              Powerful real-time cross-device productivity tools
             </p>
           </div>
+          <button
+            onClick={() => setShowCloudReviewModal(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs font-semibold transition cursor-pointer"
+          >
+            <MessageSquareHeart className="w-4 h-4 text-rose-400" />
+            <span>Leave a Review</span>
+          </button>
+        </div>
 
-          <div className="glass-panel p-4 rounded-2xl border border-white/10 bg-slate-900/60 backdrop-blur-xl">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="p-2.5 rounded-xl bg-blue-500/10 border border-blue-500/30 text-blue-400">
-                <ClipboardCopy className="w-5 h-5" />
-              </div>
-              <h4 className="text-sm font-bold text-white">Clipboard Sync</h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="flex items-start gap-3">
+            <div className="p-2.5 rounded-xl bg-cyan-500/10 text-cyan-400 shrink-0">
+              <Globe className="w-5 h-5" />
             </div>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Copy text on one device and instantly paste it on any linked device.
-            </p>
+            <div>
+              <h4 className="text-sm font-bold text-white mb-0.5">Instant Cloud Sync</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Real-time multi-device pairing across the global internet.
+              </p>
+            </div>
           </div>
 
-          <div className="glass-panel p-4 rounded-2xl border border-white/10 bg-slate-900/60 backdrop-blur-xl">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="p-2.5 rounded-xl bg-purple-500/10 border border-purple-500/30 text-purple-400">
-                <Link2 className="w-5 h-5" />
-              </div>
-              <h4 className="text-sm font-bold text-white">Links</h4>
+          <div className="flex items-start gap-3">
+            <div className="p-2.5 rounded-xl bg-blue-500/10 text-blue-400 shrink-0">
+              <ClipboardCopy className="w-5 h-5" />
             </div>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Push and trigger URLs directly across your connected phones and PCs.
-            </p>
+            <div>
+              <h4 className="text-sm font-bold text-white mb-0.5">Clipboard Sync</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Copy text on one device and instantly paste it on any linked device.
+              </p>
+            </div>
           </div>
 
-          <div className="glass-panel p-4 rounded-2xl border border-white/10 bg-slate-900/60 backdrop-blur-xl">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
-                <FileText className="w-5 h-5" />
-              </div>
-              <h4 className="text-sm font-bold text-white">Notes</h4>
+          <div className="flex items-start gap-3">
+            <div className="p-2.5 rounded-xl bg-purple-500/10 text-purple-400 shrink-0">
+              <Link2 className="w-5 h-5" />
             </div>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Shared cross-device scratchpad for quick joint notes and ideas.
-            </p>
+            <div>
+              <h4 className="text-sm font-bold text-white mb-0.5">Links</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Push and trigger URLs directly across your connected phones and PCs.
+              </p>
+            </div>
           </div>
 
-          <div className="glass-panel p-4 rounded-2xl border border-white/10 bg-slate-900/60 backdrop-blur-xl">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400">
-                <Camera className="w-5 h-5" />
-              </div>
-              <h4 className="text-sm font-bold text-white">Screenshot Sync</h4>
+          <div className="flex items-start gap-3">
+            <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 shrink-0">
+              <FileText className="w-5 h-5" />
             </div>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Capture or upload screenshots for instant remote viewing and streaming.
-            </p>
+            <div>
+              <h4 className="text-sm font-bold text-white mb-0.5">Notes</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Shared cross-device scratchpad for quick joint notes and ideas.
+              </p>
+            </div>
           </div>
 
-          <div className="glass-panel p-4 rounded-2xl border border-white/10 bg-slate-900/60 backdrop-blur-xl">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400">
-                <Users className="w-5 h-5" />
-              </div>
-              <h4 className="text-sm font-bold text-white">Multi-Device Access</h4>
+          <div className="flex items-start gap-3">
+            <div className="p-2.5 rounded-xl bg-rose-500/10 text-rose-400 shrink-0">
+              <Camera className="w-5 h-5" />
             </div>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Connect desktop PCs, laptops, tablets, and phones under isolated rooms.
-            </p>
+            <div>
+              <h4 className="text-sm font-bold text-white mb-0.5">Screenshot Sync</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Capture or upload screenshots for instant remote viewing and streaming.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3">
+            <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-400 shrink-0">
+              <Users className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="text-sm font-bold text-white mb-0.5">Multi-Device Access</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Connect desktop PCs, laptops, tablets, and phones under isolated rooms.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -471,6 +500,11 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp }:
           </div>
         </div>
       )}
+      {/* Cloud Hub User Review & Feedback Modal */}
+      <FeedbackModal
+        isOpen={showCloudReviewModal}
+        onClose={() => setShowCloudReviewModal(false)}
+      />
     </div>
   );
 }
