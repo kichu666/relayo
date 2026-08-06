@@ -25,7 +25,8 @@ import {
   KeyRound,
   Check,
   X,
-  ShieldCheck
+  ShieldCheck,
+  HelpCircle
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useFirebasePresence } from '../../logic/useFirebasePresence';
@@ -34,6 +35,7 @@ export function CloudHub() {
   const store = useStore($cloudStore);
   const [subTab, setSubTab] = useState<'presence' | 'clipboard' | 'link' | 'scratchpad' | 'screenshot'>('presence');
   const [showRoomModal, setShowRoomModal] = useState(false);
+  const [showCloudHelpModal, setShowCloudHelpModal] = useState(false);
   const [newRoomCode, setNewRoomCode] = useState('');
   const [copiedCode, setCopiedCode] = useState(false);
 
@@ -97,7 +99,16 @@ export function CloudHub() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <button
+              onClick={() => setShowCloudHelpModal(true)}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-semibold transition cursor-pointer shadow-md"
+              title="How Cloud Hub Works"
+            >
+              <HelpCircle className="w-4 h-4 text-cyan-400" />
+              <span className="hidden sm:inline">How it works</span>
+            </button>
+
             <button
               onClick={() => setShowRoomModal(true)}
               className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-black/60 hover:bg-black/80 border border-white/15 text-slate-200 text-xs font-bold transition shadow-md"
@@ -109,7 +120,7 @@ export function CloudHub() {
 
             <button
               onClick={handleCopyRoomCode}
-              className="p-2 rounded-2xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs transition"
+              className="p-2 rounded-2xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs transition cursor-pointer"
               title="Copy Room Link"
             >
               {copiedCode ? <Check className="w-4 h-4 text-emerald-400" /> : <QrCode className="w-4 h-4" />}
@@ -378,6 +389,69 @@ export function CloudHub() {
                 Switch Room
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Cloud Hub Tutorial Modal */}
+      {showCloudHelpModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
+          <div className="relative w-full max-w-md bg-slate-950 border border-white/10 rounded-3xl p-6 shadow-2xl backdrop-blur-2xl text-slate-100">
+            <button
+              onClick={() => setShowCloudHelpModal(false)}
+              className="absolute top-5 right-5 p-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-slate-400 hover:text-white transition-colors cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <div className="flex items-center gap-3 mb-5">
+              <div className="p-2.5 rounded-2xl bg-cyan-500/20 border border-cyan-500/30 text-cyan-400">
+                <HelpCircle className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-base font-extrabold text-white">How Cloud Hub Works</h3>
+                <p className="text-[11px] text-slate-400">Real-Time Multi-Device Cloud Productivity</p>
+              </div>
+            </div>
+
+            <div className="space-y-3.5 my-6 text-xs">
+              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-black/60 border border-white/10">
+                <div className="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-xs shrink-0">1</div>
+                <div>
+                  <p className="font-bold text-white mb-0.5">Create or Join a Room</p>
+                  <p className="text-slate-400 leading-normal">
+                    Use the <strong className="text-cyan-300">New Private Room</strong> button to generate a fresh key, or type an existing code into the input field and click <strong className="text-cyan-300">Join Room</strong>. You can also tap the QR code button for instant mobile pairing.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-black/60 border border-white/10">
+                <div className="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-xs shrink-0">2</div>
+                <div>
+                  <p className="font-bold text-white mb-0.5">Online Devices</p>
+                  <p className="text-slate-400 leading-normal">
+                    Monitor your active status under <strong className="text-cyan-300">This Device</strong> and view all paired devices in real time under <strong className="text-cyan-300">Connected Devices</strong>.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-black/60 border border-white/10">
+                <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0">3</div>
+                <div>
+                  <p className="font-bold text-white mb-0.5">Productivity Tools</p>
+                  <p className="text-slate-400 leading-normal">
+                    Switch between <strong className="text-cyan-300">Clipboard Sync</strong>, <strong className="text-cyan-300">Links</strong>, <strong className="text-cyan-300">Notes</strong>, and <strong className="text-cyan-300">Screenshots</strong> tabs to instantly share data across your devices over the cloud.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setShowCloudHelpModal(false)}
+              className="w-full py-2.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs transition cursor-pointer shadow-md"
+            >
+              Got It, Start Syncing
+            </button>
           </div>
         </div>
       )}
