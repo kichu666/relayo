@@ -110,19 +110,19 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
         </div>
       )}
 
-      {/* Top Banner & Room Switcher (Reverted to Airy Cyan/Blue Gradient Surface) */}
-      <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 [html[data-theme=light]_&]:border-[#D5E9FF] bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950/60 [html[data-theme=light]_&]:bg-[linear-gradient(135deg,#F8FCFF_0%,#EDF7FF_40%,#E2F2FF_100%)] shadow-2xl [html[data-theme=light]_&]:shadow-[0_18px_45px_rgba(14,165,233,0.10)] backdrop-blur-md relative overflow-hidden">
+      {/* Top Banner & Room Switcher (Mobile Responsive & Airy Surface) */}
+      <div className="glass-panel p-4 sm:p-6 md:p-8 rounded-3xl border border-white/10 [html[data-theme=light]_&]:border-[#D5E9FF] bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950/60 [html[data-theme=light]_&]:bg-[linear-gradient(135deg,#F8FCFF_0%,#EDF7FF_40%,#E2F2FF_100%)] shadow-2xl [html[data-theme=light]_&]:shadow-[0_18px_45px_rgba(14,165,233,0.10)] backdrop-blur-md relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 [html[data-theme=light]_&]:bg-cyan-400/20 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-500/10 [html[data-theme=light]_&]:bg-cyan-300/10 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
 
-        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5 sm:gap-4">
-            <div className="p-3 sm:p-3.5 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 [html[data-theme=light]_&]:bg-cyan-500/10 border border-cyan-500/30 [html[data-theme=light]_&]:border-cyan-400/30 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 shadow-lg">
-              <Globe className="w-6 h-6 sm:w-7 sm:h-7 animate-pulse" strokeWidth={2} />
+        <div className="relative z-10 flex items-start justify-between gap-3">
+          <div className="flex items-center gap-3 sm:gap-4">
+            <div className="p-2.5 sm:p-3.5 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 [html[data-theme=light]_&]:bg-cyan-500/10 border border-cyan-500/30 [html[data-theme=light]_&]:border-cyan-400/30 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 shadow-lg shrink-0">
+              <Globe className="w-5 h-5 sm:w-7 sm:h-7 animate-pulse" strokeWidth={2} />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-white [html[data-theme=light]_&]:text-[#0F172A]">
+                <h2 className="text-lg sm:text-2xl font-extrabold tracking-tight text-white [html[data-theme=light]_&]:text-[#0F172A]">
                   Relayo Cloud Hub
                 </h2>
               </div>
@@ -132,10 +132,10 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={handleCopyRoomCode}
-              className="w-11 h-11 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:hover:bg-slate-50 border border-cyan-500/30 [html[data-theme=light]_&]:border-[#D8E9FF] text-xs transition cursor-pointer shadow-sm"
+              className="w-10 h-10 sm:w-11 sm:h-11 min-h-[40px] sm:min-h-[44px] min-w-[40px] sm:min-w-[44px] flex items-center justify-center rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:hover:bg-slate-50 border border-cyan-500/30 [html[data-theme=light]_&]:border-[#D8E9FF] text-xs transition cursor-pointer shadow-sm"
               title="Copy Room Link"
             >
               {copiedCode ? <Check className="w-4 h-4 text-emerald-400" strokeWidth={2} /> : <QrCode className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />}
@@ -144,9 +144,9 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
         </div>
 
         {/* Prominent Room Code Input & Quick Switcher */}
-        <div className="mt-6 pt-5 border-t border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 relative z-10">
-          <div className="flex items-center gap-2.5 flex-1 max-w-lg">
-            <div className="relative flex-1">
+        <div className="mt-4 sm:mt-6 pt-4 sm:pt-5 border-t border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 relative z-10">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 flex-1 max-w-lg">
+            <div className="relative flex-1 w-full">
               <KeyRound className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" strokeWidth={2} />
               <input
                 type="text"
@@ -159,16 +159,16 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
             </div>
             <button
               onClick={handleSwitchRoom}
-              className="h-11 min-h-[44px] px-6 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm transition shadow-md whitespace-nowrap cursor-pointer flex items-center justify-center"
+              className="w-full sm:w-auto h-11 min-h-[44px] px-6 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm transition shadow-md whitespace-nowrap cursor-pointer flex items-center justify-center"
             >
               Join Room
             </button>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 w-full md:w-auto">
             <button
               onClick={handleNewPrivateRoom}
-              className="h-11 min-h-[44px] flex items-center gap-2 px-4 rounded-xl bg-white/5 [html[data-theme=light]_&]:bg-white hover:bg-white/10 hover:[html[data-theme=light]_&]:bg-slate-50 text-slate-300 [html[data-theme=light]_&]:text-[#0F172A] border border-white/10 [html[data-theme=light]_&]:border-[#D8E9FF] text-xs font-semibold transition whitespace-nowrap cursor-pointer"
+              className="w-full sm:w-auto h-11 min-h-[44px] flex items-center justify-center gap-2 px-4 rounded-xl bg-white/5 [html[data-theme=light]_&]:bg-white hover:bg-white/10 hover:[html[data-theme=light]_&]:bg-slate-50 text-slate-300 [html[data-theme=light]_&]:text-[#0F172A] border border-white/10 [html[data-theme=light]_&]:border-[#D8E9FF] text-xs font-semibold transition whitespace-nowrap cursor-pointer"
               title="Generate new random private room ID"
             >
               <Sparkles className="w-3.5 h-3.5 text-purple-400 [html[data-theme=light]_&]:text-purple-600" strokeWidth={2} />
