@@ -52,10 +52,10 @@ export function App() {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const cloudRoomParam = urlParams.get('cloudRoom');
-    if (cloudRoomParam) {
+    const roomParam = urlParams.get('room') || urlParams.get('cloudRoom');
+    if (roomParam) {
       setAppMode('cloud');
-      initCloudSession(cloudRoomParam);
+      initCloudSession(roomParam.trim());
     }
 
     const urlRoomId = extractRoomIdFromUrl();

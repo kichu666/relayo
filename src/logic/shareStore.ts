@@ -70,10 +70,10 @@ export function extractRoomIdFromUrl(urlStr?: string): string | null {
   if (typeof window === 'undefined') return null;
 
   try {
-    // 1. Direct URLSearchParams check on window.location.search (?id=... or ?room=...)
+    // 1. Direct URLSearchParams check on window.location.search (?id=... or ?share=...)
     if (!urlStr && window.location.search) {
       const searchParams = new URLSearchParams(window.location.search);
-      const id = searchParams.get('id') || searchParams.get('room') || searchParams.get('share');
+      const id = searchParams.get('id') || searchParams.get('share');
       if (id) return id.trim();
     }
 
@@ -81,7 +81,7 @@ export function extractRoomIdFromUrl(urlStr?: string): string | null {
     if (!fullUrl) return null;
 
     // 2. Parse query string regex in full URL (?id=... or &id=...)
-    const queryMatch = fullUrl.match(/[?&](?:id|room|share)=([^&#]+)/i);
+    const queryMatch = fullUrl.match(/[?&](?:id|share)=([^&#]+)/i);
     if (queryMatch && queryMatch[1]) {
       return decodeURIComponent(queryMatch[1]).trim();
     }

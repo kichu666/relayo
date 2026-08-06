@@ -47,9 +47,10 @@ export function CloudHub() {
   };
 
   const handleCopyRoomCode = () => {
-    navigator.clipboard.writeText(store.roomId);
+    const roomUrl = `https://relayo-eight.vercel.app/?room=${encodeURIComponent(store.roomId)}`;
+    navigator.clipboard.writeText(roomUrl);
     setCopiedCode(true);
-    triggerCloudToast('Room code copied! Share with your other devices.', 'success');
+    triggerCloudToast('Cloud Room link copied to clipboard!', 'success');
     setTimeout(() => setCopiedCode(false), 2500);
   };
 
@@ -96,7 +97,7 @@ export function CloudHub() {
             >
               <KeyRound className="w-4 h-4 text-cyan-400" />
               <span>Room:</span>
-              <span className="font-mono text-cyan-300 tracking-wider uppercase">{store.roomId}</span>
+              <span className="font-mono text-cyan-300 tracking-wider">{store.roomId}</span>
             </button>
 
             <button
@@ -229,15 +230,15 @@ export function CloudHub() {
                 type="text"
                 value={newRoomCode}
                 onChange={(e) => setNewRoomCode(e.target.value)}
-                placeholder="e.g. RELAYO-HOME, MY-DEVICES"
-                className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 font-mono text-sm text-cyan-300 uppercase tracking-wider focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+                placeholder="e.g. relayo.world, my-devices"
+                className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-2.5 font-mono text-sm text-cyan-300 tracking-wider focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
                 onKeyDown={(e) => e.key === 'Enter' && handleSwitchRoom()}
               />
             </div>
 
             <div className="flex justify-center p-3 bg-white rounded-xl">
               <QRCodeSVG
-                value={`https://relayo.vercel.app/?cloudRoom=${store.roomId}`}
+                value={`https://relayo-eight.vercel.app/?room=${encodeURIComponent(store.roomId)}`}
                 size={140}
               />
             </div>

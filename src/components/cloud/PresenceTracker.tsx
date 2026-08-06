@@ -108,7 +108,7 @@ export function PresenceTracker() {
           <div className="flex items-center gap-2 self-end sm:self-center bg-black/40 px-3 py-1.5 rounded-xl border border-white/10 text-xs text-slate-300">
             <Globe className="w-4 h-4 text-cyan-400" />
             <span>Room Code:</span>
-            <span className="font-mono font-bold text-cyan-300 tracking-wider uppercase">{store.roomId}</span>
+            <span className="font-mono font-bold text-cyan-300 tracking-wider">{store.roomId}</span>
           </div>
         </div>
       </div>

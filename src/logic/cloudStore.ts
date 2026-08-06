@@ -99,7 +99,7 @@ const detectDefaultName = (): string => {
 
 const initialDeviceId = getStoredOrGeneratedId('relayo_cloud_device_id', 'dev');
 const initialDeviceName = localStorage.getItem('relayo_cloud_device_name') || detectDefaultName();
-const initialRoomId = localStorage.getItem('relayo_cloud_room_id') || 'relayo-global-hub';
+const initialRoomId = localStorage.getItem('relayo_cloud_room_id') || 'relayo.world';
 const initialDeviceType = detectDeviceType();
 
 export const $cloudStore = atom<CloudState>({
@@ -151,20 +151,27 @@ export const initCloudSession = (roomIdToJoin?: string) => {
   const deviceRef = ref(db, `rooms/${roomId}/devices/${state.deviceId}`);
   const connectedRef = ref(db, '.info/connected');
 
+  const selfDevice: CloudDevice = {
+    id: state.deviceId,
+    name: state.deviceName,
+    type: state.deviceType,
+    status: 'online',
+    lastActive: Date.now(),
+    platform: navigator.platform
+  };
+
+  // Immediately register self device locally & in Firebase
+  set(deviceRef, selfDevice).catch(() => {});
+  const existingDevs = $cloudStore.get().devices;
+  const mergedDevs = existingDevs.some(d => d.id === state.deviceId)
+    ? existingDevs.map(d => (d.id === state.deviceId ? selfDevice : d))
+    : [selfDevice, ...existingDevs];
+  $cloudStore.set({ ...$cloudStore.get(), isConnected: true, devices: mergedDevs });
+
   // Setup presence tracking
   const unsubConnected = onValue(connectedRef, (snap) => {
     if (snap.val() === true) {
-      const devicePayload: CloudDevice = {
-        id: state.deviceId,
-        name: state.deviceName,
-        type: state.deviceType,
-        status: 'online',
-        lastActive: Date.now(),
-        platform: navigator.platform
-      };
-
-      // Set online status & configure onDisconnect trigger
-      set(deviceRef, devicePayload);
+      set(deviceRef, selfDevice);
       onDisconnect(deviceRef).update({
         status: 'offline',
         lastActive: serverTimestamp()
@@ -180,7 +187,7 @@ export const initCloudSession = (roomIdToJoin?: string) => {
   // Heartbeat loop every 10 seconds
   heartbeatInterval = setInterval(() => {
     const currentState = $cloudStore.get();
-    if (currentState.isConnected && db) {
+    if (db) {
       set(ref(db, `rooms/${roomId}/devices/${currentState.deviceId}/lastActive`), Date.now());
     }
   }, 10000);
@@ -191,17 +198,19 @@ export const initCloudSession = (roomIdToJoin?: string) => {
     const data = snapshot.val();
     if (data) {
       const deviceList: CloudDevice[] = Object.values(data);
-      // Mark as offline if lastActive is older than 30 seconds
       const now = Date.now();
-      const updatedList = deviceList.map(dev => {
+      let updatedList = deviceList.map(dev => {
         if (dev.id !== state.deviceId && dev.status === 'online' && now - dev.lastActive > 30000) {
           return { ...dev, status: 'offline' as const };
         }
         return dev;
       });
+      if (!updatedList.some(d => d.id === state.deviceId)) {
+        updatedList.push(selfDevice);
+      }
       $cloudStore.set({ ...$cloudStore.get(), devices: updatedList });
     } else {
-      $cloudStore.set({ ...$cloudStore.get(), devices: [] });
+      $cloudStore.set({ ...$cloudStore.get(), devices: [selfDevice] });
     }
   });
   currentUnsubscribes.push(() => off(devicesRef));
@@ -303,7 +312,7 @@ export const updateDeviceName = (name: string) => {
 
 // Switch Cloud Room Code
 export const switchCloudRoom = (newRoomId: string) => {
-  const cleanRoom = newRoomId.trim().toUpperCase() || 'RELAYO-GLOBAL-HUB';
+  const cleanRoom = newRoomId.trim() || 'relayo.world';
   initCloudSession(cleanRoom);
   triggerCloudToast(`Switched to Cloud Room: ${cleanRoom}`, 'success');
 };
