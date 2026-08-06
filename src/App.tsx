@@ -40,6 +40,7 @@ import {
 import { CloudHub } from './components/cloud/CloudHub';
 import { FeedbackModal } from './components/FeedbackModal';
 import { initCloudSession } from './logic/cloudStore';
+import { AmoledWifiSwitchSection } from './components/AmoledWifiSwitchSection';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -300,6 +301,9 @@ export function App() {
           </div>
         </div>
       </header>
+
+      {/* AMOLED Wi-Fi Switch Section */}
+      <AmoledWifiSwitchSection appMode={appMode} setAppMode={setAppMode} />
 
       {/* Main Content Body */}
       {appMode === 'cloud' ? (
