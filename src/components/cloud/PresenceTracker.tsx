@@ -123,7 +123,7 @@ export function PresenceTracker() {
               Connected Devices ({onlineDevices.length})
             </h4>
           </div>
-          <span className="text-xs text-slate-400">Synced via Firebase Cloud</span>
+          <span className="text-xs text-slate-400">Synced via Relayo Cloud</span>
         </div>
 
         {onlineDevices.length === 0 ? (

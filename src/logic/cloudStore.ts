@@ -96,9 +96,9 @@ const detectDefaultName = (): string => {
   const isWin = navigator.platform.toUpperCase().indexOf('WIN') >= 0;
   const os = isMac ? 'Mac' : isWin ? 'Windows' : 'Device';
   
-  if (type === 'phone') return '📱 Mobile Phone';
-  if (type === 'tablet') return '📱 Tablet';
-  return `🖥️ ${os} ${type === 'laptop' ? 'Laptop' : 'Desktop'}`;
+  if (type === 'phone') return 'Mobile Phone';
+  if (type === 'tablet') return 'Tablet';
+  return `${os} ${type === 'laptop' ? 'Laptop' : 'Desktop'}`;
 };
 
 export const generateRandomRoomId = (): string => {

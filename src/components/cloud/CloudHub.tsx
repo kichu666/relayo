@@ -87,15 +87,11 @@ export function CloudHub() {
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-2xl font-black tracking-tight text-white">
-                  Firebase Cloud Hub
+                  Relayo Cloud Hub
                 </h2>
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">
-                  <Radio className="w-3 h-3 text-cyan-400 animate-ping" />
-                  ● Global Sync
-                </span>
               </div>
               <p className="text-xs text-slate-400 mt-1">
-                Seamless cross-device productivity over the internet via Firebase
+                Seamless cross-device productivity over the cloud
               </p>
             </div>
           </div>
@@ -129,7 +125,7 @@ export function CloudHub() {
                 type="text"
                 value={newRoomCode}
                 onChange={(e) => setNewRoomCode(e.target.value)}
-                placeholder="Type custom shared room code (e.g. my-secret-room)"
+                placeholder="Type custom shared room code (e.g. relayo-x8k3p9)"
                 className="w-full bg-black/60 border border-white/15 rounded-xl pl-9 pr-3 py-2 text-xs font-mono text-cyan-300 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
                 onKeyDown={(e) => e.key === 'Enter' && handleSwitchRoom()}
               />
@@ -149,7 +145,7 @@ export function CloudHub() {
               title="Generate new random private room ID"
             >
               <Sparkles className="w-3.5 h-3.5 text-purple-400" />
-              <span>🎲 New Private Room</span>
+              <span>New Private Room</span>
             </button>
           </div>
         </div>
