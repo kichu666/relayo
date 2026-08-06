@@ -11,47 +11,51 @@ export const AmoledWifiSwitch: React.FC<AmoledWifiSwitchProps> = ({
   setAppMode,
 }) => {
   return (
-    <div className="absolute left-1/2 -translate-x-1/2 flex items-center p-1 gap-1 rounded-full bg-zinc-950/90 border border-zinc-800 shadow-[inset_0_2px_4px_rgba(0,0,0,0.8)] backdrop-blur-md">
-      {/* Active Wi-Fi Button */}
+    <div className="w-[196px] h-[38px] md:w-[248px] md:h-[42px] mx-auto p-1 flex items-center rounded-full bg-zinc-950/90 border border-zinc-800/80 shadow-[inset_0_2px_4px_rgba(0,0,0,0.8)] backdrop-blur-md relative select-none">
+      {/* Smooth Sliding Active State Indicator */}
+      <div
+        className={`absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-full bg-black ring-1 ring-white/40 shadow-[0_0_6px_rgba(34,211,238,0.2),0_0_10px_rgba(255,255,255,0.15)] transition-all duration-300 ease-in-out ${
+          appMode === 'p2p' ? 'left-1' : 'left-[calc(50%+0px)]'
+        }`}
+      />
+
+      {/* Local (Wi-Fi P2P) Mode Button */}
       <button
         onClick={() => setAppMode('p2p')}
-        className={`relative flex items-center justify-center transition-all duration-300 cursor-pointer ${
+        className={`relative z-10 w-1/2 h-full flex items-center justify-center gap-1.5 md:gap-2 rounded-full font-bold text-xs md:text-sm transition-colors duration-300 cursor-pointer ${
           appMode === 'p2p'
-            ? 'w-8 h-8 rounded-full bg-black ring-2 ring-white shadow-[0_0_12px_rgba(255,255,255,0.95),0_0_20px_rgba(255,255,255,0.5)]'
-            : 'w-8 h-8 rounded-full bg-transparent text-zinc-600 hover:text-zinc-400'
+            ? 'text-cyan-400 drop-shadow-[0_0_6px_rgba(34,211,238,0.4)]'
+            : 'text-zinc-500 hover:text-zinc-300'
         }`}
-        title="Wi-Fi P2P Mode"
+        title="Local P2P Mode"
       >
         <Wifi
-          className={`w-4 h-4 shrink-0 transition-all duration-300 ${
-            appMode === 'p2p'
-              ? 'text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,1)] stroke-[2.5]'
-              : 'text-zinc-600 stroke-[1.5]'
+          className={`w-3.5 h-3.5 md:w-4 md:h-4 shrink-0 transition-all duration-300 ${
+            appMode === 'p2p' ? 'stroke-[2.5]' : 'stroke-[1.5]'
           }`}
         />
+        <span>Local</span>
       </button>
 
-      {/* Cloud Button */}
+      {/* Cloud Mode Button */}
       <button
         onClick={() => setAppMode('cloud')}
-        className={`relative flex items-center justify-center transition-all duration-300 cursor-pointer ${
+        className={`relative z-10 w-1/2 h-full flex items-center justify-center gap-1.5 md:gap-2 rounded-full font-bold text-xs md:text-sm transition-colors duration-300 cursor-pointer ${
           appMode === 'cloud'
-            ? 'w-8 h-8 rounded-full bg-black ring-2 ring-white shadow-[0_0_12px_rgba(255,255,255,0.95),0_0_20px_rgba(255,255,255,0.5)]'
-            : 'w-8 h-8 rounded-full bg-transparent text-zinc-600 hover:text-zinc-400'
+            ? 'text-cyan-400 drop-shadow-[0_0_6px_rgba(34,211,238,0.4)]'
+            : 'text-zinc-500 hover:text-zinc-300'
         }`}
         title="Cloud Hub Mode"
       >
         <Cloud
-          className={`w-4 h-4 shrink-0 transition-all duration-300 ${
-            appMode === 'cloud'
-              ? 'text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,1)] stroke-[2.5]'
-              : 'text-zinc-600 stroke-[1.5]'
+          className={`w-3.5 h-3.5 md:w-4 md:h-4 shrink-0 transition-all duration-300 ${
+            appMode === 'cloud' ? 'stroke-[2.5]' : 'stroke-[1.5]'
           }`}
         />
+        <span>Cloud</span>
       </button>
     </div>
   );
 };
 
-// Also export as AmoledWifiSwitchSection for backward compatibility if imported elsewhere
 export const AmoledWifiSwitchSection = AmoledWifiSwitch;
