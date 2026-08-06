@@ -377,7 +377,7 @@ export function App() {
             <div className="w-full max-w-xl mt-8 p-6 sm:p-7 rounded-3xl bg-black/90 border border-zinc-800/90 shadow-2xl backdrop-blur-2xl text-left relative overflow-hidden">
               <div className="absolute top-0 right-0 w-40 h-40 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
 
-              <h3 className="text-lg font-bold uppercase tracking-wider text-zinc-100 mb-6">
+              <h3 className="text-lg font-bold tracking-wide text-zinc-100 mb-6">
                 Why Relayo?
               </h3>
 
