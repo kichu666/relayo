@@ -234,24 +234,24 @@ export function App() {
             </div>
           </div>
 
-          <div className="flex items-center gap-1 p-1 rounded-full bg-black/60 backdrop-blur-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+          <div className="flex items-center gap-1 p-1 rounded-full bg-black border border-white/10 shadow-[0_0_20px_rgba(0,0,0,0.9)] backdrop-blur-2xl">
             <button
               onClick={() => setAppMode('p2p')}
-              className={`flex items-center gap-2 px-4 py-1.5 sm:px-5 sm:py-2 rounded-full font-semibold text-xs tracking-wide transition-all duration-300 cursor-pointer ${
+              className={`flex items-center gap-2 px-4 py-1.5 sm:px-5 sm:py-2 rounded-full font-bold text-xs tracking-wide transition-all duration-300 cursor-pointer ${
                 appMode === 'p2p'
-                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-[0_0_20px_rgba(6,182,212,0.4)]'
-                  : 'text-white/60 hover:text-white hover:bg-white/5'
+                  ? 'bg-gradient-to-r from-cyan-400 to-blue-600 text-slate-950 shadow-[0_0_25px_rgba(6,182,212,0.4)]'
+                  : 'text-white/50 hover:text-white/90 hover:bg-white/5'
               }`}
             >
-              <Wifi className="w-4 h-4" />
+              <Radio className="w-4 h-4" />
               <span>Wi-Fi P2P</span>
             </button>
             <button
               onClick={() => setAppMode('cloud')}
-              className={`flex items-center gap-2 px-4 py-1.5 sm:px-5 sm:py-2 rounded-full font-semibold text-xs tracking-wide transition-all duration-300 cursor-pointer ${
+              className={`flex items-center gap-2 px-4 py-1.5 sm:px-5 sm:py-2 rounded-full font-bold text-xs tracking-wide transition-all duration-300 cursor-pointer ${
                 appMode === 'cloud'
-                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-[0_0_20px_rgba(6,182,212,0.4)]'
-                  : 'text-white/60 hover:text-white hover:bg-white/5'
+                  ? 'bg-gradient-to-r from-cyan-400 to-blue-600 text-slate-950 shadow-[0_0_25px_rgba(6,182,212,0.4)]'
+                  : 'text-white/50 hover:text-white/90 hover:bg-white/5'
               }`}
             >
               <Cloud className="w-4 h-4" />
