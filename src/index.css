@@ -100,21 +100,21 @@
   left: 0;
   width: 100%;
   z-index: 100;
-  background-color: rgba(15, 23, 42, 0.12) !important;
-  backdrop-filter: saturate(180%) blur(16px) !important;
-  -webkit-backdrop-filter: saturate(180%) blur(16px) !important;
+  background-color: rgba(11, 15, 23, 0.75) !important;
+  backdrop-filter: saturate(180%) blur(20px) !important;
+  -webkit-backdrop-filter: saturate(180%) blur(20px) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 [data-theme='amoled'] .apple-header {
-  background-color: rgba(0, 0, 0, 0.10) !important;
+  background-color: rgba(0, 0, 0, 0.90) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 [data-theme='light'] .apple-header {
-  background-color: rgba(255, 255, 255, 0.25) !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgba(248, 250, 252, 0.80) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .font-icloud-logo {
