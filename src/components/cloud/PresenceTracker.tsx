@@ -171,11 +171,10 @@ export function PresenceTracker() {
               return (
                 <div
                   key={dev.id}
-                  className={`glass-panel p-4 rounded-2xl border transition-all duration-300 ${
-                    isCurrent
+                  className={`glass-panel p-4 rounded-2xl border transition-all duration-300 ${isCurrent
                       ? 'border-cyan-500/40 bg-cyan-950/20 [html[data-theme=light]_&]:bg-[#E5F1FF] [html[data-theme=light]_&]:border-[#007AFF]/30 shadow-[0_0_15px_rgba(6,182,212,0.15)] [html[data-theme=light]_&]:shadow-none'
                       : 'border-white/10 [html[data-theme=light]_&]:border-[#E5E5EA] bg-slate-900/40 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:shadow-[0_4px_24px_rgba(0,0,0,0.04)] hover:border-white/20'
-                  }`}
+                    }`}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">

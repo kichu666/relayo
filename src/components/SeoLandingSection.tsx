@@ -59,7 +59,7 @@ export function SeoLandingSection() {
   ];
 
   return (
-    <section className="w-full max-w-6xl mx-auto mt-16 pt-12 border-t border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] space-y-16 px-4 sm:px-6">
+    <section className="w-full max-w-6xl mx-auto mt-16 pt-12 pb-28 sm:pb-36 border-t border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] space-y-16 px-4 sm:px-6">
       {/* Primary Header Section */}
       <div className="text-center space-y-4 max-w-3xl mx-auto">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 [html[data-theme=light]_&]:bg-cyan-50 [html[data-theme=light]_&]:text-cyan-700 [html[data-theme=light]_&]:border-cyan-200 text-xs font-semibold">
