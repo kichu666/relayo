@@ -268,7 +268,7 @@ export function App() {
       {/* Toast Notification - Bottom Right Corner */}
       {store.toastMessage && (
         <div className="fixed bottom-6 right-6 z-50 animate-fade-in flex items-center gap-2.5 px-4 py-2 rounded-2xl bg-[var(--card-bg)] border border-[var(--panel-border)] text-[var(--text-primary)] text-xs font-semibold backdrop-blur-xl shadow-2xl">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
+          <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
           <span>{store.toastMessage}</span>
         </div>
       )}
@@ -330,7 +330,7 @@ export function App() {
           <TermsPage onNavigate={handleNavigate} />
         </main>
       ) : appMode === 'cloud' ? (
-        <main className="max-w-6xl mx-auto px-2.5 sm:px-6 py-3 sm:py-8 w-full flex-1 relative z-10 min-h-[82vh]">
+        <main className="max-w-6xl mx-auto px-2.5 sm:px-6 pt-5 pb-3 sm:pt-8 sm:pb-8 w-full flex-1 relative z-10 min-h-[82vh]">
           <CloudHub
             isOpenCloudHelp={isCloudTutorialOpen}
             onCloseCloudHelp={() => setIsCloudTutorialOpen(false)}

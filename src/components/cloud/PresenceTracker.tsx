@@ -89,9 +89,9 @@ export function PresenceTracker() {
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-xs font-semibold tracking-wider text-cyan-400 [html[data-theme=light]_&]:text-cyan-600">This Device</span>
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-500/10 text-emerald-400 [html[data-theme=light]_&]:text-emerald-700 border border-emerald-500/30">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-emerald-500/10 text-emerald-400 [html[data-theme=light]_&]:text-emerald-700 border border-emerald-500/30">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
-                  ● Active
+                  Active
                 </span>
               </div>
 
