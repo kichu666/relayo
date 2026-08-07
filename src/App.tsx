@@ -681,45 +681,8 @@ export function App() {
       <SeoLandingSection />
 
       {/* Footer */}
-      <footer className="w-full border-t border-[var(--panel-border)] py-6 sm:py-8 glass-panel flex flex-col items-center justify-center px-4 sm:px-6 text-xs text-[var(--text-muted)] font-mono relative z-30">
-        {/* Floating Action Buttons Container — Clean fixed positioning on mobile & desktop */}
-        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col gap-3 items-end pointer-events-auto">
-          {/* Help & Tutorial FAB */}
-          <div className="relative group flex items-center">
-            <span className="absolute right-full mr-3 px-2.5 py-1 rounded-lg text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none bg-slate-900 text-white shadow-md border border-slate-700 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:text-slate-800 [html[data-theme=light]_&]:border-slate-200 [html[data-theme=light]_&]:shadow-lg">
-              Tutorial
-            </span>
-            <button
-              onClick={() => {
-                if (appMode === 'cloud') {
-                  setIsCloudTutorialOpen(true);
-                } else {
-                  setIsP2PTutorialOpen(true);
-                }
-              }}
-              className="w-11 h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center bg-[var(--card-bg)] border border-[var(--panel-border)] shadow-lg text-cyan-400 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:text-[#0EA5E9] [html[data-theme=light]_&]:shadow-md transition-all duration-300 hover:scale-110 hover:-translate-y-0.5 cursor-pointer backdrop-blur-xl"
-              title="Help & Tutorial"
-            >
-              <HelpCircle className="w-5 h-5 md:w-6 md:h-6" />
-            </button>
-          </div>
-
-          {/* Feedback / Review FAB */}
-          <div className="relative group flex items-center">
-            <span className="absolute right-full mr-3 px-2.5 py-1 rounded-lg text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none bg-slate-900 text-white shadow-md border border-slate-700 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:text-slate-800 [html[data-theme=light]_&]:border-slate-200 [html[data-theme=light]_&]:shadow-lg">
-              Feedback
-            </span>
-            <button
-              onClick={() => setIsFeedbackOpen(true)}
-              className="w-11 h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center bg-[var(--card-bg)] border border-[var(--panel-border)] shadow-lg text-rose-400 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:text-rose-500 [html[data-theme=light]_&]:shadow-md transition-all duration-300 hover:scale-110 hover:-translate-y-0.5 cursor-pointer backdrop-blur-xl"
-              title="Send Feedback"
-            >
-              <MessageSquareHeart className="w-5 h-5 md:w-6 md:h-6" />
-            </button>
-          </div>
-        </div>
-
-        <div className="w-full max-w-6xl flex flex-col sm:flex-row items-center sm:items-end justify-between gap-4 text-center sm:text-left">
+      <footer className="w-full border-t border-[var(--panel-border)] py-8 sm:py-10 glass-panel flex flex-col items-center justify-center px-4 sm:px-6 text-xs text-[var(--text-muted)] font-mono relative z-30">
+        <div className="w-full max-w-6xl flex flex-col sm:flex-row items-center sm:items-end justify-between gap-6 sm:gap-8 text-center sm:text-left">
           {/* Left Column Stack: Relocated Relayo Transfer Icon + Copyright text */}
           <div className="flex flex-col items-center sm:items-start gap-3">
             <div className="cursor-pointer transition-transform duration-300 hover:scale-105" onClick={handleResetHome}>
@@ -732,10 +695,38 @@ export function App() {
             <span>© 2026 Relayo.world • Zero Server Storage</span>
           </div>
 
-          <div className="flex items-center gap-2">
+          {/* Right Column: Intentionally Grouped Footer Action Row (Tutorial, Feedback, About Us) */}
+          <div className="flex items-center gap-6 sm:gap-8 shrink-0 flex-wrap justify-center sm:justify-end">
+            {/* Help & Tutorial Button */}
+            <button
+              onClick={() => {
+                if (appMode === 'cloud') {
+                  setIsCloudTutorialOpen(true);
+                } else {
+                  setIsP2PTutorialOpen(true);
+                }
+              }}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer"
+              title="Help & Tutorial"
+            >
+              <HelpCircle className="w-3.5 h-3.5 text-cyan-400 [html[data-theme=light]_&]:text-[#0EA5E9]" />
+              <span>Tutorial</span>
+            </button>
+
+            {/* Feedback / Review Button */}
+            <button
+              onClick={() => setIsFeedbackOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer"
+              title="Send Feedback"
+            >
+              <MessageSquareHeart className="w-3.5 h-3.5 text-rose-400 [html[data-theme=light]_&]:text-rose-500" />
+              <span>Feedback</span>
+            </button>
+
+            {/* About Us Button */}
             <button
               onClick={() => setIsAboutOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer"
             >
               <BookOpen className="w-3.5 h-3.5 text-indigo-400" />
               <span>About Us</span>
