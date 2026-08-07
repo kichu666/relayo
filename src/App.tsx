@@ -57,6 +57,7 @@ export function App() {
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const hasInitializedReceiver = useRef(false);
   const [appMode, setAppMode] = useState<'p2p' | 'cloud'>('p2p');
 
   useEffect(() => {
