@@ -36,14 +36,20 @@ import {
   Cloud,
   Radio,
   MessageSquareHeart,
-  BookOpen
+  BookOpen,
+  Menu
 } from 'lucide-react';
 import { CloudHub } from './components/cloud/CloudHub';
 import { FeedbackModal } from './components/FeedbackModal';
 import { AboutModal } from './components/AboutModal';
 import { initCloudSession } from './logic/cloudStore';
 import { AmoledWifiSwitchSection } from './components/AmoledWifiSwitchSection';
-import { SeoLandingSection } from './components/SeoLandingSection';
+import { NavigationDrawer, PageView } from './components/NavigationDrawer';
+import { ResourcesPage } from './components/ResourcesPage';
+import { FaqPage } from './components/FaqPage';
+import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
+import { TermsPage } from './components/TermsPage';
+import { WhyRelayoSection } from './components/WhyRelayoSection';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -59,6 +65,41 @@ export function App() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const hasInitializedReceiver = useRef(false);
   const [appMode, setAppMode] = useState<'p2p' | 'cloud'>('p2p');
+  const [pageView, setPageView] = useState<PageView>('home');
+  const [isNavDrawerOpen, setIsNavDrawerOpen] = useState(false);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '').toLowerCase();
+      if (hash === 'resources' || hash === 'learn') {
+        setPageView('resources');
+      } else if (hash === 'faq' || hash === 'faqs') {
+        setPageView('faq');
+      } else if (hash === 'privacy') {
+        setPageView('privacy');
+      } else if (hash === 'terms') {
+        setPageView('terms');
+      } else if (!hash) {
+        setPageView('home');
+      }
+    };
+
+    handleHashChange();
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  const handleNavigate = (page: PageView) => {
+    setPageView(page);
+    if (page === 'home') {
+      if (window.location.hash) {
+        window.history.pushState(null, '', window.location.pathname);
+      }
+    } else {
+      window.location.hash = page;
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -112,9 +153,7 @@ export function App() {
     hasInitializedReceiver.current = false;
     setSelectedFiles([]);
     resetRtcSession();
-    if (typeof window !== 'undefined' && window.history) {
-      window.history.replaceState(null, '', window.location.pathname);
-    }
+    handleNavigate('home');
   };
 
   const handleDownloadSingleFile = (fileIndex: number, fileName: string) => {
@@ -242,17 +281,46 @@ export function App() {
               relayo.world
             </span>
           </div>
-
-          {/* Right side — connection badge + theme switcher */}
-          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 z-20">
+          {/* Right side — connection badge + Hamburger Menu button */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0 z-20">
             {getConnectionStateBadge()}
-            <ThemeSwitcher />
+            <button
+              onClick={() => setIsNavDrawerOpen(true)}
+              className="p-2 sm:p-2.5 rounded-xl bg-white/5 [html[data-theme=light]_&]:bg-slate-100 hover:bg-white/10 [html[data-theme=light]_&]:hover:bg-slate-200 text-slate-200 [html[data-theme=light]_&]:text-slate-800 border border-white/10 [html[data-theme=light]_&]:border-slate-200 transition-all cursor-pointer flex items-center gap-1.5"
+              title="Open Navigation Menu"
+            >
+              <Menu className="w-5 h-5 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" />
+            </button>
           </div>
         </div>
       </header>
 
+      {/* Navigation Drawer Component */}
+      <NavigationDrawer
+        isOpen={isNavDrawerOpen}
+        onClose={() => setIsNavDrawerOpen(false)}
+        currentPage={pageView}
+        onNavigate={handleNavigate}
+      />
+
       {/* Main Content Body */}
-      {appMode === 'cloud' ? (
+      {pageView === 'resources' ? (
+        <main className="w-full flex-1 relative z-10 min-h-[75vh]">
+          <ResourcesPage onNavigate={handleNavigate} />
+        </main>
+      ) : pageView === 'faq' ? (
+        <main className="w-full flex-1 relative z-10 min-h-[75vh]">
+          <FaqPage onNavigate={handleNavigate} />
+        </main>
+      ) : pageView === 'privacy' ? (
+        <main className="w-full flex-1 relative z-10 min-h-[75vh]">
+          <PrivacyPolicyPage onNavigate={handleNavigate} />
+        </main>
+      ) : pageView === 'terms' ? (
+        <main className="w-full flex-1 relative z-10 min-h-[75vh]">
+          <TermsPage onNavigate={handleNavigate} />
+        </main>
+      ) : appMode === 'cloud' ? (
         <main className="max-w-6xl mx-auto px-2.5 sm:px-6 py-3 sm:py-8 w-full flex-1 relative z-10 min-h-[82vh]">
           <CloudHub
             isOpenCloudHelp={isCloudTutorialOpen}
@@ -260,35 +328,36 @@ export function App() {
             onOpenCloudHelp={() => setIsCloudTutorialOpen(true)}
             onBackToLocal={() => setAppMode('p2p')}
           />
+          <WhyRelayoSection />
         </main>
       ) : (
         <main className="max-w-4xl mx-auto px-3 sm:px-6 py-4 sm:py-10 w-full flex-1 flex flex-col items-center justify-center relative z-10 min-h-[82vh]">
-        {/* Ambient Depth Glows (Light Mode) */}
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-blue-400/5 rounded-full blur-[100px] pointer-events-none hidden [html[data-theme=light]_&]:block" />
-        <div className="absolute top-40 right-10 w-[400px] h-[300px] bg-purple-400/5 rounded-full blur-[100px] pointer-events-none hidden [html[data-theme=light]_&]:block" />
+          {/* Ambient Depth Glows (Light Mode) */}
+          <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-blue-400/5 rounded-full blur-[100px] pointer-events-none hidden [html[data-theme=light]_&]:block" />
+          <div className="absolute top-40 right-10 w-[400px] h-[300px] bg-purple-400/5 rounded-full blur-[100px] pointer-events-none hidden [html[data-theme=light]_&]:block" />
 
-        {/* Original Hero Section */}
-        <div className="text-center max-w-2xl mx-auto mb-5 sm:mb-8">
-          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-snug sm:leading-tight mb-2.5 sm:mb-4">
-            Instant Device-to-Device Sharing
-          </h1>
-          <p className="text-xs sm:text-base text-[var(--text-muted)] leading-relaxed max-w-2xl mx-auto mb-5 sm:mb-6">
-            Direct browser-to-browser transfer. No uploads. No server storage.
-          </p>
+          {/* Original Hero Section */}
+          <div className="text-center max-w-2xl mx-auto mb-5 sm:mb-8">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-snug sm:leading-tight mb-2.5 sm:mb-4">
+              Instant Device-to-Device Sharing
+            </h1>
+            <p className="text-xs sm:text-base text-[var(--text-muted)] leading-relaxed max-w-2xl mx-auto mb-5 sm:mb-6">
+              Direct browser-to-browser transfer. No uploads. No server storage.
+            </p>
 
-          {/* Transfer Mode Toggle Switch — Centered below heading and above dropzone */}
-          <div className="mt-4 sm:mt-6">
-            <AmoledWifiSwitchSection appMode={appMode} setAppMode={setAppMode} />
+            {/* Transfer Mode Toggle Switch — Centered below heading and above dropzone */}
+            <div className="mt-4 sm:mt-6">
+              <AmoledWifiSwitchSection appMode={appMode} setAppMode={setAppMode} />
+            </div>
           </div>
-        </div>
 
-        {store.isLoadingInfo ? (
-          <div className="w-full max-w-md glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-8 text-center border border-[var(--panel-border)] flex flex-col items-center">
-            <Loader2 className="w-8 h-8 sm:w-10 sm:h-10 theme-accent-text animate-spin mb-3 sm:mb-4" />
-            <h3 className="text-sm sm:text-base font-bold mb-1">Connecting P2P Stream...</h3>
-            <p className="text-xs text-[var(--text-muted)]">{store.statusMessage || 'Connecting to peer...'}</p>
-          </div>
-        ) : activeViewMode === 'home' ? (
+          {store.isLoadingInfo ? (
+            <div className="w-full max-w-md glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-8 text-center border border-[var(--panel-border)] flex flex-col items-center">
+              <Loader2 className="w-8 h-8 sm:w-10 sm:h-10 theme-accent-text animate-spin mb-3 sm:mb-4" />
+              <h3 className="text-sm sm:text-base font-bold mb-1">Connecting P2P Stream...</h3>
+              <p className="text-xs text-[var(--text-muted)]">{store.statusMessage || 'Connecting to peer...'}</p>
+            </div>
+          ) : activeViewMode === 'home' ? (
           /* Home Screen: Select Files to Host */
           <>
             <div className="w-full max-w-xl glass-panel rounded-2xl sm:rounded-3xl p-3.5 sm:p-8 border border-[var(--panel-border)] shadow-2xl [html[data-theme=light]_&]:shadow-[0_8px_30px_rgb(0,0,0,0.04)] text-center">
@@ -675,11 +744,9 @@ export function App() {
             </button>
           </div>
         )}
+        <WhyRelayoSection />
         </main>
       )}
-
-      {/* SEO Landing & FAQ Section */}
-      <SeoLandingSection />
 
       {/* Footer */}
       <footer className="w-full border-t border-[var(--panel-border)] py-8 sm:py-10 glass-panel flex flex-col items-center justify-center px-4 sm:px-6 text-xs text-[var(--text-muted)] font-mono relative z-30">
