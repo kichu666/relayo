@@ -84,13 +84,13 @@ export function PresenceTracker() {
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3.5 sm:gap-4">
           <div className="flex items-center gap-3 sm:gap-3.5">
             <div className="p-2.5 sm:p-3 rounded-xl bg-cyan-500/10 [html[data-theme=light]_&]:bg-cyan-50 border border-cyan-500/30 [html[data-theme=light]_&]:border-cyan-200 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 shadow-inner [html[data-theme=light]_&]:shadow-none shrink-0">
-              <Cpu className="w-5 h-5 sm:w-6 sm:h-6 animate-pulse" strokeWidth={2} />
+              <Cpu className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2} />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-xs font-semibold tracking-wider text-cyan-400 [html[data-theme=light]_&]:text-cyan-600">This Device</span>
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-500/10 text-emerald-400 [html[data-theme=light]_&]:text-emerald-700 border border-emerald-500/30">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-500/10 text-emerald-400 [html[data-theme=light]_&]:text-emerald-700 border border-emerald-500/30 shadow-[0_0_8px_rgba(16,185,129,0.2)]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
                   ● Active
                 </span>
               </div>
@@ -158,7 +158,7 @@ export function PresenceTracker() {
 
         {onlineDevices.length === 0 ? (
           <div className="glass-panel p-8 sm:p-10 pb-16 sm:pb-20 text-center rounded-2xl border border-white/5 [html[data-theme=light]_&]:border-[#E5E5EA] bg-black/40 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:shadow-[0_4px_24px_rgba(0,0,0,0.04)]">
-            <Radio className="w-8 h-8 text-cyan-400/40 [html[data-theme=light]_&]:text-[#007AFF]/50 mx-auto mb-3 animate-pulse" strokeWidth={2} />
+            <Radio className="w-8 h-8 text-cyan-400/40 [html[data-theme=light]_&]:text-[#007AFF]/50 mx-auto mb-3" strokeWidth={2} />
             <p className="text-base font-extrabold text-slate-200 [html[data-theme=light]_&]:text-[#1D1D1F]">No other devices online in this Cloud Room.</p>
             <p className="text-xs font-medium text-slate-400 [html[data-theme=light]_&]:text-[#86868B] mt-2 leading-relaxed max-w-md mx-auto">Open Relayo on your mobile phone or laptop with Room Code <span className="font-mono font-bold text-cyan-400 [html[data-theme=light]_&]:text-[#007AFF] bg-cyan-500/10 [html[data-theme=light]_&]:bg-[#E5F1FF] px-2 py-0.5 rounded">{store.roomId}</span> to instantly pair!</p>
           </div>
@@ -196,8 +196,8 @@ export function PresenceTracker() {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 [html[data-theme=light]_&]:text-emerald-700 border border-emerald-500/30">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                    <div className="flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 [html[data-theme=light]_&]:text-emerald-700 border border-emerald-500/30 shadow-[0_0_8px_rgba(16,185,129,0.2)]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
                       <span>Online</span>
                     </div>
                   </div>

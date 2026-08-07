@@ -36,8 +36,8 @@ export const TransferProgressCard: React.FC<TransferProgressCardProps> = ({ onRe
           isSentCompleted || isReceivedCompleted
             ? 'bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 shadow-emerald-500/20'
             : isSending
-            ? 'bg-indigo-500/20 border border-indigo-500/30 text-indigo-400 shadow-indigo-500/20 animate-pulse'
-            : 'bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 shadow-cyan-500/20 animate-pulse'
+            ? 'bg-indigo-500/20 border border-indigo-500/30 text-indigo-400 shadow-[0_0_15px_rgba(99,102,241,0.3)]'
+            : 'bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.3)]'
         }`}
       >
         {isSentCompleted ? (
@@ -45,9 +45,9 @@ export const TransferProgressCard: React.FC<TransferProgressCardProps> = ({ onRe
         ) : isReceivedCompleted ? (
           <Download className="w-8 h-8 text-emerald-400" />
         ) : isSending ? (
-          <FileUp className="w-8 h-8 animate-bounce" />
+          <FileUp className="w-8 h-8" />
         ) : (
-          <FileDown className="w-8 h-8 animate-bounce" />
+          <FileDown className="w-8 h-8" />
         )}
       </div>
 

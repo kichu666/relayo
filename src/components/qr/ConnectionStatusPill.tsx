@@ -22,43 +22,43 @@ export const ConnectionStatusPill: React.FC<ConnectionStatusPillProps> = ({
       case 'GENERATING':
         return {
           label: 'Generating Key Pair...',
-          bg: 'bg-indigo-500/10 border-indigo-500/30 text-indigo-400',
-          dot: 'bg-indigo-400 animate-ping',
+          bg: 'bg-indigo-500/10 border-indigo-500/30 text-indigo-400 shadow-[0_0_8px_rgba(99,102,241,0.25)]',
+          dot: 'bg-indigo-400 shadow-[0_0_6px_rgba(129,140,248,0.8)]',
           icon: RefreshCw,
         };
       case 'WAITING_FOR_SCAN':
         return {
           label: 'Ready to Pair (Waiting for Scan)',
-          bg: 'bg-cyan-500/10 border-cyan-500/30 text-cyan-400',
-          dot: 'bg-cyan-400 animate-pulse',
+          bg: 'bg-cyan-500/10 border-cyan-500/30 text-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.25)]',
+          dot: 'bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.8)]',
           icon: Lock,
         };
       case 'PEER_SCANNED':
         return {
           label: 'Peer Detected! Initializing...',
-          bg: 'bg-amber-500/10 border-amber-500/30 text-amber-400',
-          dot: 'bg-amber-400 animate-bounce',
+          bg: 'bg-amber-500/10 border-amber-500/30 text-amber-400 shadow-[0_0_8px_rgba(245,158,11,0.25)]',
+          dot: 'bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.8)]',
           icon: Wifi,
         };
       case 'HANDSHAKING':
         return {
           label: 'ECDH Key Agreement Handshake...',
-          bg: 'bg-violet-500/10 border-violet-500/30 text-violet-400',
-          dot: 'bg-violet-400 animate-ping',
+          bg: 'bg-violet-500/10 border-violet-500/30 text-violet-400 shadow-[0_0_8px_rgba(139,92,246,0.25)]',
+          dot: 'bg-violet-400 shadow-[0_0_6px_rgba(167,139,250,0.8)]',
           icon: Zap,
         };
       case 'VERIFYING_SAS':
         return {
           label: 'Security SAS Emoji Verification',
-          bg: 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400',
-          dot: 'bg-emerald-400 animate-pulse',
+          bg: 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.25)]',
+          dot: 'bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]',
           icon: ShieldCheck,
         };
       case 'CONNECTED':
         return {
           label: transport === 'turn-relay' ? 'Connected (Relayed E2EE)' : 'Connected (Direct P2P E2EE)',
-          bg: 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300',
-          dot: 'bg-emerald-400',
+          bg: 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300 shadow-[0_0_8px_rgba(16,185,129,0.25)]',
+          dot: 'bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]',
           icon: ShieldCheck,
         };
       case 'EXPIRED':
@@ -71,8 +71,8 @@ export const ConnectionStatusPill: React.FC<ConnectionStatusPillProps> = ({
       case 'ERROR':
         return {
           label: 'Pairing Connection Failed',
-          bg: 'bg-rose-500/20 border-rose-500/40 text-rose-300',
-          dot: 'bg-rose-500 animate-ping',
+          bg: 'bg-rose-500/20 border-rose-500/40 text-rose-300 shadow-[0_0_8px_rgba(244,63,94,0.25)]',
+          dot: 'bg-rose-500 shadow-[0_0_6px_rgba(244,63,94,0.8)]',
           icon: ShieldAlert,
         };
       default:

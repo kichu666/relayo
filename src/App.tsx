@@ -208,37 +208,37 @@ export function App() {
         );
       case 'transferring':
         return (
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 text-[10px] sm:text-[11px] font-bold shadow-sm shrink-0">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping shrink-0" />
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/40 shadow-[0_0_10px_rgba(6,182,212,0.3)] text-[10px] sm:text-[11px] font-bold shrink-0">
+            <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0 shadow-[0_0_6px_rgba(34,211,238,0.8)]" />
             <span>Transferring...</span>
           </div>
         );
       case 'connecting_peer':
       case 'connecting_signaling':
         return (
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30 text-[10px] sm:text-[11px] font-bold shadow-sm shrink-0">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping shrink-0" />
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/40 shadow-[0_0_10px_rgba(245,158,11,0.3)] text-[10px] sm:text-[11px] font-bold shrink-0">
+            <span className="w-2 h-2 rounded-full bg-amber-400 shrink-0 shadow-[0_0_6px_rgba(251,191,36,0.8)]" />
             <span>Connecting via P2P</span>
           </div>
         );
       case 'connected':
         return (
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-[10px] sm:text-[11px] font-bold shadow-sm shrink-0">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping shrink-0" />
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/40 shadow-[0_0_10px_rgba(16,185,129,0.3)] text-[10px] sm:text-[11px] font-bold shrink-0">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
             <span>P2P Connected</span>
           </div>
         );
       case 'completed':
         return (
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-[10px] sm:text-[11px] font-bold shadow-sm shrink-0">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/40 shadow-[0_0_10px_rgba(16,185,129,0.3)] text-[10px] sm:text-[11px] font-bold shrink-0">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
             <span>Complete</span>
           </div>
         );
       case 'waiting_for_peer':
         return (
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 text-[10px] sm:text-[11px] font-bold shadow-sm shrink-0">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/40 shadow-[0_0_10px_rgba(99,102,241,0.3)] text-[10px] sm:text-[11px] font-bold shrink-0">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
             <span>Ready</span>
           </div>
         );
@@ -268,7 +268,7 @@ export function App() {
       {/* Toast Notification - Bottom Right Corner */}
       {store.toastMessage && (
         <div className="fixed bottom-6 right-6 z-50 animate-fade-in flex items-center gap-2.5 px-4 py-2 rounded-2xl bg-[var(--card-bg)] border border-[var(--panel-border)] text-[var(--text-primary)] text-xs font-semibold backdrop-blur-xl shadow-2xl">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping shrink-0" />
+          <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
           <span>{store.toastMessage}</span>
         </div>
       )}
@@ -562,7 +562,7 @@ export function App() {
               <div className="w-full mb-6 p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 backdrop-blur-md text-left">
                 <div className="flex items-center justify-between text-xs font-semibold mb-2">
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+                    <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0 shadow-[0_0_6px_rgba(34,211,238,0.8)]" />
                     <span>Transferring files...</span>
                   </div>
                   <div className="flex items-center gap-3 font-mono">
@@ -662,7 +662,7 @@ export function App() {
               <div className="w-full mb-6 p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 backdrop-blur-md text-left">
                 <div className="flex items-center justify-between text-xs font-semibold mb-2">
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+                    <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0 shadow-[0_0_6px_rgba(34,211,238,0.8)]" />
                     <span>Receiving files...</span>
                   </div>
                   <div className="flex items-center gap-3 font-mono">

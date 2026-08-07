@@ -131,12 +131,24 @@ export const $cloudStore = atom<CloudState>({
   cloudSubTab: 'presence'
 });
 
-// Toast notification trigger
+let cloudToastTimeoutHandle: ReturnType<typeof setTimeout> | null = null;
+
+// Toast notification trigger with auto-dismiss after 2500ms
 export const triggerCloudToast = (message: string, type: 'info' | 'success' | 'warn' = 'info') => {
+  if (cloudToastTimeoutHandle) {
+    clearTimeout(cloudToastTimeoutHandle);
+  }
   $cloudStore.set({
     ...$cloudStore.get(),
     toast: { message, type, id: Date.now() }
   });
+  cloudToastTimeoutHandle = setTimeout(() => {
+    $cloudStore.set({
+      ...$cloudStore.get(),
+      toast: null
+    });
+    cloudToastTimeoutHandle = null;
+  }, 2500);
 };
 
 let heartbeatInterval: any = null;
@@ -356,7 +368,6 @@ export const switchCloudRoom = (newRoomId?: string) => {
   }
   const cleanRoom = newRoomId?.trim() || generateRandomRoomId();
   initCloudSession(cleanRoom);
-  triggerCloudToast(`Joined Cloud Room: ${cleanRoom}`, 'success');
 };
 
 // Send Clipboard Text

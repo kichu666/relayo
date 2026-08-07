@@ -56,11 +56,17 @@ let receiverSessionInitializing = false;
 // NOTE: Receiver initialization is triggered exclusively by App.tsx useEffect.
 // Do NOT auto-init here to avoid a duplicate PeerJS connection race with React's mount cycle.
 
+let toastTimeoutHandle: ReturnType<typeof setTimeout> | null = null;
+
 export function triggerToast(message: string) {
+  if (toastTimeoutHandle) {
+    clearTimeout(toastTimeoutHandle);
+  }
   $shareStore.setKey('toastMessage', message);
-  setTimeout(() => {
+  toastTimeoutHandle = setTimeout(() => {
     $shareStore.setKey('toastMessage', null);
-  }, 4000);
+    toastTimeoutHandle = null;
+  }, 2500);
 }
 
 /**
@@ -168,7 +174,7 @@ export async function hostFilesOnSender(files: File[]): Promise<string> {
     uploadProgressPercent: 0,
     currentUploadingFileName: '',
     isLoadingInfo: false,
-    toastMessage: 'Share active!',
+    toastMessage: null,
   });
 
   const rtcManager = new WebRTCManager({

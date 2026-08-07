@@ -103,9 +103,9 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
 
       {/* Toast Notification Alert */}
       {store.toast && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl bg-slate-900/90 border border-cyan-500/40 text-cyan-200 shadow-[0_0_25px_rgba(6,182,212,0.3)] backdrop-blur-xl animate-bounce">
-          <Sparkles className="w-5 h-5 text-cyan-400" strokeWidth={2} />
-          <span className="text-sm font-semibold">{store.toast.message}</span>
+        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-slate-900/90 border border-cyan-500/30 text-cyan-200 shadow-[0_0_15px_rgba(6,182,212,0.25)] backdrop-blur-xl animate-fade-in">
+          <Sparkles className="w-4 h-4 text-cyan-400 shrink-0" strokeWidth={2} />
+          <span className="text-xs font-semibold">{store.toast.message}</span>
         </div>
       )}
 
@@ -117,7 +117,7 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
         <div className="relative z-10 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 sm:gap-4">
             <div className="p-2 sm:p-3 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 [html[data-theme=light]_&]:bg-cyan-500/10 border border-cyan-500/30 [html[data-theme=light]_&]:border-cyan-400/30 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 shadow-lg shrink-0">
-              <Globe className="w-5 h-5 sm:w-6 sm:h-7 animate-pulse" strokeWidth={2} />
+              <Globe className="w-5 h-5 sm:w-6 sm:h-7" strokeWidth={2} />
             </div>
             <div>
               <div className="flex items-center gap-2">
