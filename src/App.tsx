@@ -232,15 +232,17 @@ export function App() {
       <header className="w-full border-b border-[var(--panel-border)] glass-panel sticky top-0 z-40 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2">
 
-          {/* Logo — left */}
-          <div className="flex items-center gap-2 cursor-pointer shrink-0" onClick={handleResetHome}>
-            <Share2 className="w-5 h-5 sm:w-6 sm:h-6 theme-accent-text shrink-0" />
-            <div className="flex items-center gap-1">
-              <span className="font-extrabold text-base sm:text-xl tracking-tight bg-gradient-to-r from-[var(--text-primary)] via-cyan-400 to-indigo-400 bg-clip-text text-transparent">
+          {/* Logo — left (Gradient Icon Wrapper, Brand Text & relayo.world Domain Pill) */}
+          <div className="flex items-center gap-2.5 sm:gap-3 cursor-pointer shrink-0" onClick={handleResetHome}>
+            <div className="p-2 sm:p-2.5 rounded-xl bg-gradient-to-br from-cyan-500/20 to-indigo-600/20 [html[data-theme=light]_&]:bg-cyan-50 border border-cyan-500/30 [html[data-theme=light]_&]:border-cyan-200 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 shadow-md flex items-center justify-center shrink-0">
+              <ArrowLeftRight className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2.2} />
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-extrabold text-lg sm:text-xl tracking-tight text-white [html[data-theme=light]_&]:text-[#0F172A]">
                 Relayo
               </span>
-              <span className="hidden xs:inline-block text-[9px] sm:text-[10px] font-mono px-1.5 py-0.5 rounded border theme-badge font-semibold">
-                P2P
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-mono font-semibold bg-black/40 dark:bg-slate-900/80 [html[data-theme=light]_&]:bg-[#E0F2FE] text-cyan-300 [html[data-theme=light]_&]:text-[#0369A1] border border-cyan-500/30 [html[data-theme=light]_&]:border-[#0284C7]/40 shadow-sm">
+                relayo.world
               </span>
             </div>
           </div>
