@@ -758,88 +758,90 @@ export function App() {
       )}
 
       {/* Footer */}
-      <footer className="w-full border-t border-[var(--panel-border)] py-8 sm:py-10 glass-panel flex flex-col items-center justify-center px-4 sm:px-6 text-xs text-[var(--text-muted)] font-mono relative z-30">
-        <div className="w-full max-w-6xl flex flex-col sm:flex-row items-center sm:items-end justify-between gap-5 sm:gap-8 text-center sm:text-left">
-          {/* Left Column Stack: Relocated Relayo Transfer Icon + Copyright text */}
-          <div className="flex flex-col items-center sm:items-start gap-3 shrink-0">
+      <footer className="w-full border-t border-[var(--panel-border)] py-8 sm:py-10 glass-panel px-4 sm:px-6 text-xs text-[var(--text-muted)] font-mono relative z-30">
+        <div className="w-full max-w-6xl mx-auto flex flex-col sm:flex-row items-center sm:items-center justify-between gap-5 sm:gap-6">
+
+          {/* Left: Icon + Copyright inline on one row */}
+          <div className="flex flex-row items-center gap-3 shrink-0">
             <div className="cursor-pointer transition-transform duration-300 hover:scale-105" onClick={handleResetHome}>
-              <div className="p-[1.5px] rounded-xl sm:rounded-2xl bg-gradient-to-br from-cyan-400 via-indigo-500 to-purple-600 shadow-[0_2px_14px_rgba(168,85,247,0.35)] shrink-0">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-[10px] sm:rounded-[14px] bg-[#070A12] [html[data-theme=light]_&]:bg-white flex items-center justify-center">
-                  <ArrowLeftRight className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2.5} />
+              <div className="p-[1.5px] rounded-xl bg-gradient-to-br from-cyan-400 via-indigo-500 to-purple-600 shadow-[0_2px_14px_rgba(168,85,247,0.35)] shrink-0">
+                <div className="w-8 h-8 rounded-[10px] bg-[#070A12] [html[data-theme=light]_&]:bg-white flex items-center justify-center">
+                  <ArrowLeftRight className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2.5} />
                 </div>
               </div>
             </div>
-            <span className="whitespace-nowrap shrink-0 font-medium">© 2026 Relayo.space • Zero Server Storage</span>
+            <span className="whitespace-nowrap font-medium">© 2026 Relayo.space</span>
           </div>
 
-          {/* Right Column: Intentionally Grouped Footer Action Toolbar */}
-          <div className="flex flex-col items-center gap-2.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3 sm:justify-end shrink-0 w-full sm:w-auto">
-            {/* Official Contact Email Button */}
+          {/* Right: Email + Pill buttons */}
+          <div className="flex flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end sm:gap-3 w-full sm:w-auto">
+
+            {/* Email button — centered on its own row on mobile */}
             <a
               href="mailto:rrajr0503@gmail.com"
-              className="inline-flex items-center justify-center gap-2 px-5 py-2 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-mono font-semibold tracking-normal leading-normal text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap w-full sm:w-auto group"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-mono font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap w-full sm:w-auto"
               title="Contact Us via Email"
             >
               <Mail className="w-3.5 h-3.5 text-cyan-400 [html[data-theme=light]_&]:text-[#0EA5E9] shrink-0" />
               <span>rrajr0503@gmail.com</span>
             </a>
 
-            {/* Small pill buttons row — wrap centered on mobile, inline on desktop */}
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:contents">
+            {/* Pill buttons — centered wrap cluster on mobile, inline on desktop */}
+            <div className="flex flex-wrap items-center justify-center gap-2.5 sm:contents">
+              {/* Help & Tutorial Button */}
+              <button
+                onClick={() => {
+                  if (appMode === 'cloud') {
+                    setIsCloudTutorialOpen(true);
+                  } else {
+                    setIsP2PTutorialOpen(true);
+                  }
+                }}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0"
+                title="Help & Tutorial"
+              >
+                <HelpCircle className="w-3.5 h-3.5 text-cyan-400 [html[data-theme=light]_&]:text-[#0EA5E9]" />
+                <span>Tutorial</span>
+              </button>
 
-            {/* Help & Tutorial Button */}
-            <button
-              onClick={() => {
-                if (appMode === 'cloud') {
-                  setIsCloudTutorialOpen(true);
-                } else {
-                  setIsP2PTutorialOpen(true);
-                }
-              }}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0"
-              title="Help & Tutorial"
-            >
-              <HelpCircle className="w-3.5 h-3.5 text-cyan-400 [html[data-theme=light]_&]:text-[#0EA5E9]" />
-              <span>Tutorial</span>
-            </button>
+              {/* Feedback Button */}
+              <button
+                onClick={() => setIsFeedbackOpen(true)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0"
+                title="Send Feedback"
+              >
+                <MessageSquareHeart className="w-3.5 h-3.5 text-rose-400 [html[data-theme=light]_&]:text-rose-500" />
+                <span>Feedback</span>
+              </button>
 
-            {/* Feedback / Review Button */}
-            <button
-              onClick={() => setIsFeedbackOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0"
-              title="Send Feedback"
-            >
-              <MessageSquareHeart className="w-3.5 h-3.5 text-rose-400 [html[data-theme=light]_&]:text-rose-500" />
-              <span>Feedback</span>
-            </button>
+              {/* About Us Button */}
+              <button
+                onClick={() => setIsAboutOpen(true)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0"
+              >
+                <BookOpen className="w-3.5 h-3.5 text-indigo-400" />
+                <span>About Us</span>
+              </button>
 
-            {/* About Us Button */}
-            <button
-              onClick={() => setIsAboutOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0"
-            >
-              <BookOpen className="w-3.5 h-3.5 text-indigo-400" />
-              <span>About Us</span>
-            </button>
+              {/* Privacy Policy Button */}
+              <button
+                onClick={() => handleNavigate('privacy')}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0"
+              >
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 [html[data-theme=light]_&]:text-emerald-600" />
+                <span>Privacy Policy</span>
+              </button>
 
-            {/* Privacy Policy Button */}
-            <button
-              onClick={() => handleNavigate('privacy')}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0"
-            >
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 [html[data-theme=light]_&]:text-emerald-600" />
-              <span>Privacy Policy</span>
-            </button>
-
-            {/* Terms & Conditions Button */}
-            <button
-              onClick={() => handleNavigate('terms')}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0"
-            >
-              <FileText className="w-3.5 h-3.5 text-amber-400 [html[data-theme=light]_&]:text-amber-600" />
-              <span>Terms & Conditions</span>
-            </button>
+              {/* Terms & Conditions Button */}
+              <button
+                onClick={() => handleNavigate('terms')}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0"
+              >
+                <FileText className="w-3.5 h-3.5 text-amber-400 [html[data-theme=light]_&]:text-amber-600" />
+                <span>Terms & Conditions</span>
+              </button>
             </div>
+
           </div>
         </div>
       </footer>
