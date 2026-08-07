@@ -682,7 +682,7 @@ export function App() {
       {/* Footer */}
       <footer className="w-full border-t border-[var(--panel-border)] py-4 glass-panel flex flex-col sm:flex-row items-center justify-between px-6 gap-3 text-xs text-[var(--text-muted)] font-mono relative z-30">
         {/* Floating Action Buttons Container — Anchored permanently above footer */}
-        <div className="absolute bottom-full right-6 mb-3.5 z-40 flex flex-col gap-3 items-end pointer-events-auto">
+        <div className="absolute bottom-full right-3 sm:right-6 mb-3.5 z-40 flex flex-col gap-3 items-end pointer-events-auto">
           {/* Help & Tutorial FAB */}
           <div className="relative group flex items-center">
             <span className="absolute right-full mr-3 px-2.5 py-1 rounded-lg text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none bg-slate-900 text-white shadow-md border border-slate-700 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:text-slate-800 [html[data-theme=light]_&]:border-slate-200 [html[data-theme=light]_&]:shadow-lg">
