@@ -759,7 +759,7 @@ export function App() {
 
       {/* Footer */}
       <footer className="w-full border-t border-[var(--panel-border)] py-8 sm:py-10 glass-panel flex flex-col items-center justify-center px-4 sm:px-6 text-xs text-[var(--text-muted)] font-mono relative z-30">
-        <div className="w-full max-w-6xl flex flex-col sm:flex-row items-center sm:items-end justify-between gap-6 sm:gap-8 text-center sm:text-left">
+        <div className="w-full max-w-6xl flex flex-col sm:flex-row items-center sm:items-end justify-between gap-5 sm:gap-8 text-center sm:text-left">
           {/* Left Column Stack: Relocated Relayo Transfer Icon + Copyright text */}
           <div className="flex flex-col items-center sm:items-start gap-3 shrink-0">
             <div className="cursor-pointer transition-transform duration-300 hover:scale-105" onClick={handleResetHome}>
@@ -773,16 +773,19 @@ export function App() {
           </div>
 
           {/* Right Column: Intentionally Grouped Footer Action Toolbar */}
-          <div className="flex items-center gap-3 sm:gap-4 shrink-0 flex-wrap justify-center sm:justify-end">
+          <div className="flex flex-col items-center gap-2.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3 sm:justify-end shrink-0 w-full sm:w-auto">
             {/* Official Contact Email Button */}
             <a
               href="mailto:rrajr0503@gmail.com"
-              className="inline-flex items-center gap-2 sm:gap-2.5 px-4 sm:px-5 py-1.5 sm:py-2 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-mono font-semibold tracking-normal leading-normal text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0 min-w-max group"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-mono font-semibold tracking-normal leading-normal text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap w-full sm:w-auto group"
               title="Contact Us via Email"
             >
-              <Mail className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 [html[data-theme=light]_&]:text-[#0EA5E9] shrink-0" />
-              <span className="inline-block">rrajr0503@gmail.com</span>
+              <Mail className="w-3.5 h-3.5 text-cyan-400 [html[data-theme=light]_&]:text-[#0EA5E9] shrink-0" />
+              <span>rrajr0503@gmail.com</span>
             </a>
+
+            {/* Small pill buttons row — wrap centered on mobile, inline on desktop */}
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:contents">
 
             {/* Help & Tutorial Button */}
             <button
@@ -836,6 +839,7 @@ export function App() {
               <FileText className="w-3.5 h-3.5 text-amber-400 [html[data-theme=light]_&]:text-amber-600" />
               <span>Terms & Conditions</span>
             </button>
+            </div>
           </div>
         </div>
       </footer>
