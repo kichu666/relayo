@@ -232,18 +232,18 @@ export function App() {
       <header className="apple-header shadow-sm">
         <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2">
 
-          {/* Logo — left (Glowing Gradient Border Icon, iCloud SF Pro Brand Title & relayo.world Subtitle) */}
-          <div className="flex items-center gap-3 sm:gap-3.5 cursor-pointer shrink-0" onClick={handleResetHome}>
-            <div className="p-[2px] rounded-2xl bg-gradient-to-br from-cyan-400 via-indigo-500 to-purple-600 shadow-[0_4px_18px_rgba(168,85,247,0.35)] shrink-0 transition-transform duration-300 hover:scale-105">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-[14px] bg-[#070A12] [html[data-theme=light]_&]:bg-white flex items-center justify-center">
-                <ArrowLeftRight className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2.5} />
+          {/* Logo — left (Responsive Compact Logo Section for Mobile) */}
+          <div className="flex items-center gap-2 sm:gap-3 cursor-pointer shrink-0" onClick={handleResetHome}>
+            <div className="p-[1.5px] rounded-xl sm:rounded-2xl bg-gradient-to-br from-cyan-400 via-indigo-500 to-purple-600 shadow-[0_2px_12px_rgba(168,85,247,0.3)] shrink-0 transition-transform duration-300 hover:scale-105">
+              <div className="w-7 h-7 sm:w-9.5 sm:h-9.5 rounded-[10px] sm:rounded-[14px] bg-[#070A12] [html[data-theme=light]_&]:bg-white flex items-center justify-center">
+                <ArrowLeftRight className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2.5} />
               </div>
             </div>
             <div className="flex flex-col justify-center text-left">
-              <span className="font-icloud-logo font-semibold text-lg sm:text-xl tracking-tight text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none">
+              <span className="font-icloud-logo font-semibold text-base sm:text-lg md:text-xl tracking-tight text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none">
                 Relayo
               </span>
-              <span className="text-[10px] sm:text-[11px] font-mono text-cyan-300/90 [html[data-theme=light]_&]:text-cyan-700 font-medium tracking-wider leading-none mt-1">
+              <span className="text-[9px] sm:text-[10.5px] font-mono text-cyan-300/90 [html[data-theme=light]_&]:text-cyan-700 font-medium tracking-wider leading-none mt-0.5 sm:mt-1">
                 relayo.world
               </span>
             </div>
