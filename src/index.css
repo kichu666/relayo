@@ -93,3 +93,7 @@
 .animate-orb-slow {
   animation: orbSlow 12s ease-in-out infinite;
 }
+
+.font-icloud-logo {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
