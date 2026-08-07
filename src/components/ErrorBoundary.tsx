@@ -1,4 +1,5 @@
 import React, { Component, ReactNode } from 'react';
+import { AlertTriangle, RefreshCw, Mail } from 'lucide-react';
 
 interface ErrorBoundaryState {
   hasError: boolean;
@@ -16,97 +17,66 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, ErrorBound
   }
 
   componentDidCatch(error: Error, info: React.ErrorInfo) {
-    console.error('[Relayo] Render error caught by ErrorBoundary:', error, info);
+    console.error('[Relayo] System exception captured:', error, info);
   }
-
-  handleReset = () => {
-    this.setState({ hasError: false, error: null });
-  };
 
   render() {
     if (this.state.hasError) {
+      const errorName = this.state.error?.name || 'ERR_RENDER_CRASH';
+      const rawMsg = this.state.error?.message || 'An unhandled rendering exception occurred.';
+      // Truncate long error messages cleanly without raw stack dumps
+      const truncatedMessage = rawMsg.length > 80 ? `${rawMsg.substring(0, 80)}...` : rawMsg;
+
       return (
-        <div
-          style={{
-            minHeight: '100vh',
-            backgroundColor: '#000',
-            color: '#f4f4f5',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '2rem',
-            fontFamily: 'system-ui, sans-serif',
-          }}
-        >
-          <div
-            style={{
-              maxWidth: '480px',
-              width: '100%',
-              background: 'rgba(255,255,255,0.04)',
-              border: '1px solid rgba(255,255,255,0.08)',
-              borderRadius: '24px',
-              padding: '2rem',
-              textAlign: 'center',
-              backdropFilter: 'blur(16px)',
-            }}
-          >
-            <div
-              style={{
-                width: '52px',
-                height: '52px',
-                borderRadius: '14px',
-                background: 'rgba(239,68,68,0.15)',
-                border: '1px solid rgba(239,68,68,0.3)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: '0 auto 1.25rem',
-                fontSize: '1.5rem',
-              }}
-            >
-              ⚠️
+        <div className="min-h-screen bg-[#070A12] text-slate-100 flex items-center justify-center p-4 font-sans relative z-50 selection:bg-cyan-500 selection:text-white">
+          <div className="max-w-md w-full glass-panel bg-slate-900/90 border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-2xl text-center space-y-5 animate-fade-in">
+            
+            {/* Warning Shield Icon */}
+            <div className="w-14 h-14 rounded-2xl bg-rose-500/15 border border-rose-500/30 text-rose-400 flex items-center justify-center mx-auto shadow-inner">
+              <AlertTriangle className="w-7 h-7" />
             </div>
-            <h2 style={{ fontWeight: 800, fontSize: '1.1rem', marginBottom: '0.5rem' }}>
-              Something went wrong
-            </h2>
-            <p style={{ fontSize: '0.75rem', color: '#a1a1aa', marginBottom: '1.5rem', lineHeight: 1.6 }}>
-              Relayo encountered an unexpected error and couldn't render. You can try refreshing the page.
-            </p>
-            {this.state.error && (
-              <pre
-                style={{
-                  background: '#0f0f0f',
-                  border: '1px solid #27272a',
-                  borderRadius: '10px',
-                  padding: '0.75rem',
-                  fontSize: '0.65rem',
-                  color: '#f87171',
-                  textAlign: 'left',
-                  overflowX: 'auto',
-                  marginBottom: '1.5rem',
-                  whiteSpace: 'pre-wrap',
-                  wordBreak: 'break-word',
-                }}
+
+            {/* Professional Title & Description */}
+            <div className="space-y-2">
+              <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white">
+                Application Error
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-sm mx-auto">
+                Relayo encountered an unexpected rendering issue. Our system has logged the exception. Please refresh the session to continue.
+              </p>
+            </div>
+
+            {/* Formatted Monospaced Error Code Block */}
+            <div className="p-3.5 rounded-xl bg-black/60 border border-slate-800 text-left font-mono text-[11px] text-rose-400 space-y-1">
+              <div className="font-bold uppercase tracking-wider text-rose-300 text-[10px]">
+                Error Code: {errorName}
+              </div>
+              <div className="truncate text-slate-300">
+                {truncatedMessage}
+              </div>
+            </div>
+
+            {/* Recovery Action Buttons */}
+            <div className="space-y-2.5 pt-2">
+              {/* Primary Gradient Refresh Button */}
+              <button
+                onClick={() => window.location.reload()}
+                className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm shadow-lg transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-2"
               >
-                {this.state.error.message}
-              </pre>
-            )}
-            <button
-              onClick={() => window.location.reload()}
-              style={{
-                width: '100%',
-                padding: '0.65rem 1rem',
-                borderRadius: '12px',
-                background: 'linear-gradient(90deg,#06b6d4,#6366f1)',
-                color: '#fff',
-                fontWeight: 700,
-                fontSize: '0.8rem',
-                border: 'none',
-                cursor: 'pointer',
-              }}
-            >
-              Refresh Page
-            </button>
+                <RefreshCw className="w-4 h-4" />
+                <span>Refresh Page</span>
+              </button>
+
+              {/* Secondary Ghost Contact Support Button */}
+              <a
+                href="mailto:rrajr0503@gmail.com"
+                className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white font-semibold text-xs transition-all cursor-pointer flex items-center justify-center gap-2 group"
+              >
+                <Mail className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform" />
+                <span>Contact Support</span>
+              </a>
+            </div>
+
           </div>
         </div>
       );

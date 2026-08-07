@@ -18,6 +18,7 @@ import {
   Check,
   FileUp,
   File as FileIcon,
+  FileText,
   X,
   Sparkles,
   Globe,
