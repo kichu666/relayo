@@ -89,8 +89,8 @@ export function PresenceTracker() {
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-xs font-semibold tracking-wider text-cyan-400 [html[data-theme=light]_&]:text-cyan-600">This Device</span>
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-500/10 text-emerald-400 [html[data-theme=light]_&]:text-emerald-700 border border-emerald-500/30 shadow-[0_0_8px_rgba(16,185,129,0.2)]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-500/10 text-emerald-400 [html[data-theme=light]_&]:text-emerald-700 border border-emerald-500/30">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
                   ● Active
                 </span>
               </div>
@@ -196,8 +196,8 @@ export function PresenceTracker() {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 [html[data-theme=light]_&]:text-emerald-700 border border-emerald-500/30 shadow-[0_0_8px_rgba(16,185,129,0.2)]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
+                    <div className="flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 [html[data-theme=light]_&]:text-emerald-700 border border-emerald-500/30">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
                       <span>Online</span>
                     </div>
                   </div>

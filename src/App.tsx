@@ -223,22 +223,22 @@ export function App() {
         );
       case 'connected':
         return (
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/40 shadow-[0_0_10px_rgba(16,185,129,0.3)] text-[10px] sm:text-[11px] font-bold shrink-0">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/40 text-[10px] sm:text-[11px] font-bold shrink-0">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
             <span>P2P Connected</span>
           </div>
         );
       case 'completed':
         return (
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/40 shadow-[0_0_10px_rgba(16,185,129,0.3)] text-[10px] sm:text-[11px] font-bold shrink-0">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/40 text-[10px] sm:text-[11px] font-bold shrink-0">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
             <span>Complete</span>
           </div>
         );
       case 'waiting_for_peer':
         return (
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/40 shadow-[0_0_10px_rgba(99,102,241,0.3)] text-[10px] sm:text-[11px] font-bold shrink-0">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/40 text-[10px] sm:text-[11px] font-bold shrink-0">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
             <span>Ready</span>
           </div>
         );
