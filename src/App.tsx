@@ -272,13 +272,13 @@ export function App() {
       <header className={`apple-header shadow-sm transition-opacity duration-200 ${isNavDrawerOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
         <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
 
-          {/* Left side — Relayo brand title & relayo.world subtext */}
-          <div className="flex flex-col justify-center text-left cursor-pointer shrink-0 z-20" onClick={handleResetHome}>
-            <span className="font-icloud-logo font-semibold text-base sm:text-lg md:text-xl tracking-tight text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none">
+          {/* Left side — Inline Relayo.world brand title perfectly vertically centered */}
+          <div className="flex items-center text-left cursor-pointer shrink-0 z-20" onClick={handleResetHome}>
+            <span className="font-icloud-logo font-bold text-lg sm:text-xl md:text-2xl tracking-tight text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none">
               Relayo
             </span>
-            <span className="text-[9px] sm:text-[10.5px] font-mono text-cyan-300/90 [html[data-theme=light]_&]:text-cyan-700 font-medium tracking-wider leading-none mt-0.5 sm:mt-1">
-              relayo.world
+            <span className="text-xs sm:text-sm font-mono text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 font-semibold tracking-wide leading-none ml-1">
+              .world
             </span>
           </div>
           {/* Right side — connection badge + Hamburger Menu button */}

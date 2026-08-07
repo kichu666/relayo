@@ -46,12 +46,12 @@ export function NavigationDrawer({
           {/* Drawer Header with Consolidated Branding */}
           <div>
             <div className="flex items-center justify-between pb-6 mb-6 border-b border-white/10 [html[data-theme=light]_&]:border-slate-200">
-              <div className="flex flex-col">
+              <div className="flex items-center">
                 <span className="font-icloud-logo font-bold text-xl tracking-tight text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none">
                   Relayo
                 </span>
-                <span className="text-[10.5px] font-mono text-cyan-400 [html[data-theme=light]_&]:text-cyan-700 font-medium tracking-wider leading-none mt-1">
-                  relayo.world
+                <span className="text-xs font-mono text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 font-semibold tracking-wide leading-none ml-1">
+                  .world
                 </span>
               </div>
               <button
