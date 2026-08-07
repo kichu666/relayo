@@ -230,7 +230,7 @@ export function App() {
 
       {/* Sticky Apple iCloud-Style Frosted Glass Header */}
       <header className="apple-header shadow-sm">
-        <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 relative flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
 
           {/* Left side — Relayo brand title & relayo.world subtext */}
           <div className="flex flex-col justify-center text-left cursor-pointer shrink-0 z-20" onClick={handleResetHome}>
@@ -242,17 +242,8 @@ export function App() {
             </span>
           </div>
 
-          {/* Center — Glowing Gradient Logo Icon Box */}
-          <div className="absolute left-1/2 -translate-x-1/2 cursor-pointer z-10" onClick={handleResetHome}>
-            <div className="p-[1.5px] rounded-xl sm:rounded-2xl bg-gradient-to-br from-cyan-400 via-indigo-500 to-purple-600 shadow-[0_2px_14px_rgba(168,85,247,0.35)] shrink-0 transition-transform duration-300 hover:scale-105">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-[10px] sm:rounded-[14px] bg-[#070A12] [html[data-theme=light]_&]:bg-white flex items-center justify-center">
-                <ArrowLeftRight className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2.5} />
-              </div>
-            </div>
-          </div>
-
           {/* Right side — connection badge + theme switcher */}
-          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 z-20 ml-auto">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 z-20">
             {getConnectionStateBadge()}
             <ThemeSwitcher />
           </div>
@@ -690,7 +681,7 @@ export function App() {
       <SeoLandingSection />
 
       {/* Footer */}
-      <footer className="w-full border-t border-[var(--panel-border)] py-4 glass-panel flex flex-col sm:flex-row items-center justify-between px-6 gap-3 text-xs text-[var(--text-muted)] font-mono relative z-30">
+      <footer className="w-full border-t border-[var(--panel-border)] py-8 glass-panel flex flex-col items-center justify-center px-6 text-xs text-[var(--text-muted)] font-mono relative z-30">
         {/* Floating Action Buttons Container — Clean fixed positioning on mobile & desktop */}
         <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col gap-3 items-end pointer-events-auto">
           {/* Help & Tutorial FAB */}
@@ -728,15 +719,26 @@ export function App() {
           </div>
         </div>
 
-        <span>Relayo P2P Direct Share • Zero Server Storage</span>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => setIsAboutOpen(true)}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all cursor-pointer"
-          >
-            <BookOpen className="w-3.5 h-3.5 text-indigo-400" />
-            <span>About Us</span>
-          </button>
+        {/* Relocated Relayo Transfer Icon — Centered directly above copyright text */}
+        <div className="cursor-pointer mb-6 transition-transform duration-300 hover:scale-105" onClick={handleResetHome}>
+          <div className="p-[1.5px] rounded-xl sm:rounded-2xl bg-gradient-to-br from-cyan-400 via-indigo-500 to-purple-600 shadow-[0_2px_14px_rgba(168,85,247,0.35)] shrink-0">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-[10px] sm:rounded-[14px] bg-[#070A12] [html[data-theme=light]_&]:bg-white flex items-center justify-center">
+              <ArrowLeftRight className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2.5} />
+            </div>
+          </div>
+        </div>
+
+        <div className="w-full max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+          <span>© 2026 Relayo.world • Zero Server Storage</span>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setIsAboutOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all cursor-pointer"
+            >
+              <BookOpen className="w-3.5 h-3.5 text-indigo-400" />
+              <span>About Us</span>
+            </button>
+          </div>
         </div>
       </footer>
 
