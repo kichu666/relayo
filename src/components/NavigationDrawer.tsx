@@ -23,8 +23,6 @@ export function NavigationDrawer({
     { id: 'resources', label: 'Resources', icon: BookOpen },
     { id: 'faq', label: 'Frequently Asked Questions', icon: HelpCircle },
     { id: 'contact', label: 'Contact Us', icon: Mail },
-    { id: 'privacy', label: 'Privacy Policy', icon: ShieldCheck },
-    { id: 'terms', label: 'Terms & Conditions', icon: FileText },
   ];
 
   const handleItemClick = (page: PageView) => {

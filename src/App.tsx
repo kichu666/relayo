@@ -771,15 +771,15 @@ export function App() {
             <span>© 2026 Relayo.world • Zero Server Storage</span>
           </div>
 
-          {/* Right Column: Intentionally Grouped Footer Action Row (Contact Email, Tutorial, Feedback, About Us) */}
-          <div className="flex items-center gap-6 sm:gap-8 shrink-0 flex-wrap justify-center sm:justify-end">
+          {/* Right Column: Intentionally Grouped Footer Action Toolbar */}
+          <div className="flex items-center gap-3 sm:gap-4 shrink-0 flex-wrap justify-center sm:justify-end">
             {/* Official Contact Email Button */}
             <a
               href="mailto:rrajr0503@gmail.com"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-mono font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer group"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-mono font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0 group"
               title="Contact Us via Email"
             >
-              <Mail className="w-3.5 h-3.5 text-cyan-400 [html[data-theme=light]_&]:text-[#0EA5E9]" />
+              <Mail className="w-3.5 h-3.5 text-cyan-400 [html[data-theme=light]_&]:text-[#0EA5E9] shrink-0" />
               <span>rrajr0503@gmail.com</span>
             </a>
 
@@ -792,7 +792,7 @@ export function App() {
                   setIsP2PTutorialOpen(true);
                 }
               }}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0"
               title="Help & Tutorial"
             >
               <HelpCircle className="w-3.5 h-3.5 text-cyan-400 [html[data-theme=light]_&]:text-[#0EA5E9]" />
@@ -802,7 +802,7 @@ export function App() {
             {/* Feedback / Review Button */}
             <button
               onClick={() => setIsFeedbackOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0"
               title="Send Feedback"
             >
               <MessageSquareHeart className="w-3.5 h-3.5 text-rose-400 [html[data-theme=light]_&]:text-rose-500" />
@@ -812,10 +812,28 @@ export function App() {
             {/* About Us Button */}
             <button
               onClick={() => setIsAboutOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0"
             >
               <BookOpen className="w-3.5 h-3.5 text-indigo-400" />
               <span>About Us</span>
+            </button>
+
+            {/* Privacy Policy Button */}
+            <button
+              onClick={() => handleNavigate('privacy')}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0"
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 [html[data-theme=light]_&]:text-emerald-600" />
+              <span>Privacy Policy</span>
+            </button>
+
+            {/* Terms & Conditions Button */}
+            <button
+              onClick={() => handleNavigate('terms')}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0"
+            >
+              <FileText className="w-3.5 h-3.5 text-amber-400 [html[data-theme=light]_&]:text-amber-600" />
+              <span>Terms & Conditions</span>
             </button>
           </div>
         </div>
