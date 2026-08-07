@@ -777,11 +777,11 @@ export function App() {
             {/* Official Contact Email Button */}
             <a
               href="mailto:rrajr0503@gmail.com"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-mono font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0 group"
+              className="inline-flex items-center gap-2 sm:gap-2.5 px-4 sm:px-5 py-1.5 sm:py-2 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-mono font-semibold tracking-normal leading-normal text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0 min-w-max group"
               title="Contact Us via Email"
             >
-              <Mail className="w-3.5 h-3.5 text-cyan-400 [html[data-theme=light]_&]:text-[#0EA5E9] shrink-0" />
-              <span>rrajr0503@gmail.com</span>
+              <Mail className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 [html[data-theme=light]_&]:text-[#0EA5E9] shrink-0" />
+              <span className="inline-block">rrajr0503@gmail.com</span>
             </a>
 
             {/* Help & Tutorial Button */}
