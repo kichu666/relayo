@@ -271,7 +271,7 @@ export function App() {
 
         {/* Original Hero Section */}
         <div className="text-center max-w-2xl mx-auto mb-5 sm:mb-8">
-          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-snug sm:leading-tight mb-2.5 sm:mb-4">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-thin font-ntype82-thin tracking-tight leading-snug sm:leading-tight mb-2.5 sm:mb-4">
             Instant Device-to-Device Sharing
           </h1>
           <p className="text-xs sm:text-base text-[var(--text-muted)] leading-relaxed max-w-2xl mx-auto mb-5 sm:mb-6">

@@ -93,3 +93,8 @@
 .animate-orb-slow {
   animation: orbSlow 12s ease-in-out infinite;
 }
+
+.font-ntype82-thin {
+  font-family: 'NType82', 'Outfit', 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  font-weight: 100;
+}
