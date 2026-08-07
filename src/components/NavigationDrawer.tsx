@@ -1,7 +1,7 @@
-import { X, Home, BookOpen, HelpCircle, ShieldCheck, FileText } from 'lucide-react';
+import { X, Home, BookOpen, HelpCircle, ShieldCheck, FileText, Mail } from 'lucide-react';
 import { ThemeSwitcher } from './ThemeSwitcher';
 
-export type PageView = 'home' | 'resources' | 'faq' | 'privacy' | 'terms';
+export type PageView = 'home' | 'resources' | 'faq' | 'contact' | 'privacy' | 'terms';
 
 interface NavigationDrawerProps {
   isOpen: boolean;
@@ -22,6 +22,7 @@ export function NavigationDrawer({
     { id: 'home', label: 'Home', icon: Home },
     { id: 'resources', label: 'Resources', icon: BookOpen },
     { id: 'faq', label: 'Frequently Asked Questions', icon: HelpCircle },
+    { id: 'contact', label: 'Contact Us', icon: Mail },
     { id: 'privacy', label: 'Privacy Policy', icon: ShieldCheck },
     { id: 'terms', label: 'Terms & Conditions', icon: FileText },
   ];

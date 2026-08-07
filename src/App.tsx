@@ -50,6 +50,7 @@ import { ResourcesPage } from './components/ResourcesPage';
 import { FaqPage } from './components/FaqPage';
 import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
 import { TermsPage } from './components/TermsPage';
+import { ContactPage } from './components/ContactPage';
 import { WhyRelayoSection } from './components/WhyRelayoSection';
 
 const ITEMS_PER_PAGE = 20;
@@ -76,6 +77,8 @@ export function App() {
         setPageView('resources');
       } else if (hash === 'faq' || hash === 'faqs') {
         setPageView('faq');
+      } else if (hash === 'contact' || hash === 'support') {
+        setPageView('contact');
       } else if (hash === 'privacy') {
         setPageView('privacy');
       } else if (hash === 'terms') {
@@ -312,6 +315,10 @@ export function App() {
       ) : pageView === 'faq' ? (
         <main className="w-full flex-1 relative z-10 min-h-[75vh]">
           <FaqPage onNavigate={handleNavigate} />
+        </main>
+      ) : pageView === 'contact' ? (
+        <main className="w-full flex-1 relative z-10 min-h-[75vh]">
+          <ContactPage onNavigate={handleNavigate} />
         </main>
       ) : pageView === 'privacy' ? (
         <main className="w-full flex-1 relative z-10 min-h-[75vh]">
