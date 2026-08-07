@@ -239,11 +239,11 @@ export function App() {
                 <ArrowLeftRight className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2.5} />
               </div>
             </div>
-            <div className="flex items-center gap-2.5">
-              <span className="font-extrabold text-xl sm:text-2xl tracking-tight text-white [html[data-theme=light]_&]:text-[#0F172A]">
+            <div className="flex flex-col justify-center text-left">
+              <span className="font-extrabold text-base sm:text-lg tracking-tight text-white [html[data-theme=light]_&]:text-[#0F172A] leading-none">
                 Relayo
               </span>
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-mono bg-[#111625] [html[data-theme=light]_&]:bg-[#E0F2FE] text-indigo-200 [html[data-theme=light]_&]:text-[#0369A1] border border-indigo-500/30 [html[data-theme=light]_&]:border-[#0284C7]/30 shadow-sm">
+              <span className="text-[10px] sm:text-[11px] font-mono text-cyan-300/90 [html[data-theme=light]_&]:text-cyan-700 font-medium tracking-wider leading-none mt-1">
                 relayo.world
               </span>
             </div>
