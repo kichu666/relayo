@@ -91,8 +91,8 @@
 }
 
 @font-face {
-  font-family: 'NType82';
-  src: url('https://raw.githubusercontent.com/xeji01/nothingfont/9d8b51d2e89fcf4d71f4d31e346a2b0ee4350716/fonts/NType82-Regular.otf') format('opentype');
+  font-family: 'NType82Mono';
+  src: url('https://raw.githubusercontent.com/xeji01/nothingfont/9d8b51d2e89fcf4d71f4d31e346a2b0ee4350716/fonts/NType82Mono-Regular.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -100,18 +100,18 @@
 
 @layer base {
   *, ::before, ::after {
-    font-family: 'NType82', 'Outfit', 'Space Grotesk', system-ui, -apple-system, sans-serif;
+    font-family: 'NType82Mono', 'Outfit', 'Space Grotesk', system-ui, -apple-system, sans-serif;
   }
 
   html, body, button, input, select, textarea, code, pre {
-    font-family: 'NType82', 'Outfit', 'Space Grotesk', system-ui, -apple-system, sans-serif;
+    font-family: 'NType82Mono', 'Outfit', 'Space Grotesk', system-ui, -apple-system, sans-serif;
   }
 }
 
 .font-mono {
-  font-family: 'NType82', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  font-family: 'NType82Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
 }
 
 .font-ntype82 {
-  font-family: 'NType82', 'Outfit', 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  font-family: 'NType82Mono', 'Outfit', 'Space Grotesk', system-ui, -apple-system, sans-serif;
 }
