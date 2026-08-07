@@ -86,14 +86,9 @@ export function NavigationDrawer({
             </nav>
           </div>
 
-          {/* Drawer Footer — Settings & Theme Switcher anchored at bottom-right */}
-          <div className="pt-6 border-t border-white/10 [html[data-theme=light]_&]:border-slate-200 flex items-center justify-between">
-            <span className="text-[11px] font-mono text-slate-400 [html[data-theme=light]_&]:text-slate-500">
-              Theme Mode
-            </span>
-            <div className="shrink-0">
-              <ThemeSwitcher />
-            </div>
+          {/* Drawer Footer — Theme Switcher anchored at bottom-right */}
+          <div className="pt-6 border-t border-white/10 [html[data-theme=light]_&]:border-slate-200 flex items-center justify-end">
+            <ThemeSwitcher />
           </div>
         </div>
       </div>
