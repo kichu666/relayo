@@ -33,24 +33,24 @@ export function NavigationDrawer({
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden animate-fade-in">
-      {/* Semi-transparent Backdrop Overlay */}
+      {/* Heavy Backdrop Overlay */}
       <div
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity"
         onClick={onClose}
       />
 
-      {/* Slide-out Navigation Drawer */}
+      {/* Solid Opaque Navigation Drawer */}
       <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-        <div className="w-80 sm:w-96 backdrop-blur-2xl bg-slate-950/95 dark:bg-black/95 [html[data-theme=light]_&]:bg-white/95 border-l border-white/10 [html[data-theme=light]_&]:border-slate-200/80 shadow-2xl p-6 flex flex-col justify-between relative z-10 transition-transform duration-300 ease-out">
+        <div className="w-80 sm:w-96 bg-[#090D16] [html[data-theme=light]_&]:bg-white border-l border-white/15 [html[data-theme=light]_&]:border-slate-200 shadow-2xl p-6 flex flex-col justify-between relative z-10 transition-transform duration-300 ease-out">
           
-          {/* Drawer Header */}
+          {/* Drawer Header with Consolidated Branding */}
           <div>
             <div className="flex items-center justify-between pb-6 mb-6 border-b border-white/10 [html[data-theme=light]_&]:border-slate-200">
               <div className="flex flex-col">
-                <span className="font-icloud-logo font-semibold text-lg text-white [html[data-theme=light]_&]:text-[#1D1D1F]">
-                  Navigation
+                <span className="font-icloud-logo font-bold text-xl tracking-tight text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none">
+                  Relayo
                 </span>
-                <span className="text-[10px] font-mono text-cyan-400 [html[data-theme=light]_&]:text-cyan-700">
+                <span className="text-[10.5px] font-mono text-cyan-400 [html[data-theme=light]_&]:text-cyan-700 font-medium tracking-wider leading-none mt-1">
                   relayo.world
                 </span>
               </div>

@@ -269,7 +269,7 @@ export function App() {
       )}
 
       {/* Sticky Apple iCloud-Style Frosted Glass Header */}
-      <header className="apple-header shadow-sm">
+      <header className={`apple-header shadow-sm transition-opacity duration-200 ${isNavDrawerOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
         <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
 
           {/* Left side — Relayo brand title & relayo.world subtext */}
