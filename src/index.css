@@ -94,6 +94,21 @@
   animation: orbSlow 12s ease-in-out infinite;
 }
 
+.icloud-frosted-header {
+  background-color: rgba(11, 15, 23, 0.15);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+[data-theme='amoled'] .icloud-frosted-header {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme='light'] .icloud-frosted-header {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-bottom-color: rgba(226, 232, 240, 0.7);
+}
+
 .font-icloud-logo {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }

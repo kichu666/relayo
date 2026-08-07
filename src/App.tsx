@@ -229,7 +229,7 @@ export function App() {
       )}
 
       {/* Sticky iCloud-Style Frosted Glass Header */}
-      <header className="w-full sticky top-0 left-0 right-0 z-50 backdrop-blur-3xl bg-slate-950/30 dark:bg-black/30 [html[data-theme=light]_&]:bg-white/40 border-b border-white/10 [html[data-theme=light]_&]:border-slate-200/80 shadow-sm transition-all duration-300">
+      <header className="w-full sticky top-0 left-0 right-0 z-50 icloud-frosted-header border-b border-white/10 [html[data-theme=light]_&]:border-slate-200/60 shadow-sm transition-all duration-300">
         <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2">
 
           {/* Logo — left (Glowing Gradient Border Icon, iCloud SF Pro Brand Title & relayo.world Subtitle) */}
