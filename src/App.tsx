@@ -37,7 +37,8 @@ import {
   Radio,
   MessageSquareHeart,
   BookOpen,
-  Menu
+  Menu,
+  Mail
 } from 'lucide-react';
 import { CloudHub } from './components/cloud/CloudHub';
 import { FeedbackModal } from './components/FeedbackModal';
@@ -763,8 +764,18 @@ export function App() {
             <span>© 2026 Relayo.world • Zero Server Storage</span>
           </div>
 
-          {/* Right Column: Intentionally Grouped Footer Action Row (Tutorial, Feedback, About Us) */}
+          {/* Right Column: Intentionally Grouped Footer Action Row (Contact Email, Tutorial, Feedback, About Us) */}
           <div className="flex items-center gap-6 sm:gap-8 shrink-0 flex-wrap justify-center sm:justify-end">
+            {/* Official Contact Email Button */}
+            <a
+              href="mailto:rrajr0503@gmail.com"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-mono font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer group"
+              title="Contact Us via Email"
+            >
+              <Mail className="w-3.5 h-3.5 text-cyan-400 [html[data-theme=light]_&]:text-[#0EA5E9]" />
+              <span>rrajr0503@gmail.com</span>
+            </a>
+
             {/* Help & Tutorial Button */}
             <button
               onClick={() => {
