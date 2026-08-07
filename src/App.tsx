@@ -681,7 +681,7 @@ export function App() {
       <SeoLandingSection />
 
       {/* Footer */}
-      <footer className="w-full border-t border-[var(--panel-border)] py-8 glass-panel flex flex-col items-center justify-center px-6 text-xs text-[var(--text-muted)] font-mono relative z-30">
+      <footer className="w-full border-t border-[var(--panel-border)] py-6 sm:py-8 glass-panel flex flex-col items-center justify-center px-4 sm:px-6 text-xs text-[var(--text-muted)] font-mono relative z-30">
         {/* Floating Action Buttons Container — Clean fixed positioning on mobile & desktop */}
         <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col gap-3 items-end pointer-events-auto">
           {/* Help & Tutorial FAB */}
@@ -719,17 +719,19 @@ export function App() {
           </div>
         </div>
 
-        {/* Relocated Relayo Transfer Icon — Centered directly above copyright text */}
-        <div className="cursor-pointer mb-6 transition-transform duration-300 hover:scale-105" onClick={handleResetHome}>
-          <div className="p-[1.5px] rounded-xl sm:rounded-2xl bg-gradient-to-br from-cyan-400 via-indigo-500 to-purple-600 shadow-[0_2px_14px_rgba(168,85,247,0.35)] shrink-0">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-[10px] sm:rounded-[14px] bg-[#070A12] [html[data-theme=light]_&]:bg-white flex items-center justify-center">
-              <ArrowLeftRight className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2.5} />
+        <div className="w-full max-w-6xl flex flex-col sm:flex-row items-center sm:items-end justify-between gap-4 text-center sm:text-left">
+          {/* Left Column Stack: Relocated Relayo Transfer Icon + Copyright text */}
+          <div className="flex flex-col items-center sm:items-start gap-3">
+            <div className="cursor-pointer transition-transform duration-300 hover:scale-105" onClick={handleResetHome}>
+              <div className="p-[1.5px] rounded-xl sm:rounded-2xl bg-gradient-to-br from-cyan-400 via-indigo-500 to-purple-600 shadow-[0_2px_14px_rgba(168,85,247,0.35)] shrink-0">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-[10px] sm:rounded-[14px] bg-[#070A12] [html[data-theme=light]_&]:bg-white flex items-center justify-center">
+                  <ArrowLeftRight className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2.5} />
+                </div>
+              </div>
             </div>
+            <span>© 2026 Relayo.world • Zero Server Storage</span>
           </div>
-        </div>
 
-        <div className="w-full max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
-          <span>© 2026 Relayo.world • Zero Server Storage</span>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setIsAboutOpen(true)}
