@@ -94,19 +94,27 @@
   animation: orbSlow 12s ease-in-out infinite;
 }
 
-.icloud-frosted-header {
-  background-color: rgba(11, 15, 23, 0.25) !important;
-  backdrop-filter: blur(24px) !important;
-  -webkit-backdrop-filter: blur(24px) !important;
+.apple-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: rgba(22, 22, 23, 0.75);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-[data-theme='amoled'] .icloud-frosted-header {
-  background-color: rgba(0, 0, 0, 0.25) !important;
+[data-theme='amoled'] .apple-header {
+  background-color: rgba(0, 0, 0, 0.75);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-[data-theme='light'] .icloud-frosted-header {
-  background-color: rgba(255, 255, 255, 0.35) !important;
-  border-bottom-color: rgba(226, 232, 240, 0.8) !important;
+[data-theme='light'] .apple-header {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .font-icloud-logo {
