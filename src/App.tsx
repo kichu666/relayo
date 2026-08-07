@@ -761,7 +761,7 @@ export function App() {
       <footer className="w-full border-t border-[var(--panel-border)] py-8 sm:py-10 glass-panel flex flex-col items-center justify-center px-4 sm:px-6 text-xs text-[var(--text-muted)] font-mono relative z-30">
         <div className="w-full max-w-6xl flex flex-col sm:flex-row items-center sm:items-end justify-between gap-6 sm:gap-8 text-center sm:text-left">
           {/* Left Column Stack: Relocated Relayo Transfer Icon + Copyright text */}
-          <div className="flex flex-col items-center sm:items-start gap-3">
+          <div className="flex flex-col items-center sm:items-start gap-3 shrink-0">
             <div className="cursor-pointer transition-transform duration-300 hover:scale-105" onClick={handleResetHome}>
               <div className="p-[1.5px] rounded-xl sm:rounded-2xl bg-gradient-to-br from-cyan-400 via-indigo-500 to-purple-600 shadow-[0_2px_14px_rgba(168,85,247,0.35)] shrink-0">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-[10px] sm:rounded-[14px] bg-[#070A12] [html[data-theme=light]_&]:bg-white flex items-center justify-center">
@@ -769,7 +769,7 @@ export function App() {
                 </div>
               </div>
             </div>
-            <span>© 2026 Relayo.world • Zero Server Storage</span>
+            <span className="whitespace-nowrap shrink-0 font-medium">© 2026 Relayo.world • Zero Server Storage</span>
           </div>
 
           {/* Right Column: Intentionally Grouped Footer Action Toolbar */}
