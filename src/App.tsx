@@ -43,6 +43,7 @@ import { FeedbackModal } from './components/FeedbackModal';
 import { AboutModal } from './components/AboutModal';
 import { initCloudSession } from './logic/cloudStore';
 import { AmoledWifiSwitchSection } from './components/AmoledWifiSwitchSection';
+import { SeoLandingSection } from './components/SeoLandingSection';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -678,6 +679,9 @@ export function App() {
         )}
         </main>
       )}
+
+      {/* SEO Landing & FAQ Section */}
+      <SeoLandingSection />
 
       {/* Footer */}
       <footer className="w-full border-t border-[var(--panel-border)] py-4 glass-panel flex flex-col sm:flex-row items-center justify-between px-6 gap-3 text-xs text-[var(--text-muted)] font-mono relative z-30">
