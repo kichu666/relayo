@@ -35,10 +35,12 @@ import {
   Package,
   Cloud,
   Radio,
-  MessageSquareHeart
+  MessageSquareHeart,
+  BookOpen
 } from 'lucide-react';
 import { CloudHub } from './components/cloud/CloudHub';
 import { FeedbackModal } from './components/FeedbackModal';
+import { AboutModal } from './components/AboutModal';
 import { initCloudSession } from './logic/cloudStore';
 import { AmoledWifiSwitchSection } from './components/AmoledWifiSwitchSection';
 
@@ -52,6 +54,7 @@ export function App() {
   const [isP2PTutorialOpen, setIsP2PTutorialOpen] = useState(false);
   const [isCloudTutorialOpen, setIsCloudTutorialOpen] = useState(false);
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [appMode, setAppMode] = useState<'p2p' | 'cloud'>('p2p');
 
@@ -367,7 +370,7 @@ export function App() {
             </div>
 
             {/* Why Relayo? Unified Card */}
-            <div className="w-full max-w-xl mt-8 p-6 sm:p-7 rounded-3xl bg-black/90 [html[data-theme=light]_&]:bg-white border border-zinc-800/90 [html[data-theme=light]_&]:border-gray-200 shadow-2xl [html[data-theme=light]_&]:shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-2xl text-left relative overflow-hidden">
+            <div className="w-full max-w-xl mt-8 p-6 sm:p-7 rounded-3xl [html[data-theme=amoled]_&]:bg-black/90 [html[data-theme=dark]_&]:bg-slate-900/90 [html[data-theme=light]_&]:bg-white border border-zinc-800/90 [html[data-theme=light]_&]:border-gray-200 shadow-2xl [html[data-theme=light]_&]:shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-2xl text-left relative overflow-hidden">
               <div className="absolute top-0 right-0 w-40 h-40 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
 
               <h3 className="text-lg font-bold tracking-wide text-zinc-100 [html[data-theme=light]_&]:text-slate-900 mb-6">
@@ -677,40 +680,66 @@ export function App() {
       )}
 
       {/* Footer */}
-      <footer className="w-full border-t border-[var(--panel-border)] py-4 glass-panel flex flex-col sm:flex-row items-center justify-between px-6 gap-3 text-xs text-[var(--text-muted)] font-mono">
+      <footer className="w-full border-t border-[var(--panel-border)] py-4 glass-panel flex flex-col sm:flex-row items-center justify-between px-6 gap-3 text-xs text-[var(--text-muted)] font-mono relative z-30">
+        {/* Floating Action Buttons Container — Anchored permanently above footer */}
+        <div className="absolute bottom-full right-6 mb-3.5 z-40 flex flex-col gap-3 items-end pointer-events-auto">
+          {/* Help & Tutorial FAB */}
+          <div className="relative group flex items-center">
+            <span className="absolute right-full mr-3 px-2.5 py-1 rounded-lg text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none bg-slate-900 text-white shadow-md border border-slate-700 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:text-slate-800 [html[data-theme=light]_&]:border-slate-200 [html[data-theme=light]_&]:shadow-lg">
+              Tutorial
+            </span>
+            <button
+              onClick={() => {
+                if (appMode === 'cloud') {
+                  setIsCloudTutorialOpen(true);
+                } else {
+                  setIsP2PTutorialOpen(true);
+                }
+              }}
+              className="w-11 h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center bg-[var(--card-bg)] border border-[var(--panel-border)] shadow-lg text-cyan-400 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:text-[#0EA5E9] [html[data-theme=light]_&]:shadow-md transition-all duration-300 hover:scale-110 hover:-translate-y-0.5 cursor-pointer backdrop-blur-xl"
+              title="Help & Tutorial"
+            >
+              <HelpCircle className="w-5 h-5 md:w-6 md:h-6" />
+            </button>
+          </div>
+
+          {/* Feedback / Review FAB */}
+          <div className="relative group flex items-center">
+            <span className="absolute right-full mr-3 px-2.5 py-1 rounded-lg text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none bg-slate-900 text-white shadow-md border border-slate-700 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:text-slate-800 [html[data-theme=light]_&]:border-slate-200 [html[data-theme=light]_&]:shadow-lg">
+              Feedback
+            </span>
+            <button
+              onClick={() => setIsFeedbackOpen(true)}
+              className="w-11 h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center bg-[var(--card-bg)] border border-[var(--panel-border)] shadow-lg text-rose-400 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:text-rose-500 [html[data-theme=light]_&]:shadow-md transition-all duration-300 hover:scale-110 hover:-translate-y-0.5 cursor-pointer backdrop-blur-xl"
+              title="Send Feedback"
+            >
+              <MessageSquareHeart className="w-5 h-5 md:w-6 md:h-6" />
+            </button>
+          </div>
+        </div>
+
         <span>Relayo P2P Direct Share • Zero Server Storage</span>
         <div className="flex items-center gap-2">
           <button
-            onClick={() => setIsFeedbackOpen(true)}
+            onClick={() => setIsAboutOpen(true)}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all cursor-pointer"
           >
-            <MessageSquareHeart className="w-3.5 h-3.5 text-rose-400" />
-            <span>Send Feedback</span>
-          </button>
-
-          <button
-            onClick={() => {
-              if (appMode === 'cloud') {
-                setIsCloudTutorialOpen(true);
-              } else {
-                setIsP2PTutorialOpen(true);
-              }
-            }}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all cursor-pointer"
-          >
-            <HelpCircle className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Help & Tutorial</span>
+            <BookOpen className="w-3.5 h-3.5 text-indigo-400" />
+            <span>About Us</span>
           </button>
         </div>
       </footer>
+
+      {/* About Us Author Story Modal */}
+      <AboutModal isOpen={isAboutOpen} onClose={() => setIsAboutOpen(false)} />
 
       {/* Formspree User Feedback Modal */}
       <FeedbackModal isOpen={isFeedbackOpen} onClose={() => setIsFeedbackOpen(false)} />
 
       {/* Glassmorphism P2P Help Modal */}
       {appMode === 'p2p' && isP2PTutorialOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 dark:bg-black/80 [html[data-theme=light]_&]:bg-[rgba(248,250,252,0.35)] backdrop-blur-md animate-fade-in">
-          <div className="relative w-full max-w-md bg-black/95 dark:bg-black/95 [html[data-theme=light]_&]:bg-[linear-gradient(180deg,#F9FCFF_0%,#EEF7FF_100%)] border border-zinc-800/90 dark:border-zinc-800/90 [html[data-theme=light]_&]:border-[#D7E8FF] rounded-3xl p-6 shadow-2xl dark:shadow-2xl [html[data-theme=light]_&]:shadow-[0_20px_60px_rgba(14,165,233,0.12)] backdrop-blur-2xl text-zinc-100 dark:text-zinc-100 [html[data-theme=light]_&]:text-[#0F172A]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 [html[data-theme=amoled]_&]:bg-black/80 [html[data-theme=dark]_&]:bg-slate-950/80 [html[data-theme=light]_&]:bg-[rgba(248,250,252,0.35)] backdrop-blur-md animate-fade-in">
+          <div className="relative w-full max-w-md [html[data-theme=amoled]_&]:bg-black/95 [html[data-theme=dark]_&]:bg-slate-900/95 [html[data-theme=light]_&]:bg-[linear-gradient(180deg,#F9FCFF_0%,#EEF7FF_100%)] border border-zinc-800/90 [html[data-theme=light]_&]:border-[#D7E8FF] rounded-3xl p-6 shadow-2xl [html[data-theme=light]_&]:shadow-[0_20px_60px_rgba(14,165,233,0.12)] backdrop-blur-2xl text-zinc-100 [html[data-theme=light]_&]:text-[#0F172A]">
             <button
               onClick={() => setIsP2PTutorialOpen(false)}
               className="absolute top-5 right-5 p-1.5 rounded-full bg-zinc-900 dark:bg-zinc-900 [html[data-theme=light]_&]:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-800 hover:[html[data-theme=light]_&]:bg-slate-50 border border-zinc-800 dark:border-zinc-800 [html[data-theme=light]_&]:border-[#D7E8FF] text-zinc-400 dark:text-zinc-400 [html[data-theme=light]_&]:text-[#475569] hover:text-white dark:hover:text-white hover:[html[data-theme=light]_&]:text-[#0F172A] [html[data-theme=light]_&]:shadow-sm transition-colors cursor-pointer"

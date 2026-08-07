@@ -32,7 +32,6 @@ import {
   Copy
 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
-import { useFirebasePresence } from '../../logic/useFirebasePresence';
 import { FeedbackModal } from '../FeedbackModal';
 
 interface CloudHubProps {
@@ -61,8 +60,6 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
     if (onCloseCloudHelp) onCloseCloudHelp();
     else setLocalCloudHelpModal(false);
   };
-
-  useFirebasePresence(store.roomId, store.deviceName || 'Windows Desktop');
 
   useEffect(() => {
     initCloudSession();
@@ -486,37 +483,6 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
           </div>
         </div>
       )}
-
-      {/* Floating Action Buttons (FAB) Container */}
-      <div className="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-50 flex flex-col gap-4 items-center pointer-events-auto">
-        {/* Help & Tutorial FAB */}
-        <div className="relative group flex items-center">
-          <span className="absolute right-full mr-3 px-2.5 py-1 rounded-lg text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none bg-slate-900 text-white shadow-md border border-slate-700 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:text-slate-800 [html[data-theme=light]_&]:border-slate-200 [html[data-theme=light]_&]:shadow-lg">
-            Tutorial
-          </span>
-          <button
-            onClick={handleOpenHelp}
-            className="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center bg-white border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.12)] text-[#0EA5E9] dark:bg-slate-800/90 dark:border-slate-700 dark:text-cyan-400 dark:shadow-[0_0_15px_rgba(14,165,233,0.2)] transition-transform duration-300 hover:scale-110 hover:-translate-y-1 cursor-pointer"
-            title="Help & Tutorial"
-          >
-            <HelpCircle className="w-5 h-5 md:w-6 md:h-6" />
-          </button>
-        </div>
-
-        {/* Feedback / Review FAB */}
-        <div className="relative group flex items-center">
-          <span className="absolute right-full mr-3 px-2.5 py-1 rounded-lg text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none bg-slate-900 text-white shadow-md border border-slate-700 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:text-slate-800 [html[data-theme=light]_&]:border-slate-200 [html[data-theme=light]_&]:shadow-lg">
-            Feedback
-          </span>
-          <button
-            onClick={() => setShowCloudReviewModal(true)}
-            className="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center bg-white border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.12)] text-[#0EA5E9] dark:bg-slate-800/90 dark:border-slate-700 dark:text-cyan-400 dark:shadow-[0_0_15px_rgba(14,165,233,0.2)] transition-transform duration-300 hover:scale-110 hover:-translate-y-1 cursor-pointer"
-            title="Leave a Review"
-          >
-            <MessageSquareHeart className="w-5 h-5 md:w-6 md:h-6" />
-          </button>
-        </div>
-      </div>
 
       {/* Dedicated Share Cloud Room & QR Code Modal */}
       {showQRModal && (

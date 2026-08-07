@@ -64,8 +64,8 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 dark:bg-black/80 [html[data-theme=light]_&]:bg-[rgba(248,250,252,0.35)] backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-md bg-white dark:bg-slate-950 [html[data-theme=light]_&]:bg-[linear-gradient(180deg,#F9FCFF_0%,#EEF7FF_100%)] border border-slate-200 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] rounded-3xl p-6 shadow-[0_20px_60px_rgba(14,165,233,0.12)] dark:shadow-2xl backdrop-blur-2xl text-slate-900 dark:text-slate-100">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 [html[data-theme=amoled]_&]:bg-black/80 [html[data-theme=dark]_&]:bg-slate-950/80 [html[data-theme=light]_&]:bg-[rgba(248,250,252,0.35)] backdrop-blur-md animate-fade-in">
+      <div className="relative w-full max-w-md [html[data-theme=amoled]_&]:bg-black [html[data-theme=dark]_&]:bg-slate-950 [html[data-theme=light]_&]:bg-[linear-gradient(180deg,#F9FCFF_0%,#EEF7FF_100%)] border border-slate-200 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] rounded-3xl p-6 shadow-[0_20px_60px_rgba(14,165,233,0.12)] dark:shadow-2xl backdrop-blur-2xl text-slate-900 dark:text-slate-100">
         <button
           onClick={handleResetAndClose}
           className="absolute top-5 right-5 p-1.5 rounded-full bg-slate-100 dark:bg-white/5 [html[data-theme=light]_&]:bg-white hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] text-slate-500 dark:text-slate-400 [html[data-theme=light]_&]:text-[#475569] hover:text-slate-900 dark:hover:text-white hover:[html[data-theme=light]_&]:text-[#0F172A] [html[data-theme=light]_&]:shadow-sm transition-colors cursor-pointer"

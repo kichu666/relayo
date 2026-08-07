@@ -350,6 +350,10 @@ export const updateDeviceName = (name: string) => {
 
 // Switch Cloud Room Code
 export const switchCloudRoom = (newRoomId?: string) => {
+  const state = $cloudStore.get();
+  if (db && state.roomId && state.deviceId) {
+    set(ref(db, `rooms/${state.roomId}/presence/${state.deviceId}/status`), 'offline').catch(() => {});
+  }
   const cleanRoom = newRoomId?.trim() || generateRandomRoomId();
   initCloudSession(cleanRoom);
   triggerCloudToast(`Joined Cloud Room: ${cleanRoom}`, 'success');

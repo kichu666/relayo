@@ -2,7 +2,7 @@
 
 @layer base {
   :root {
-    --bg-main: #0B0F19;
+    --bg-main: #0B0F17;
     --panel-bg: rgba(15, 23, 42, 0.85);
     --panel-border: rgba(255, 255, 255, 0.12);
     --text-primary: #ffffff;
@@ -11,13 +11,13 @@
     --badge-border: rgba(56, 189, 248, 0.3);
     --badge-text: #38bdf8;
     --accent-color: #38bdf8;
-    --card-bg: rgba(255, 255, 255, 0.05);
-    --input-bg: rgba(0, 0, 0, 0.7);
+    --card-bg: rgba(30, 41, 59, 0.4);
+    --input-bg: rgba(15, 23, 42, 0.8);
   }
 
   [data-theme='amoled'] {
     --bg-main: #000000;
-    --panel-bg: rgba(10, 10, 14, 0.92);
+    --panel-bg: rgba(0, 0, 0, 0.92);
     --panel-border: rgba(255, 255, 255, 0.12);
     --text-primary: #ffffff;
     --text-muted: #94a3b8;
@@ -25,12 +25,12 @@
     --badge-border: rgba(56, 189, 248, 0.35);
     --badge-text: #38bdf8;
     --accent-color: #38bdf8;
-    --card-bg: rgba(255, 255, 255, 0.05);
-    --input-bg: rgba(0, 0, 0, 0.7);
+    --card-bg: rgba(255, 255, 255, 0.04);
+    --input-bg: rgba(0, 0, 0, 0.85);
   }
 
   [data-theme='dark'] {
-    --bg-main: #0B0F19;
+    --bg-main: #0B0F17;
     --panel-bg: rgba(15, 23, 42, 0.85);
     --panel-border: rgba(255, 255, 255, 0.12);
     --text-primary: #ffffff;
@@ -39,8 +39,8 @@
     --badge-border: rgba(56, 189, 248, 0.3);
     --badge-text: #38bdf8;
     --accent-color: #38bdf8;
-    --card-bg: rgba(255, 255, 255, 0.05);
-    --input-bg: rgba(0, 0, 0, 0.7);
+    --card-bg: rgba(30, 41, 59, 0.4);
+    --input-bg: rgba(15, 23, 42, 0.8);
   }
 
   [data-theme='light'] {
@@ -57,7 +57,7 @@
     --input-bg: #FFFFFF;
   }
 
-  body {
+  html, body {
     background-color: var(--bg-main);
     color: var(--text-primary);
     transition: background-color 0.3s ease, color 0.3s ease;
