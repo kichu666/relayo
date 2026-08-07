@@ -90,11 +90,14 @@
   }
 }
 
-.animate-orb-slow {
-  animation: orbSlow 12s ease-in-out infinite;
+@font-face {
+  font-family: 'NType82';
+  src: url('https://raw.githubusercontent.com/xeji01/nothingfont/9d8b51d2e89fcf4d71f4d31e346a2b0ee4350716/fonts/NType82-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
-.font-ntype82-thin {
+.font-ntype82 {
   font-family: 'NType82', 'Outfit', 'Space Grotesk', system-ui, -apple-system, sans-serif;
-  font-weight: 100;
 }
