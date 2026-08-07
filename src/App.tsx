@@ -206,7 +206,7 @@ export function App() {
   const activeViewMode = store.viewMode === 'home' && isReceiverUrl ? 'receiver_download' : store.viewMode;
 
   return (
-    <div className="min-h-screen bg-[var(--bg-main)] text-[var(--text-primary)] flex flex-col justify-between selection:bg-indigo-500 selection:text-white relative overflow-hidden transition-colors duration-300">
+    <div className="min-h-screen bg-[var(--bg-main)] text-[var(--text-primary)] flex flex-col justify-between selection:bg-indigo-500 selection:text-white relative overflow-x-clip transition-colors duration-300">
       {/* Background Ambient Orbs */}
       <div className="absolute top-1/4 left-10 w-96 h-96 bg-indigo-600/15 rounded-full blur-[120px] pointer-events-none animate-orb-slow" />
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-cyan-500/15 rounded-full blur-[120px] pointer-events-none animate-orb-slow" />
@@ -229,7 +229,7 @@ export function App() {
       )}
 
       {/* Sticky iCloud-Style Frosted Glass Header */}
-      <header className="w-full sticky top-0 z-50 backdrop-blur-2xl bg-slate-950/75 dark:bg-black/80 [html[data-theme=light]_&]:bg-white/80 border-b border-white/10 [html[data-theme=light]_&]:border-slate-200/80 shadow-sm transition-all duration-300">
+      <header className="w-full sticky top-0 left-0 right-0 z-50 backdrop-blur-2xl bg-slate-950/80 dark:bg-black/85 [html[data-theme=light]_&]:bg-white/85 border-b border-white/10 [html[data-theme=light]_&]:border-slate-200/80 shadow-md transition-all duration-300">
         <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2">
 
           {/* Logo — left (Glowing Gradient Border Icon, iCloud SF Pro Brand Title & relayo.world Subtitle) */}
