@@ -230,10 +230,13 @@ export function App() {
 
       {/* Sticky Apple iCloud-Style Frosted Glass Header */}
       <header className="apple-header shadow-sm">
-        <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2">
+        <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 relative flex items-center justify-between">
 
-          {/* Logo — left (Responsive Compact Logo Section for Mobile) */}
-          <div className="flex items-center gap-2 sm:gap-3 cursor-pointer shrink-0" onClick={handleResetHome}>
+          {/* Left spacer for layout balance */}
+          <div className="w-8 sm:w-12 shrink-0 pointer-events-none" />
+
+          {/* Logo — Perfectly Centered horizontally across mobile and desktop */}
+          <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2 sm:gap-3 cursor-pointer shrink-0 z-10" onClick={handleResetHome}>
             <div className="p-[1.5px] rounded-xl sm:rounded-2xl bg-gradient-to-br from-cyan-400 via-indigo-500 to-purple-600 shadow-[0_2px_12px_rgba(168,85,247,0.3)] shrink-0 transition-transform duration-300 hover:scale-105">
               <div className="w-7 h-7 sm:w-9.5 sm:h-9.5 rounded-[10px] sm:rounded-[14px] bg-[#070A12] [html[data-theme=light]_&]:bg-white flex items-center justify-center">
                 <ArrowLeftRight className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2.5} />
@@ -250,7 +253,7 @@ export function App() {
           </div>
 
           {/* Right side — connection badge + theme */}
-          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 z-20 ml-auto">
             {getConnectionStateBadge()}
             <ThemeSwitcher />
           </div>
