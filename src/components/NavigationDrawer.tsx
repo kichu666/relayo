@@ -50,7 +50,7 @@ export function NavigationDrawer({
                   Relayo
                 </span>
                 <span className="text-xs font-mono text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 font-semibold tracking-wide leading-none ml-1">
-                  .world
+                  .space
                 </span>
               </div>
               <button

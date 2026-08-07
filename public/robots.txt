@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://relayo.world/sitemap.xml
+Sitemap: https://relayo.space/sitemap.xml

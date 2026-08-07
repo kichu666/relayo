@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Home / Root Landing Page -->
   <url>
-    <loc>https://relayo.world/</loc>
+    <loc>https://relayo.space/</loc>
     <lastmod>2026-08-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -10,7 +10,7 @@
 
   <!-- Dedicated Resources & Learn Page -->
   <url>
-    <loc>https://relayo.world/resources</loc>
+    <loc>https://relayo.space/resources</loc>
     <lastmod>2026-08-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -18,7 +18,7 @@
 
   <!-- Frequently Asked Questions (FAQ) Page -->
   <url>
-    <loc>https://relayo.world/faq</loc>
+    <loc>https://relayo.space/faq</loc>
     <lastmod>2026-08-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -26,7 +26,7 @@
 
   <!-- About Us Section & Page -->
   <url>
-    <loc>https://relayo.world/about</loc>
+    <loc>https://relayo.space/about</loc>
     <lastmod>2026-08-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -34,7 +34,7 @@
 
   <!-- Contact Us Page -->
   <url>
-    <loc>https://relayo.world/contact</loc>
+    <loc>https://relayo.space/contact</loc>
     <lastmod>2026-08-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -42,7 +42,7 @@
 
   <!-- Privacy Policy Page -->
   <url>
-    <loc>https://relayo.world/privacy-policy</loc>
+    <loc>https://relayo.space/privacy-policy</loc>
     <lastmod>2026-08-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
@@ -50,7 +50,7 @@
 
   <!-- Terms & Conditions Page -->
   <url>
-    <loc>https://relayo.world/terms-and-conditions</loc>
+    <loc>https://relayo.space/terms-and-conditions</loc>
     <lastmod>2026-08-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>

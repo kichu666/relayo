@@ -277,13 +277,13 @@ export function App() {
       <header className={`apple-header shadow-sm transition-opacity duration-200 ${isNavDrawerOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
         <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
 
-          {/* Left side — Inline Relayo.world brand title perfectly vertically centered */}
+          {/* Left side — Inline Relayo.space brand title perfectly vertically centered */}
           <div className="flex items-center text-left cursor-pointer shrink-0 z-20" onClick={handleResetHome}>
             <span className="font-icloud-logo font-bold text-lg sm:text-xl md:text-2xl tracking-tight text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none">
               Relayo
             </span>
             <span className="text-xs sm:text-sm font-mono text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 font-semibold tracking-wide leading-none ml-1">
-              .world
+              .space
             </span>
           </div>
           {/* Right side — connection badge + Hamburger Menu button */}
@@ -769,7 +769,7 @@ export function App() {
                 </div>
               </div>
             </div>
-            <span className="whitespace-nowrap shrink-0 font-medium">© 2026 Relayo.world • Zero Server Storage</span>
+            <span className="whitespace-nowrap shrink-0 font-medium">© 2026 Relayo.space • Zero Server Storage</span>
           </div>
 
           {/* Right Column: Intentionally Grouped Footer Action Toolbar */}

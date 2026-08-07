@@ -38,7 +38,7 @@ export function TermsPage({ onNavigate }: TermsPageProps) {
             1. Acceptance of Terms & Service Overview
           </h2>
           <p>
-            By accessing or using Relayo (<a href="https://relayo.world" className="text-cyan-400 underline">relayo.world</a>), you agree to comply with these Terms & Conditions. Relayo provides a browser-based WebRTC peer-to-peer (P2P) file sharing application and multi-device Cloud Hub workspace across Windows, macOS, Linux, Android, and iOS platforms.
+            By accessing or using Relayo (<a href="https://relayo.space" className="text-cyan-400 underline">relayo.space</a>), you agree to comply with these Terms & Conditions. Relayo provides a browser-based WebRTC peer-to-peer (P2P) file sharing application and multi-device Cloud Hub workspace across Windows, macOS, Linux, Android, and iOS platforms.
           </p>
         </div>
 

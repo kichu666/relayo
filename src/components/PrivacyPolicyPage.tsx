@@ -39,7 +39,7 @@ export function PrivacyPolicyPage({ onNavigate }: PrivacyPolicyPageProps) {
             1. Dual Architecture: Local P2P Mode vs. Cloud Hub Mode
           </h2>
           <p>
-            At Relayo (<a href="https://relayo.world" className="text-cyan-400 underline">relayo.world</a>), we respect your privacy and enforce transparent data handling across both operational modes:
+            At Relayo (<a href="https://relayo.space" className="text-cyan-400 underline">relayo.space</a>), we respect your privacy and enforce transparent data handling across both operational modes:
           </p>
           <ul className="list-disc pl-5 space-y-1.5 text-xs">
             <li>
@@ -68,7 +68,7 @@ export function PrivacyPolicyPage({ onNavigate }: PrivacyPolicyPageProps) {
             Relayo may display advertisements served by third-party vendor networks, including Google AdSense. 
           </p>
           <ul className="list-disc pl-5 space-y-1.5 text-xs">
-            <li>Third-party vendors, including Google, use cookies (such as the DoubleClick DART cookie) to serve ads based on a user's prior visits to <code className="font-mono text-cyan-300">relayo.world</code> or other internet websites.</li>
+            <li>Third-party vendors, including Google, use cookies (such as the DoubleClick DART cookie) to serve ads based on a user's prior visits to <code className="font-mono text-cyan-300">relayo.space</code> or other internet websites.</li>
             <li>Google's use of advertising cookies enables it and its partners to serve personalized or non-personalized advertisements to users based on their browsing history.</li>
             <li>
               Users may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" className="text-cyan-400 underline">Google Ad Settings</a> or by visiting <a href="https://www.aboutads.info/choices" target="_blank" rel="noopener noreferrer" className="text-cyan-400 underline">aboutads.info</a>.

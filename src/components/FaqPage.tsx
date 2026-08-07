@@ -28,7 +28,7 @@ export function FaqPage({ onNavigate }: FaqPageProps) {
     },
     {
       question: "Can I AirDrop files from PC to iPhone without installing an app?",
-      answer: "Yes, you can transfer files between a Windows PC and iPhone without installing software by using Relayo in any web browser. Simply open relayo.world on both devices, scan the generated QR code, and send unlimited photos, videos, and documents directly across browsers."
+      answer: "Yes, you can transfer files between a Windows PC and iPhone without installing software by using Relayo in any web browser. Simply open relayo.space on both devices, scan the generated QR code, and send unlimited photos, videos, and documents directly across browsers."
     },
     {
       question: "What is P2P file sharing and is it secure?",
@@ -40,7 +40,7 @@ export function FaqPage({ onNavigate }: FaqPageProps) {
     },
     {
       question: "How do I sync my clipboard across devices without Phone Link or Apple ID?",
-      answer: "You can sync your clipboard across Windows, Mac, Android, and iOS without Phone Link or Apple Universal Clipboard using Relayo Cloud Hub. Simply open relayo.world in your browser, join a private room code, and copy-paste text or links live across all connected screens."
+      answer: "You can sync your clipboard across Windows, Mac, Android, and iOS without Phone Link or Apple Universal Clipboard using Relayo Cloud Hub. Simply open relayo.space in your browser, join a private room code, and copy-paste text or links live across all connected screens."
     },
     {
       question: "How can I push links instantly from my phone to my laptop?",
