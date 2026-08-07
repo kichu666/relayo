@@ -102,7 +102,7 @@ export function SeoLandingSection() {
   ];
 
   return (
-    <section className="w-full max-w-6xl mx-auto mt-20 pt-16 pb-32 sm:pb-40 border-t border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] space-y-20 px-4 sm:px-6">
+    <section id="seo-content" className="w-full max-w-6xl mx-auto mt-20 pt-16 pb-32 sm:pb-40 border-t border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] space-y-20 px-4 sm:px-6">
       {/* Primary Header Section */}
       <RevealOnScroll>
         <div className="text-center space-y-4 max-w-3xl mx-auto">

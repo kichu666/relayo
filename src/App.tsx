@@ -255,7 +255,7 @@ export function App() {
 
       {/* Main Content Body */}
       {appMode === 'cloud' ? (
-        <main className="max-w-6xl mx-auto px-2.5 sm:px-6 py-3 sm:py-8 w-full flex-1 relative z-10">
+        <main className="max-w-6xl mx-auto px-2.5 sm:px-6 py-3 sm:py-8 w-full flex-1 relative z-10 min-h-[82vh]">
           <CloudHub
             isOpenCloudHelp={isCloudTutorialOpen}
             onCloseCloudHelp={() => setIsCloudTutorialOpen(false)}
@@ -264,7 +264,7 @@ export function App() {
           />
         </main>
       ) : (
-        <main className="max-w-4xl mx-auto px-3 sm:px-6 py-4 sm:py-10 w-full flex-1 flex flex-col items-center justify-center relative z-10">
+        <main className="max-w-4xl mx-auto px-3 sm:px-6 py-4 sm:py-10 w-full flex-1 flex flex-col items-center justify-center relative z-10 min-h-[82vh]">
         {/* Ambient Depth Glows (Light Mode) */}
         <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-blue-400/5 rounded-full blur-[100px] pointer-events-none hidden [html[data-theme=light]_&]:block" />
         <div className="absolute top-40 right-10 w-[400px] h-[300px] bg-purple-400/5 rounded-full blur-[100px] pointer-events-none hidden [html[data-theme=light]_&]:block" />
