@@ -95,7 +95,7 @@ const detectDefaultName = (): string => {
   const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
   const isWin = navigator.platform.toUpperCase().indexOf('WIN') >= 0;
   const os = isMac ? 'Mac' : isWin ? 'Windows' : 'Device';
-  
+
   if (type === 'phone') return 'Mobile Phone';
   if (type === 'tablet') return 'Tablet';
   return `${os} ${type === 'laptop' ? 'Laptop' : 'Desktop'}`;
@@ -158,9 +158,9 @@ let currentUnsubscribes: Array<() => void> = [];
 export const initCloudSession = (roomIdToJoin?: string) => {
   const state = $cloudStore.get();
   const roomId = roomIdToJoin || state.roomId;
-  
+
   localStorage.setItem('relayo_cloud_room_id', roomId);
-  
+
   // Clean up previous listeners & heartbeat
   currentUnsubscribes.forEach(unsub => unsub());
   currentUnsubscribes = [];
@@ -229,7 +229,7 @@ export const initCloudSession = (roomIdToJoin?: string) => {
   currentUnsubscribes.push(() => off(connectedRef));
 
   // Initial set
-  set(deviceRef, selfDevice).catch(() => {});
+  set(deviceRef, selfDevice).catch(() => { });
 
   // Heartbeat loop every 10 seconds for dynamic roomId
   heartbeatInterval = setInterval(() => {
@@ -361,12 +361,24 @@ export const updateDeviceName = (name: string) => {
 };
 
 // Switch Cloud Room Code
-export const switchCloudRoom = (newRoomId?: string) => {
+export const switchCloudRoom = (newRoomId?: any) => {
   const state = $cloudStore.get();
+
+  // Set current device offline in the old room before leaving
   if (db && state.roomId && state.deviceId) {
-    set(ref(db, `rooms/${state.roomId}/presence/${state.deviceId}/status`), 'offline').catch(() => {});
+    set(ref(db, `rooms/${state.roomId}/presence/${state.deviceId}/status`), 'offline').catch(() => { });
   }
-  const cleanRoom = newRoomId?.trim() || generateRandomRoomId();
+
+  // FIX: Prevent silent crash if a UI event object is passed instead of a string
+  let cleanRoom = '';
+  if (typeof newRoomId === 'string') {
+    cleanRoom = newRoomId.trim();
+  }
+
+  // Fallback to a random room if no valid string was provided
+  cleanRoom = cleanRoom || generateRandomRoomId();
+
+  // Boot up the real-time listeners for the new room
   initCloudSession(cleanRoom);
 };
 

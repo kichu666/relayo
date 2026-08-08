@@ -10,16 +10,10 @@ const detectMobileDevice = (): 'phone' | 'desktop' => {
   return isMobileUA || isSmallScreen ? 'phone' : 'desktop';
 };
 
-export function useFirebasePresence(roomId: string, deviceName: string) {
+// Added deviceId as a required parameter here
+export function useFirebasePresence(roomId: string, deviceName: string, deviceId: string) {
   useEffect(() => {
-    if (!roomId || !db) return;
-
-    // Use sessionStorage and crypto.randomUUID() so individual tabs don't collide
-    let deviceId = sessionStorage.getItem('relayo_session_device_id');
-    if (!deviceId) {
-      deviceId = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'dev_' + Math.random().toString(36).substring(2, 11);
-      sessionStorage.setItem('relayo_session_device_id', deviceId);
-    }
+    if (!roomId || !db || !deviceId) return;
 
     const deviceType = detectMobileDevice();
     const cleanName = deviceName.replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]/gu, '').trim() || (deviceType === 'phone' ? 'Mobile Device' : 'Desktop Device');
@@ -29,7 +23,6 @@ export function useFirebasePresence(roomId: string, deviceName: string) {
 
     const unsubscribe = onValue(connectedRef, (snap) => {
       if (snap.val() === true) {
-        // Set up disconnect handler FIRST
         onDisconnect(presenceRef).set({
           status: 'offline',
           lastActive: serverTimestamp(),
@@ -37,7 +30,6 @@ export function useFirebasePresence(roomId: string, deviceName: string) {
           type: deviceType
         });
 
-        // Write online state immediately
         set(presenceRef, {
           status: 'online',
           lastActive: serverTimestamp(),
@@ -56,5 +48,5 @@ export function useFirebasePresence(roomId: string, deviceName: string) {
         type: deviceType
       });
     };
-  }, [roomId, deviceName]);
+  }, [roomId, deviceName, deviceId]);
 }

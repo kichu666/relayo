@@ -80,7 +80,7 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
   };
 
   const handleCopyRoomCode = () => {
-    const roomUrl = `https://relayo-eight.vercel.app/?room=${encodeURIComponent(store.roomId)}`;
+    const roomUrl = `${window.location.origin}/?room=${encodeURIComponent(store.roomId)}`;
     navigator.clipboard.writeText(roomUrl);
     setCopiedCode(true);
     triggerCloudToast('Cloud Room link copied to clipboard!', 'success');
@@ -182,11 +182,10 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
         <div className="flex items-center justify-start sm:justify-center overflow-x-auto gap-1 sm:gap-2 p-1.5 glass-panel bg-black/40 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:shadow-[0_4px_20px_rgb(0,0,0,0.03)] backdrop-blur-xl">
           <button
             onClick={() => setSubTab('presence')}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] ${
-              subTab === 'presence'
-                ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 [html[data-theme=light]_&]:bg-cyan-50 border border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.2)] [html[data-theme=light]_&]:shadow-none'
-                : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
-            }`}
+            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] ${subTab === 'presence'
+              ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 [html[data-theme=light]_&]:bg-cyan-50 border border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.2)] [html[data-theme=light]_&]:shadow-none'
+              : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
+              }`}
           >
             <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />
             <span>Online Devices</span>
@@ -197,11 +196,10 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
 
           <button
             onClick={() => setSubTab('clipboard')}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] ${
-              subTab === 'clipboard'
-                ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 [html[data-theme=light]_&]:bg-cyan-50 border border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.2)] [html[data-theme=light]_&]:shadow-none'
-                : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
-            }`}
+            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] ${subTab === 'clipboard'
+              ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 [html[data-theme=light]_&]:bg-cyan-50 border border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.2)] [html[data-theme=light]_&]:shadow-none'
+              : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
+              }`}
           >
             <ClipboardCopy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />
             <span>Clipboard Sync</span>
@@ -214,11 +212,10 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
 
           <button
             onClick={() => setSubTab('link')}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] ${
-              subTab === 'link'
-                ? 'bg-gradient-to-r from-purple-500/20 to-indigo-500/20 text-purple-300 [html[data-theme=light]_&]:text-purple-700 [html[data-theme=light]_&]:bg-purple-50 border border-purple-500/40 shadow-[0_0_15px_rgba(168,85,247,0.2)] [html[data-theme=light]_&]:shadow-none'
-                : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
-            }`}
+            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] ${subTab === 'link'
+              ? 'bg-gradient-to-r from-purple-500/20 to-indigo-500/20 text-purple-300 [html[data-theme=light]_&]:text-purple-700 [html[data-theme=light]_&]:bg-purple-50 border border-purple-500/40 shadow-[0_0_15px_rgba(168,85,247,0.2)] [html[data-theme=light]_&]:shadow-none'
+              : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
+              }`}
           >
             <Link2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-400 [html[data-theme=light]_&]:text-purple-600" strokeWidth={2} />
             <span>Links</span>
@@ -231,11 +228,10 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
 
           <button
             onClick={() => setSubTab('scratchpad')}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] ${
-              subTab === 'scratchpad'
-                ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-300 [html[data-theme=light]_&]:text-emerald-700 [html[data-theme=light]_&]:bg-emerald-50 border border-emerald-500/40 shadow-[0_0_15px_rgba(16,185,129,0.2)] [html[data-theme=light]_&]:shadow-none'
-                : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
-            }`}
+            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] ${subTab === 'scratchpad'
+              ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-300 [html[data-theme=light]_&]:text-emerald-700 [html[data-theme=light]_&]:bg-emerald-50 border border-emerald-500/40 shadow-[0_0_15px_rgba(16,185,129,0.2)] [html[data-theme=light]_&]:shadow-none'
+              : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
+              }`}
           >
             <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 [html[data-theme=light]_&]:text-emerald-600" strokeWidth={2} />
             <span>Notes</span>
@@ -243,11 +239,10 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
 
           <button
             onClick={() => setSubTab('screenshot')}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] ${
-              subTab === 'screenshot'
-                ? 'bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-300 [html[data-theme=light]_&]:text-amber-700 [html[data-theme=light]_&]:bg-amber-50 border border-amber-500/40 shadow-[0_0_15px_rgba(245,158,11,0.2)] [html[data-theme=light]_&]:shadow-none'
-                : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
-            }`}
+            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] ${subTab === 'screenshot'
+              ? 'bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-300 [html[data-theme=light]_&]:text-amber-700 [html[data-theme=light]_&]:bg-amber-50 border border-amber-500/40 shadow-[0_0_15px_rgba(245,158,11,0.2)] [html[data-theme=light]_&]:shadow-none'
+              : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
+              }`}
           >
             <Camera className="w-4 h-4 text-amber-400 [html[data-theme=light]_&]:text-amber-600" strokeWidth={2} />
             <span>Screenshots</span>
@@ -398,7 +393,7 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
 
             <div className="flex justify-center p-3 bg-white rounded-xl border border-slate-100">
               <QRCodeSVG
-                value={`https://relayo-eight.vercel.app/?room=${encodeURIComponent(store.roomId)}`}
+                value={`${window.location.origin}/?room=${encodeURIComponent(store.roomId)}`}
                 size={140}
               />
             </div>
@@ -508,7 +503,7 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
             {/* Prominent Centered QR Code Container */}
             <div className="flex flex-col items-center justify-center p-5 bg-white rounded-2xl border border-slate-200/80 [html[data-theme=light]_&]:border-[#D7E8FF] shadow-sm">
               <QRCodeSVG
-                value={`https://relayo-eight.vercel.app/?room=${encodeURIComponent(store.roomId)}`}
+                value={`${window.location.origin}/?room=${encodeURIComponent(store.roomId)}`}
                 size={160}
                 className="w-40 h-40"
               />
@@ -526,7 +521,7 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
                 <input
                   type="text"
                   readOnly
-                  value={`https://relayo-eight.vercel.app/?room=${encodeURIComponent(store.roomId)}`}
+                  value={`${window.location.origin}/?room=${encodeURIComponent(store.roomId)}`}
                   className="flex-1 bg-black/60 dark:bg-black/60 [html[data-theme=light]_&]:bg-white border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] rounded-xl px-3 py-2 text-xs font-mono text-cyan-300 dark:text-cyan-300 [html[data-theme=light]_&]:text-[#0F172A] truncate focus:outline-none select-all"
                 />
                 <button
