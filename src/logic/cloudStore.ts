@@ -157,7 +157,15 @@ let currentUnsubscribes: Array<() => void> = [];
 // Initialize Firebase Realtime Listeners for current Room ID
 export const initCloudSession = (roomIdToJoin?: string) => {
   const state = $cloudStore.get();
-  const roomId = roomIdToJoin || state.roomId;
+
+  // Check URL parameters first, then manual input, then storage, then random fallback
+  let urlRoom = '';
+  if (typeof window !== 'undefined') {
+    const params = new URLSearchParams(window.location.search);
+    urlRoom = params.get('room') || '';
+  }
+
+  const roomId = roomIdToJoin || urlRoom || state.roomId || localStorage.getItem('relayo_cloud_room_id') || generateRandomRoomId();
 
   localStorage.setItem('relayo_cloud_room_id', roomId);
 
@@ -175,9 +183,9 @@ export const initCloudSession = (roomIdToJoin?: string) => {
     platform: navigator.platform
   };
 
-  // State reset on room change to clear stale data from previous rooms
+  // FORCE state update immediately so roomId matches across the whole app
   $cloudStore.set({
-    ...$cloudStore.get(),
+    ...state,
     roomId,
     devices: [selfDevice],
     clipboards: [],
