@@ -69,7 +69,7 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, ErrorBound
 
               {/* Secondary Ghost Contact Support Button */}
               <a
-                href="mailto:rrajr0503@gmail.com"
+                href="mailto:team@relayo.space"
                 className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white font-semibold text-xs transition-all cursor-pointer flex items-center justify-center gap-2 group"
               >
                 <Mail className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform" />

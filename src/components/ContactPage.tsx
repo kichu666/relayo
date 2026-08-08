@@ -46,11 +46,11 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
             </p>
           </div>
           <a
-            href="mailto:rrajr0503@gmail.com"
+            href="mailto:team@relayo.space"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-cyan-500 hover:bg-cyan-400 text-white font-mono font-bold text-xs sm:text-sm transition-all shadow-lg hover:scale-105 cursor-pointer"
           >
             <Send className="w-4 h-4" />
-            <span>rrajr0503@gmail.com</span>
+            <span>team@relayo.space</span>
           </a>
         </div>
 
@@ -61,7 +61,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
             <div>
               <h3 className="text-xs font-bold text-white [html[data-theme=light]_&]:text-[#0F172A]">Operational Transparency</h3>
               <p className="text-xs text-slate-400 [html[data-theme=light]_&]:text-slate-600 italic mt-0.5">
-                "Operated by Damien Kaul (pseudonym) to maintain personal privacy while delivering uncompromising software quality and complete operational transparency."
+                "Operated by rudra (pseudonym) to maintain personal privacy while delivering uncompromising software quality and complete operational transparency."
               </p>
             </div>
           </div>

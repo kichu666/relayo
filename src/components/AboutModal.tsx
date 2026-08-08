@@ -55,7 +55,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
             Welcome to Relayo, the seamless standard for instant device-to-device file sharing. Built on the principles of speed, privacy, and frictionless connectivity, our platform leverages advanced WebRTC technology to ensure your data moves directly between browsers—with zero server storage and zero cloud uploads.
           </p>
           <p>
-            Our mission is to empower remote teams, developers, and power users with a secure, real-time synchronization hub that just works. Relayo was engineered and is curated by Damien Kaul (pseudonym) to solve the complexities of multi-device workflows, delivering a seamless ecosystem experience across any platform. We prioritize your privacy and data integrity above all else, ensuring every transfer is authenticated and entirely decentralized.
+            Our mission is to empower remote teams, developers, and power users with a secure, real-time synchronization hub that just works. Relayo was engineered and is curated by rudra (pseudonym) to solve the complexities of multi-device workflows, delivering a seamless ecosystem experience across any platform. We prioritize your privacy and data integrity above all else, ensuring every transfer is authenticated and entirely decentralized.
           </p>
         </div>
 
@@ -70,7 +70,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
                 Operational Transparency
               </p>
               <p className="text-xs italic text-slate-300 dark:text-slate-300 [html[data-theme=light]_&]:text-[#334155] leading-relaxed mt-0.5">
-                "Operated by Damien Kaul (pseudonym) to maintain personal privacy while delivering uncompromising software quality and complete operational transparency."
+                "Operated by rudra (pseudonym) to maintain personal privacy while delivering uncompromising software quality and complete operational transparency."
               </p>
             </div>
           </div>
@@ -82,11 +82,11 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
             Official Contact Channel
           </span>
           <a
-            href="mailto:rrajr0503@gmail.com"
+            href="mailto:team@relayo.space"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 dark:bg-white/5 dark:hover:bg-white/10 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:hover:bg-slate-100 border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] text-slate-200 dark:text-slate-200 [html[data-theme=light]_&]:text-[#0F172A] text-xs font-mono transition-all shadow-sm group cursor-pointer"
           >
             <Mail className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-[#0EA5E9] group-hover:scale-110 transition-transform" />
-            <span className="font-semibold">rrajr0503@gmail.com</span>
+            <span className="font-semibold">team@relayo.space</span>
           </a>
         </div>
 

@@ -778,12 +778,12 @@ export function App() {
 
             {/* Email button — centered on its own row on mobile */}
             <a
-              href="mailto:rrajr0503@gmail.com"
+              href="mailto:team@relayo.space"
               className="inline-flex items-center justify-center gap-2 px-5 py-2 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-mono font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap w-full sm:w-auto"
               title="Contact Us via Email"
             >
               <Mail className="w-3.5 h-3.5 text-cyan-400 [html[data-theme=light]_&]:text-[#0EA5E9] shrink-0" />
-              <span>rrajr0503@gmail.com</span>
+              <span>team@relayo.space</span>
             </a>
 
             {/* Pill buttons — centered wrap cluster on mobile, inline on desktop */}
