@@ -393,8 +393,9 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
 
             <div className="flex justify-center p-3 bg-white rounded-xl border border-slate-100">
               <QRCodeSVG
-                value={`${window.location.origin}/?room=${encodeURIComponent(store.roomId)}`}
-                size={140}
+                value={`${window.location.origin}/?room=${store.roomId}`}
+                size={160}
+                className="w-40 h-40"
               />
             </div>
 
