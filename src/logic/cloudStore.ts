@@ -236,6 +236,23 @@ export const initCloudSession = (roomIdToJoin?: string) => {
   });
   currentUnsubscribes.push(() => off(connectedRef));
 
+  // Listen to all devices in the room in real-time
+  const presenceRef = ref(db, `rooms/${roomId}/presence`);
+  const unsubPresence = onValue(presenceRef, (snapshot) => {
+    const data = snapshot.val() || {};
+    const devices = Object.keys(data).map(id => ({
+      id,
+      ...data[id]
+    }));
+
+    $cloudStore.set({
+      ...$cloudStore.get(),
+      devices
+    });
+  });
+
+  currentUnsubscribes.push(unsubPresence);
+
   // Initial set
   set(deviceRef, selfDevice).catch(() => { });
 
