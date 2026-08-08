@@ -503,7 +503,7 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
             {/* Prominent Centered QR Code Container */}
             <div className="flex flex-col items-center justify-center p-5 bg-white rounded-2xl border border-slate-200/80 [html[data-theme=light]_&]:border-[#D7E8FF] shadow-sm">
               <QRCodeSVG
-                value={`${window.location.origin}/?room=${encodeURIComponent(store.roomId)}`}
+                value={`${window.location.origin}/?room=${store.roomId}`}
                 size={160}
                 className="w-40 h-40"
               />
