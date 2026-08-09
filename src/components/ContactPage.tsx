@@ -59,9 +59,9 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
           <div className="flex items-start gap-3">
             <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
             <div>
-              <h3 className="text-xs font-bold text-white [html[data-theme=light]_&]:text-[#0F172A]">Operational Transparency</h3>
+              <h3 className="text-xs font-bold text-white [html[data-theme=light]_&]:text-[#0F172A]">Operational Transparency & Independence</h3>
               <p className="text-xs text-slate-400 [html[data-theme=light]_&]:text-slate-600 italic mt-0.5">
-                "Operated by rudra (pseudonym) to maintain personal privacy while delivering uncompromising software quality and complete operational transparency."
+                "Independently engineered to ensure user privacy, complete operational transparency, and uncompromising software performance without third-party data tracking."
               </p>
             </div>
           </div>

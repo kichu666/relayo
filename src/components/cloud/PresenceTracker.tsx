@@ -8,7 +8,6 @@ import {
   Tablet,
   Edit2,
   Check,
-  Globe,
   Activity,
   Cpu,
   Radio,
@@ -43,19 +42,61 @@ export function PresenceTracker() {
     return clean || 'Connected Device';
   };
 
-  const getDeviceIcon = (type?: string, name?: string) => {
-    const clean = String(type || '').toLowerCase();
+  const getDeviceIcon = (type?: string, platform?: string, name?: string) => {
+    const cleanType = String(type || '').toLowerCase();
+    const cleanPlatform = String(platform || '').toLowerCase();
     const cleanName = String(name || '').toLowerCase();
-    if (clean.includes('phone') || clean.includes('mobile') || (isMobileViewport && cleanName.includes('desktop'))) {
-      return <Smartphone className="w-5 h-5 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />;
-    }
-    if (clean.includes('tablet') || clean.includes('ipad')) {
+
+    const isMobile =
+      cleanType === 'phone' ||
+      cleanType === 'mobile' ||
+      cleanPlatform.includes('android') ||
+      cleanPlatform.includes('iphone') ||
+      cleanName.includes('mobile') ||
+      cleanName.includes('phone');
+
+    const isTablet =
+      cleanType === 'tablet' ||
+      cleanPlatform.includes('ipad') ||
+      cleanName.includes('tablet') ||
+      cleanName.includes('ipad');
+
+    const isLaptop = cleanType === 'laptop' || cleanName.includes('laptop');
+
+    if (isTablet) {
       return <Tablet className="w-5 h-5 text-purple-400 [html[data-theme=light]_&]:text-purple-600" strokeWidth={2} />;
     }
-    if (clean.includes('laptop')) {
+    if (isMobile) {
+      return <Smartphone className="w-5 h-5 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />;
+    }
+    if (isLaptop) {
       return <Laptop className="w-5 h-5 text-emerald-400 [html[data-theme=light]_&]:text-emerald-600" strokeWidth={2} />;
     }
     return <Monitor className="w-5 h-5 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />;
+  };
+
+  const getDeviceTypeLabel = (dev: { type?: string; platform?: string; name?: string }): string => {
+    const cleanType = String(dev.type || '').toLowerCase();
+    const cleanPlatform = String(dev.platform || '').toLowerCase();
+    const cleanName = String(dev.name || '').toLowerCase();
+
+    if (cleanType === 'tablet' || cleanPlatform.includes('ipad') || cleanName.includes('tablet') || cleanName.includes('ipad')) {
+      return 'Tablet';
+    }
+    if (
+      cleanType === 'phone' ||
+      cleanType === 'mobile' ||
+      cleanPlatform.includes('android') ||
+      cleanPlatform.includes('iphone') ||
+      cleanName.includes('phone') ||
+      cleanName.includes('mobile')
+    ) {
+      return 'Mobile Phone';
+    }
+    if (cleanType === 'laptop' || cleanName.includes('laptop')) {
+      return 'Laptop';
+    }
+    return 'Desktop';
   };
 
   const formatLastSeen = (timestamp: number) => {
@@ -129,14 +170,6 @@ export function PresenceTracker() {
               )}
             </div>
           </div>
-
-          <div className="inline-flex items-center justify-between sm:justify-center px-4 py-2 bg-black/40 dark:bg-slate-900/90 [html[data-theme=light]_&]:bg-[#F4F9FF] border border-white/10 [html[data-theme=light]_&]:border-[#D5E9FF] rounded-xl text-xs font-mono text-slate-300 [html[data-theme=light]_&]:text-[#0F172A] font-medium w-full sm:w-auto shrink-0 mt-3 pt-3 sm:mt-0 sm:pt-0 border-t sm:border-t-0">
-            <div className="inline-flex items-center gap-2 leading-none">
-              <Globe className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 shrink-0" strokeWidth={2} />
-              <span className="font-sans leading-none">Room Code:</span>
-              <span className="font-mono font-bold text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 tracking-wider truncate max-w-[160px] sm:max-w-none leading-none">{store.roomId}</span>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -175,7 +208,7 @@ export function PresenceTracker() {
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
                       <div className="p-2.5 rounded-xl bg-white/5 [html[data-theme=light]_&]:bg-[#F5F5F7] border border-white/10 [html[data-theme=light]_&]:border-transparent">
-                        {getDeviceIcon(dev.type, dev.name)}
+                        {getDeviceIcon(dev.type, dev.platform, dev.name)}
                       </div>
                       <div>
                         <div className="flex items-center gap-1.5">
@@ -187,7 +220,7 @@ export function PresenceTracker() {
                           )}
                         </div>
                         <p className="text-xs font-medium text-slate-400 [html[data-theme=light]_&]:text-[#86868B] mt-0.5 capitalize">
-                          {isMobileViewport && formattedName.includes('Mobile') ? 'Mobile Phone' : dev.type} • {dev.platform || 'Web'}
+                          {getDeviceTypeLabel(dev)} • {dev.platform || 'Web'}
                         </p>
                       </div>
                     </div>
@@ -226,11 +259,11 @@ export function PresenceTracker() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
                     <div className="p-2 rounded-lg bg-white/5 [html[data-theme=light]_&]:bg-slate-200/60 text-slate-400 [html[data-theme=light]_&]:text-[#86868B]">
-                      {getDeviceIcon(dev.type, dev.name)}
+                      {getDeviceIcon(dev.type, dev.platform, dev.name)}
                     </div>
                     <div>
                       <span className="font-bold text-xs text-slate-300 [html[data-theme=light]_&]:text-[#1D1D1F]">{stripEmojis(dev.name)}</span>
-                      <p className="text-[11px] font-medium text-slate-500">Last active: {formatLastSeen(dev.lastActive)}</p>
+                      <p className="text-[11px] font-medium text-slate-500">{getDeviceTypeLabel(dev)} • Last active: {formatLastSeen(dev.lastActive)}</p>
                     </div>
                   </div>
                   <span className="px-2 py-0.5 rounded-full text-[10px] bg-slate-800 [html[data-theme=light]_&]:bg-slate-200 text-slate-400 [html[data-theme=light]_&]:text-[#86868B] border border-slate-700 [html[data-theme=light]_&]:border-transparent">

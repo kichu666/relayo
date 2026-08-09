@@ -55,7 +55,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
             Welcome to Relayo, the seamless standard for instant device-to-device file sharing. Built on the principles of speed, privacy, and frictionless connectivity, our platform leverages advanced WebRTC technology to ensure your data moves directly between browsers—with zero server storage and zero cloud uploads.
           </p>
           <p>
-            Our mission is to empower remote teams, developers, and power users with a secure, real-time synchronization hub that just works. Relayo was engineered and is curated by rudra (pseudonym) to solve the complexities of multi-device workflows, delivering a seamless ecosystem experience across any platform. We prioritize your privacy and data integrity above all else, ensuring every transfer is authenticated and entirely decentralized.
+            Our mission is to empower remote teams, developers, and power users with a secure, real-time synchronization hub that just works. Relayo was engineered independently to solve the complexities of multi-device workflows, delivering a seamless ecosystem experience across any platform. We prioritize your privacy and data integrity above all else, ensuring every transfer is authenticated and entirely decentralized.
           </p>
         </div>
 
@@ -67,10 +67,10 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
             </div>
             <div>
               <p className="text-xs font-extrabold text-white dark:text-white [html[data-theme=light]_&]:text-[#0F172A]">
-                Operational Transparency
+                Operational Transparency & Independence
               </p>
               <p className="text-xs italic text-slate-300 dark:text-slate-300 [html[data-theme=light]_&]:text-[#334155] leading-relaxed mt-0.5">
-                "Operated by rudra (pseudonym) to maintain personal privacy while delivering uncompromising software quality and complete operational transparency."
+                "Independently engineered to ensure user privacy, complete operational transparency, and uncompromising software performance without third-party data tracking."
               </p>
             </div>
           </div>

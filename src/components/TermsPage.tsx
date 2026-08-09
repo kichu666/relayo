@@ -65,7 +65,7 @@ export function TermsPage({ onNavigate }: TermsPageProps) {
             4. Intellectual Property Rights & Curation
           </h2>
           <p>
-            The software, branding, UI design system, WebRTC data pipeline architecture, and documentation of Relayo are engineered and curated by rudra (pseudonym). All trademarks and brand assets belong to their respective owners.
+            The software, branding, UI design system, WebRTC data pipeline architecture, and documentation of Relayo are engineered and maintained by the Relayo core development team. All trademarks and brand assets belong to their respective owners.
           </p>
         </div>
 

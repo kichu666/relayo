@@ -131,10 +131,18 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
             </div>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-2 flex-wrap justify-end shrink-0 max-w-full">
+            <div className="inline-flex items-center gap-1.5 px-3 py-2 sm:px-3.5 sm:py-2.5 bg-black/40 dark:bg-slate-900/90 [html[data-theme=light]_&]:bg-white border border-white/10 [html[data-theme=light]_&]:border-[#D5E9FF] rounded-xl text-xs font-mono text-slate-300 [html[data-theme=light]_&]:text-[#0F172A] shadow-sm max-w-full overflow-hidden">
+              <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 shrink-0" strokeWidth={2} />
+              <span className="font-sans font-medium text-[11px] sm:text-xs text-slate-400 [html[data-theme=light]_&]:text-slate-600 hidden xs:inline leading-none">Room:</span>
+              <span className="font-mono font-bold text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 tracking-wider truncate max-w-[110px] sm:max-w-none leading-none">
+                {store.roomId}
+              </span>
+            </div>
+
             <button
               onClick={() => setShowQRModal(true)}
-              className="w-10 h-10 sm:w-11 sm:h-11 min-h-[40px] sm:min-h-[44px] min-w-[40px] sm:min-w-[44px] flex items-center justify-center rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:hover:bg-slate-50 border border-cyan-500/30 [html[data-theme=light]_&]:border-[#D8E9FF] text-xs transition cursor-pointer shadow-sm"
+              className="w-10 h-10 sm:w-11 sm:h-11 min-h-[40px] sm:min-h-[44px] min-w-[40px] sm:min-w-[44px] flex items-center justify-center rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:hover:bg-slate-50 border border-cyan-500/30 [html[data-theme=light]_&]:border-[#D8E9FF] text-xs transition cursor-pointer shadow-sm shrink-0"
               title="Share Room & QR Code"
             >
               <QrCode className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />

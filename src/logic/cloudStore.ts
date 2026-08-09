@@ -154,6 +154,27 @@ export const triggerCloudToast = (message: string, type: 'info' | 'success' | 'w
 let heartbeatInterval: any = null;
 let currentUnsubscribes: Array<() => void> = [];
 
+// Helper to normalize and infer device type from type, platform, and name fields
+const inferDeviceType = (type?: string, platform?: string, name?: string): CloudDevice['type'] => {
+  const cleanType = String(type || '').toLowerCase();
+  if (cleanType === 'phone' || cleanType === 'mobile') return 'phone';
+  if (cleanType === 'tablet' || cleanType === 'ipad') return 'tablet';
+  if (cleanType === 'laptop') return 'laptop';
+  if (cleanType === 'desktop') return 'desktop';
+
+  const cleanPlatform = String(platform || '').toLowerCase();
+  if (cleanPlatform.includes('android') || cleanPlatform.includes('iphone')) return 'phone';
+  if (cleanPlatform.includes('ipad')) return 'tablet';
+  if (cleanPlatform.includes('win') || cleanPlatform.includes('mac') || cleanPlatform.includes('linux')) return 'desktop';
+
+  const cleanName = String(name || '').toLowerCase();
+  if (cleanName.includes('phone') || cleanName.includes('mobile')) return 'phone';
+  if (cleanName.includes('tablet') || cleanName.includes('ipad')) return 'tablet';
+  if (cleanName.includes('laptop')) return 'laptop';
+
+  return detectDeviceType();
+};
+
 // Helper to guarantee a sanitized CloudDevice payload with no undefined fields
 const getSanitizedDevicePayload = (
   id?: string,
@@ -163,11 +184,10 @@ const getSanitizedDevicePayload = (
   lastActive?: number,
   platform?: string
 ): CloudDevice => {
-  const validTypes = ['desktop', 'phone', 'laptop', 'tablet'] as const;
-  const safeType = validTypes.includes(type as any) ? (type as CloudDevice['type']) : detectDeviceType();
   const safePlatform = platform && typeof platform === 'string' && platform.trim()
     ? platform.trim()
     : (typeof navigator !== 'undefined' && navigator.platform ? String(navigator.platform) : 'Web');
+  const safeType = inferDeviceType(type, safePlatform, name);
 
   return {
     id: String(id || initialDeviceId || 'dev_unknown').trim(),
@@ -280,18 +300,18 @@ export const initCloudSession = (roomIdToJoin?: string) => {
   const unsubPresence = onValue(presenceRef, (snapshot) => {
     const data = snapshot.val();
     if (data && typeof data === 'object') {
-      const validTypes = ['desktop', 'phone', 'laptop', 'tablet'] as const;
       const deviceList: CloudDevice[] = Object.keys(data).map((key) => {
         const item = data[key] || {};
-        const rawType = item.type;
-        const safeItemType = validTypes.includes(rawType as any) ? rawType : 'desktop';
+        const itemPlatform = String(item.platform || '').trim();
+        const itemName = String(item.name || 'Device').trim();
+        const itemType = inferDeviceType(item.type, itemPlatform, itemName);
         return {
           id: String(item.id || key).trim(),
-          name: String(item.name || 'Device').trim(),
-          type: safeItemType,
+          name: itemName,
+          type: itemType,
           status: item.status === 'offline' ? 'offline' : 'online',
           lastActive: typeof item.lastActive === 'number' && !isNaN(item.lastActive) ? item.lastActive : Date.now(),
-          platform: String(item.platform || (typeof navigator !== 'undefined' ? navigator.platform : '') || 'Web').trim()
+          platform: itemPlatform || 'Web'
         };
       });
 

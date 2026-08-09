@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { ref, onValue, onDisconnect, set, serverTimestamp } from 'firebase/database';
+import { ref, onValue, onDisconnect, set, remove, serverTimestamp } from 'firebase/database';
 import { db } from './firebaseConfig';
 
 const detectMobileDevice = (): 'phone' | 'desktop' => {
@@ -23,30 +23,21 @@ export function useFirebasePresence(roomId: string, deviceName: string, deviceId
 
     const unsubscribe = onValue(connectedRef, (snap) => {
       if (snap.val() === true) {
-        onDisconnect(presenceRef).set({
-          status: 'offline',
-          lastActive: serverTimestamp(),
-          name: cleanName,
-          type: deviceType
-        });
+        onDisconnect(presenceRef).remove();
 
         set(presenceRef, {
           status: 'online',
           lastActive: serverTimestamp(),
           name: cleanName,
-          type: deviceType
+          type: deviceType,
+          platform: typeof navigator !== 'undefined' ? (navigator.platform || 'Web') : 'Web'
         });
       }
     });
 
     return () => {
       unsubscribe();
-      set(presenceRef, {
-        status: 'offline',
-        lastActive: serverTimestamp(),
-        name: cleanName,
-        type: deviceType
-      });
+      remove(presenceRef).catch(() => { });
     };
   }, [roomId, deviceName, deviceId]);
 }
