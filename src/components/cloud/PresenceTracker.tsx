@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useStore } from '@nanostores/react';
-import { $cloudStore, updateDeviceName } from '../../logic/cloudStore';
+import { $cloudStore, updateDeviceName, inferDeviceType } from '../../logic/cloudStore';
 import {
   Laptop,
   Smartphone,
@@ -18,16 +18,6 @@ export function PresenceTracker() {
   const store = useStore($cloudStore);
   const [isEditingName, setIsEditingName] = useState(false);
   const [nameInput, setNameInput] = useState(store.deviceName);
-  const [isMobileViewport, setIsMobileViewport] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobileViewport(window.innerWidth < 768 || /Mobile|Android|iP(hone|od)/i.test(navigator.userAgent));
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   const handleSaveName = () => {
     updateDeviceName(nameInput);
@@ -43,59 +33,24 @@ export function PresenceTracker() {
   };
 
   const getDeviceIcon = (type?: string, platform?: string, name?: string) => {
-    const cleanType = String(type || '').toLowerCase();
-    const cleanPlatform = String(platform || '').toLowerCase();
-    const cleanName = String(name || '').toLowerCase();
-
-    const isMobile =
-      cleanType === 'phone' ||
-      cleanType === 'mobile' ||
-      cleanPlatform.includes('android') ||
-      cleanPlatform.includes('iphone') ||
-      cleanName.includes('mobile') ||
-      cleanName.includes('phone');
-
-    const isTablet =
-      cleanType === 'tablet' ||
-      cleanPlatform.includes('ipad') ||
-      cleanName.includes('tablet') ||
-      cleanName.includes('ipad');
-
-    const isLaptop = cleanType === 'laptop' || cleanName.includes('laptop');
-
-    if (isTablet) {
+    const inferred = inferDeviceType(type, platform, name);
+    if (inferred === 'tablet') {
       return <Tablet className="w-5 h-5 text-purple-400 [html[data-theme=light]_&]:text-purple-600" strokeWidth={2} />;
     }
-    if (isMobile) {
+    if (inferred === 'phone') {
       return <Smartphone className="w-5 h-5 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />;
     }
-    if (isLaptop) {
+    if (inferred === 'laptop') {
       return <Laptop className="w-5 h-5 text-emerald-400 [html[data-theme=light]_&]:text-emerald-600" strokeWidth={2} />;
     }
     return <Monitor className="w-5 h-5 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />;
   };
 
   const getDeviceTypeLabel = (dev: { type?: string; platform?: string; name?: string }): string => {
-    const cleanType = String(dev.type || '').toLowerCase();
-    const cleanPlatform = String(dev.platform || '').toLowerCase();
-    const cleanName = String(dev.name || '').toLowerCase();
-
-    if (cleanType === 'tablet' || cleanPlatform.includes('ipad') || cleanName.includes('tablet') || cleanName.includes('ipad')) {
-      return 'Tablet';
-    }
-    if (
-      cleanType === 'phone' ||
-      cleanType === 'mobile' ||
-      cleanPlatform.includes('android') ||
-      cleanPlatform.includes('iphone') ||
-      cleanName.includes('phone') ||
-      cleanName.includes('mobile')
-    ) {
-      return 'Mobile Phone';
-    }
-    if (cleanType === 'laptop' || cleanName.includes('laptop')) {
-      return 'Laptop';
-    }
+    const inferred = inferDeviceType(dev.type, dev.platform, dev.name);
+    if (inferred === 'tablet') return 'Tablet';
+    if (inferred === 'phone') return 'Mobile Phone';
+    if (inferred === 'laptop') return 'Laptop';
     return 'Desktop';
   };
 

@@ -80,13 +80,35 @@ const getStoredOrGeneratedId = (key: string, prefix: string) => {
 };
 
 const detectDeviceType = (): 'desktop' | 'phone' | 'laptop' | 'tablet' => {
-  const ua = navigator.userAgent.toLowerCase();
-  if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+  if (typeof navigator === 'undefined') return 'desktop';
+  const ua = (navigator.userAgent || '').toLowerCase();
+  const platform = (navigator.platform || '').toLowerCase();
+  const maxTouch = typeof navigator.maxTouchPoints === 'number' ? navigator.maxTouchPoints : 0;
+  const isTouchDevice = maxTouch > 0 || (typeof window !== 'undefined' && ('ontouchstart' in window || (window as any).DocumentTouch && document instanceof (window as any).DocumentTouch));
+
+  // 1. Tablet checks (including iPad on iOS 13+ desktop mode where platform is MacIntel but maxTouchPoints > 1)
+  if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua) || (platform.includes('mac') && maxTouch > 1)) {
     return 'tablet';
   }
-  if (/Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
+
+  // 2. Mobile User Agent or Platform keywords
+  if (/mobile|iphone|ipod|android|blackberry|iemobile|kindle|silk-accelerated|opera m(obi|ini)|phone/i.test(ua) || /android|iphone|ipad|ipod|mobile/i.test(platform)) {
     return 'phone';
   }
+
+  // 3. Fallback for mobile phone browsers forced into "Desktop Site" mode
+  if (typeof window !== 'undefined' && isTouchDevice) {
+    const sw = window.screen?.width || window.innerWidth || 1920;
+    const sh = window.screen?.height || window.innerHeight || 1080;
+    const minDim = Math.min(sw, sh);
+    if (minDim > 0 && minDim <= 600) {
+      return 'phone';
+    }
+    if (minDim > 600 && minDim <= 1024 && !platform.includes('win32')) {
+      return 'tablet';
+    }
+  }
+
   return 'desktop';
 };
 
@@ -155,22 +177,47 @@ let heartbeatInterval: any = null;
 let currentUnsubscribes: Array<() => void> = [];
 
 // Helper to normalize and infer device type from type, platform, and name fields
-const inferDeviceType = (type?: string, platform?: string, name?: string): CloudDevice['type'] => {
+export const inferDeviceType = (type?: string, platform?: string, name?: string): CloudDevice['type'] => {
   const cleanType = String(type || '').toLowerCase();
-  if (cleanType === 'phone' || cleanType === 'mobile') return 'phone';
-  if (cleanType === 'tablet' || cleanType === 'ipad') return 'tablet';
-  if (cleanType === 'laptop') return 'laptop';
-  if (cleanType === 'desktop') return 'desktop';
-
   const cleanPlatform = String(platform || '').toLowerCase();
-  if (cleanPlatform.includes('android') || cleanPlatform.includes('iphone')) return 'phone';
-  if (cleanPlatform.includes('ipad')) return 'tablet';
-  if (cleanPlatform.includes('win') || cleanPlatform.includes('mac') || cleanPlatform.includes('linux')) return 'desktop';
-
   const cleanName = String(name || '').toLowerCase();
-  if (cleanName.includes('phone') || cleanName.includes('mobile')) return 'phone';
-  if (cleanName.includes('tablet') || cleanName.includes('ipad')) return 'tablet';
-  if (cleanName.includes('laptop')) return 'laptop';
+
+  // Explicit Mobile / Phone keywords (highest priority to prevent mobile in Desktop Mode from being overridden by Win32/MacIntel spoofing)
+  const isMobile =
+    cleanType === 'phone' ||
+    cleanType === 'mobile' ||
+    cleanPlatform.includes('android') ||
+    cleanPlatform.includes('iphone') ||
+    cleanPlatform.includes('ipod') ||
+    cleanPlatform.includes('ios') ||
+    cleanName.includes('mobile') ||
+    cleanName.includes('phone') ||
+    cleanName.includes('android') ||
+    cleanName.includes('iphone');
+
+  const isTablet =
+    cleanType === 'tablet' ||
+    cleanType === 'ipad' ||
+    cleanPlatform.includes('ipad') ||
+    cleanName.includes('tablet') ||
+    cleanName.includes('ipad');
+
+  if (isTablet) return 'tablet';
+  if (isMobile) return 'phone';
+
+  // Desktop / Laptop keywords
+  if (cleanType === 'laptop' || cleanName.includes('laptop')) return 'laptop';
+
+  if (
+    cleanType === 'desktop' ||
+    cleanPlatform.includes('win') ||
+    cleanPlatform.includes('mac') ||
+    cleanPlatform.includes('linux') ||
+    cleanName.includes('desktop') ||
+    cleanName.includes('windows')
+  ) {
+    return 'desktop';
+  }
 
   return detectDeviceType();
 };
