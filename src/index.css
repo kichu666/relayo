@@ -95,28 +95,41 @@
 }
 
 .apple-header {
-  position: sticky;
-  top: 0;
-  left: 0;
+  position: relative;
   width: 100%;
-  z-index: 99999;
-  background-color: rgba(11, 15, 23, 0.75) !important;
-  backdrop-filter: saturate(180%) blur(20px) !important;
-  -webkit-backdrop-filter: saturate(180%) blur(20px) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(11, 15, 23, 0.35) !important;
+  backdrop-filter: saturate(180%) blur(16px) !important;
+  -webkit-backdrop-filter: saturate(180%) blur(16px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 [data-theme='amoled'] .apple-header {
-  background-color: rgba(0, 0, 0, 0.90) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: rgba(0, 0, 0, 0.45) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
 }
 
 [data-theme='light'] .apple-header {
-  background-color: rgba(248, 250, 252, 0.80) !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  background-color: rgba(248, 250, 252, 0.45) !important;
+  border-bottom: 1px solid rgba(215, 232, 255, 0.80) !important;
 }
 
 .font-icloud-logo {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+
+@keyframes tickerAnimation {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-ticker {
+  display: inline-flex;
+  will-change: transform;
+  animation: tickerAnimation 40s linear infinite;
+}
+
