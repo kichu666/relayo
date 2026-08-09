@@ -114,35 +114,48 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
         <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 [html[data-theme=light]_&]:bg-cyan-400/20 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-500/10 [html[data-theme=light]_&]:bg-cyan-300/10 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
 
-        <div className="relative z-10 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3 sm:gap-4">
-            <div className="p-2 sm:p-3 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 [html[data-theme=light]_&]:bg-cyan-500/10 border border-cyan-500/30 [html[data-theme=light]_&]:border-cyan-400/30 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 shadow-lg shrink-0">
-              <Globe className="w-5 h-5 sm:w-6 sm:h-7" strokeWidth={2} />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-base sm:text-xl md:text-2xl font-extrabold tracking-tight text-white [html[data-theme=light]_&]:text-[#0F172A]">
+        <div className="relative z-10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
+          {/* Header Title & Subtitle Section */}
+          <div className="flex items-center justify-between sm:justify-start gap-3 sm:gap-4 w-full sm:w-auto">
+            <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+              <div className="p-2 sm:p-3 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 [html[data-theme=light]_&]:bg-cyan-500/10 border border-cyan-500/30 [html[data-theme=light]_&]:border-cyan-400/30 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 shadow-lg shrink-0">
+                <Globe className="w-5 h-5 sm:w-6 sm:h-7" strokeWidth={2} />
+              </div>
+              <div className="min-w-0">
+                <h2 className="text-base sm:text-xl md:text-2xl font-extrabold tracking-tight text-white [html[data-theme=light]_&]:text-[#0F172A] truncate">
                   Relayo Cloud Hub
                 </h2>
+                <p className="text-[11px] sm:text-xs font-medium text-slate-400 [html[data-theme=light]_&]:text-[#475569] mt-0.5 sm:mt-1 truncate">
+                  Seamless cross-device productivity over the cloud
+                </p>
               </div>
-              <p className="text-[11px] sm:text-xs font-medium text-slate-400 [html[data-theme=light]_&]:text-[#475569] mt-0.5 sm:mt-1">
-                Seamless cross-device productivity over the cloud
-              </p>
             </div>
+
+            {/* QR Button for small mobile screens */}
+            <button
+              onClick={() => setShowQRModal(true)}
+              className="sm:hidden w-10 h-10 min-h-[40px] min-w-[40px] flex items-center justify-center rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:hover:bg-slate-50 border border-cyan-500/30 [html[data-theme=light]_&]:border-[#D8E9FF] text-xs transition cursor-pointer shadow-sm shrink-0"
+              title="Share Room & QR Code"
+            >
+              <QrCode className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />
+            </button>
           </div>
 
-          <div className="flex items-center gap-2 flex-wrap justify-end shrink-0 max-w-full">
-            <div className="inline-flex items-center gap-1.5 px-3 py-2 sm:px-3.5 sm:py-2.5 bg-black/40 dark:bg-slate-900/90 [html[data-theme=light]_&]:bg-white border border-white/10 [html[data-theme=light]_&]:border-[#D5E9FF] rounded-xl text-xs font-mono text-slate-300 [html[data-theme=light]_&]:text-[#0F172A] shadow-sm max-w-full overflow-hidden">
-              <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 shrink-0" strokeWidth={2} />
-              <span className="font-sans font-medium text-[11px] sm:text-xs text-slate-400 [html[data-theme=light]_&]:text-slate-600 hidden xs:inline leading-none">Room:</span>
-              <span className="font-mono font-bold text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 tracking-wider truncate max-w-[110px] sm:max-w-none leading-none">
+          {/* Active Room Code Badge & QR Button Container */}
+          <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end mt-1 sm:mt-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF]">
+            <div className="inline-flex items-center gap-2 px-3.5 py-2 sm:px-3.5 sm:py-2.5 bg-black/40 dark:bg-slate-900/90 [html[data-theme=light]_&]:bg-white border border-white/10 [html[data-theme=light]_&]:border-[#D5E9FF] rounded-xl text-xs font-mono text-slate-300 [html[data-theme=light]_&]:text-[#0F172A] shadow-sm w-full sm:w-auto justify-between sm:justify-start">
+              <div className="inline-flex items-center gap-1.5 min-w-0">
+                <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 shrink-0" strokeWidth={2} />
+                <span className="font-sans font-medium text-[11px] sm:text-xs text-slate-400 [html[data-theme=light]_&]:text-slate-600 leading-none">Active Room:</span>
+              </div>
+              <span className="font-mono font-bold text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 tracking-wider truncate text-xs sm:text-sm leading-none pl-2">
                 {store.roomId}
               </span>
             </div>
 
             <button
               onClick={() => setShowQRModal(true)}
-              className="w-10 h-10 sm:w-11 sm:h-11 min-h-[40px] sm:min-h-[44px] min-w-[40px] sm:min-w-[44px] flex items-center justify-center rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:hover:bg-slate-50 border border-cyan-500/30 [html[data-theme=light]_&]:border-[#D8E9FF] text-xs transition cursor-pointer shadow-sm shrink-0"
+              className="hidden sm:flex w-10 h-10 sm:w-11 sm:h-11 min-h-[40px] sm:min-h-[44px] min-w-[40px] sm:min-w-[44px] items-center justify-center rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:hover:bg-slate-50 border border-cyan-500/30 [html[data-theme=light]_&]:border-[#D8E9FF] text-xs transition cursor-pointer shadow-sm shrink-0"
               title="Share Room & QR Code"
             >
               <QrCode className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />

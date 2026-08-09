@@ -72,26 +72,40 @@ export function App() {
   const [isNavDrawerOpen, setIsNavDrawerOpen] = useState(false);
 
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '').toLowerCase();
-      if (hash === 'resources' || hash === 'learn') {
+    const handleRouteSync = () => {
+      const hash = window.location.hash.replace('#', '').trim().toLowerCase();
+      const pathname = window.location.pathname.replace(/^\/+|\/+$/g, '').trim().toLowerCase();
+      const routeToken = hash || pathname;
+
+      if (routeToken === 'resources' || routeToken === 'learn') {
         setPageView('resources');
-      } else if (hash === 'faq' || hash === 'faqs') {
+      } else if (routeToken === 'faq' || routeToken === 'faqs') {
         setPageView('faq');
-      } else if (hash === 'contact' || hash === 'support') {
+      } else if (routeToken === 'contact' || routeToken === 'support') {
         setPageView('contact');
-      } else if (hash === 'privacy') {
+      } else if (routeToken === 'privacy' || routeToken === 'privacy-policy') {
         setPageView('privacy');
-      } else if (hash === 'terms') {
+      } else if (
+        routeToken === 'terms' ||
+        routeToken === 'terms-and-conditions' ||
+        routeToken === 'terms-of-service'
+      ) {
         setPageView('terms');
-      } else if (!hash) {
+      } else if (routeToken === 'about') {
+        setPageView('home');
+        setIsAboutOpen(true);
+      } else if (!routeToken) {
         setPageView('home');
       }
     };
 
-    handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    handleRouteSync();
+    window.addEventListener('hashchange', handleRouteSync);
+    window.addEventListener('popstate', handleRouteSync);
+    return () => {
+      window.removeEventListener('hashchange', handleRouteSync);
+      window.removeEventListener('popstate', handleRouteSync);
+    };
   }, []);
 
   const handleNavigate = (page: PageView) => {
