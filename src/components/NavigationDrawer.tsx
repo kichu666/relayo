@@ -1,4 +1,4 @@
-import { X, Home, BookOpen, HelpCircle, ShieldCheck, FileText, Mail } from 'lucide-react';
+import { X, Home, BookOpen, HelpCircle, ShieldCheck, FileText, Mail, Coffee } from 'lucide-react';
 import { ThemeSwitcher } from './ThemeSwitcher';
 
 export type PageView = 'home' | 'resources' | 'faq' | 'contact' | 'privacy' | 'terms';
@@ -84,6 +84,18 @@ export function NavigationDrawer({
                   </button>
                 );
               })}
+
+              {/* Support Us / Buy Me a Coffee */}
+              <a
+                href="https://www.buymeacoffee.com/relayo"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={onClose}
+                className="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl text-xs font-semibold transition-all cursor-pointer text-left text-slate-300 [html[data-theme=light]_&]:text-slate-700 hover:bg-amber-500/15 hover:text-amber-300 [html[data-theme=light]_&]:hover:bg-amber-50 [html[data-theme=light]_&]:hover:text-amber-700 border border-transparent"
+              >
+                <Coffee className="w-4 h-4 shrink-0 text-amber-400 [html[data-theme=light]_&]:text-amber-600" />
+                <span>Support Us</span>
+              </a>
             </nav>
           </div>
 
