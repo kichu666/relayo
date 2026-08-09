@@ -154,6 +154,31 @@ export const triggerCloudToast = (message: string, type: 'info' | 'success' | 'w
 let heartbeatInterval: any = null;
 let currentUnsubscribes: Array<() => void> = [];
 
+// Helper to guarantee a sanitized CloudDevice payload with no undefined fields
+const getSanitizedDevicePayload = (
+  id?: string,
+  name?: string,
+  type?: string,
+  status?: string,
+  lastActive?: number,
+  platform?: string
+): CloudDevice => {
+  const validTypes = ['desktop', 'phone', 'laptop', 'tablet'] as const;
+  const safeType = validTypes.includes(type as any) ? (type as CloudDevice['type']) : detectDeviceType();
+  const safePlatform = platform && typeof platform === 'string' && platform.trim()
+    ? platform.trim()
+    : (typeof navigator !== 'undefined' && navigator.platform ? String(navigator.platform) : 'Web');
+
+  return {
+    id: String(id || initialDeviceId || 'dev_unknown').trim(),
+    name: String(name || initialDeviceName || detectDefaultName()).trim(),
+    type: safeType,
+    status: status === 'offline' ? 'offline' : 'online',
+    lastActive: typeof lastActive === 'number' && !isNaN(lastActive) ? lastActive : Date.now(),
+    platform: safePlatform
+  };
+};
+
 // Initialize Firebase Realtime Listeners for current Room ID
 export const initCloudSession = (roomIdToJoin?: string) => {
   const state = $cloudStore.get();
@@ -169,25 +194,37 @@ export const initCloudSession = (roomIdToJoin?: string) => {
 
   localStorage.setItem('relayo_cloud_room_id', roomId);
 
+  // If changing rooms, wipe presence node from old room in Firebase
+  if (db && state.roomId && state.roomId !== roomId && state.deviceId) {
+    const oldDeviceRef = ref(db, `rooms/${state.roomId}/presence/${state.deviceId}`);
+    onDisconnect(oldDeviceRef).cancel().catch(() => { });
+    remove(oldDeviceRef).catch(() => { });
+  }
+
   // Clean up previous listeners & heartbeat
-  currentUnsubscribes.forEach(unsub => unsub());
+  currentUnsubscribes.forEach(unsub => {
+    try { unsub(); } catch (_) { }
+  });
   currentUnsubscribes = [];
   if (heartbeatInterval) clearInterval(heartbeatInterval);
 
-  const selfDevice: CloudDevice = {
-    id: state.deviceId,
-    name: state.deviceName,
-    type: state.deviceType,
-    status: 'online',
-    lastActive: Date.now(),
-    platform: navigator.platform
-  };
+  const safePayload = getSanitizedDevicePayload(
+    state.deviceId,
+    state.deviceName,
+    state.deviceType,
+    'online',
+    Date.now(),
+    typeof navigator !== 'undefined' ? navigator.platform : 'Web'
+  );
 
-  // FORCE state update immediately so roomId matches across the whole app
+  // FORCE state update immediately so roomId matches & old peer caches are instantly cleared
   $cloudStore.set({
     ...state,
     roomId,
-    devices: [selfDevice],
+    deviceId: safePayload.id,
+    deviceName: safePayload.name,
+    deviceType: safePayload.type,
+    devices: [safePayload],
     clipboards: [],
     links: [],
     scratchpad: { text: '', lastUpdatedBy: '', updatedAt: Date.now() },
@@ -200,33 +237,26 @@ export const initCloudSession = (roomIdToJoin?: string) => {
   }
 
   // Dynamic Room Presence Reference
-  const deviceRef = ref(db, `rooms/${roomId}/presence/${state.deviceId}`);
+  const deviceRef = ref(db, `rooms/${roomId}/presence/${safePayload.id}`);
   const connectedRef = ref(db, '.info/connected');
-
-  // Immediately write presence data to Firebase for the dynamic roomId
-  set(deviceRef, selfDevice).catch((err) => {
-    console.warn('[Relayo Cloud] Direct presence write notice:', err);
-  });
 
   // Setup presence tracking & onDisconnect for this specific room reference
   const unsubConnected = onValue(connectedRef, (snap) => {
     if (snap.val() === true) {
-      const explicitOnlinePayload: CloudDevice = {
-        id: state.deviceId,
-        name: state.deviceName,
-        type: state.deviceType,
+      // Configure onDisconnect to instantly remove node when device drops, closes or refreshes
+      onDisconnect(deviceRef).remove().catch((err) => {
+        console.warn('[Relayo Cloud] onDisconnect remove setup notice:', err);
+      });
+
+      const activePayload: CloudDevice = {
+        ...safePayload,
         status: 'online',
-        lastActive: Date.now(),
-        platform: navigator.platform
+        lastActive: Date.now()
       };
 
-      // Explicit online status write
-      set(deviceRef, explicitOnlinePayload);
-
-      // Configure onDisconnect to mark status as offline when client disconnects
-      onDisconnect(deviceRef).update({
-        status: 'offline',
-        lastActive: serverTimestamp()
+      // Write sanitized payload to rooms/${roomId}/presence/${safePayload.id}
+      set(deviceRef, activePayload).catch((err) => {
+        console.warn('[Relayo Cloud] Direct presence write notice:', err);
       });
 
       $cloudStore.set({ ...$cloudStore.get(), isConnected: true });
@@ -236,59 +266,63 @@ export const initCloudSession = (roomIdToJoin?: string) => {
   });
   currentUnsubscribes.push(() => off(connectedRef));
 
-  // Listen to all devices in the room in real-time
-  const presenceRef = ref(db, `rooms/${roomId}/presence`);
-  const unsubPresence = onValue(presenceRef, (snapshot) => {
-    const data = snapshot.val() || {};
-    const devices = Object.keys(data).map(id => ({
-      id,
-      ...data[id]
-    }));
-
-    $cloudStore.set({
-      ...$cloudStore.get(),
-      devices
-    });
-  });
-
-  currentUnsubscribes.push(unsubPresence);
-
-  // Initial set
-  set(deviceRef, selfDevice).catch(() => { });
-
-  // Heartbeat loop every 10 seconds for dynamic roomId
+  // Heartbeat loop every 10 seconds for active room
   heartbeatInterval = setInterval(() => {
-    if (db) {
-      set(ref(db, `rooms/${roomId}/presence/${state.deviceId}/lastActive`), Date.now());
-      set(ref(db, `rooms/${roomId}/presence/${state.deviceId}/status`), 'online');
+    const currentState = $cloudStore.get();
+    if (db && currentState.isConnected && currentState.roomId) {
+      const activeLastActiveRef = ref(db, `rooms/${currentState.roomId}/presence/${safePayload.id}/lastActive`);
+      set(activeLastActiveRef, Date.now()).catch(() => { });
     }
   }, 10000);
 
-  // Listen to all devices in the room presence node
+  // Listen to presence snapshot strictly for active room
   const presenceRef = ref(db, `rooms/${roomId}/presence`);
-  const unsubDevices = onValue(presenceRef, (snapshot) => {
+  const unsubPresence = onValue(presenceRef, (snapshot) => {
     const data = snapshot.val();
-    if (data) {
-      const deviceList: CloudDevice[] = Object.values(data);
-      const now = Date.now();
-      let updatedList = deviceList.map(dev => {
-        if (dev.id === state.deviceId) {
-          return { ...dev, status: 'online' as const };
-        }
-        if (dev.status === 'online' && now - dev.lastActive > 35000) {
-          return { ...dev, status: 'offline' as const };
-        }
-        return dev;
+    if (data && typeof data === 'object') {
+      const validTypes = ['desktop', 'phone', 'laptop', 'tablet'] as const;
+      const deviceList: CloudDevice[] = Object.keys(data).map((key) => {
+        const item = data[key] || {};
+        const rawType = item.type;
+        const safeItemType = validTypes.includes(rawType as any) ? rawType : 'desktop';
+        return {
+          id: String(item.id || key).trim(),
+          name: String(item.name || 'Device').trim(),
+          type: safeItemType,
+          status: item.status === 'offline' ? 'offline' : 'online',
+          lastActive: typeof item.lastActive === 'number' && !isNaN(item.lastActive) ? item.lastActive : Date.now(),
+          platform: String(item.platform || (typeof navigator !== 'undefined' ? navigator.platform : '') || 'Web').trim()
+        };
       });
-      if (!updatedList.some(d => d.id === state.deviceId)) {
-        updatedList.push(selfDevice);
+
+      let finalDevices = deviceList;
+      if (!finalDevices.some(d => d.id === safePayload.id)) {
+        finalDevices = [safePayload, ...finalDevices];
       }
-      $cloudStore.set({ ...$cloudStore.get(), devices: updatedList });
+
+      $cloudStore.set({
+        ...$cloudStore.get(),
+        devices: finalDevices
+      });
     } else {
-      $cloudStore.set({ ...$cloudStore.get(), devices: [selfDevice] });
+      $cloudStore.set({
+        ...$cloudStore.get(),
+        devices: [safePayload]
+      });
     }
   });
   currentUnsubscribes.push(() => off(presenceRef));
+
+  // Add tab unload cleanup to immediately remove presence node on window close/refresh
+  const handleUnload = () => {
+    if (db && roomId && safePayload.id) {
+      remove(ref(db, `rooms/${roomId}/presence/${safePayload.id}`)).catch(() => { });
+    }
+  };
+  if (typeof window !== 'undefined') {
+    window.addEventListener('beforeunload', handleUnload);
+    currentUnsubscribes.push(() => window.removeEventListener('beforeunload', handleUnload));
+  }
 
   // Listen to Clipboard items
   const clipboardRef = ref(db, `rooms/${roomId}/clipboard`);
@@ -380,8 +414,8 @@ export const updateDeviceName = (name: string) => {
   const state = $cloudStore.get();
   $cloudStore.set({ ...state, deviceName: cleanName });
 
-  if (db && state.isConnected) {
-    set(ref(db, `rooms/${state.roomId}/presence/${state.deviceId}/name`), cleanName);
+  if (db && state.isConnected && state.roomId && state.deviceId) {
+    set(ref(db, `rooms/${state.roomId}/presence/${state.deviceId}/name`), cleanName).catch(() => { });
   }
 };
 
@@ -389,9 +423,11 @@ export const updateDeviceName = (name: string) => {
 export const switchCloudRoom = (newRoomId?: any) => {
   const state = $cloudStore.get();
 
-  // Set current device offline in the old room before leaving
+  // Wipe current device presence node from old room in Firebase before leaving
   if (db && state.roomId && state.deviceId) {
-    set(ref(db, `rooms/${state.roomId}/presence/${state.deviceId}/status`), 'offline').catch(() => { });
+    const oldDeviceRef = ref(db, `rooms/${state.roomId}/presence/${state.deviceId}`);
+    onDisconnect(oldDeviceRef).cancel().catch(() => { });
+    remove(oldDeviceRef).catch(() => { });
   }
 
   // FIX: Prevent silent crash if a UI event object is passed instead of a string
