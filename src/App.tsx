@@ -288,35 +288,33 @@ export function App() {
         </div>
       )}
 
-      {/* Sticky Header Group: Tech News Ticker + iCloud Glass Header */}
-      <div className={`sticky top-0 z-50 w-full transition-opacity duration-200 ${isNavDrawerOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+      {/* Sticky Apple Frosted Glass Header */}
+      <header className={`sticky top-0 z-[1000] w-full apple-header shadow-sm ${isNavDrawerOpen ? 'opacity-0 pointer-events-none' : ''}`}>
         <TechNewsTicker />
-        <header className="apple-header shadow-sm">
-          <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
 
-            {/* Left side — Inline Relayo.space brand title perfectly vertically centered */}
-            <div className="flex items-center text-left cursor-pointer shrink-0 z-20" onClick={handleResetHome}>
-              <span className="font-icloud-logo font-bold text-lg sm:text-xl md:text-2xl tracking-tight text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none">
-                Relayo
-              </span>
-              <span className="text-xs sm:text-sm font-mono text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 font-semibold tracking-wide leading-none ml-1">
-                .space
-              </span>
-            </div>
-            {/* Right side — connection badge + Hamburger Menu button */}
-            <div className="flex items-center gap-2 sm:gap-3 shrink-0 z-20">
-              {getConnectionStateBadge()}
-              <button
-                onClick={() => setIsNavDrawerOpen(true)}
-                className="p-2 sm:p-2.5 rounded-xl bg-white/5 [html[data-theme=light]_&]:bg-slate-100 hover:bg-white/10 [html[data-theme=light]_&]:hover:bg-slate-200 text-slate-200 [html[data-theme=light]_&]:text-slate-800 border border-white/10 [html[data-theme=light]_&]:border-slate-200 transition-all cursor-pointer flex items-center gap-1.5"
-                title="Open Navigation Menu"
-              >
-                <Menu className="w-5 h-5 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" />
-              </button>
-            </div>
+          {/* Left side — Inline Relayo.space brand title perfectly vertically centered */}
+          <div className="flex items-center text-left cursor-pointer shrink-0 z-20" onClick={handleResetHome}>
+            <span className="font-icloud-logo font-bold text-lg sm:text-xl md:text-2xl tracking-tight text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none">
+              Relayo
+            </span>
+            <span className="text-xs sm:text-sm font-mono text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 font-semibold tracking-wide leading-none ml-1">
+              .space
+            </span>
           </div>
-        </header>
-      </div>
+          {/* Right side — connection badge + Hamburger Menu button */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0 z-20">
+            {getConnectionStateBadge()}
+            <button
+              onClick={() => setIsNavDrawerOpen(true)}
+              className="p-2 sm:p-2.5 rounded-xl bg-white/5 [html[data-theme=light]_&]:bg-slate-100 hover:bg-white/10 [html[data-theme=light]_&]:hover:bg-slate-200 text-slate-200 [html[data-theme=light]_&]:text-slate-800 border border-white/10 [html[data-theme=light]_&]:border-slate-200 transition-all cursor-pointer flex items-center gap-1.5"
+              title="Open Navigation Menu"
+            >
+              <Menu className="w-5 h-5 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" />
+            </button>
+          </div>
+        </div>
+      </header>
 
       {/* Navigation Drawer Component */}
       <NavigationDrawer
