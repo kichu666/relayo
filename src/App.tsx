@@ -288,10 +288,10 @@ export function App() {
           {/* Left side — Inline RELAYO.space brand title perfectly vertically centered */}
           <div className="inline-flex items-baseline cursor-pointer shrink-0 z-20" onClick={handleResetHome}>
             <span
-              className="inline-block font-sans font-extrabold uppercase text-base sm:text-lg text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none"
-              style={{ letterSpacing: '-0.06em' }}
+              className="inline-block font-sans font-light uppercase text-base sm:text-lg text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none"
+              style={{ letterSpacing: '-0.02em', fontWeight: 300 }}
             >RELAYO</span>
-            <span className="text-xs sm:text-sm font-mono text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 font-semibold tracking-normal leading-none ml-[1px]">.space</span>
+            <span className="text-xs sm:text-sm font-mono text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 font-medium tracking-normal leading-none ml-[1.5px]">.space</span>
           </div>
           {/* Right side — connection badge + Hamburger Menu button */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0 z-20">
