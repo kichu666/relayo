@@ -47,13 +47,12 @@ export function NavigationDrawer({
           {/* Drawer Header with Consolidated Branding */}
           <div>
             <div className="flex items-center justify-between pb-6 mb-6 border-b border-white/10 [html[data-theme=light]_&]:border-slate-200">
-              <div className="flex items-center">
-                <span className="font-sans font-extrabold uppercase text-base sm:text-lg tracking-tighter text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none">
-                  RELAYO
-                </span>
-                <span className="text-xs font-mono text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 font-semibold tracking-wide leading-none ml-0.5">
-                  .space
-                </span>
+              <div className="inline-flex items-baseline">
+                <span
+                  className="inline-block font-sans font-extrabold uppercase text-base sm:text-lg text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none"
+                  style={{ letterSpacing: '-0.06em' }}
+                >RELAYO</span>
+                <span className="text-xs font-mono text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 font-semibold tracking-normal leading-none ml-[1px]">.space</span>
               </div>
               <button
                 onClick={onClose}
