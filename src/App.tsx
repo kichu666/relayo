@@ -53,7 +53,6 @@ import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
 import { TermsPage } from './components/TermsPage';
 import { ContactPage } from './components/ContactPage';
 import { WhyRelayoSection } from './components/WhyRelayoSection';
-import { TechNewsTicker } from './components/TechNewsTicker';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -290,7 +289,6 @@ export function App() {
 
       {/* Sticky Apple Frosted Glass Header */}
       <header className={`sticky top-0 z-[1000] w-full apple-header shadow-sm ${isNavDrawerOpen ? 'opacity-0 pointer-events-none' : ''}`}>
-        <TechNewsTicker />
         <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
 
           {/* Left side — Inline Relayo.space brand title perfectly vertically centered */}
