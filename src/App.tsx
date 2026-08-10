@@ -760,27 +760,27 @@ export function App() {
       )}
 
       {/* Footer */}
-      <footer className="relative w-full overflow-hidden border-t border-[var(--panel-border)] bg-[var(--bg-dark)]/90 backdrop-blur-md pt-16 pb-6 px-4 sm:px-8 text-xs text-[var(--text-muted)] font-sans z-30 min-h-[180px] sm:min-h-[220px] flex flex-col justify-between">
-        {/* Giant Watermark Background Text */}
+      <footer className="relative w-full overflow-hidden border-t border-[var(--panel-border)] bg-[var(--bg-dark)]/90 backdrop-blur-md pt-12 pb-6 px-4 sm:px-8 text-xs text-[var(--text-muted)] font-sans z-30 min-h-[160px] sm:min-h-[200px] flex flex-col justify-between">
+        {/* Background Watermark Layer - Absolute position behind content (z-0, pointer-events-none) */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-0">
-          <span className="text-[17vw] sm:text-[19vw] leading-none font-black tracking-tighter text-slate-500/10 [html[data-theme=light]_&]:text-slate-400/15 uppercase font-sans whitespace-nowrap">
+          <span className="text-[14vw] sm:text-[16vw] leading-none font-black tracking-tighter text-slate-500/5 [html[data-theme=light]_&]:text-slate-400/10 uppercase font-sans whitespace-nowrap -translate-y-4">
             RELAYO
           </span>
         </div>
 
         {/* Spacer for vertical balance */}
-        <div className="flex-1 min-h-[50px] sm:min-h-[70px]" />
+        <div className="flex-1 min-h-[40px] sm:min-h-[60px] pointer-events-none" />
 
-        {/* Footer Bottom Row */}
+        {/* Foreground Content Layer - Higher z-index (z-10) sitting cleanly on top */}
         <div className="w-full max-w-6xl mx-auto relative z-10 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono text-[var(--text-muted)]">
           
           {/* Left: Copyright */}
-          <div className="flex items-center gap-2 whitespace-nowrap">
+          <div className="flex items-center gap-2 whitespace-nowrap relative z-10">
             <span>© 2026 Relayo.space — Direct Peer-to-Peer File Transfer</span>
           </div>
 
           {/* Right: Small clickable inline text links */}
-          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[var(--text-muted)]">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[var(--text-muted)] relative z-10">
             <a
               href="mailto:team@relayo.space"
               className="hover:text-cyan-400 [html[data-theme=light]_&]:hover:text-cyan-600 transition-colors"
