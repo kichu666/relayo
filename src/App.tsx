@@ -285,12 +285,12 @@ export function App() {
       <header className={`sticky top-0 z-[1000] w-full apple-header shadow-sm ${isNavDrawerOpen ? 'opacity-0 pointer-events-none' : ''}`}>
         <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
 
-          {/* Left side — Inline RELAYO.space brand title perfectly vertically centered */}
+          {/* Left side — Inline relayo.space brand title perfectly vertically centered */}
           <div className="inline-flex items-baseline cursor-pointer shrink-0 z-20" onClick={handleResetHome}>
             <span
-              className="inline-block font-sans font-light uppercase text-base sm:text-lg text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none"
+              className="inline-block font-sans font-light text-base sm:text-lg text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none"
               style={{ letterSpacing: '-0.02em', fontWeight: 300 }}
-            >RELAYO</span>
+            >relayo</span>
             <span className="text-xs sm:text-sm font-mono text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 font-medium tracking-normal leading-none ml-[1.5px]">.space</span>
           </div>
           {/* Right side — connection badge + Hamburger Menu button */}

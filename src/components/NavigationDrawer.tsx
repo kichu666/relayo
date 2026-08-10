@@ -49,9 +49,9 @@ export function NavigationDrawer({
             <div className="flex items-center justify-between pb-6 mb-6 border-b border-white/10 [html[data-theme=light]_&]:border-slate-200">
               <div className="inline-flex items-baseline">
                 <span
-                  className="inline-block font-sans font-light uppercase text-base sm:text-lg text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none"
+                  className="inline-block font-sans font-light text-base sm:text-lg text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none"
                   style={{ letterSpacing: '-0.02em', fontWeight: 300 }}
-                >RELAYO</span>
+                >relayo</span>
                 <span className="text-xs font-mono text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 font-medium tracking-normal leading-none ml-[1.5px]">.space</span>
               </div>
               <button
