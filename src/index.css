@@ -61,6 +61,10 @@
     font-family: 'Google Sans', 'Product Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
 
+  .font-sf-mono {
+    font-family: 'SF Mono', SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, monospace;
+  }
+
   html, body {
     scroll-behavior: smooth;
     background-color: var(--bg-main);
