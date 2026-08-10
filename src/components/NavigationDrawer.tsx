@@ -52,7 +52,10 @@ export function NavigationDrawer({
                   className="inline-block font-sans font-light text-base sm:text-lg text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none"
                   style={{ letterSpacing: '-0.02em', fontWeight: 300 }}
                 >relayo</span>
-                <span className="text-xs font-mono text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 font-medium tracking-normal leading-none ml-[1.5px]">.space</span>
+                <span
+                  className="inline-block font-sans font-light text-base sm:text-lg text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 leading-none"
+                  style={{ letterSpacing: '-0.02em', fontWeight: 300 }}
+                >.space</span>
               </div>
               <button
                 onClick={onClose}
