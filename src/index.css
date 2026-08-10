@@ -65,6 +65,10 @@
     font-family: 'SF Mono', SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, monospace;
   }
 
+  .font-martian-mono {
+    font-family: 'Martian Mono', monospace;
+  }
+
   html, body {
     scroll-behavior: smooth;
     background-color: var(--bg-main);
