@@ -763,7 +763,7 @@ export function App() {
       <footer className="relative w-full overflow-hidden border-t border-[var(--panel-border)] bg-[var(--bg-dark)]/90 backdrop-blur-md pt-12 pb-6 px-4 sm:px-8 text-xs text-[var(--text-muted)] font-sans z-30 min-h-[160px] sm:min-h-[200px] flex flex-col justify-between">
         {/* Background Watermark Layer - Absolute position behind content (z-0, pointer-events-none) */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-0">
-          <span className="text-[14vw] sm:text-[16vw] leading-none font-black tracking-tighter text-slate-500/5 [html[data-theme=light]_&]:text-slate-400/10 uppercase font-sans whitespace-nowrap -translate-y-4">
+          <span className="text-[14vw] sm:text-[16vw] leading-none font-black tracking-wider text-slate-500/5 [html[data-theme=light]_&]:text-slate-400/10 uppercase font-sans whitespace-nowrap -translate-y-4">
             RELAYO
           </span>
         </div>
