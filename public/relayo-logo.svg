@@ -1,0 +1,16 @@
+<svg viewBox="0 0 176 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="cyanGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="1.2" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  <text x="0" y="30" fill="#FFFFFF" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="300" font-size="24" letter-spacing="-0.5px">relay</text>
+  <circle cx="70" cy="22" r="10.5" stroke="#22D3EE" stroke-width="2.5" fill="none" filter="url(#cyanGlow)" />
+  <path d="M 2 37 C 24 41, 48 31, 70 22 C 92 13, 118 9, 155 15" stroke="#38BDF8" stroke-width="2" fill="none" stroke-linecap="round" filter="url(#cyanGlow)" />
+  <path d="M 0 40 C 22 44, 46 34, 68 25 C 90 16, 116 12, 153 18" stroke="#06B6D4" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.85" filter="url(#cyanGlow)" />
+  <text x="87" y="30" fill="#FFFFFF" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="300" font-size="24" letter-spacing="-0.5px">.space</text>
+</svg>

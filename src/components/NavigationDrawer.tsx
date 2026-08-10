@@ -1,5 +1,6 @@
 import { X, Home, BookOpen, HelpCircle, ShieldCheck, FileText, Mail, Coffee } from 'lucide-react';
 import { ThemeSwitcher } from './ThemeSwitcher';
+import { RelayoLogo } from './RelayoLogo';
 
 export type PageView = 'home' | 'resources' | 'faq' | 'contact' | 'privacy' | 'terms';
 
@@ -47,13 +48,7 @@ export function NavigationDrawer({
           {/* Drawer Header with Consolidated Branding */}
           <div>
             <div className="flex items-center justify-between pb-6 mb-6 border-b border-white/10 [html[data-theme=light]_&]:border-slate-200">
-              <div className="flex items-center">
-                <img
-                  src="/relayo-logo.png"
-                  alt="relayo.space"
-                  className="h-7 sm:h-8 w-auto object-contain mix-blend-screen"
-                />
-              </div>
+              <RelayoLogo />
               <button
                 onClick={onClose}
                 className="p-2 rounded-xl bg-white/5 [html[data-theme=light]_&]:bg-slate-100 hover:bg-white/10 [html[data-theme=light]_&]:hover:bg-slate-200 text-slate-300 [html[data-theme=light]_&]:text-slate-700 transition-colors cursor-pointer"

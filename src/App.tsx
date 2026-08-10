@@ -47,6 +47,7 @@ import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
 import { TermsPage } from './components/TermsPage';
 import { ContactPage } from './components/ContactPage';
 import { WhyRelayoSection } from './components/WhyRelayoSection';
+import { RelayoLogo } from './components/RelayoLogo';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -285,14 +286,8 @@ export function App() {
       <header className={`sticky top-0 z-[1000] w-full apple-header shadow-sm ${isNavDrawerOpen ? 'opacity-0 pointer-events-none' : ''}`}>
         <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
 
-          {/* Left side — 4K Brand Logo Asset */}
-          <div className="flex items-center cursor-pointer shrink-0 z-20" onClick={handleResetHome}>
-            <img
-              src="/relayo-logo.png"
-              alt="relayo.space"
-              className="h-7 sm:h-9 w-auto object-contain transition-transform duration-200 hover:scale-[1.03] mix-blend-screen"
-            />
-          </div>
+          {/* Left side — Inline HTML/CSS + SVG RelayoLogo */}
+          <RelayoLogo onClick={handleResetHome} />
           {/* Right side — connection badge + Hamburger Menu button */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0 z-20">
             {getConnectionStateBadge()}
