@@ -18,17 +18,14 @@ import {
   Check,
   FileUp,
   File as FileIcon,
-  FileText,
   X,
   Sparkles,
   Globe,
   Loader2,
   QrCode,
   ChevronDown,
-  ShieldCheck,
   Zap,
   Wifi,
-  HelpCircle,
   Laptop,
   Smartphone,
   CloudOff,
@@ -36,10 +33,7 @@ import {
   Package,
   Cloud,
   Radio,
-  MessageSquareHeart,
-  BookOpen,
-  Menu,
-  Mail
+  Menu
 } from 'lucide-react';
 import { CloudHub } from './components/cloud/CloudHub';
 import { FeedbackModal } from './components/FeedbackModal';
@@ -772,91 +766,103 @@ export function App() {
       )}
 
       {/* Footer */}
-      <footer className="w-full border-t border-[var(--panel-border)] py-8 sm:py-10 glass-panel px-4 sm:px-6 text-xs text-[var(--text-muted)] font-mono relative z-30">
-        <div className="w-full max-w-6xl mx-auto flex flex-col sm:flex-row items-center sm:items-center justify-between gap-5 sm:gap-6">
+      <footer className="relative w-full overflow-hidden border-t border-[var(--panel-border)] bg-[var(--bg-dark)]/90 backdrop-blur-md pt-16 pb-6 px-4 sm:px-8 text-xs text-[var(--text-muted)] font-sans z-30 min-h-[200px] sm:min-h-[240px] flex flex-col justify-between">
+        {/* Giant Watermark Background Text */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-0">
+          <span className="text-[17vw] sm:text-[19vw] leading-none font-black tracking-tighter text-slate-500/10 [html[data-theme=light]_&]:text-slate-400/15 uppercase font-sans whitespace-nowrap">
+            RELAYO
+          </span>
+        </div>
 
-          {/* Left: Icon + Copyright inline on one row */}
-          <div className="flex flex-row items-center gap-3 shrink-0">
-            <div className="cursor-pointer transition-transform duration-300 hover:scale-105" onClick={handleResetHome}>
-              <div className="p-[1.5px] rounded-xl bg-gradient-to-br from-cyan-400 via-indigo-500 to-purple-600 shadow-[0_2px_14px_rgba(168,85,247,0.35)] shrink-0">
-                <div className="w-8 h-8 rounded-[10px] bg-[#070A12] [html[data-theme=light]_&]:bg-white flex items-center justify-center">
-                  <ArrowLeftRight className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2.5} />
-                </div>
-              </div>
-            </div>
-            <span className="whitespace-nowrap font-medium">© 2026 Relayo.space</span>
+        {/* Spacer for vertical balance */}
+        <div className="flex-1 min-h-[60px] sm:min-h-[80px]" />
+
+        {/* Footer Bottom Row */}
+        <div className="w-full max-w-7xl mx-auto relative z-10 flex flex-col lg:flex-row items-center justify-between gap-4 text-[11px] sm:text-xs font-mono text-[var(--text-muted)]">
+          
+          {/* Left: Copyright */}
+          <div className="flex items-center gap-2 whitespace-nowrap">
+            <span>© 2026 Relayo — File Transfer That Doesn't Suck.</span>
           </div>
 
-          {/* Right: Email + Pill buttons */}
-          <div className="flex flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end sm:gap-3 w-full sm:w-auto">
-
-            {/* Email button — centered on its own row on mobile */}
+          {/* Center: Small clickable inline text links */}
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[var(--text-muted)]">
             <a
               href="mailto:team@relayo.space"
-              className="inline-flex items-center justify-center gap-2 px-5 py-2 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-mono font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap w-full sm:w-auto"
-              title="Contact Us via Email"
+              className="hover:text-cyan-400 [html[data-theme=light]_&]:hover:text-cyan-600 transition-colors"
             >
-              <Mail className="w-3.5 h-3.5 text-cyan-400 [html[data-theme=light]_&]:text-[#0EA5E9] shrink-0" />
-              <span>team@relayo.space</span>
+              Contact
             </a>
-
-            {/* Pill buttons — centered wrap cluster on mobile, inline on desktop */}
-            <div className="flex flex-wrap items-center justify-center gap-2.5 sm:contents">
-              {/* Help & Tutorial Button */}
-              <button
-                onClick={() => {
-                  if (appMode === 'cloud') {
-                    setIsCloudTutorialOpen(true);
-                  } else {
-                    setIsP2PTutorialOpen(true);
-                  }
-                }}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0"
-                title="Help & Tutorial"
-              >
-                <HelpCircle className="w-3.5 h-3.5 text-cyan-400 [html[data-theme=light]_&]:text-[#0EA5E9]" />
-                <span>Tutorial</span>
-              </button>
-
-              {/* Feedback Button */}
-              <button
-                onClick={() => setIsFeedbackOpen(true)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0"
-                title="Send Feedback"
-              >
-                <MessageSquareHeart className="w-3.5 h-3.5 text-rose-400 [html[data-theme=light]_&]:text-rose-500" />
-                <span>Feedback</span>
-              </button>
-
-              {/* About Us Button */}
-              <button
-                onClick={() => setIsAboutOpen(true)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0"
-              >
-                <BookOpen className="w-3.5 h-3.5 text-indigo-400" />
-                <span>About Us</span>
-              </button>
-
-              {/* Privacy Policy Button */}
-              <button
-                onClick={() => handleNavigate('privacy')}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0"
-              >
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 [html[data-theme=light]_&]:text-emerald-600" />
-                <span>Privacy Policy</span>
-              </button>
-
-              {/* Terms & Conditions Button */}
-              <button
-                onClick={() => handleNavigate('terms')}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--card-bg)] hover:bg-[var(--panel-border)] border border-[var(--panel-border)] text-xs font-sans font-semibold text-[var(--text-primary)] shadow-sm transition-all duration-200 hover:scale-105 cursor-pointer whitespace-nowrap shrink-0"
-              >
-                <FileText className="w-3.5 h-3.5 text-amber-400 [html[data-theme=light]_&]:text-amber-600" />
-                <span>Terms & Conditions</span>
-              </button>
-            </div>
-
+            <button
+              onClick={() => {
+                if (appMode === 'cloud') {
+                  setIsCloudTutorialOpen(true);
+                } else {
+                  setIsP2PTutorialOpen(true);
+                }
+              }}
+              className="hover:text-cyan-400 [html[data-theme=light]_&]:hover:text-cyan-600 transition-colors cursor-pointer"
+            >
+              Tutorial
+            </button>
+            <button
+              onClick={() => setIsFeedbackOpen(true)}
+              className="hover:text-cyan-400 [html[data-theme=light]_&]:hover:text-cyan-600 transition-colors cursor-pointer"
+            >
+              Feedback
+            </button>
+            <button
+              onClick={() => setIsAboutOpen(true)}
+              className="hover:text-cyan-400 [html[data-theme=light]_&]:hover:text-cyan-600 transition-colors cursor-pointer"
+            >
+              About Us
+            </button>
+            <button
+              onClick={() => handleNavigate('privacy')}
+              className="hover:text-cyan-400 [html[data-theme=light]_&]:hover:text-cyan-600 transition-colors cursor-pointer"
+            >
+              Privacy Policy
+            </button>
+            <button
+              onClick={() => handleNavigate('terms')}
+              className="hover:text-cyan-400 [html[data-theme=light]_&]:hover:text-cyan-600 transition-colors cursor-pointer"
+            >
+              Terms & Conditions
+            </button>
+            <a
+              href="/robots.txt"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-cyan-400 [html[data-theme=light]_&]:hover:text-cyan-600 transition-colors"
+            >
+              robots.txt
+            </a>
+            <a
+              href="/sitemap.xml"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-cyan-400 [html[data-theme=light]_&]:hover:text-cyan-600 transition-colors"
+            >
+              sitemap.xml
+            </a>
+            <a
+              href="/llm.txt"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-cyan-400 [html[data-theme=light]_&]:hover:text-cyan-600 transition-colors"
+            >
+              llm.txt
+            </a>
           </div>
+
+          {/* Right: Builder Credit */}
+          <div className="whitespace-nowrap">
+            Built by{' '}
+            <span className="underline underline-offset-4 text-[var(--text-primary)] font-semibold">
+              Rishi Shah
+            </span>
+          </div>
+
         </div>
       </footer>
 

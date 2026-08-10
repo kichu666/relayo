@@ -1,0 +1,17 @@
+# Relayo (.space)
+
+> Fast, secure, end-to-end encrypted peer-to-peer and cloud file sharing web application.
+
+## Overview
+Relayo is a zero-setup file transfer platform operating directly in the browser using WebRTC P2P mesh technology and cloud relay options.
+
+## Features
+- Direct P2P transfers via WebRTC with zero server storage.
+- Cloud fallback relay for offline or cross-network transfers.
+- Real-time active presence and cross-device sharing.
+- E2EE end-to-end security and instant QR code sharing.
+
+## Documentation
+- Website: https://relayo.space
+- Privacy Policy: https://relayo.space/privacy
+- Terms of Service: https://relayo.space/terms
