@@ -25,6 +25,27 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Martian+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <!-- Canonical Link -->
+    <link rel="canonical" href="https://relayo.space/" />
+
+    <!-- Conditional Domain Robots Indexing Check for Staging & Preview Environments (*.pages.dev, etc.) -->
+    <script>
+      (function() {
+        var hostname = window.location.hostname;
+        if (hostname !== 'relayo.space' && hostname !== 'www.relayo.space') {
+          var robotsMeta = document.querySelector('meta[name="robots"]');
+          if (robotsMeta) {
+            robotsMeta.setAttribute('content', 'noindex, nofollow');
+          } else {
+            var meta = document.createElement('meta');
+            meta.name = 'robots';
+            meta.content = 'noindex, nofollow';
+            document.head.appendChild(meta);
+          }
+        }
+      })();
+    </script>
+
     <!-- Primary Meta Tags -->
     <title>Relayo | Lightning-Fast P2P File Transfer & Real-Time Cloud Hub</title>
     <meta name="title" content="Relayo | Lightning-Fast P2P File Transfer & Real-Time Cloud Hub" />
