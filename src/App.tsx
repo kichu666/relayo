@@ -287,10 +287,10 @@ export function App() {
 
           {/* Left side — Inline RELAYO.space brand title perfectly vertically centered */}
           <div className="flex items-center text-left cursor-pointer shrink-0 z-20" onClick={handleResetHome}>
-            <span className="font-sans font-extrabold uppercase text-base sm:text-lg tracking-wider text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none">
+            <span className="font-sans font-extrabold uppercase text-base sm:text-lg tracking-tighter text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none">
               RELAYO
             </span>
-            <span className="text-xs sm:text-sm font-mono text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 font-semibold tracking-wide leading-none ml-1">
+            <span className="text-xs sm:text-sm font-mono text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 font-semibold tracking-wide leading-none ml-0.5">
               .space
             </span>
           </div>
