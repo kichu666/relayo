@@ -285,10 +285,10 @@ export function App() {
       <header className={`sticky top-0 z-[1000] w-full apple-header shadow-sm ${isNavDrawerOpen ? 'opacity-0 pointer-events-none' : ''}`}>
         <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
 
-          {/* Left side — Inline Relayo.space brand title perfectly vertically centered */}
+          {/* Left side — Inline RELAYO.space brand title perfectly vertically centered */}
           <div className="flex items-center text-left cursor-pointer shrink-0 z-20" onClick={handleResetHome}>
-            <span className="font-icloud-logo font-bold text-lg sm:text-xl md:text-2xl tracking-tight text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none">
-              Relayo
+            <span className="font-sans font-extrabold uppercase text-base sm:text-lg tracking-wider text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none">
+              RELAYO
             </span>
             <span className="text-xs sm:text-sm font-mono text-cyan-400 [html[data-theme=light]_&]:text-cyan-600 font-semibold tracking-wide leading-none ml-1">
               .space
