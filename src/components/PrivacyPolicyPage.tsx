@@ -7,7 +7,7 @@ interface PrivacyPolicyPageProps {
 
 export function PrivacyPolicyPage({ onNavigate }: PrivacyPolicyPageProps) {
   return (
-    <div className="w-full max-w-4xl mx-auto py-8 sm:py-12 px-4 sm:px-6 space-y-8 animate-fade-in">
+    <div className="w-full max-w-4xl mx-auto pt-20 pb-8 sm:py-12 px-4 sm:px-6 space-y-8 animate-fade-in">
       {/* Top Back Button */}
       <button
         onClick={() => onNavigate('home')}

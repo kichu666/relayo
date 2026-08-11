@@ -379,7 +379,7 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
 
       {/* Cloud Room Switcher Modal */}
       {showRoomModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 dark:bg-black/80 [html[data-theme=light]_&]:bg-[rgba(248,250,252,0.35)] backdrop-blur-md animate-fade-in">
+        <div className="fixed inset-0 z-[1050] flex items-center justify-center p-4 pt-20 sm:pt-4 bg-black/80 dark:bg-black/80 [html[data-theme=light]_&]:bg-[rgba(248,250,252,0.35)] backdrop-blur-md animate-fade-in">
           <div className="relative max-w-md w-full glass-panel p-6 rounded-3xl border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] bg-slate-900 dark:bg-slate-900 [html[data-theme=light]_&]:bg-[linear-gradient(180deg,#F9FCFF_0%,#EEF7FF_100%)] shadow-2xl [html[data-theme=light]_&]:shadow-[0_20px_60px_rgba(14,165,233,0.12)] space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -440,7 +440,7 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
 
       {/* Cloud Hub Tutorial Modal */}
       {isHelpModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 dark:bg-black/80 [html[data-theme=light]_&]:bg-[rgba(248,250,252,0.35)] backdrop-blur-md animate-fade-in">
+        <div className="fixed inset-0 z-[1050] flex items-center justify-center p-4 pt-20 sm:pt-4 bg-black/80 dark:bg-black/80 [html[data-theme=light]_&]:bg-[rgba(248,250,252,0.35)] backdrop-blur-md animate-fade-in">
           <div className="relative w-full max-w-md bg-slate-950 dark:bg-slate-950 [html[data-theme=light]_&]:bg-[linear-gradient(180deg,#F9FCFF_0%,#EEF7FF_100%)] border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] rounded-3xl p-6 shadow-2xl dark:shadow-2xl [html[data-theme=light]_&]:shadow-[0_20px_60px_rgba(14,165,233,0.12)] backdrop-blur-2xl text-slate-100 dark:text-slate-100 [html[data-theme=light]_&]:text-[#0F172A]">
             <button
               onClick={handleCloseHelp}
@@ -503,7 +503,7 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
 
       {/* Dedicated Share Cloud Room & QR Code Modal */}
       {showQRModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 dark:bg-black/80 [html[data-theme=light]_&]:bg-[rgba(248,250,252,0.35)] backdrop-blur-md animate-fade-in">
+        <div className="fixed inset-0 z-[1050] flex items-center justify-center p-4 pt-20 sm:pt-4 bg-slate-950/60 dark:bg-black/80 [html[data-theme=light]_&]:bg-[rgba(248,250,252,0.35)] backdrop-blur-md animate-fade-in">
           <div className="relative w-full max-w-md bg-slate-950 dark:bg-slate-950 [html[data-theme=light]_&]:bg-[linear-gradient(180deg,#F9FCFF_0%,#EEF7FF_100%)] border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] rounded-3xl p-6 sm:p-7 shadow-2xl dark:shadow-2xl [html[data-theme=light]_&]:shadow-[0_20px_60px_rgba(14,165,233,0.12)] backdrop-blur-2xl text-slate-100 dark:text-slate-100 [html[data-theme=light]_&]:text-[#0F172A] space-y-5">
             <button
               onClick={() => setShowQRModal(false)}
