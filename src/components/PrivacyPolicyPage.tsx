@@ -1,4 +1,4 @@
-import { ShieldCheck, Lock, ArrowLeft, Mail, FileText } from 'lucide-react';
+import { ShieldCheck, Lock, ArrowLeft, Mail } from 'lucide-react';
 import { PageView } from './NavigationDrawer';
 
 interface PrivacyPolicyPageProps {
@@ -10,7 +10,9 @@ export function PrivacyPolicyPage({ onNavigate }: PrivacyPolicyPageProps) {
     <div className="w-full max-w-4xl mx-auto pt-20 pb-8 sm:py-12 px-4 sm:px-6 space-y-8 animate-fade-in">
       {/* Top Back Button */}
       <button
+        type="button"
         onClick={() => onNavigate('home')}
+        aria-label="Back to Home"
         className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 [html[data-theme=light]_&]:bg-slate-100 hover:bg-white/10 [html[data-theme=light]_&]:hover:bg-slate-200 text-xs font-semibold text-slate-300 [html[data-theme=light]_&]:text-slate-700 transition-all cursor-pointer border border-white/10 [html[data-theme=light]_&]:border-slate-200"
       >
         <ArrowLeft className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" />

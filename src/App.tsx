@@ -10,16 +10,13 @@ import {
   extractRoomIdFromUrl,
   triggerToast,
 } from './logic/shareStore';
-import { ThemeSwitcher } from './components/ThemeSwitcher';
 import {
-  Share2,
   Download,
   Copy,
   Check,
   FileUp,
   File as FileIcon,
   X,
-  Sparkles,
   Globe,
   Loader2,
   QrCode,
@@ -31,8 +28,6 @@ import {
   CloudOff,
   ArrowLeftRight,
   Package,
-  Cloud,
-  Radio,
   Menu,
   HelpCircle
 } from 'lucide-react';
@@ -294,6 +289,7 @@ export function App() {
             {getConnectionStateBadge()}
             <button
               onClick={() => setIsNavDrawerOpen(true)}
+              aria-label="Open Navigation Menu"
               className="p-2 sm:p-2.5 rounded-xl bg-white/5 [html[data-theme=light]_&]:bg-slate-100 hover:bg-white/10 [html[data-theme=light]_&]:hover:bg-slate-200 text-slate-200 [html[data-theme=light]_&]:text-slate-800 border border-white/10 [html[data-theme=light]_&]:border-slate-200 transition-all cursor-pointer flex items-center gap-1.5"
               title="Open Navigation Menu"
             >
@@ -374,8 +370,17 @@ export function App() {
           <>
             <div className="w-full max-w-xl glass-panel rounded-2xl sm:rounded-3xl p-3.5 sm:p-8 border border-[var(--panel-border)] shadow-2xl [html[data-theme=light]_&]:shadow-[0_8px_30px_rgb(0,0,0,0.04)] text-center">
               <div
+                role="button"
+                tabIndex={0}
+                aria-label="Drop files here or click to select files for sharing"
                 onClick={handleDropzoneClick}
-                className="w-full p-4 sm:p-8 rounded-xl sm:rounded-2xl border-2 border-dashed border-cyan-500/40 bg-[var(--card-bg)] hover:opacity-90 transition-colors cursor-pointer mb-4 sm:mb-6 flex flex-col items-center justify-center group"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleDropzoneClick();
+                  }
+                }}
+                className="w-full p-4 sm:p-8 rounded-xl sm:rounded-2xl border-2 border-dashed border-cyan-500/40 bg-[var(--card-bg)] hover:opacity-90 transition-colors cursor-pointer mb-4 sm:mb-6 flex flex-col items-center justify-center group focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
               >
                 <FileUp className="w-10 h-10 sm:w-12 sm:h-12 theme-accent-text mb-3 group-hover:scale-110 transition-transform animate-bounce" />
                 <p className="text-sm sm:text-base font-bold">Drop files here or click to select</p>
@@ -391,7 +396,9 @@ export function App() {
                       Selected Files ({selectedFiles.length})
                     </span>
                     <button
+                      type="button"
                       onClick={() => setSelectedFiles([])}
+                      aria-label="Clear all selected files"
                       className="text-[11px] text-rose-500 hover:underline cursor-pointer"
                     >
                       Clear all
@@ -413,10 +420,12 @@ export function App() {
                           </span>
                         </div>
                         <button
+                          type="button"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleRemoveFile(idx);
                           }}
+                          aria-label={`Remove file ${file.name}`}
                           className="p-1 rounded-lg hover:bg-black/10 dark:hover:bg-white/10 transition-colors cursor-pointer"
                         >
                           <X className="w-3.5 h-3.5" />
@@ -427,7 +436,9 @@ export function App() {
 
                   {selectedFiles.length > displayLimit && (
                     <button
+                      type="button"
                       onClick={() => setDisplayLimit((prev) => prev + ITEMS_PER_PAGE)}
+                      aria-label="Show remaining files"
                       className="w-full mt-2 py-1 text-center text-xs theme-accent-text hover:underline cursor-pointer flex items-center justify-center gap-1 font-semibold"
                     >
                       <span>Show More Files ({selectedFiles.length - displayLimit} remaining)</span>
@@ -436,8 +447,10 @@ export function App() {
                   )}
 
                   <button
+                    type="button"
                     onClick={handleStartShareHost}
                     disabled={store.isUploading}
+                    aria-label={`Share ${selectedFiles.length} selected files`}
                     className="w-full mt-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white text-xs font-bold shadow-lg shadow-cyan-500/25 flex flex-col items-center justify-center gap-1 transition-all cursor-pointer disabled:opacity-50"
                   >
                     <div className="flex items-center gap-2">
@@ -543,7 +556,9 @@ export function App() {
                 <p className="text-xs font-mono font-bold truncate">{store.shareUrl}</p>
               </div>
               <button
+                type="button"
                 onClick={handleCopyLink}
+                aria-label="Copy WebRTC share link to clipboard"
                 className="px-3.5 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition-all shrink-0 cursor-pointer shadow-lg shadow-cyan-500/20"
               >
                 {copied ? (
@@ -639,7 +654,9 @@ export function App() {
             </div>
 
             <button
+              type="button"
               onClick={handleResetHome}
+              aria-label="Done and return to home page"
               className="px-4 py-2 rounded-xl bg-[var(--card-bg)] hover:opacity-80 text-xs font-medium cursor-pointer border border-[var(--panel-border)]"
             >
               Done & Return Home
@@ -710,7 +727,9 @@ export function App() {
                 </span>
                 {store.files.length > 1 && (
                   <button
+                    type="button"
                     onClick={handleDownloadAllZip}
+                    aria-label="Download all shared files"
                     className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white text-xs font-bold shadow-md flex items-center gap-1 cursor-pointer transition-all"
                   >
                     <Download className="w-3.5 h-3.5" />
@@ -737,7 +756,9 @@ export function App() {
                       </div>
                     </div>
                     <button
+                      type="button"
                       onClick={() => handleDownloadSingleFile(idx, file.name)}
+                      aria-label={`Download file ${file.name}`}
                       className="px-3 py-1.5 rounded-xl border theme-badge text-xs font-bold transition-all shrink-0 cursor-pointer flex items-center gap-1 shadow-sm"
                     >
                       <Download className="w-3.5 h-3.5" />
@@ -749,7 +770,9 @@ export function App() {
             </div>
 
             <button
+              type="button"
               onClick={handleResetHome}
+              aria-label="Done and return to home page"
               className="px-4 py-2 rounded-xl bg-[var(--card-bg)] hover:opacity-80 text-xs font-medium cursor-pointer border border-[var(--panel-border)]"
             >
               Done & Return Home
@@ -784,11 +807,13 @@ export function App() {
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[var(--text-muted)] relative z-10">
             <a
               href="mailto:team@relayo.space"
+              aria-label="Send email to team@relayo.space"
               className="hover:text-cyan-400 [html[data-theme=light]_&]:hover:text-cyan-600 transition-colors"
             >
               Contact
             </a>
             <button
+              type="button"
               onClick={() => {
                 if (appMode === 'cloud') {
                   setIsCloudTutorialOpen(true);
@@ -796,30 +821,39 @@ export function App() {
                   setIsP2PTutorialOpen(true);
                 }
               }}
+              aria-label="Open usage tutorial"
               className="hover:text-cyan-400 [html[data-theme=light]_&]:hover:text-cyan-600 transition-colors cursor-pointer"
             >
               Tutorial
             </button>
             <button
+              type="button"
               onClick={() => setIsFeedbackOpen(true)}
+              aria-label="Open feedback form modal"
               className="hover:text-cyan-400 [html[data-theme=light]_&]:hover:text-cyan-600 transition-colors cursor-pointer"
             >
               Feedback
             </button>
             <button
+              type="button"
               onClick={() => setIsAboutOpen(true)}
+              aria-label="Open About Us modal"
               className="hover:text-cyan-400 [html[data-theme=light]_&]:hover:text-cyan-600 transition-colors cursor-pointer"
             >
               About Us
             </button>
             <button
+              type="button"
               onClick={() => handleNavigate('privacy')}
+              aria-label="Navigate to Privacy Policy page"
               className="hover:text-cyan-400 [html[data-theme=light]_&]:hover:text-cyan-600 transition-colors cursor-pointer"
             >
               Privacy Policy
             </button>
             <button
+              type="button"
               onClick={() => handleNavigate('terms')}
+              aria-label="Navigate to Terms and Conditions page"
               className="hover:text-cyan-400 [html[data-theme=light]_&]:hover:text-cyan-600 transition-colors cursor-pointer"
             >
               Terms & Conditions
@@ -840,7 +874,9 @@ export function App() {
         <div className="fixed inset-0 z-[1050] flex items-center justify-center p-4 pt-20 sm:pt-4 [html[data-theme=amoled]_&]:bg-black/80 [html[data-theme=dark]_&]:bg-slate-950/80 [html[data-theme=light]_&]:bg-[rgba(248,250,252,0.35)] backdrop-blur-md animate-fade-in">
           <div className="relative w-full max-w-md [html[data-theme=amoled]_&]:bg-black/95 [html[data-theme=dark]_&]:bg-slate-900/95 [html[data-theme=light]_&]:bg-[linear-gradient(180deg,#F9FCFF_0%,#EEF7FF_100%)] border border-zinc-800/90 [html[data-theme=light]_&]:border-[#D7E8FF] rounded-3xl p-6 shadow-2xl [html[data-theme=light]_&]:shadow-[0_20px_60px_rgba(14,165,233,0.12)] backdrop-blur-2xl text-zinc-100 [html[data-theme=light]_&]:text-[#0F172A]">
             <button
+              type="button"
               onClick={() => setIsP2PTutorialOpen(false)}
+              aria-label="Close tutorial modal"
               className="absolute top-5 right-5 p-1.5 rounded-full bg-zinc-900 dark:bg-zinc-900 [html[data-theme=light]_&]:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-800 hover:[html[data-theme=light]_&]:bg-slate-50 border border-zinc-800 dark:border-zinc-800 [html[data-theme=light]_&]:border-[#D7E8FF] text-zinc-400 dark:text-zinc-400 [html[data-theme=light]_&]:text-[#475569] hover:text-white dark:hover:text-white hover:[html[data-theme=light]_&]:text-[#0F172A] [html[data-theme=light]_&]:shadow-sm transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
@@ -883,7 +919,9 @@ export function App() {
             </div>
 
             <button
+              type="button"
               onClick={() => setIsP2PTutorialOpen(false)}
+              aria-label="Got it, start sharing"
               className="w-full py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-bold text-xs transition-all shadow-lg cursor-pointer"
             >
               Got It, Start Sharing

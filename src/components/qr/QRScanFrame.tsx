@@ -36,7 +36,9 @@ export const QRScanFrame: React.FC<QRScanFrameProps> = ({
               <button
                 type="button"
                 onClick={onToggleTorch}
-                className={`p-2 rounded-full transition-all ${
+                aria-label="Toggle Flashlight"
+                aria-pressed={torchActive}
+                className={`p-2 rounded-full transition-all cursor-pointer ${
                   torchActive
                     ? 'bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/50'
                     : 'bg-white/10 hover:bg-white/20 text-slate-300'
@@ -51,7 +53,8 @@ export const QRScanFrame: React.FC<QRScanFrameProps> = ({
               <button
                 type="button"
                 onClick={onSwitchCamera}
-                className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 transition-all"
+                aria-label="Switch Camera"
+                className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 transition-all cursor-pointer"
                 title="Switch Camera"
               >
                 <FlipHorizontal className="w-4 h-4" />

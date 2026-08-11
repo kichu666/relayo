@@ -52,7 +52,9 @@ export function FaqPage({ onNavigate }: FaqPageProps) {
     <div className="w-full max-w-4xl mx-auto pt-20 pb-8 sm:py-12 px-4 sm:px-6 space-y-10 animate-fade-in">
       {/* Top Back Button */}
       <button
+        type="button"
         onClick={() => onNavigate('home')}
+        aria-label="Back to Home"
         className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 [html[data-theme=light]_&]:bg-slate-100 hover:bg-white/10 [html[data-theme=light]_&]:hover:bg-slate-200 text-xs font-semibold text-slate-300 [html[data-theme=light]_&]:text-slate-700 transition-all cursor-pointer border border-white/10 [html[data-theme=light]_&]:border-slate-200"
       >
         <ArrowLeft className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" />
@@ -83,7 +85,10 @@ export function FaqPage({ onNavigate }: FaqPageProps) {
               className="glass-panel rounded-2xl border border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] bg-slate-900/60 [html[data-theme=light]_&]:bg-white overflow-hidden transition-all duration-300 shadow-md"
             >
               <button
+                type="button"
                 onClick={() => toggleFaq(idx)}
+                aria-expanded={isOpen}
+                aria-label={`Toggle FAQ question: ${faq.question}`}
                 className="w-full flex items-center justify-between p-5 text-left cursor-pointer focus:outline-none group"
               >
                 <span className="text-sm sm:text-base font-extrabold text-white [html[data-theme=light]_&]:text-[#0F172A] pr-4 group-hover:text-cyan-400 [html[data-theme=light]_&]:group-hover:text-cyan-600 transition-colors">

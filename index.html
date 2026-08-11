@@ -12,6 +12,8 @@
       gtag('config', 'G-R5PS28L8M2');
     </script>
     <!-- Official Relayo Transfer Icon Favicon & App Icons -->
+    <link rel="icon" type="image/avif" href="/icon.avif" />
+    <link rel="icon" type="image/webp" href="/icon.webp" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="512x512" href="/icon.png" />
     <link rel="shortcut icon" href="/favicon.ico" />
@@ -24,7 +26,11 @@
     <!-- Google Sans / Product Sans Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Martian+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Martian+Mono:wght@400;700&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Martian+Mono:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Martian+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    </noscript>
     <!-- Canonical Link -->
     <link rel="canonical" href="https://relayo.space/" />
 

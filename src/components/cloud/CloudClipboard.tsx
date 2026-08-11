@@ -54,7 +54,9 @@ export function CloudClipboard() {
             <h3 className="text-base font-extrabold text-white [html[data-theme=light]_&]:text-[#1D1D1F]">Send Clipboard to Cloud</h3>
           </div>
           <button
+            type="button"
             onClick={readAndPushSystemClipboard}
+            aria-label="Read system clipboard and send directly"
             className="flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:bg-[#F5F5F7] [html[data-theme=light]_&]:hover:bg-[#E5E5EA] [html[data-theme=light]_&]:text-[#1D1D1F] border border-cyan-500/30 [html[data-theme=light]_&]:border-transparent text-xs font-semibold transition cursor-pointer min-h-[44px]"
             title="Read system clipboard and send directly"
           >
@@ -68,6 +70,7 @@ export function CloudClipboard() {
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             placeholder="Type or paste text payload here to copy across your linked devices..."
+            aria-label="Clipboard text payload input"
             className="w-full h-[160px] bg-black/60 dark:bg-black/60 [html[data-theme=light]_&]:bg-[#F5F5F7] border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-transparent focus:[html[data-theme=light]_&]:border-[#007AFF] rounded-2xl p-5 text-sm font-mono text-white dark:text-white [html[data-theme=light]_&]:text-[#1D1D1F] placeholder-slate-500 dark:placeholder-slate-500 [html[data-theme=light]_&]:placeholder-[#86868B] focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:[html[data-theme=light]_&]:ring-[#007AFF]/20 transition resize-none leading-relaxed"
           />
         </div>
@@ -77,8 +80,10 @@ export function CloudClipboard() {
             {inputText.length} characters
           </span>
           <button
+            type="button"
             onClick={handleSend}
             disabled={!inputText.trim()}
+            aria-label="Sync Clipboard Payload"
             className="flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 [html[data-theme=light]_&]:bg-[#007AFF] [html[data-theme=light]_&]:from-[#007AFF] [html[data-theme=light]_&]:to-[#007AFF] hover:from-cyan-400 hover:to-blue-500 hover:[html[data-theme=light]_&]:bg-[#0066CC] disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-sm shadow-[0_0_15px_rgba(6,182,212,0.3)] [html[data-theme=light]_&]:shadow-md transition transform active:scale-95 cursor-pointer min-h-[44px]"
           >
             <Sparkles className="w-4 h-4" strokeWidth={2} />
@@ -133,8 +138,10 @@ export function CloudClipboard() {
                         <Clock className="w-3 h-3" /> {formatTime(item.timestamp)}
                       </span>
                       <button
+                        type="button"
                         onClick={() => deleteClipboardItem(item.id)}
-                        className="p-1 text-slate-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition"
+                        aria-label="Remove clipboard item"
+                        className="p-1 text-slate-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition cursor-pointer"
                         title="Remove"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -148,8 +155,10 @@ export function CloudClipboard() {
 
                   <div className="flex items-center justify-end gap-2 mt-3">
                     <button
+                      type="button"
                       onClick={() => handleCopyItem(item.id, item.text)}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition ${
+                      aria-label="Copy item text to clipboard"
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer ${
                         isJustCopied
                           ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
                           : 'bg-white/5 hover:bg-white/10 text-slate-200 border border-white/10'

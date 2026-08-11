@@ -60,7 +60,9 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, ErrorBound
             <div className="space-y-2.5 pt-2">
               {/* Primary Gradient Refresh Button */}
               <button
+                type="button"
                 onClick={() => window.location.reload()}
+                aria-label="Refresh application page"
                 className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm shadow-lg transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-2"
               >
                 <RefreshCw className="w-4 h-4" />
@@ -70,6 +72,7 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, ErrorBound
               {/* Secondary Ghost Contact Support Button */}
               <a
                 href="mailto:team@relayo.space"
+                aria-label="Contact Relayo support via email"
                 className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white font-semibold text-xs transition-all cursor-pointer flex items-center justify-center gap-2 group"
               >
                 <Mail className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform" />

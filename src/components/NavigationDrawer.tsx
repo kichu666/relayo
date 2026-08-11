@@ -37,7 +37,16 @@ export function NavigationDrawer({
     <div className="fixed inset-0 z-50 overflow-hidden animate-fade-in">
       {/* Heavy Backdrop Overlay */}
       <div
-        className="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity"
+        role="button"
+        tabIndex={0}
+        aria-label="Close navigation drawer"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') {
+            e.preventDefault();
+            onClose();
+          }
+        }}
+        className="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity cursor-pointer"
         onClick={onClose}
       />
 
@@ -50,7 +59,9 @@ export function NavigationDrawer({
             <div className="flex items-center justify-between pb-6 mb-6 border-b border-white/10 [html[data-theme=light]_&]:border-slate-200">
               <RelayoLogo />
               <button
+                type="button"
                 onClick={onClose}
+                aria-label="Close navigation drawer"
                 className="p-2 rounded-xl bg-white/5 [html[data-theme=light]_&]:bg-slate-100 hover:bg-white/10 [html[data-theme=light]_&]:hover:bg-slate-200 text-slate-300 [html[data-theme=light]_&]:text-slate-700 transition-colors cursor-pointer"
                 title="Close menu"
               >
@@ -59,14 +70,17 @@ export function NavigationDrawer({
             </div>
 
             {/* Navigation List */}
-            <nav className="space-y-1.5">
+            <nav className="space-y-1.5" aria-label="Mobile main navigation">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = currentPage === item.id;
                 return (
                   <button
+                    type="button"
                     key={item.id}
                     onClick={() => handleItemClick(item.id)}
+                    aria-label={`Navigate to ${item.label}`}
+                    aria-current={isActive ? 'page' : undefined}
                     className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl text-xs font-semibold transition-all cursor-pointer text-left ${
                       isActive
                         ? 'bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 [html[data-theme=light]_&]:bg-cyan-50 [html[data-theme=light]_&]:text-cyan-700 [html[data-theme=light]_&]:border-cyan-200 shadow-sm'
@@ -85,6 +99,7 @@ export function NavigationDrawer({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={onClose}
+                aria-label="Support Us on Buy Me a Coffee"
                 className="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl text-xs font-semibold transition-all cursor-pointer text-left text-slate-300 [html[data-theme=light]_&]:text-slate-700 hover:bg-amber-500/15 hover:text-amber-300 [html[data-theme=light]_&]:hover:bg-amber-50 [html[data-theme=light]_&]:hover:text-amber-700 border border-transparent"
               >
                 <Coffee className="w-4 h-4 shrink-0 text-amber-400 [html[data-theme=light]_&]:text-amber-600" />

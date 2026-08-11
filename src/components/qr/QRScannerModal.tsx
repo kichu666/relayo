@@ -87,10 +87,12 @@ export const QRScannerModal: React.FC<QRScannerModalProps> = ({
       <div className="relative w-full max-w-md glass-panel rounded-3xl p-6 border border-white/10 shadow-2xl overflow-hidden flex flex-col items-center">
         {/* Modal Close Button */}
         <button
+          type="button"
           onClick={() => {
             stopCameraScanner();
             onClose();
           }}
+          aria-label="Close QR Code scanner modal"
           className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 transition-all z-40 cursor-pointer"
         >
           <X className="w-5 h-5" />
@@ -103,9 +105,13 @@ export const QRScannerModal: React.FC<QRScannerModalProps> = ({
         </div>
 
         {/* Camera / Manual PIN Tab Switcher */}
-        <div className="w-full flex p-1 rounded-xl bg-white/5 border border-white/10 mb-5 z-30">
+        <div className="w-full flex p-1 rounded-xl bg-white/5 border border-white/10 mb-5 z-30" role="tablist">
           <button
+            type="button"
+            role="tab"
+            aria-selected={activeTab === 'camera'}
             onClick={() => setActiveTab('camera')}
+            aria-label="Camera Viewfinder"
             className={`flex-1 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
               activeTab === 'camera'
                 ? 'bg-indigo-600 text-white shadow-md'
@@ -117,7 +123,11 @@ export const QRScannerModal: React.FC<QRScannerModalProps> = ({
           </button>
 
           <button
+            type="button"
+            role="tab"
+            aria-selected={activeTab === 'manual'}
             onClick={() => setActiveTab('manual')}
+            aria-label="Manual PIN Input"
             className={`flex-1 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
               activeTab === 'manual'
                 ? 'bg-indigo-600 text-white shadow-md'

@@ -19,15 +19,12 @@ import {
   FileText,
   Camera,
   Globe,
-  Radio,
   Sparkles,
   QrCode,
   KeyRound,
   Check,
   X,
-  ShieldCheck,
   HelpCircle,
-  MessageSquareHeart,
   ArrowLeft,
   Copy
 } from 'lucide-react';
@@ -41,7 +38,12 @@ interface CloudHubProps {
   onBackToLocal?: () => void;
 }
 
-export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, onBackToLocal }: CloudHubProps = {}) {
+export function CloudHub({
+  isOpenCloudHelp,
+  onCloseCloudHelp,
+  onOpenCloudHelp,
+  onBackToLocal
+}: CloudHubProps = {}) {
   const store = useStore($cloudStore);
   const [subTab, setSubTab] = useState<'presence' | 'clipboard' | 'link' | 'scratchpad' | 'screenshot'>('presence');
   const [showRoomModal, setShowRoomModal] = useState(false);
@@ -92,7 +94,9 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
       {/* Back to Local Navigation Button */}
       {onBackToLocal && (
         <button
+          type="button"
           onClick={onBackToLocal}
+          aria-label="Back to Local P2P Mode"
           className="flex items-center gap-2 text-sm text-zinc-400 hover:text-white [html[data-theme=light]_&]:text-slate-600 [html[data-theme=light]_&]:hover:text-slate-900 transition-colors cursor-pointer w-fit group py-1.5 px-3 rounded-xl hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100 min-h-[44px]"
           title="Back to Local P2P Mode"
         >
@@ -133,7 +137,9 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
 
             {/* QR Button for small mobile screens */}
             <button
+              type="button"
               onClick={() => setShowQRModal(true)}
+              aria-label="Share Room & QR Code"
               className="sm:hidden w-10 h-10 min-h-[40px] min-w-[40px] flex items-center justify-center rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:hover:bg-slate-50 border border-cyan-500/30 [html[data-theme=light]_&]:border-[#D8E9FF] text-xs transition cursor-pointer shadow-sm shrink-0"
               title="Share Room & QR Code"
             >
@@ -154,11 +160,23 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
             </div>
 
             <button
+              type="button"
               onClick={() => setShowQRModal(true)}
+              aria-label="Share Room & QR Code"
               className="hidden sm:flex w-10 h-10 sm:w-11 sm:h-11 min-h-[40px] sm:min-h-[44px] min-w-[40px] sm:min-w-[44px] items-center justify-center rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:hover:bg-slate-50 border border-cyan-500/30 [html[data-theme=light]_&]:border-[#D8E9FF] text-xs transition cursor-pointer shadow-sm shrink-0"
               title="Share Room & QR Code"
             >
               <QrCode className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />
+            </button>
+
+            <button
+              type="button"
+              onClick={handleOpenHelp}
+              aria-label="How Cloud Hub Works"
+              className="w-10 h-10 sm:w-11 sm:h-11 min-h-[40px] sm:min-h-[44px] min-w-[40px] sm:min-w-[44px] flex items-center justify-center rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:hover:bg-slate-50 border border-cyan-500/30 [html[data-theme=light]_&]:border-[#D8E9FF] text-xs transition cursor-pointer shadow-sm shrink-0"
+              title="How Cloud Hub Works"
+            >
+              <HelpCircle className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-cyan-600" strokeWidth={2} />
             </button>
           </div>
         </div>
@@ -173,12 +191,15 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
                 value={newRoomCode}
                 onChange={(e) => setNewRoomCode(e.target.value)}
                 placeholder="Enter room code (e.g. relayo-x8k3p9)..."
+                aria-label="Enter cloud room code"
                 className="w-full h-10 sm:h-11 min-h-[40px] bg-black/60 [html[data-theme=light]_&]:bg-white border border-white/15 [html[data-theme=light]_&]:border-[#D7E8FF] focus:[html[data-theme=light]_&]:border-[#22C7F2] rounded-xl pl-10 pr-3 py-2 text-xs sm:text-sm font-mono text-cyan-300 [html[data-theme=light]_&]:text-[#0F172A] placeholder-slate-500 [html[data-theme=light]_&]:placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:[html[data-theme=light]_&]:ring-0 focus:[html[data-theme=light]_&]:shadow-[0_0_0_4px_rgba(34,199,242,0.15)] transition"
                 onKeyDown={(e) => e.key === 'Enter' && handleSwitchRoom()}
               />
             </div>
             <button
+              type="button"
               onClick={handleSwitchRoom}
+              aria-label="Join Room"
               className="w-full sm:w-auto h-10 sm:h-11 min-h-[40px] px-5 sm:px-6 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm transition shadow-md whitespace-nowrap cursor-pointer flex items-center justify-center"
             >
               Join Room
@@ -187,7 +208,9 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
 
           <div className="flex items-center gap-2 w-full md:w-auto">
             <button
+              type="button"
               onClick={handleNewPrivateRoom}
+              aria-label="Generate new random private room ID"
               className="w-full sm:w-auto h-10 sm:h-11 min-h-[40px] flex items-center justify-center gap-2 px-4 rounded-xl bg-white/5 [html[data-theme=light]_&]:bg-white hover:bg-white/10 hover:[html[data-theme=light]_&]:bg-slate-50 text-slate-300 [html[data-theme=light]_&]:text-[#0F172A] border border-white/10 [html[data-theme=light]_&]:border-[#D8E9FF] text-xs font-semibold transition whitespace-nowrap cursor-pointer"
               title="Generate new random private room ID"
             >
@@ -200,10 +223,14 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
 
       {/* Sub-Tab Navigation Bar with Horizontal Scrollability Hint */}
       <div className="relative group/tabs overflow-hidden rounded-xl sm:rounded-2xl border border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF]">
-        <div className="flex items-center justify-start sm:justify-center overflow-x-auto gap-1 sm:gap-2 p-1.5 glass-panel bg-black/40 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:shadow-[0_4px_20px_rgb(0,0,0,0.03)] backdrop-blur-xl">
+        <div className="flex items-center justify-start sm:justify-center overflow-x-auto gap-1 sm:gap-2 p-1.5 glass-panel bg-black/40 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:shadow-[0_4px_20px_rgb(0,0,0,0.03)] backdrop-blur-xl" role="tablist">
           <button
+            type="button"
+            role="tab"
+            aria-selected={subTab === 'presence'}
             onClick={() => setSubTab('presence')}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] ${subTab === 'presence'
+            aria-label="Online Devices"
+            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] cursor-pointer ${subTab === 'presence'
               ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 [html[data-theme=light]_&]:bg-cyan-50 border border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.2)] [html[data-theme=light]_&]:shadow-none'
               : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
               }`}
@@ -216,8 +243,12 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
           </button>
 
           <button
+            type="button"
+            role="tab"
+            aria-selected={subTab === 'clipboard'}
             onClick={() => setSubTab('clipboard')}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] ${subTab === 'clipboard'
+            aria-label="Clipboard Sync"
+            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] cursor-pointer ${subTab === 'clipboard'
               ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 [html[data-theme=light]_&]:text-cyan-700 [html[data-theme=light]_&]:bg-cyan-50 border border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.2)] [html[data-theme=light]_&]:shadow-none'
               : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
               }`}
@@ -232,8 +263,12 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
           </button>
 
           <button
+            type="button"
+            role="tab"
+            aria-selected={subTab === 'link'}
             onClick={() => setSubTab('link')}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] ${subTab === 'link'
+            aria-label="Links"
+            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] cursor-pointer ${subTab === 'link'
               ? 'bg-gradient-to-r from-purple-500/20 to-indigo-500/20 text-purple-300 [html[data-theme=light]_&]:text-purple-700 [html[data-theme=light]_&]:bg-purple-50 border border-purple-500/40 shadow-[0_0_15px_rgba(168,85,247,0.2)] [html[data-theme=light]_&]:shadow-none'
               : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
               }`}
@@ -248,8 +283,12 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
           </button>
 
           <button
+            type="button"
+            role="tab"
+            aria-selected={subTab === 'scratchpad'}
             onClick={() => setSubTab('scratchpad')}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] ${subTab === 'scratchpad'
+            aria-label="Notes"
+            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] cursor-pointer ${subTab === 'scratchpad'
               ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-300 [html[data-theme=light]_&]:text-emerald-700 [html[data-theme=light]_&]:bg-emerald-50 border border-emerald-500/40 shadow-[0_0_15px_rgba(16,185,129,0.2)] [html[data-theme=light]_&]:shadow-none'
               : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
               }`}
@@ -259,8 +298,12 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
           </button>
 
           <button
+            type="button"
+            role="tab"
+            aria-selected={subTab === 'screenshot'}
             onClick={() => setSubTab('screenshot')}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] ${subTab === 'screenshot'
+            aria-label="Screenshots"
+            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-[11px] sm:text-xs transition whitespace-nowrap min-h-[44px] cursor-pointer ${subTab === 'screenshot'
               ? 'bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-300 [html[data-theme=light]_&]:text-amber-700 [html[data-theme=light]_&]:bg-amber-50 border border-amber-500/40 shadow-[0_0_15px_rgba(245,158,11,0.2)] [html[data-theme=light]_&]:shadow-none'
               : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200 [html[data-theme=light]_&]:hover:text-slate-900 hover:bg-white/5 [html[data-theme=light]_&]:hover:bg-slate-100'
               }`}
@@ -506,7 +549,9 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
         <div className="fixed inset-0 z-[1050] flex items-center justify-center p-4 pt-20 sm:pt-4 bg-slate-950/60 dark:bg-black/80 [html[data-theme=light]_&]:bg-[rgba(248,250,252,0.35)] backdrop-blur-md animate-fade-in">
           <div className="relative w-full max-w-md bg-slate-950 dark:bg-slate-950 [html[data-theme=light]_&]:bg-[linear-gradient(180deg,#F9FCFF_0%,#EEF7FF_100%)] border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] rounded-3xl p-6 sm:p-7 shadow-2xl dark:shadow-2xl [html[data-theme=light]_&]:shadow-[0_20px_60px_rgba(14,165,233,0.12)] backdrop-blur-2xl text-slate-100 dark:text-slate-100 [html[data-theme=light]_&]:text-[#0F172A] space-y-5">
             <button
+              type="button"
               onClick={() => setShowQRModal(false)}
+              aria-label="Close share room modal"
               className="absolute top-5 right-5 p-1.5 rounded-full bg-white/5 dark:bg-white/5 [html[data-theme=light]_&]:bg-white hover:bg-white/10 dark:hover:bg-white/10 hover:[html[data-theme=light]_&]:bg-slate-50 border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] text-slate-400 dark:text-slate-400 [html[data-theme=light]_&]:text-[#475569] hover:text-white dark:hover:text-white hover:[html[data-theme=light]_&]:text-[#0F172A] [html[data-theme=light]_&]:shadow-sm transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
@@ -544,10 +589,13 @@ export function CloudHub({ isOpenCloudHelp, onCloseCloudHelp, onOpenCloudHelp, o
                   type="text"
                   readOnly
                   value={`${window.location.origin}/?room=${encodeURIComponent(store.roomId)}`}
+                  aria-label="Direct room URL"
                   className="flex-1 bg-black/60 dark:bg-black/60 [html[data-theme=light]_&]:bg-white border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] rounded-xl px-3 py-2 text-xs font-mono text-cyan-300 dark:text-cyan-300 [html[data-theme=light]_&]:text-[#0F172A] truncate focus:outline-none select-all"
                 />
                 <button
+                  type="button"
                   onClick={handleCopyRoomCode}
+                  aria-label="Copy direct room link"
                   className="h-9 px-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs transition shadow-md whitespace-nowrap cursor-pointer flex items-center gap-1.5"
                 >
                   {copiedCode ? (

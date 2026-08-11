@@ -5,9 +5,7 @@ import {
   Globe,
   Lock,
   ChevronDown,
-  ChevronUp,
   Cpu,
-  Share2,
   Copy,
   Link,
   FileText,
@@ -287,7 +285,10 @@ export function SeoLandingSection() {
                   className="glass-panel rounded-2xl border border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] bg-slate-900/40 [html[data-theme=light]_&]:bg-white overflow-hidden transition-all duration-300"
                 >
                   <button
+                    type="button"
                     onClick={() => toggleFaq(idx)}
+                    aria-expanded={isOpen}
+                    aria-label={`Toggle FAQ question: ${faq.question}`}
                     className="w-full flex items-center justify-between p-4 sm:p-5 text-left cursor-pointer focus:outline-none group"
                   >
                     <span className="text-sm font-extrabold text-white [html[data-theme=light]_&]:text-[#0F172A] pr-4 group-hover:text-cyan-400 [html[data-theme=light]_&]:group-hover:text-cyan-600 transition-colors">

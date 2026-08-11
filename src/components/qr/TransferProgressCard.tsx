@@ -97,7 +97,9 @@ export const TransferProgressCard: React.FC<TransferProgressCardProps> = ({ onRe
       {isSentCompleted && (
         <div className="flex items-center justify-center mt-4">
           <button
+            type="button"
             onClick={onReset}
+            aria-label="Send Another File"
             className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-400 hover:to-violet-500 text-white text-xs font-semibold shadow-lg shadow-indigo-500/25 flex items-center gap-2 transition-all cursor-pointer"
           >
             <RefreshCw className="w-4 h-4" />
@@ -111,12 +113,14 @@ export const TransferProgressCard: React.FC<TransferProgressCardProps> = ({ onRe
         <div className="flex flex-wrap items-center justify-center gap-3 mt-4">
           {transfer.downloadUrl && (
             <button
+              type="button"
               onClick={() =>
                 webrtcTransferEngine.triggerAutoDownload(
                   transfer.downloadUrl!,
                   transfer.fileName || 'download'
                 )
               }
+              aria-label="Download File Again"
               className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white text-xs font-semibold shadow-lg shadow-emerald-500/30 flex items-center gap-2 transition-all cursor-pointer"
             >
               <Download className="w-4 h-4" />
@@ -125,7 +129,9 @@ export const TransferProgressCard: React.FC<TransferProgressCardProps> = ({ onRe
           )}
 
           <button
+            type="button"
             onClick={onReset}
+            aria-label="Done, reset transfer card"
             className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 text-xs font-medium flex items-center gap-2 transition-all cursor-pointer border border-white/10"
           >
             <span>Done</span>

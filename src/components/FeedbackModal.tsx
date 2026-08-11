@@ -67,7 +67,9 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
     <div className="fixed inset-0 z-[1050] flex items-center justify-center p-4 pt-20 sm:pt-4 [html[data-theme=amoled]_&]:bg-black/80 [html[data-theme=dark]_&]:bg-slate-950/80 [html[data-theme=light]_&]:bg-[rgba(248,250,252,0.35)] backdrop-blur-md animate-fade-in">
       <div className="relative w-full max-w-md [html[data-theme=amoled]_&]:bg-black [html[data-theme=dark]_&]:bg-slate-950 [html[data-theme=light]_&]:bg-[linear-gradient(180deg,#F9FCFF_0%,#EEF7FF_100%)] border border-slate-200 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] rounded-3xl p-6 shadow-[0_20px_60px_rgba(14,165,233,0.12)] dark:shadow-2xl backdrop-blur-2xl text-slate-900 dark:text-slate-100">
         <button
+          type="button"
           onClick={handleResetAndClose}
+          aria-label="Close feedback modal"
           className="absolute top-5 right-5 p-1.5 rounded-full bg-slate-100 dark:bg-white/5 [html[data-theme=light]_&]:bg-white hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] text-slate-500 dark:text-slate-400 [html[data-theme=light]_&]:text-[#475569] hover:text-slate-900 dark:hover:text-white hover:[html[data-theme=light]_&]:text-[#0F172A] [html[data-theme=light]_&]:shadow-sm transition-colors cursor-pointer"
         >
           <X className="w-4 h-4" />
@@ -87,7 +89,9 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
               Your review has been successfully submitted and helps us continuously improve Relayo.
             </p>
             <button
+              type="button"
               onClick={handleResetAndClose}
+              aria-label="Done, close feedback modal"
               className="w-full mt-4 py-2.5 rounded-2xl bg-[linear-gradient(90deg,#1FB6FF,#2D7FF9)] hover:brightness-105 text-white font-bold text-xs shadow-lg transition cursor-pointer"
             >
               Done
@@ -106,7 +110,7 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Star Rating Picker (Star wrapper forced to bg-transparent with drop-shadow SVG glow) */}
+              {/* Star Rating Picker */}
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 [html[data-theme=light]_&]:text-[#172033] mb-1.5">
                   Rating
@@ -119,6 +123,8 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                       onClick={() => setRating(star)}
                       onMouseEnter={() => setHoverRating(star)}
                       onMouseLeave={() => setHoverRating(0)}
+                      aria-label={`Rate ${star} out of 5 stars`}
+                      aria-pressed={star <= rating}
                       className="p-1 transition-transform hover:scale-125 focus:outline-none cursor-pointer bg-transparent"
                     >
                       <Star
@@ -144,6 +150,7 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Your name..."
+                    aria-label="Name (Optional)"
                     className="w-full bg-slate-50 dark:bg-black/60 [html[data-theme=light]_&]:bg-white border border-slate-200 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] hover:[html[data-theme=light]_&]:border-[#B8DCFF] focus:[html[data-theme=light]_&]:border-[#22C7F2] rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white [html[data-theme=light]_&]:text-[#0F172A] placeholder-slate-400 dark:placeholder-slate-500 [html[data-theme=light]_&]:placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:[html[data-theme=light]_&]:ring-0 focus:[html[data-theme=light]_&]:shadow-[0_0_0_4px_rgba(34,199,242,0.15)] transition"
                   />
                 </div>
@@ -156,6 +163,7 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@domain.com..."
+                    aria-label="Email (Optional)"
                     className="w-full bg-slate-50 dark:bg-black/60 [html[data-theme=light]_&]:bg-white border border-slate-200 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] hover:[html[data-theme=light]_&]:border-[#B8DCFF] focus:[html[data-theme=light]_&]:border-[#22C7F2] rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white [html[data-theme=light]_&]:text-[#0F172A] placeholder-slate-400 dark:placeholder-slate-500 [html[data-theme=light]_&]:placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:[html[data-theme=light]_&]:ring-0 focus:[html[data-theme=light]_&]:shadow-[0_0_0_4px_rgba(34,199,242,0.15)] transition"
                   />
                 </div>
@@ -172,6 +180,7 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Tell us what you love or how we can improve Relayo..."
+                  aria-label="Your Review or Message"
                   className="w-full bg-slate-50 dark:bg-black/60 [html[data-theme=light]_&]:bg-white border border-slate-200 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] hover:[html[data-theme=light]_&]:border-[#B8DCFF] focus:[html[data-theme=light]_&]:border-[#22C7F2] rounded-xl p-3 text-xs text-slate-900 dark:text-white [html[data-theme=light]_&]:text-[#0F172A] placeholder-slate-400 dark:placeholder-slate-500 [html[data-theme=light]_&]:placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:[html[data-theme=light]_&]:ring-0 focus:[html[data-theme=light]_&]:shadow-[0_0_0_4px_rgba(34,199,242,0.15)] transition resize-none"
                 />
               </div>
@@ -185,6 +194,7 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
               <button
                 type="submit"
                 disabled={isSubmitting || !message.trim()}
+                aria-label="Submit Feedback"
                 className="w-full py-2.5 rounded-2xl bg-[linear-gradient(90deg,#1FB6FF,#2D7FF9)] hover:brightness-105 disabled:opacity-50 text-white font-bold text-xs shadow-md flex items-center justify-center gap-2 transition cursor-pointer"
               >
                 {isSubmitting ? (

@@ -17,7 +17,6 @@ import {
   Laptop,
   Smartphone,
   Clock,
-  Sparkles,
   Image as ImageIcon
 } from 'lucide-react';
 
@@ -59,7 +58,9 @@ export function CloudScreenshot() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
           <button
+            type="button"
             onClick={handleCapture}
+            aria-label="Capture Display Screen"
             className="flex items-center justify-center gap-2 py-2.5 px-4 sm:py-3.5 sm:px-5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white font-bold text-xs sm:text-sm transition shadow-md active:scale-95 cursor-pointer min-h-[44px]"
           >
             <Camera className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2} />
@@ -67,7 +68,9 @@ export function CloudScreenshot() {
           </button>
 
           <button
+            type="button"
             onClick={() => fileInputRef.current?.click()}
+            aria-label="Upload Image File"
             className="flex items-center justify-center gap-2 py-2.5 px-4 sm:py-3.5 sm:px-5 rounded-xl bg-white/5 [html[data-theme=light]_&]:bg-white hover:bg-white/10 hover:[html[data-theme=light]_&]:bg-slate-50 border border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] text-slate-200 [html[data-theme=light]_&]:text-[#0F172A] font-bold text-xs sm:text-sm transition shadow-sm active:scale-95 cursor-pointer min-h-[44px]"
           >
             <Upload className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 [html[data-theme=light]_&]:text-amber-600" strokeWidth={2} />
@@ -111,7 +114,11 @@ export function CloudScreenshot() {
                   <div className="relative aspect-video bg-black/80 overflow-hidden cursor-pointer" onClick={() => setSelectedItem(item)}>
                     <img
                       src={item.imageUrl}
-                      alt={item.title || 'Screenshot'}
+                      alt={item.title || 'Screenshot thumbnail'}
+                      width="400"
+                      height="225"
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
                     />
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-2">
@@ -142,8 +149,10 @@ export function CloudScreenshot() {
 
                     <div className="flex items-center justify-between pt-2 border-t border-white/5 [html[data-theme=light]_&]:border-slate-100">
                       <button
+                        type="button"
                         onClick={() => setSelectedItem(item)}
-                        className="text-xs text-amber-400 [html[data-theme=light]_&]:text-amber-600 hover:text-amber-300 font-semibold"
+                        aria-label="View screenshot in HD"
+                        className="text-xs text-amber-400 [html[data-theme=light]_&]:text-amber-600 hover:text-amber-300 font-semibold cursor-pointer"
                       >
                         View HD 4K
                       </button>
@@ -152,14 +161,17 @@ export function CloudScreenshot() {
                         <a
                           href={item.imageUrl}
                           download={`Screenshot_${item.timestamp}.webp`}
+                          aria-label="Download screenshot image"
                           className="p-1 text-slate-400 hover:text-white transition"
                           title="Download Image"
                         >
                           <Download className="w-3.5 h-3.5" />
                         </a>
                         <button
+                          type="button"
                           onClick={() => deleteScreenshotItem(item.id)}
-                          className="p-1 text-slate-500 hover:text-red-400 transition"
+                          aria-label="Delete screenshot"
+                          className="p-1 text-slate-500 hover:text-red-400 transition cursor-pointer"
                           title="Delete Screenshot"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -191,14 +203,17 @@ export function CloudScreenshot() {
                 <a
                   href={selectedItem.imageUrl}
                   download={`Screenshot_${selectedItem.timestamp}.webp`}
+                  aria-label="Download 4K screenshot"
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-xs font-semibold transition"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Download 4K</span>
                 </a>
                 <button
+                  type="button"
                   onClick={() => setSelectedItem(null)}
-                  className="p-2 text-slate-400 hover:text-white rounded-xl bg-white/5 hover:bg-white/10 transition"
+                  aria-label="Close screenshot preview modal"
+                  className="p-2 text-slate-400 hover:text-white rounded-xl bg-white/5 hover:bg-white/10 transition cursor-pointer"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -208,7 +223,10 @@ export function CloudScreenshot() {
             <div className="p-4 flex-1 overflow-auto flex items-center justify-center bg-black">
               <img
                 src={selectedItem.imageUrl}
-                alt="Full Preview"
+                alt={selectedItem.title || 'Full screenshot preview'}
+                width="1280"
+                height="720"
+                decoding="async"
                 className="max-w-full max-h-[70vh] object-contain rounded-lg shadow-2xl"
               />
             </div>

@@ -75,14 +75,17 @@ export const ManualCodeInput: React.FC<ManualCodeInputProps> = ({ onSubmit }) =>
             onChange={(e) => handleChange(idx, e.target.value)}
             onKeyDown={(e) => handleKeyDown(idx, e)}
             onPaste={handlePaste}
+            aria-label={`Digit ${idx + 1} of 6-digit PIN`}
             className="w-10 h-12 text-center text-lg font-mono font-bold bg-white/5 border border-white/15 focus:border-cyan-400 focus:bg-cyan-500/10 rounded-xl text-white outline-none transition-all"
           />
         ))}
       </div>
 
       <button
+        type="button"
         disabled={!isComplete}
         onClick={() => onSubmit(digits.join(''))}
+        aria-label="Connect Device with PIN"
         className={`w-full py-2.5 rounded-xl font-medium text-xs flex items-center justify-center gap-2 transition-all shadow-lg ${
           isComplete
             ? 'bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-400 hover:to-violet-500 text-white cursor-pointer'

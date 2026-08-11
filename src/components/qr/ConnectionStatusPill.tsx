@@ -115,8 +115,10 @@ export const ConnectionStatusPill: React.FC<ConnectionStatusPillProps> = ({
 
       {(state === 'EXPIRED' || state === 'ERROR') && onRefresh && (
         <button
+          type="button"
           onClick={onRefresh}
-          className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-indigo-600/80 hover:bg-indigo-500 text-white text-xs font-medium transition-colors shadow-lg"
+          aria-label="Regenerate QR Code session"
+          className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-indigo-600/80 hover:bg-indigo-500 text-white text-xs font-medium transition-colors shadow-lg cursor-pointer"
         >
           <RefreshCw className="w-3 h-3" />
           Regenerate QR

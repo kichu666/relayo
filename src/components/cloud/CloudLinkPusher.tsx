@@ -71,6 +71,7 @@ export function CloudLinkPusher() {
               value={urlInput}
               onChange={(e) => setUrlInput(e.target.value)}
               placeholder="Paste or type URL (e.g. https://github.com or google.com)"
+              aria-label="URL Input"
               className="w-full h-11 min-h-[44px] bg-black/60 dark:bg-black/60 [html[data-theme=light]_&]:bg-[#F5F5F7] border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-transparent focus:[html[data-theme=light]_&]:border-[#007AFF] rounded-xl px-4 py-2 text-sm font-mono text-white dark:text-white [html[data-theme=light]_&]:text-[#1D1D1F] placeholder-slate-500 dark:placeholder-slate-500 [html[data-theme=light]_&]:placeholder-[#86868B] focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:[html[data-theme=light]_&]:ring-[#007AFF]/20 transition"
               onKeyDown={(e) => e.key === 'Enter' && handlePushLink()}
             />
@@ -82,12 +83,15 @@ export function CloudLinkPusher() {
               value={noteInput}
               onChange={(e) => setNoteInput(e.target.value)}
               placeholder="Optional note / title..."
+              aria-label="Optional note or title for URL"
               className="flex-1 h-11 min-h-[44px] bg-black/60 dark:bg-black/60 [html[data-theme=light]_&]:bg-[#F5F5F7] border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-transparent focus:[html[data-theme=light]_&]:border-[#007AFF] rounded-xl px-4 py-2 text-xs sm:text-sm text-white dark:text-white [html[data-theme=light]_&]:text-[#1D1D1F] placeholder-slate-500 dark:placeholder-slate-500 [html[data-theme=light]_&]:placeholder-[#86868B] focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:[html[data-theme=light]_&]:ring-[#007AFF]/20 transition"
               onKeyDown={(e) => e.key === 'Enter' && handlePushLink()}
             />
             <button
+              type="button"
               onClick={handlePushLink}
               disabled={!urlInput.trim()}
+              aria-label="Push URL to cloud room"
               className="h-11 min-h-[44px] flex items-center justify-center gap-2 px-6 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 [html[data-theme=light]_&]:bg-[#007AFF] [html[data-theme=light]_&]:from-[#007AFF] [html[data-theme=light]_&]:to-[#007AFF] hover:from-purple-500 hover:to-indigo-500 hover:[html[data-theme=light]_&]:bg-[#0066CC] disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-sm shadow-[0_0_15px_rgba(147,51,234,0.3)] [html[data-theme=light]_&]:shadow-md transition transform active:scale-95 whitespace-nowrap cursor-pointer"
             >
               <Send className="w-4 h-4" strokeWidth={2} />
@@ -142,8 +146,10 @@ export function CloudLinkPusher() {
                         <Clock className="w-3 h-3" /> {formatTime(item.timestamp)}
                       </span>
                       <button
+                        type="button"
                         onClick={() => deleteLinkItem(item.id)}
-                        className="p-1 text-slate-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition"
+                        aria-label="Remove link"
+                        className="p-1 text-slate-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition cursor-pointer"
                         title="Remove"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -161,6 +167,7 @@ export function CloudLinkPusher() {
                       href={item.url}
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label={`Open link ${item.url}`}
                       className="text-sm font-semibold text-cyan-300 hover:text-cyan-200 underline underline-offset-2 break-all"
                     >
                       {item.url}
@@ -169,8 +176,10 @@ export function CloudLinkPusher() {
 
                   <div className="flex items-center justify-end gap-2 mt-3">
                     <button
+                      type="button"
                       onClick={() => handleCopy(item.id, item.url)}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition ${
+                      aria-label="Copy link URL"
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer ${
                         isJustCopied
                           ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
                           : 'bg-white/5 hover:bg-white/10 text-slate-200 border border-white/10'
@@ -184,6 +193,7 @@ export function CloudLinkPusher() {
                       href={item.url}
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label={`Open URL in new tab: ${item.url}`}
                       className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 text-purple-200 border border-purple-500/40 text-xs font-semibold transition shadow-sm"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />

@@ -61,11 +61,14 @@ export const AmoledWifiSwitch: React.FC<AmoledWifiSwitchProps> = ({
 
       {/* Local (Wi-Fi P2P) Mode Button */}
       <button
+        type="button"
         onClick={() => setAppMode('p2p')}
+        aria-label="Local P2P Mode"
+        aria-pressed={appMode === 'p2p'}
         className={`relative z-10 w-1/2 h-full flex items-center justify-center gap-1.5 md:gap-2 rounded-full font-bold text-xs md:text-sm transition-colors duration-300 cursor-pointer ${
           appMode === 'p2p'
             ? 'text-cyan-400 [html[data-theme=light]_&]:text-cyan-400 drop-shadow-[0_0_6px_rgba(34,211,238,0.4)] [html[data-theme=light]_&]:drop-shadow-none'
-            : 'text-zinc-500 [html[data-theme=light]_&]:text-slate-400 hover:text-zinc-300 [html[data-theme=light]_&]:hover:text-slate-200'
+            : 'text-zinc-400 [html[data-theme=light]_&]:text-slate-500 hover:text-zinc-300 [html[data-theme=light]_&]:hover:text-slate-200'
         }`}
         title="Local P2P Mode"
       >
@@ -75,11 +78,14 @@ export const AmoledWifiSwitch: React.FC<AmoledWifiSwitchProps> = ({
 
       {/* Cloud Mode Button */}
       <button
+        type="button"
         onClick={() => setAppMode('cloud')}
+        aria-label="Cloud Hub Mode"
+        aria-pressed={appMode === 'cloud'}
         className={`relative z-10 w-1/2 h-full flex items-center justify-center gap-1.5 md:gap-2 rounded-full font-bold text-xs md:text-sm transition-colors duration-300 cursor-pointer ${
           appMode === 'cloud'
             ? 'text-cyan-400 [html[data-theme=light]_&]:text-cyan-400 drop-shadow-[0_0_6px_rgba(34,211,238,0.4)] [html[data-theme=light]_&]:drop-shadow-none'
-            : 'text-zinc-500 [html[data-theme=light]_&]:text-slate-400 hover:text-zinc-300 [html[data-theme=light]_&]:hover:text-slate-200'
+            : 'text-zinc-400 [html[data-theme=light]_&]:text-slate-500 hover:text-zinc-300 [html[data-theme=light]_&]:hover:text-slate-200'
         }`}
         title="Cloud Hub Mode"
       >

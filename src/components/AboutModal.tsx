@@ -27,7 +27,9 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
         
         {/* Close Button */}
         <button
+          type="button"
           onClick={onClose}
+          aria-label="Close About Us modal"
           className="absolute top-5 right-5 p-1.5 rounded-full bg-white/5 dark:bg-white/5 [html[data-theme=light]_&]:bg-white hover:bg-white/10 dark:hover:bg-white/10 hover:[html[data-theme=light]_&]:bg-slate-50 border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] text-slate-400 dark:text-slate-400 [html[data-theme=light]_&]:text-[#475569] hover:text-white dark:hover:text-white hover:[html[data-theme=light]_&]:text-[#0F172A] [html[data-theme=light]_&]:shadow-sm transition-colors cursor-pointer"
           title="Close Modal (Esc)"
         >
@@ -83,6 +85,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
           </span>
           <a
             href="mailto:team@relayo.space"
+            aria-label="Send email to team@relayo.space"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 dark:bg-white/5 dark:hover:bg-white/10 [html[data-theme=light]_&]:bg-white [html[data-theme=light]_&]:hover:bg-slate-100 border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-[#D7E8FF] text-slate-200 dark:text-slate-200 [html[data-theme=light]_&]:text-[#0F172A] text-xs font-mono transition-all shadow-sm group cursor-pointer"
           >
             <Mail className="w-4 h-4 text-cyan-400 [html[data-theme=light]_&]:text-[#0EA5E9] group-hover:scale-110 transition-transform" />
@@ -105,7 +108,9 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
         {/* Modal Action Button */}
         <div className="pt-2">
           <button
+            type="button"
             onClick={onClose}
+            aria-label="Got it, back to Relayo"
             className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm transition-all shadow-lg active:scale-95 cursor-pointer"
           >
             Got It, Back to Relayo

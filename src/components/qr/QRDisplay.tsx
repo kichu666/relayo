@@ -69,9 +69,11 @@ export const QRDisplay: React.FC<QRDisplayProps> = ({
         </div>
 
         <button
+          type="button"
           onClick={onRefreshKey}
+          aria-label="Regenerate QR Code"
           title="Regenerate QR Code"
-          className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white transition-all border border-white/5"
+          className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white transition-all border border-white/5 cursor-pointer"
         >
           <RefreshCw className="w-4 h-4" />
         </button>
@@ -103,8 +105,10 @@ export const QRDisplay: React.FC<QRDisplayProps> = ({
             <p className="text-xs font-semibold text-slate-900">QR Code Expired</p>
             <p className="text-[10px] text-slate-500 mb-3">Key payload destroyed for security</p>
             <button
+              type="button"
               onClick={onRefreshKey}
-              className="px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-medium shadow-md hover:bg-indigo-500 transition-all"
+              aria-label="Refresh expired QR code"
+              className="px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-medium shadow-md hover:bg-indigo-500 transition-all cursor-pointer"
             >
               Refresh QR
             </button>
@@ -116,7 +120,9 @@ export const QRDisplay: React.FC<QRDisplayProps> = ({
         <button
           type="button"
           onClick={() => onModeChange('ephemeral')}
-          className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-medium transition-all flex items-center justify-center gap-1.5 ${
+          aria-label="One-Off Ephemeral Mode"
+          aria-pressed={pairingMode === 'ephemeral'}
+          className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-medium transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
             pairingMode === 'ephemeral'
               ? 'bg-gradient-to-r from-indigo-500 to-violet-600 text-white shadow-md'
               : 'text-slate-400 hover:text-slate-200'
@@ -129,7 +135,9 @@ export const QRDisplay: React.FC<QRDisplayProps> = ({
         <button
           type="button"
           onClick={() => onModeChange('trusted')}
-          className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-medium transition-all flex items-center justify-center gap-1.5 ${
+          aria-label="Trust Device Mode"
+          aria-pressed={pairingMode === 'trusted'}
+          className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-medium transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
             pairingMode === 'trusted'
               ? 'bg-gradient-to-r from-indigo-500 to-violet-600 text-white shadow-md'
               : 'text-slate-400 hover:text-slate-200'
@@ -169,8 +177,10 @@ export const QRDisplay: React.FC<QRDisplayProps> = ({
         </div>
 
         <button
+          type="button"
           onClick={copyToClipboard}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-slate-200 hover:text-white transition-all"
+          aria-label="Copy pairing link to clipboard"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-slate-200 hover:text-white transition-all cursor-pointer"
         >
           {copied ? (
             <>

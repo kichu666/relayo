@@ -50,16 +50,20 @@ export const SASVerificationModal: React.FC<SASVerificationModalProps> = ({
 
         <div className="w-full flex gap-3">
           <button
+            type="button"
             onClick={onReject}
-            className="flex-1 py-2.5 rounded-xl border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 text-xs font-medium transition-all flex items-center justify-center gap-1.5"
+            aria-label="Mismatch, cancel pairing"
+            className="flex-1 py-2.5 rounded-xl border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 text-xs font-medium transition-all flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <X className="w-4 h-4" />
             <span>Mismatch (Cancel)</span>
           </button>
 
           <button
+            type="button"
             onClick={onConfirm}
-            className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white text-xs font-semibold shadow-lg shadow-emerald-500/25 transition-all flex items-center justify-center gap-1.5"
+            aria-label="Confirm security verification and pair"
+            className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white text-xs font-semibold shadow-lg shadow-emerald-500/25 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <Check className="w-4 h-4" />
             <span>Confirm & Pair</span>

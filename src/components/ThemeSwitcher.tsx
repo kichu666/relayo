@@ -18,12 +18,15 @@ export function ThemeSwitcher() {
         const isActive = currentTheme === item.id;
         return (
           <button
+            type="button"
             key={item.id}
             onClick={() => setTheme(item.id)}
+            aria-label={`Switch to ${item.label} Theme`}
+            aria-pressed={isActive}
             className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
               isActive
                 ? 'bg-cyan-500 text-slate-950 font-bold shadow-md'
-                : 'text-slate-400 hover:text-slate-200'
+                : 'text-slate-400 [html[data-theme=light]_&]:text-slate-600 hover:text-slate-200'
             }`}
             title={`Switch to ${item.label} Theme`}
           >

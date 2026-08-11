@@ -12,7 +12,6 @@ import {
   Trash2,
   Check,
   Sparkles,
-  Clock,
   Code,
   List,
   CheckSquare
@@ -79,8 +78,10 @@ export function CloudScratchpad() {
 
           <div className="flex items-center gap-2">
             <button
+              type="button"
               onClick={handleCopyNote}
               disabled={!localText}
+              aria-label="Copy Scratchpad note to clipboard"
               className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer min-h-[44px] ${
                 isCopied
                   ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
@@ -92,8 +93,10 @@ export function CloudScratchpad() {
             </button>
 
             <button
+              type="button"
               onClick={clearScratchpadNote}
               disabled={!localText}
+              aria-label="Clear Scratchpad note"
               className="p-2.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 text-xs disabled:opacity-40 transition cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center"
               title="Clear Scratchpad"
             >
@@ -106,19 +109,25 @@ export function CloudScratchpad() {
         <div className="flex items-center gap-2 mb-3 pt-2 border-t border-white/5 [html[data-theme=light]_&]:border-[#E5E5EA]">
           <span className="text-[11px] text-slate-400 [html[data-theme=light]_&]:text-[#86868B] font-medium">Quick Insert:</span>
           <button
+            type="button"
             onClick={() => handleInsertTemplate('bullets')}
+            aria-label="Insert bullet points template"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 [html[data-theme=light]_&]:bg-[#F5F5F7] [html[data-theme=light]_&]:hover:bg-[#E5E5EA] text-slate-300 [html[data-theme=light]_&]:text-[#1D1D1F] text-xs border border-white/10 [html[data-theme=light]_&]:border-transparent transition cursor-pointer min-h-[36px]"
           >
             <List className="w-3.5 h-3.5 text-emerald-400 [html[data-theme=light]_&]:text-[#007AFF]" strokeWidth={2} /> List
           </button>
           <button
+            type="button"
             onClick={() => handleInsertTemplate('todo')}
+            aria-label="Insert checklist template"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 [html[data-theme=light]_&]:bg-[#F5F5F7] [html[data-theme=light]_&]:hover:bg-[#E5E5EA] text-slate-300 [html[data-theme=light]_&]:text-[#1D1D1F] text-xs border border-white/10 [html[data-theme=light]_&]:border-transparent transition cursor-pointer min-h-[36px]"
           >
             <CheckSquare className="w-3.5 h-3.5 text-cyan-400 [html[data-theme=light]_&]:text-[#007AFF]" strokeWidth={2} /> Checklist
           </button>
           <button
+            type="button"
             onClick={() => handleInsertTemplate('code')}
+            aria-label="Insert code block template"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 [html[data-theme=light]_&]:bg-[#F5F5F7] [html[data-theme=light]_&]:hover:bg-[#E5E5EA] text-slate-300 [html[data-theme=light]_&]:text-[#1D1D1F] text-xs border border-white/10 [html[data-theme=light]_&]:border-transparent transition cursor-pointer min-h-[36px]"
           >
             <Code className="w-3.5 h-3.5 text-purple-400 [html[data-theme=light]_&]:text-[#007AFF]" strokeWidth={2} /> Code Block
@@ -131,6 +140,7 @@ export function CloudScratchpad() {
             value={localText}
             onChange={(e) => handleTextChange(e.target.value)}
             placeholder="Type notes, draft code, or brainstorm here... Changes sync in real-time to your phone & desktop!"
+            aria-label="Real-time synchronized scratchpad note"
             className="w-full h-[160px] min-h-[160px] bg-black/70 dark:bg-black/70 [html[data-theme=light]_&]:bg-[#F5F5F7] border border-white/10 dark:border-white/10 [html[data-theme=light]_&]:border-transparent focus:[html[data-theme=light]_&]:border-[#007AFF] rounded-2xl p-5 font-mono text-sm text-slate-100 dark:text-slate-100 [html[data-theme=light]_&]:text-[#1D1D1F] placeholder-slate-500 dark:placeholder-slate-500 [html[data-theme=light]_&]:placeholder-[#86868B] focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:[html[data-theme=light]_&]:ring-[#007AFF]/20 transition resize-y leading-relaxed"
           />
         </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useStore } from '@nanostores/react';
 import { $cloudStore, updateDeviceName, inferDeviceType } from '../../logic/cloudStore';
 import {
@@ -94,12 +94,15 @@ export function PresenceTracker() {
                     value={nameInput}
                     onChange={(e) => setNameInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSaveName()}
+                    aria-label="Device name input"
                     className="h-11 min-h-[44px] bg-black/60 [html[data-theme=light]_&]:bg-white border border-cyan-500/50 [html[data-theme=light]_&]:border-[#D5E9FF] focus:[html[data-theme=light]_&]:border-[#22C7F2] rounded-xl px-4 py-1 text-sm text-white [html[data-theme=light]_&]:text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:[html[data-theme=light]_&]:ring-0 focus:[html[data-theme=light]_&]:shadow-[0_0_0_4px_rgba(34,199,242,0.15)] transition"
                     placeholder="Enter device name..."
                     autoFocus
                   />
                   <button
+                    type="button"
                     onClick={handleSaveName}
+                    aria-label="Save device name"
                     className="h-11 min-h-[44px] px-4 rounded-xl bg-cyan-500/20 [html[data-theme=light]_&]:bg-gradient-to-r [html[data-theme=light]_&]:from-cyan-500 [html[data-theme=light]_&]:to-blue-600 hover:bg-cyan-500/30 text-cyan-300 [html[data-theme=light]_&]:text-white border border-cyan-500/40 [html[data-theme=light]_&]:border-transparent transition cursor-pointer font-bold"
                     title="Save Device Name"
                   >
@@ -112,10 +115,12 @@ export function PresenceTracker() {
                     {displayedCurrentDeviceName}
                   </h3>
                   <button
+                    type="button"
                     onClick={() => {
                       setNameInput(displayedCurrentDeviceName);
                       setIsEditingName(true);
                     }}
+                    aria-label="Rename device"
                     className="p-1.5 text-slate-400 hover:text-cyan-300 [html[data-theme=light]_&]:hover:text-cyan-600 transition cursor-pointer"
                     title="Rename Device"
                   >
