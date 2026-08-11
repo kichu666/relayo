@@ -33,7 +33,8 @@ import {
   Package,
   Cloud,
   Radio,
-  Menu
+  Menu,
+  HelpCircle
 } from 'lucide-react';
 import { CloudHub } from './components/cloud/CloudHub';
 import { FeedbackModal } from './components/FeedbackModal';

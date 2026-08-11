@@ -185,7 +185,7 @@ export async function hostFilesOnSender(files: File[]): Promise<string> {
         $shareStore.setKey('isLoadingInfo', false);
       }
     },
-    onFileMetadataReceived: () => {},
+    onFileMetadataReceived: () => { },
     onProgress: (percent, currentFile, speedStr, bytesTransferred, totalBytes) => {
       $shareStore.setKey('isUploading', percent < 100);
       $shareStore.setKey('uploadProgressPercent', percent);
@@ -194,7 +194,7 @@ export async function hostFilesOnSender(files: File[]): Promise<string> {
       $shareStore.setKey('bytesTransferred', bytesTransferred);
       $shareStore.setKey('totalBytesExpected', totalBytes);
     },
-    onFileReceived: () => {},
+    onFileReceived: () => { },
     onTransferComplete: () => {
       $shareStore.setKey('isUploading', false);
       $shareStore.setKey('uploadProgressPercent', 100);
