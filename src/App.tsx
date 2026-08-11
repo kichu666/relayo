@@ -777,7 +777,7 @@ export function App() {
           
           {/* Left: Copyright */}
           <div className="flex items-center gap-2 whitespace-nowrap relative z-10">
-            <span>© 2026 Relayo.space — Direct Peer-to-Peer File Transfer</span>
+            <span>© 2026 Relayo.space</span>
           </div>
 
           {/* Right: Small clickable inline text links */}
