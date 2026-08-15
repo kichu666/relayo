@@ -29,7 +29,8 @@ import {
   ArrowLeftRight,
   Package,
   Menu,
-  HelpCircle
+  HelpCircle,
+  ShieldCheck
 } from 'lucide-react';
 import { CloudHub } from './components/cloud/CloudHub';
 import { FeedbackModal } from './components/FeedbackModal';
