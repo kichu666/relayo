@@ -26,6 +26,7 @@ export function useFirebasePresence(roomId: string, deviceName: string, deviceId
         onDisconnect(presenceRef).remove();
 
         set(presenceRef, {
+          id: deviceId,
           status: 'online',
           lastActive: serverTimestamp(),
           name: cleanName,

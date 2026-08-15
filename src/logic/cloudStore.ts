@@ -343,6 +343,7 @@ export const initCloudSession = (roomIdToJoin?: string) => {
   }, 10000);
 
   // Listen to presence snapshot strictly for active room
+  // Listen to presence snapshot strictly for active room
   const presenceRef = ref(db, `rooms/${roomId}/presence`);
   const unsubPresence = onValue(presenceRef, (snapshot) => {
     const data = snapshot.val();
@@ -352,12 +353,17 @@ export const initCloudSession = (roomIdToJoin?: string) => {
         const itemPlatform = String(item.platform || '').trim();
         const itemName = String(item.name || 'Device').trim();
         const itemType = inferDeviceType(item.type, itemPlatform, itemName);
+        const isOnline = item.status === 'online' || item.isActive === true;
+        const lastActiveTime = typeof item.lastActive === 'number' && !isNaN(item.lastActive)
+          ? item.lastActive
+          : (typeof item.lastSeen === 'number' && !isNaN(item.lastSeen) ? item.lastSeen : Date.now());
+
         return {
           id: String(item.id || key).trim(),
           name: itemName,
           type: itemType,
-          status: item.status === 'offline' ? 'offline' : 'online',
-          lastActive: typeof item.lastActive === 'number' && !isNaN(item.lastActive) ? item.lastActive : Date.now(),
+          status: isOnline ? 'online' : 'offline',
+          lastActive: lastActiveTime,
           platform: itemPlatform || 'Web'
         };
       });
@@ -396,10 +402,36 @@ export const initCloudSession = (roomIdToJoin?: string) => {
   const unsubClipboards = onValue(clipboardRef, (snapshot) => {
     const data = snapshot.val();
     if (data) {
-      const items: ClipboardItem[] = Object.keys(data).map(key => ({
-        id: key,
-        ...data[key]
-      })).sort((a, b) => b.timestamp - a.timestamp);
+      let items: ClipboardItem[] = [];
+      if (typeof data === 'object') {
+        items = Object.keys(data).map(key => {
+          const val = data[key];
+          if (typeof val === 'string') {
+            return {
+              id: key,
+              senderId: 'remote',
+              senderName: 'Remote Device',
+              text: val,
+              timestamp: Date.now()
+            };
+          }
+          return {
+            id: key,
+            senderId: String(val.senderId || 'remote'),
+            senderName: String(val.senderName || 'Remote Device'),
+            text: String(val.text || ''),
+            timestamp: typeof val.timestamp === 'number' ? val.timestamp : Date.now()
+          };
+        }).sort((a, b) => b.timestamp - a.timestamp);
+      } else if (typeof data === 'string') {
+        items = [{
+          id: 'legacy_clip',
+          senderId: 'remote',
+          senderName: 'Remote Device',
+          text: data,
+          timestamp: Date.now()
+        }];
+      }
 
       const previousCount = $cloudStore.get().clipboards.length;
       if (items.length > previousCount && previousCount > 0) {
@@ -420,10 +452,37 @@ export const initCloudSession = (roomIdToJoin?: string) => {
   const unsubLinks = onValue(linksRef, (snapshot) => {
     const data = snapshot.val();
     if (data) {
-      const items: LinkItem[] = Object.keys(data).map(key => ({
-        id: key,
-        ...data[key]
-      })).sort((a, b) => b.timestamp - a.timestamp);
+      let items: LinkItem[] = [];
+      if (typeof data === 'object') {
+        items = Object.keys(data).map(key => {
+          const val = data[key];
+          if (typeof val === 'string') {
+            return {
+              id: key,
+              senderId: 'remote',
+              senderName: 'Remote Device',
+              url: val,
+              timestamp: Date.now()
+            };
+          }
+          return {
+            id: key,
+            senderId: String(val.senderId || 'remote'),
+            senderName: String(val.senderName || 'Remote Device'),
+            url: String(val.url || ''),
+            note: String(val.note || ''),
+            timestamp: typeof val.timestamp === 'number' ? val.timestamp : Date.now()
+          };
+        }).sort((a, b) => b.timestamp - a.timestamp);
+      } else if (typeof data === 'string') {
+        items = [{
+          id: 'legacy_link',
+          senderId: 'remote',
+          senderName: 'Remote Device',
+          url: data,
+          timestamp: Date.now()
+        }];
+      }
 
       const previousCount = $cloudStore.get().links.length;
       if (items.length > previousCount && previousCount > 0) {
@@ -444,7 +503,25 @@ export const initCloudSession = (roomIdToJoin?: string) => {
   const unsubScratchpad = onValue(scratchpadRef, (snapshot) => {
     const data = snapshot.val();
     if (data) {
-      $cloudStore.set({ ...$cloudStore.get(), scratchpad: data });
+      if (typeof data === 'object') {
+        $cloudStore.set({
+          ...$cloudStore.get(),
+          scratchpad: {
+            text: String(data.text || ''),
+            lastUpdatedBy: String(data.lastUpdatedBy || 'Remote Device'),
+            updatedAt: typeof data.updatedAt === 'number' ? data.updatedAt : Date.now()
+          }
+        });
+      } else if (typeof data === 'string') {
+        $cloudStore.set({
+          ...$cloudStore.get(),
+          scratchpad: {
+            text: data,
+            lastUpdatedBy: 'Remote Device',
+            updatedAt: Date.now()
+          }
+        });
+      }
     }
   });
   currentUnsubscribes.push(() => off(scratchpadRef));
