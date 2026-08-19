@@ -367,420 +367,420 @@ export function App() {
               <p className="text-xs text-[var(--text-muted)]">{store.statusMessage || 'Connecting to peer...'}</p>
             </div>
           ) : activeViewMode === 'home' ? (
-          /* Home Screen: Select Files to Host */
-          <>
-            <div className="w-full max-w-xl glass-panel rounded-2xl sm:rounded-3xl p-3.5 sm:p-8 border border-[var(--panel-border)] shadow-2xl [html[data-theme=light]_&]:shadow-[0_8px_30px_rgb(0,0,0,0.04)] text-center">
-              <div
-                role="button"
-                tabIndex={0}
-                aria-label="Drop files here or click to select files for sharing"
-                onClick={handleDropzoneClick}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    handleDropzoneClick();
-                  }
-                }}
-                className="w-full p-4 sm:p-8 rounded-xl sm:rounded-2xl border-2 border-dashed border-cyan-500/40 bg-[var(--card-bg)] hover:opacity-90 transition-colors cursor-pointer mb-4 sm:mb-6 flex flex-col items-center justify-center group focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
-              >
-                <FileUp className="w-10 h-10 sm:w-12 sm:h-12 theme-accent-text mb-3 group-hover:scale-110 transition-transform animate-bounce" />
-                <p className="text-sm sm:text-base font-bold">Drop files here or click to select</p>
-                <p className="text-[10px] sm:text-xs text-[var(--text-muted)] mt-1 font-mono">
-                  Direct Browser-to-Browser Transfer • Zero-Server Storage
-                </p>
+            /* Home Screen: Select Files to Host */
+            <>
+              <div className="w-full max-w-xl glass-panel rounded-2xl sm:rounded-3xl p-3.5 sm:p-8 border border-[var(--panel-border)] shadow-2xl [html[data-theme=light]_&]:shadow-[0_8px_30px_rgb(0,0,0,0.04)] text-center">
+                <div
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Drop files here or click to select files for sharing"
+                  onClick={handleDropzoneClick}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleDropzoneClick();
+                    }
+                  }}
+                  className="w-full p-4 sm:p-8 rounded-xl sm:rounded-2xl border-2 border-dashed border-cyan-500/40 bg-[var(--card-bg)] hover:opacity-90 transition-colors cursor-pointer mb-4 sm:mb-6 flex flex-col items-center justify-center group focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+                >
+                  <FileUp className="w-10 h-10 sm:w-12 sm:h-12 theme-accent-text mb-3 group-hover:scale-110 transition-transform animate-bounce" />
+                  <p className="text-sm sm:text-base font-bold">Drop files here or click to select</p>
+                  <p className="text-[10px] sm:text-xs text-[var(--text-muted)] mt-1 font-mono">
+                    Direct Browser-to-Browser Transfer • Zero-Server Storage
+                  </p>
+                </div>
+
+                {selectedFiles.length > 0 && (
+                  <div className="w-full mb-6 text-left">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-semibold text-[var(--text-muted)]">
+                        Selected Files ({selectedFiles.length})
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setSelectedFiles([])}
+                        aria-label="Clear all selected files"
+                        className="text-[11px] text-rose-500 hover:underline cursor-pointer"
+                      >
+                        Clear all
+                      </button>
+                    </div>
+
+                    {/* Paginated File Queue View */}
+                    <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+                      {selectedFiles.slice(0, displayLimit).map((file, idx) => (
+                        <div
+                          key={idx}
+                          className="flex items-center justify-between p-2.5 rounded-xl bg-[var(--card-bg)] border border-[var(--panel-border)] text-xs"
+                        >
+                          <div className="flex items-center gap-2.5 min-w-0 pr-2">
+                            <FileIcon className="w-4 h-4 theme-accent-text shrink-0" />
+                            <span className="truncate font-medium">{file.name}</span>
+                            <span className="text-[10px] font-mono text-[var(--text-muted)] shrink-0">
+                              ({formatFileSize(file.size)})
+                            </span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleRemoveFile(idx);
+                            }}
+                            aria-label={`Remove file ${file.name}`}
+                            className="p-1 rounded-lg hover:bg-black/10 dark:hover:bg-white/10 transition-colors cursor-pointer"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+
+                    {selectedFiles.length > displayLimit && (
+                      <button
+                        type="button"
+                        onClick={() => setDisplayLimit((prev) => prev + ITEMS_PER_PAGE)}
+                        aria-label="Show remaining files"
+                        className="w-full mt-2 py-1 text-center text-xs theme-accent-text hover:underline cursor-pointer flex items-center justify-center gap-1 font-semibold"
+                      >
+                        <span>Show More Files ({selectedFiles.length - displayLimit} remaining)</span>
+                        <ChevronDown className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+
+                    <button
+                      type="button"
+                      onClick={handleStartShareHost}
+                      disabled={store.isUploading}
+                      aria-label={`Share ${selectedFiles.length} selected files`}
+                      className="w-full mt-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white text-xs font-bold shadow-lg shadow-cyan-500/25 flex flex-col items-center justify-center gap-1 transition-all cursor-pointer disabled:opacity-50"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Zap className="w-4 h-4 fill-white" />
+                        <span>Share Files ({selectedFiles.length})</span>
+                      </div>
+                    </button>
+                  </div>
+                )}
               </div>
 
-              {selectedFiles.length > 0 && (
-                <div className="w-full mb-6 text-left">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-semibold text-[var(--text-muted)]">
-                      Selected Files ({selectedFiles.length})
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => setSelectedFiles([])}
-                      aria-label="Clear all selected files"
-                      className="text-[11px] text-rose-500 hover:underline cursor-pointer"
-                    >
-                      Clear all
-                    </button>
-                  </div>
+              {/* Why Relayo? Unified Card */}
+              <div className="w-full max-w-xl mt-8 p-6 sm:p-7 rounded-3xl [html[data-theme=amoled]_&]:bg-black/90 [html[data-theme=dark]_&]:bg-slate-900/90 [html[data-theme=light]_&]:bg-white border border-zinc-800/90 [html[data-theme=light]_&]:border-gray-200 shadow-2xl [html[data-theme=light]_&]:shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-2xl text-left relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-40 h-40 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
 
-                  {/* Paginated File Queue View */}
-                  <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
-                    {selectedFiles.slice(0, displayLimit).map((file, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-center justify-between p-2.5 rounded-xl bg-[var(--card-bg)] border border-[var(--panel-border)] text-xs"
-                      >
-                        <div className="flex items-center gap-2.5 min-w-0 pr-2">
-                          <FileIcon className="w-4 h-4 theme-accent-text shrink-0" />
-                          <span className="truncate font-medium">{file.name}</span>
-                          <span className="text-[10px] font-mono text-[var(--text-muted)] shrink-0">
-                            ({formatFileSize(file.size)})
-                          </span>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleRemoveFile(idx);
-                          }}
-                          aria-label={`Remove file ${file.name}`}
-                          className="p-1 rounded-lg hover:bg-black/10 dark:hover:bg-white/10 transition-colors cursor-pointer"
-                        >
-                          <X className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
+                <h3 className="text-lg font-bold tracking-wide text-zinc-100 [html[data-theme=light]_&]:text-slate-900 mb-6">
+                  Why Relayo?
+                </h3>
 
-                  {selectedFiles.length > displayLimit && (
-                    <button
-                      type="button"
-                      onClick={() => setDisplayLimit((prev) => prev + ITEMS_PER_PAGE)}
-                      aria-label="Show remaining files"
-                      className="w-full mt-2 py-1 text-center text-xs theme-accent-text hover:underline cursor-pointer flex items-center justify-center gap-1 font-semibold"
-                    >
-                      <span>Show More Files ({selectedFiles.length - displayLimit} remaining)</span>
-                      <ChevronDown className="w-3.5 h-3.5" />
-                    </button>
-                  )}
-
-                  <button
-                    type="button"
-                    onClick={handleStartShareHost}
-                    disabled={store.isUploading}
-                    aria-label={`Share ${selectedFiles.length} selected files`}
-                    className="w-full mt-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white text-xs font-bold shadow-lg shadow-cyan-500/25 flex flex-col items-center justify-center gap-1 transition-all cursor-pointer disabled:opacity-50"
-                  >
-                    <div className="flex items-center gap-2">
-                      <Zap className="w-4 h-4 fill-white" />
-                      <span>Share Files ({selectedFiles.length})</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 shrink-0 shadow-lg shadow-cyan-500/10">
+                      <CloudOff className="w-4 h-4" />
                     </div>
-                  </button>
+                    <div>
+                      <p className="text-xs font-bold text-zinc-100 [html[data-theme=light]_&]:text-slate-900">No cloud uploads</p>
+                      <p className="text-[10px] text-zinc-400 [html[data-theme=light]_&]:text-slate-500 font-medium">100% Zero server data storage</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 shrink-0 shadow-lg shadow-indigo-500/10">
+                      <ArrowLeftRight className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-zinc-100 [html[data-theme=light]_&]:text-slate-900">Direct P2P transfer</p>
+                      <p className="text-[10px] text-zinc-400 [html[data-theme=light]_&]:text-slate-500 font-medium">Browser-to-browser streaming</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 shrink-0 shadow-lg shadow-emerald-500/10">
+                      <QrCode className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-zinc-100 [html[data-theme=light]_&]:text-slate-900">Scan QR & download</p>
+                      <p className="text-[10px] text-zinc-400 [html[data-theme=light]_&]:text-slate-500 font-medium">Instant pairing for mobile</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-2xl bg-violet-500/10 border border-violet-500/30 text-violet-400 shrink-0 shadow-lg shadow-violet-500/10">
+                      <div className="flex items-center gap-0.5">
+                        <Laptop className="w-3.5 h-3.5" />
+                        <Smartphone className="w-3 h-3" />
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-zinc-100 [html[data-theme=light]_&]:text-slate-900">Phone & desktop</p>
+                      <p className="text-[10px] text-zinc-400 [html[data-theme=light]_&]:text-slate-500 font-medium">Cross-platform compatibility</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 shrink-0 shadow-lg shadow-amber-500/10">
+                      <Package className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-zinc-100 [html[data-theme=light]_&]:text-slate-900">Large file support</p>
+                      <p className="text-[10px] text-zinc-400 [html[data-theme=light]_&]:text-slate-500 font-medium">Zero file size limitations</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-2xl bg-blue-500/10 border border-blue-500/30 text-blue-400 shrink-0 shadow-lg shadow-blue-500/10">
+                      <Wifi className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-zinc-100 [html[data-theme=light]_&]:text-slate-900">Same local network</p>
+                      <p className="text-[10px] text-zinc-400 [html[data-theme=light]_&]:text-slate-500 font-medium">Ultra-fast Wi-Fi speed</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : store.viewMode === 'sender_host' ? (
+            /* Sender View: Display WebRTC Network Share Link & QR Code */
+            <div className="w-full max-w-xl glass-panel rounded-3xl p-8 border border-[var(--panel-border)] shadow-2xl text-center relative overflow-hidden animate-fade-in">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+
+              <div className="w-14 h-14 rounded-2xl bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center theme-accent-text mx-auto mb-4 shadow-lg shadow-cyan-500/20">
+                <Globe className="w-7 h-7 animate-pulse" />
+              </div>
+
+              <h3 className="text-lg font-bold mb-1">Share Link Ready</h3>
+              <p className="text-xs text-[var(--text-muted)] mb-5">
+                Open this link on any device to download files.
+              </p>
+
+              {/* Share Link Display Box */}
+              <div className="w-full p-4 rounded-2xl bg-[var(--input-bg)] border border-cyan-500/40 mb-6 flex items-center justify-between gap-3">
+                <div className="text-left min-w-0 flex-1">
+                  <p className="text-xs font-mono font-bold truncate">{store.shareUrl}</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleCopyLink}
+                  aria-label="Copy WebRTC share link to clipboard"
+                  className="px-3.5 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition-all shrink-0 cursor-pointer shadow-lg shadow-cyan-500/20"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="w-4 h-4" />
+                      <span>Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4" />
+                      <span>Copy Link</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {/* Transfer Progress Bar with Percentage & Live Speed */}
+              {(store.isUploading || store.connectionState === 'transferring' || (store.uploadProgressPercent > 0 && store.uploadProgressPercent <= 100)) && (
+                <div className="w-full mb-6 p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 backdrop-blur-md text-left">
+                  <div className="flex items-center justify-between text-xs font-semibold mb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0 shadow-[0_0_6px_rgba(34,211,238,0.8)]" />
+                      <span>Transferring files...</span>
+                    </div>
+                    <div className="flex items-center gap-3 font-mono">
+                      {store.transferSpeed && (
+                        <span className="text-[11px] px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold">
+                          ⚡ {store.transferSpeed}
+                        </span>
+                      )}
+                      <span className="text-cyan-400 font-bold text-sm">{store.uploadProgressPercent}%</span>
+                    </div>
+                  </div>
+
+                  <div className="w-full h-3 bg-slate-900/80 rounded-full overflow-hidden p-0.5 border border-slate-700/50">
+                    <div
+                      className="h-full bg-gradient-to-r from-cyan-400 via-indigo-500 to-violet-500 rounded-full transition-all duration-150 shadow-lg shadow-cyan-500/50"
+                      style={{ width: `${store.uploadProgressPercent}%` }}
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between text-[11px] font-mono text-[var(--text-muted)] mt-2">
+                    {store.currentUploadingFileName ? (
+                      <span className="truncate max-w-[200px] sm:max-w-[280px]">
+                        File: <span className="text-[var(--text-primary)] font-medium">{store.currentUploadingFileName}</span>
+                      </span>
+                    ) : (
+                      <span />
+                    )}
+                    {store.totalBytesExpected > 0 && (
+                      <span className="shrink-0 font-semibold">
+                        {formatFileSize(store.bytesTransferred)} / {formatFileSize(store.totalBytesExpected)}
+                      </span>
+                    )}
+                  </div>
                 </div>
               )}
-            </div>
 
-            {/* Why Relayo? Unified Card */}
-            <div className="w-full max-w-xl mt-8 p-6 sm:p-7 rounded-3xl [html[data-theme=amoled]_&]:bg-black/90 [html[data-theme=dark]_&]:bg-slate-900/90 [html[data-theme=light]_&]:bg-white border border-zinc-800/90 [html[data-theme=light]_&]:border-gray-200 shadow-2xl [html[data-theme=light]_&]:shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-2xl text-left relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-40 h-40 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
-
-              <h3 className="text-lg font-bold tracking-wide text-zinc-100 [html[data-theme=light]_&]:text-slate-900 mb-6">
-                Why Relayo?
-              </h3>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 shrink-0 shadow-lg shadow-cyan-500/10">
-                    <CloudOff className="w-4 h-4" />
+              {/* QR Code for Instant Phone Camera Scanning */}
+              {store.shareUrl && (
+                <div className="mb-6 flex flex-col items-center">
+                  <div className="p-4 bg-white rounded-2xl shadow-xl inline-block mb-2 border border-slate-200">
+                    <QRCodeSVG value={store.shareUrl} size={160} level="M" />
                   </div>
-                  <div>
-                    <p className="text-xs font-bold text-zinc-100 [html[data-theme=light]_&]:text-slate-900">No cloud uploads</p>
-                    <p className="text-[10px] text-zinc-400 [html[data-theme=light]_&]:text-slate-500 font-medium">100% Zero server data storage</p>
-                  </div>
+                  <p className="text-[11px] text-[var(--text-muted)] flex items-center gap-1.5 font-medium">
+                    <QrCode className="w-3.5 h-3.5 theme-accent-text" />
+                    <span>Scan to open on mobile</span>
+                  </p>
                 </div>
+              )}
 
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 shrink-0 shadow-lg shadow-indigo-500/10">
-                    <ArrowLeftRight className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-zinc-100 [html[data-theme=light]_&]:text-slate-900">Direct P2P transfer</p>
-                    <p className="text-[10px] text-zinc-400 [html[data-theme=light]_&]:text-slate-500 font-medium">Browser-to-browser streaming</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 shrink-0 shadow-lg shadow-emerald-500/10">
-                    <QrCode className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-zinc-100 [html[data-theme=light]_&]:text-slate-900">Scan QR & download</p>
-                    <p className="text-[10px] text-zinc-400 [html[data-theme=light]_&]:text-slate-500 font-medium">Instant pairing for mobile</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-2xl bg-violet-500/10 border border-violet-500/30 text-violet-400 shrink-0 shadow-lg shadow-violet-500/10">
-                    <div className="flex items-center gap-0.5">
-                      <Laptop className="w-3.5 h-3.5" />
-                      <Smartphone className="w-3 h-3" />
+              {/* Hosted File List Preview */}
+              <div className="w-full text-left mb-6">
+                <p className="text-xs font-semibold text-[var(--text-muted)] mb-2">
+                  Hosted Files ({store.files.length})
+                </p>
+                <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+                  {visibleFiles.map((file, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-center justify-between p-3 rounded-xl bg-[var(--card-bg)] border border-[var(--panel-border)] text-xs"
+                    >
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <FileIcon className="w-4 h-4 theme-accent-text shrink-0" />
+                        <span className="truncate font-medium">{file.name}</span>
+                      </div>
+                      <span className="text-[10px] font-mono text-[var(--text-muted)] shrink-0">
+                        {formatFileSize(file.size)}
+                      </span>
                     </div>
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-zinc-100 [html[data-theme=light]_&]:text-slate-900">Phone & desktop</p>
-                    <p className="text-[10px] text-zinc-400 [html[data-theme=light]_&]:text-slate-500 font-medium">Cross-platform compatibility</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 shrink-0 shadow-lg shadow-amber-500/10">
-                    <Package className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-zinc-100 [html[data-theme=light]_&]:text-slate-900">Large file support</p>
-                    <p className="text-[10px] text-zinc-400 [html[data-theme=light]_&]:text-slate-500 font-medium">Zero file size limitations</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-2xl bg-blue-500/10 border border-blue-500/30 text-blue-400 shrink-0 shadow-lg shadow-blue-500/10">
-                    <Wifi className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-zinc-100 [html[data-theme=light]_&]:text-slate-900">Same local network</p>
-                    <p className="text-[10px] text-zinc-400 [html[data-theme=light]_&]:text-slate-500 font-medium">Ultra-fast Wi-Fi speed</p>
-                  </div>
+                  ))}
                 </div>
               </div>
-            </div>
-          </>
-        ) : store.viewMode === 'sender_host' ? (
-          /* Sender View: Display WebRTC Network Share Link & QR Code */
-          <div className="w-full max-w-xl glass-panel rounded-3xl p-8 border border-[var(--panel-border)] shadow-2xl text-center relative overflow-hidden animate-fade-in">
-            <div className="absolute top-0 right-0 w-40 h-40 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
 
-            <div className="w-14 h-14 rounded-2xl bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center theme-accent-text mx-auto mb-4 shadow-lg shadow-cyan-500/20">
-              <Globe className="w-7 h-7 animate-pulse" />
-            </div>
-
-            <h3 className="text-lg font-bold mb-1">Share Link Ready</h3>
-            <p className="text-xs text-[var(--text-muted)] mb-5">
-              Open this link on any device to download files.
-            </p>
-
-            {/* Share Link Display Box */}
-            <div className="w-full p-4 rounded-2xl bg-[var(--input-bg)] border border-cyan-500/40 mb-6 flex items-center justify-between gap-3">
-              <div className="text-left min-w-0 flex-1">
-                <p className="text-xs font-mono font-bold truncate">{store.shareUrl}</p>
-              </div>
               <button
                 type="button"
-                onClick={handleCopyLink}
-                aria-label="Copy WebRTC share link to clipboard"
-                className="px-3.5 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition-all shrink-0 cursor-pointer shadow-lg shadow-cyan-500/20"
+                onClick={handleResetHome}
+                aria-label="Done and return to home page"
+                className="px-4 py-2 rounded-xl bg-[var(--card-bg)] hover:opacity-80 text-xs font-medium cursor-pointer border border-[var(--panel-border)]"
               >
-                {copied ? (
-                  <>
-                    <Check className="w-4 h-4" />
-                    <span>Copied!</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-4 h-4" />
-                    <span>Copy Link</span>
-                  </>
-                )}
+                Done & Return Home
               </button>
             </div>
+          ) : (
+            /* Receiver View: WebRTC P2P Direct Download Dashboard */
+            <div className="w-full max-w-xl glass-panel rounded-3xl p-8 border border-indigo-500/30 shadow-2xl text-center relative overflow-hidden animate-fade-in">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
-            {/* Transfer Progress Bar with Percentage & Live Speed */}
-            {(store.isUploading || store.connectionState === 'transferring' || (store.uploadProgressPercent > 0 && store.uploadProgressPercent <= 100)) && (
-              <div className="w-full mb-6 p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 backdrop-blur-md text-left">
-                <div className="flex items-center justify-between text-xs font-semibold mb-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0 shadow-[0_0_6px_rgba(34,211,238,0.8)]" />
-                    <span>Transferring files...</span>
-                  </div>
-                  <div className="flex items-center gap-3 font-mono">
-                    {store.transferSpeed && (
-                      <span className="text-[11px] px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold">
-                        ⚡ {store.transferSpeed}
-                      </span>
-                    )}
-                    <span className="text-cyan-400 font-bold text-sm">{store.uploadProgressPercent}%</span>
-                  </div>
-                </div>
-
-                <div className="w-full h-3 bg-slate-900/80 rounded-full overflow-hidden p-0.5 border border-slate-700/50">
-                  <div
-                    className="h-full bg-gradient-to-r from-cyan-400 via-indigo-500 to-violet-500 rounded-full transition-all duration-150 shadow-lg shadow-cyan-500/50"
-                    style={{ width: `${store.uploadProgressPercent}%` }}
-                  />
-                </div>
-
-                <div className="flex items-center justify-between text-[11px] font-mono text-[var(--text-muted)] mt-2">
-                  {store.currentUploadingFileName ? (
-                    <span className="truncate max-w-[200px] sm:max-w-[280px]">
-                      File: <span className="text-[var(--text-primary)] font-medium">{store.currentUploadingFileName}</span>
-                    </span>
-                  ) : (
-                    <span />
-                  )}
-                  {store.totalBytesExpected > 0 && (
-                    <span className="shrink-0 font-semibold">
-                      {formatFileSize(store.bytesTransferred)} / {formatFileSize(store.totalBytesExpected)}
-                    </span>
-                  )}
-                </div>
+              <div className="w-14 h-14 rounded-2xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-500 mx-auto mb-4 shadow-lg shadow-indigo-500/20">
+                <Download className="w-7 h-7 animate-bounce" />
               </div>
-            )}
 
-            {/* QR Code for Instant Phone Camera Scanning */}
-            {store.shareUrl && (
-              <div className="mb-6 flex flex-col items-center">
-                <div className="p-4 bg-white rounded-2xl shadow-xl inline-block mb-2 border border-slate-200">
-                  <QRCodeSVG value={store.shareUrl} size={160} level="M" />
-                </div>
-                <p className="text-[11px] text-[var(--text-muted)] flex items-center gap-1.5 font-medium">
-                  <QrCode className="w-3.5 h-3.5 theme-accent-text" />
-                  <span>Scan to open on mobile</span>
-                </p>
-              </div>
-            )}
-
-            {/* Hosted File List Preview */}
-            <div className="w-full text-left mb-6">
-              <p className="text-xs font-semibold text-[var(--text-muted)] mb-2">
-                Hosted Files ({store.files.length})
+              <h3 className="text-lg font-bold mb-1">Shared Files</h3>
+              <p className="text-xs text-[var(--text-muted)] mb-5 flex items-center justify-center gap-1.5 font-medium">
+                <ShieldCheck className="w-4 h-4 text-emerald-500" />
+                Direct browser-to-browser transfer
               </p>
-              <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
-                {visibleFiles.map((file, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center justify-between p-3 rounded-xl bg-[var(--card-bg)] border border-[var(--panel-border)] text-xs"
-                  >
-                    <div className="flex items-center gap-2.5 min-w-0">
-                      <FileIcon className="w-4 h-4 theme-accent-text shrink-0" />
-                      <span className="truncate font-medium">{file.name}</span>
+
+              {/* Transfer Progress Bar for Receiver with Percentage & Live Speed */}
+              {(store.isUploading || store.connectionState === 'transferring' || (store.uploadProgressPercent > 0 && store.uploadProgressPercent <= 100)) && (
+                <div className="w-full mb-6 p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 backdrop-blur-md text-left">
+                  <div className="flex items-center justify-between text-xs font-semibold mb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0 shadow-[0_0_6px_rgba(34,211,238,0.8)]" />
+                      <span>Receiving files...</span>
                     </div>
-                    <span className="text-[10px] font-mono text-[var(--text-muted)] shrink-0">
-                      {formatFileSize(file.size)}
-                    </span>
+                    <div className="flex items-center gap-3 font-mono">
+                      {store.transferSpeed && (
+                        <span className="text-[11px] px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold">
+                          ⚡ {store.transferSpeed}
+                        </span>
+                      )}
+                      <span className="text-cyan-400 font-bold text-sm">{store.uploadProgressPercent}%</span>
+                    </div>
                   </div>
-                ))}
-              </div>
-            </div>
 
-            <button
-              type="button"
-              onClick={handleResetHome}
-              aria-label="Done and return to home page"
-              className="px-4 py-2 rounded-xl bg-[var(--card-bg)] hover:opacity-80 text-xs font-medium cursor-pointer border border-[var(--panel-border)]"
-            >
-              Done & Return Home
-            </button>
-          </div>
-        ) : (
-          /* Receiver View: WebRTC P2P Direct Download Dashboard */
-          <div className="w-full max-w-xl glass-panel rounded-3xl p-8 border border-indigo-500/30 shadow-2xl text-center relative overflow-hidden animate-fade-in">
-            <div className="absolute top-0 right-0 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-
-            <div className="w-14 h-14 rounded-2xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-500 mx-auto mb-4 shadow-lg shadow-indigo-500/20">
-              <Download className="w-7 h-7 animate-bounce" />
-            </div>
-
-            <h3 className="text-lg font-bold mb-1">Shared Files</h3>
-            <p className="text-xs text-[var(--text-muted)] mb-5 flex items-center justify-center gap-1.5 font-medium">
-              <ShieldCheck className="w-4 h-4 text-emerald-500" />
-              Direct browser-to-browser transfer
-            </p>
-
-            {/* Transfer Progress Bar for Receiver with Percentage & Live Speed */}
-            {(store.isUploading || store.connectionState === 'transferring' || (store.uploadProgressPercent > 0 && store.uploadProgressPercent <= 100)) && (
-              <div className="w-full mb-6 p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 backdrop-blur-md text-left">
-                <div className="flex items-center justify-between text-xs font-semibold mb-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0 shadow-[0_0_6px_rgba(34,211,238,0.8)]" />
-                    <span>Receiving files...</span>
+                  <div className="w-full h-3 bg-slate-900/80 rounded-full overflow-hidden p-0.5 border border-slate-700/50">
+                    <div
+                      className="h-full bg-gradient-to-r from-cyan-400 via-indigo-500 to-violet-500 rounded-full transition-all duration-150 shadow-lg shadow-cyan-500/50"
+                      style={{ width: `${store.uploadProgressPercent}%` }}
+                    />
                   </div>
-                  <div className="flex items-center gap-3 font-mono">
-                    {store.transferSpeed && (
-                      <span className="text-[11px] px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold">
-                        ⚡ {store.transferSpeed}
+
+                  <div className="flex items-center justify-between text-[11px] font-mono text-[var(--text-muted)] mt-2">
+                    {store.currentUploadingFileName ? (
+                      <span className="truncate max-w-[200px] sm:max-w-[280px]">
+                        Receiving: <span className="text-[var(--text-primary)] font-medium">{store.currentUploadingFileName}</span>
+                      </span>
+                    ) : (
+                      <span />
+                    )}
+                    {store.totalBytesExpected > 0 && (
+                      <span className="shrink-0 font-semibold">
+                        {formatFileSize(store.bytesTransferred)} / {formatFileSize(store.totalBytesExpected)}
                       </span>
                     )}
-                    <span className="text-cyan-400 font-bold text-sm">{store.uploadProgressPercent}%</span>
                   </div>
                 </div>
+              )}
 
-                <div className="w-full h-3 bg-slate-900/80 rounded-full overflow-hidden p-0.5 border border-slate-700/50">
-                  <div
-                    className="h-full bg-gradient-to-r from-cyan-400 via-indigo-500 to-violet-500 rounded-full transition-all duration-150 shadow-lg shadow-cyan-500/50"
-                    style={{ width: `${store.uploadProgressPercent}%` }}
-                  />
-                </div>
-
-                <div className="flex items-center justify-between text-[11px] font-mono text-[var(--text-muted)] mt-2">
-                  {store.currentUploadingFileName ? (
-                    <span className="truncate max-w-[200px] sm:max-w-[280px]">
-                      Receiving: <span className="text-[var(--text-primary)] font-medium">{store.currentUploadingFileName}</span>
-                    </span>
-                  ) : (
-                    <span />
-                  )}
-                  {store.totalBytesExpected > 0 && (
-                    <span className="shrink-0 font-semibold">
-                      {formatFileSize(store.bytesTransferred)} / {formatFileSize(store.totalBytesExpected)}
-                    </span>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {/* Receiver File List & Download Buttons */}
-            <div className="w-full text-left mb-6">
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-semibold text-[var(--text-muted)]">
-                  Available Files ({store.files.length})
-                </span>
-                {store.files.length > 1 && (
-                  <button
-                    type="button"
-                    onClick={handleDownloadAllZip}
-                    aria-label="Download all shared files"
-                    className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white text-xs font-bold shadow-md flex items-center gap-1 cursor-pointer transition-all"
-                  >
-                    <Download className="w-3.5 h-3.5" />
-                    <span>Download All</span>
-                  </button>
-                )}
-              </div>
-
-              <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
-                {visibleFiles.map((file, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center justify-between p-3 rounded-xl bg-[var(--card-bg)] border border-[var(--panel-border)] text-xs gap-3"
-                  >
-                    <div className="flex items-center gap-2.5 min-w-0 pr-2">
-                      <div className="p-2 rounded-lg bg-indigo-500/10 text-indigo-400 shrink-0">
-                        <FileIcon className="w-4 h-4" />
-                      </div>
-                      <div className="min-w-0">
-                        <p className="truncate font-semibold">{file.name}</p>
-                        <p className="text-[10px] font-mono text-[var(--text-muted)]">
-                          {formatFileSize(file.size)} • {file.mimeType}
-                        </p>
-                      </div>
-                    </div>
+              {/* Receiver File List & Download Buttons */}
+              <div className="w-full text-left mb-6">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-semibold text-[var(--text-muted)]">
+                    Available Files ({store.files.length})
+                  </span>
+                  {store.files.length > 1 && (
                     <button
                       type="button"
-                      onClick={() => handleDownloadSingleFile(idx, file.name)}
-                      aria-label={`Download file ${file.name}`}
-                      className="px-3 py-1.5 rounded-xl border theme-badge text-xs font-bold transition-all shrink-0 cursor-pointer flex items-center gap-1 shadow-sm"
+                      onClick={handleDownloadAllZip}
+                      aria-label="Download all shared files"
+                      className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white text-xs font-bold shadow-md flex items-center gap-1 cursor-pointer transition-all"
                     >
                       <Download className="w-3.5 h-3.5" />
-                      <span>{file.receivedBlob ? 'Save File' : 'Download'}</span>
+                      <span>Download All</span>
                     </button>
-                  </div>
-                ))}
-              </div>
-            </div>
+                  )}
+                </div>
 
-            <button
-              type="button"
-              onClick={handleResetHome}
-              aria-label="Done and return to home page"
-              className="px-4 py-2 rounded-xl bg-[var(--card-bg)] hover:opacity-80 text-xs font-medium cursor-pointer border border-[var(--panel-border)]"
-            >
-              Done & Return Home
-            </button>
-          </div>
-        )}
-        <WhyRelayoSection />
+                <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
+                  {visibleFiles.map((file, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-center justify-between p-3 rounded-xl bg-[var(--card-bg)] border border-[var(--panel-border)] text-xs gap-3"
+                    >
+                      <div className="flex items-center gap-2.5 min-w-0 pr-2">
+                        <div className="p-2 rounded-lg bg-indigo-500/10 text-indigo-400 shrink-0">
+                          <FileIcon className="w-4 h-4" />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="truncate font-semibold">{file.name}</p>
+                          <p className="text-[10px] font-mono text-[var(--text-muted)]">
+                            {formatFileSize(file.size)} • {file.mimeType}
+                          </p>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => handleDownloadSingleFile(idx, file.name)}
+                        aria-label={`Download file ${file.name}`}
+                        className="px-3 py-1.5 rounded-xl border theme-badge text-xs font-bold transition-all shrink-0 cursor-pointer flex items-center gap-1 shadow-sm"
+                      >
+                        <Download className="w-3.5 h-3.5" />
+                        <span>{file.receivedBlob ? 'Save File' : 'Download'}</span>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleResetHome}
+                aria-label="Done and return to home page"
+                className="px-4 py-2 rounded-xl bg-[var(--card-bg)] hover:opacity-80 text-xs font-medium cursor-pointer border border-[var(--panel-border)]"
+              >
+                Done & Return Home
+              </button>
+            </div>
+          )}
+          <WhyRelayoSection />
         </main>
       )}
 
@@ -798,7 +798,7 @@ export function App() {
 
         {/* Foreground Content Layer - Higher z-index (z-10) sitting cleanly on top */}
         <div className="w-full max-w-6xl mx-auto relative z-10 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono text-[var(--text-muted)]">
-          
+
           {/* Left: Copyright */}
           <div className="flex items-center gap-2 whitespace-nowrap relative z-10">
             <span>© 2026 Relayo.space</span>

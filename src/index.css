@@ -57,6 +57,12 @@
     --input-bg: #FFFFFF;
   }
 
+  .font-relayo {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+  }
+
   .font-product-sans {
     font-family: 'Google Sans', 'Product Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }

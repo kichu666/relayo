@@ -37,8 +37,11 @@ export function RelayoLogo({ className = '', onClick, showIcon = false }: Relayo
         </picture>
       )}
       <div className="inline-flex items-baseline">
-        {/* "Relayo" with capital R in white using Product Sans / Google Sans font */}
-        <span className="font-product-sans font-bold text-lg sm:text-xl md:text-2xl text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none tracking-tight">
+        {/* "Relayo" in Inter font weight 900 with tight negative letter-spacing (-0.5px) */}
+        <span
+          className="font-relayo text-lg sm:text-xl md:text-2xl text-white [html[data-theme=light]_&]:text-[#1D1D1F] leading-none"
+          style={{ fontFamily: "'Inter', sans-serif", fontWeight: 900, letterSpacing: '-0.5px' }}
+        >
           Relayo
         </span>
         {/* ".space" in small font size using Martian Mono Google font in teal */}
