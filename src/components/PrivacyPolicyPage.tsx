@@ -29,7 +29,7 @@ export function PrivacyPolicyPage({ onNavigate }: PrivacyPolicyPageProps) {
           Privacy Policy
         </h1>
         <p className="text-xs font-mono text-slate-400 [html[data-theme=light]_&]:text-slate-500">
-          Last Updated: August 7, 2026 • Official Support Contact: team@relayo.space
+          Last Updated: August 21, 2026 • Official Support Contact: team@relayo.space
         </p>
       </div>
 
@@ -38,17 +38,14 @@ export function PrivacyPolicyPage({ onNavigate }: PrivacyPolicyPageProps) {
         <div className="space-y-2">
           <h2 className="text-base sm:text-lg font-bold text-white [html[data-theme=light]_&]:text-[#0F172A] flex items-center gap-2">
             <Lock className="w-4 h-4 text-cyan-400" />
-            1. Dual Architecture: Local P2P Mode vs. Cloud Hub Mode
+            1. Dual Architecture: WebRTC vs. Local Hotspot Transfer
           </h2>
-          <p>
-            At Relayo (<a href="https://relayo.space" className="text-cyan-400 underline">relayo.space</a>), we respect your privacy and enforce transparent data handling across both operational modes:
-          </p>
-          <ul className="list-disc pl-5 space-y-1.5 text-xs">
+          <ul className="list-disc pl-5 space-y-2 text-xs sm:text-sm">
             <li>
-              <strong className="text-white [html[data-theme=light]_&]:text-slate-900">Local P2P Share Mode (Zero Server Storage):</strong> Relayo operates on a 100% serverless, browser-to-browser WebRTC peer-to-peer infrastructure. Your file payloads stream memory-to-memory via encrypted WebRTC data channels (<code className="font-mono text-cyan-300">rtcDataChannel</code>). Files are never uploaded, saved, or indexed on cloud server disks.
+              <strong className="text-white [html[data-theme=light]_&]:text-slate-900">Web Platform (Relayo.space):</strong> Relayo’s web interface operates on a 100% serverless, browser-to-browser WebRTC peer-to-peer infrastructure. Your file payloads stream memory-to-memory via encrypted WebRTC data channels. Files are never uploaded, saved, or indexed on cloud server disks.
             </li>
             <li>
-              <strong className="text-white [html[data-theme=light]_&]:text-slate-900">Cloud Hub Mode (Ephemeral Sync):</strong> For multi-device clipboard synchronization, live scratchpad notes, and instant link pushing, room payload data is encrypted in transit and stored strictly on a temporary basis. Session payloads are automatically purged upon room expiration or browser tab closure.
+              <strong className="text-white [html[data-theme=light]_&]:text-slate-900">Android Application:</strong> The Relayo Android app utilizes local Wi-Fi Hotspot and Wi-Fi Direct technology to facilitate direct, device-to-device file transfers. When using this mode, the sender’s device acts as a local host, and the receiver connects directly to this host via Wi-Fi. Files are transferred exclusively between the sender and receiver devices over this local connection. Data is never uploaded to, stored, or routed through any external servers or third-party cloud services.
             </li>
           </ul>
         </div>
